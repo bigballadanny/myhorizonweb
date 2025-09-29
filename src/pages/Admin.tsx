@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -8,7 +7,6 @@ import { LayoutDashboard, Users, MessageSquare, Calendar, Settings, LogOut } fro
 import { useToast } from '@/hooks/use-toast';
 
 export default function Admin() {
-  const navigate = useNavigate();
   const { toast } = useToast();
   const [leads, setLeads] = useState<any[]>([]);
   const [conversations, setConversations] = useState<any[]>([]);
@@ -18,13 +16,13 @@ export default function Admin() {
     // Check authentication
     const isAuth = sessionStorage.getItem('admin_authenticated');
     if (!isAuth) {
-      navigate('/');
+      window.location.href = '/';
       return;
     }
 
     // Fetch data
     fetchData();
-  }, [navigate]);
+  }, []);
 
   const fetchData = async () => {
     const [leadsData, conversationsData, appointmentsData] = await Promise.all([
@@ -41,7 +39,7 @@ export default function Admin() {
   const handleLogout = () => {
     sessionStorage.removeItem('admin_authenticated');
     toast({ title: 'Logged out successfully' });
-    navigate('/');
+    window.location.href = '/';
   };
 
   const stats = {

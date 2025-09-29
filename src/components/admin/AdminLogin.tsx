@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -13,7 +12,6 @@ interface AdminLoginProps {
 export function AdminLogin({ open, onClose }: AdminLoginProps) {
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
   const { toast } = useToast();
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -30,9 +28,9 @@ export function AdminLogin({ open, onClose }: AdminLoginProps) {
         description: "Admin access granted",
       });
       
+      // Use window.location instead of useNavigate to avoid Router context issues
       setTimeout(() => {
-        navigate('/admin');
-        onClose();
+        window.location.href = '/admin';
       }, 500);
     } else {
       toast({
