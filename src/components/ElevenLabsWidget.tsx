@@ -2,26 +2,28 @@ import { useEffect } from 'react';
 
 export function ElevenLabsWidget() {
   useEffect(() => {
+    // Create the ElevenLabs Conversational AI widget element
+    const widget = document.createElement('elevenlabs-convai');
+    widget.setAttribute('agent-id', 'agent_3701k6bjf9q2e5wsc1y94xbg2r3g');
+    document.body.appendChild(widget);
+
     // Load ElevenLabs widget script
     const script = document.createElement('script');
-    script.src = 'https://elevenlabs.io/convai-widget/index.js';
+    script.src = 'https://unpkg.com/@elevenlabs/convai-widget-embed';
     script.async = true;
+    script.type = 'text/javascript';
     document.body.appendChild(script);
 
-    // Configure widget after script loads
-    script.onload = () => {
-      // The ElevenLabs widget will automatically initialize
-      // You need to get your agent ID from ElevenLabs dashboard
-      // and add it as a data attribute to the body or configure via their dashboard
-    };
-
     return () => {
-      // Cleanup script on unmount
-      document.body.removeChild(script);
+      // Cleanup on unmount
+      if (document.body.contains(widget)) {
+        document.body.removeChild(widget);
+      }
+      if (document.body.contains(script)) {
+        document.body.removeChild(script);
+      }
     };
   }, []);
 
-  // The widget is configured through ElevenLabs dashboard
-  // This component just loads the script
   return null;
 }

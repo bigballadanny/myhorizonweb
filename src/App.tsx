@@ -1,3 +1,4 @@
+import { Navigation } from './components/Navigation'
 import { Hero } from './components/Hero'
 import { Portfolio } from './components/Portfolio'
 import { Awards } from './components/Awards'
@@ -11,6 +12,7 @@ import { ElevenLabsWidget } from './components/ElevenLabsWidget'
 export default function App() {
   return (
     <div className="min-h-screen bg-background text-foreground" style={{ overflow: 'visible' }}>
+      <Navigation />
       <main className="relative" role="main" style={{ overflow: 'visible' }}>
         <section id="hero" aria-label="Hero section">
           <Hero />
