@@ -130,11 +130,20 @@ export function Hero() {
             <motion.div
               whileHover={{ scale: 1.05 }}
               className="flex items-center cursor-pointer"
-              onClick={() => {
-                window.scrollTo({ top: 0, behavior: 'smooth' })
+              onClick={(e) => {
+                // Track clicks for secret admin access
+                const clicks = parseInt(sessionStorage.getItem('logoClicks') || '0') + 1;
+                sessionStorage.setItem('logoClicks', clicks.toString());
+                
+                if (clicks >= 8) {
+                  sessionStorage.removeItem('logoClicks');
+                  window.location.href = '/admin';
+                } else {
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
               }}
             >
-              <span className="font-bagel text-white text-xl tracking-wider">MOJJU</span>
+              <span className="font-bagel text-white text-xl tracking-wider">MyHorizon</span>
             </motion.div>
 
             {/* Navigation Menu */}
@@ -143,7 +152,7 @@ export function Hero() {
                 href="#portfolio" 
                 className="text-white hover:text-white/80 font-medium gentle-animation hover:scale-105"
               >
-                Work
+                Solutions
               </a>
               <a 
                 href="#about" 
@@ -155,7 +164,7 @@ export function Hero() {
                 href="#services" 
                 className="text-white hover:text-white/80 font-medium gentle-animation hover:scale-105"
               >
-                Capabilities
+                Services
               </a>
               <a 
                 href="#team" 
@@ -255,7 +264,7 @@ export function Hero() {
                 className="mobile-menu-link px-4 py-3 hover:text-white/80 hover:bg-white/10 rounded-lg gentle-animation font-medium text-lg active:bg-white/20"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                Work
+                Solutions
               </a>
               <a 
                 href="#about" 
@@ -269,7 +278,7 @@ export function Hero() {
                 className="mobile-menu-link px-4 py-3 hover:text-white/80 hover:bg-white/10 rounded-lg gentle-animation font-medium text-lg active:bg-white/20"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                Capabilities
+                Services
               </a>
               <a 
                 href="#team" 
@@ -315,9 +324,9 @@ export function Hero() {
       >
         <div className="max-w-2xl">
           <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-black leading-tight text-white">
-            <span className="block">AI FILM</span>
-            <span className="block">PRODUCTION</span>
-            <span className="block">WITHOUT LIMITS</span>
+            <span className="block">AI AUTOMATION</span>
+            <span className="block">FOR YOUR</span>
+            <span className="block">BUSINESS</span>
           </h1>
         </div>
       </motion.div>

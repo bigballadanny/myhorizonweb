@@ -2,17 +2,17 @@
 
 export function Footer() {
   const aiTools = [
-    'Runway Gen-4',
-    'Kling 2', 
-    'Veo 3',
-    'Higgsfield AI',
-    'Hailuo Minimax 2',
-    'Midjourney',
-    'Leonardo AI',
-    'Krea AI',
-    'Runway',
-    'Suno AI',
-    'ElevenLabs'
+    'OpenAI GPT',
+    'Google Gemini', 
+    'Anthropic Claude',
+    'ElevenLabs',
+    'Make.com',
+    'Zapier',
+    'Twilio',
+    'Stripe',
+    'Supabase',
+    'N8N',
+    'LangChain'
   ]
 
   return (
@@ -23,11 +23,11 @@ export function Footer() {
           <div className="col-span-12 md:col-span-4">
             <div>
               <div className="font-bagel text-background text-3xl tracking-wider mb-4">
-                MOJJU
+                MyHorizon
               </div>
               <p className="text-background/70 leading-relaxed mb-6">
-                Revolutionizing video production with intelligent AI that understands 
-                creativity, storytelling, and human emotion.
+                Empowering businesses with cutting-edge AI automation solutions. 
+                We transform complex workflows into seamless intelligent systems.
               </p>
               {/* Social Media Icons */}
               <div className="flex items-center space-x-6">
@@ -92,12 +92,12 @@ export function Footer() {
           {/* Tools We Use Section */}
           <div className="col-span-12 md:col-span-8">
             <div>
-              <h4 className="font-black text-2xl text-background mb-4">TOOLS WE USE</h4>
+              <h4 className="font-black text-2xl text-background mb-4">TECHNOLOGIES WE USE</h4>
               
               {/* AI Tools Description */}
               <p className="text-background/70 text-base mb-8 leading-relaxed">
-                We leverage the latest AI technology to deliver cutting-edge video production. 
-                Our toolkit combines the best generative AI models for video, audio, and visual content creation.
+                We leverage cutting-edge AI and automation platforms to build intelligent business solutions. 
+                Our toolkit includes the latest tools for conversational AI, workflow automation, and data intelligence.
               </p>
               
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -118,7 +118,7 @@ export function Footer() {
         <div className="border-t border-background/20 pt-8 mt-16">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="text-sm text-background/70 mb-4 md:mb-0">
-              © 2025 MOJJU. All rights reserved.
+              © 2025 MyHorizon. All rights reserved.
             </div>
             <div className="text-sm text-background/70">
               2847 HIGHLAND AVE. SUITE 310 BIRMINGHAM 35205, AL, USA
