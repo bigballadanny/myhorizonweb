@@ -2,10 +2,14 @@ import { useState, useEffect } from 'react'
 import { Menu, X } from 'lucide-react'
 import { Button } from './ui/button'
 import { ThemeToggle } from './ThemeToggle'
+import { AdminLogin } from './admin/AdminLogin'
 
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [logoClickCount, setLogoClickCount] = useState(0)
+  const [showAdminLogin, setShowAdminLogin] = useState(false)
+  const [lastClickTime, setLastClickTime] = useState(0)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,6 +24,25 @@ export function Navigation() {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' })
       setIsMobileMenuOpen(false)
+    }
+  }
+
+  const handleLogoClick = () => {
+    const now = Date.now()
+    
+    // Reset counter if more than 2 seconds between clicks
+    if (now - lastClickTime > 2000) {
+      setLogoClickCount(1)
+    } else {
+      setLogoClickCount(prev => prev + 1)
+    }
+    
+    setLastClickTime(now)
+
+    // Open admin login on 8th click
+    if (logoClickCount + 1 >= 8) {
+      setShowAdminLogin(true)
+      setLogoClickCount(0)
     }
   }
 
@@ -41,8 +64,8 @@ export function Navigation() {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <button
-            onClick={() => scrollToSection('hero')}
-            className="text-2xl font-black text-foreground hover:text-accent-blue transition-colors"
+            onClick={handleLogoClick}
+            className="text-2xl font-black text-foreground hover:text-accent-blue transition-colors select-none"
           >
             MyHorizon
           </button>
@@ -113,6 +136,11 @@ export function Navigation() {
           </div>
         )}
       </div>
+
+      <AdminLogin 
+        open={showAdminLogin} 
+        onClose={() => setShowAdminLogin(false)} 
+      />
     </nav>
   )
 }
