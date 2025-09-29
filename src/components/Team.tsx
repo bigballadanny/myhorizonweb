@@ -1,107 +1,73 @@
 'use client'
 
 import { ImageWithFallback } from './figma/ImageWithFallback'
-import marcusPhoto from '../assets/team-member-1.png'
-import sofiaPhoto from '../assets/team-member-2.png'
-import jakePhoto from '../assets/team-member-3.png'
-import mayaPhoto from '../assets/team-member-4.png'
-import connorPhoto from '../assets/team-member-5.png'
-import zaraPhoto from '../assets/team-member-6.png'
-import leoPhoto from '../assets/team-member-7.png'
+import teamMember1 from '../assets/team-member-1.png'
+import teamMember2 from '../assets/team-member-2.png'
+import teamMember3 from '../assets/team-member-3.png'
+import teamMember4 from '../assets/team-member-4.png'
+import teamMember5 from '../assets/team-member-5.png'
+import teamMember6 from '../assets/team-member-6.png'
+import teamMember7 from '../assets/team-member-7.png'
 
 export function Team() {
-  const wantedCriminals = [
+  const industries = [
     {
-      name: "Marcus 'The Pixel Bandit'",
-      crime: "ARMED CREATIVE ROBBERY",
-      bounty: "$8,500",
-      description: "Notorious for stealing ordinary footage and transforming it into extraordinary visual experiences. Approach with caution - carries dangerous levels of creative vision and technical expertise.",
-      image: marcusPhoto,
+      name: "E-Commerce & Retail",
+      capability: "CART-TO-CHECKOUT AUTOMATION",
+      impact: "24/7 SALES SUPPORT",
+      description: "Notorious for automating entire customer journeys from product discovery to post-purchase. Armed with AI chatbots that understand product catalogs, inventory APIs that prevent overselling, and checkout flows that never sleep.",
+      image: teamMember1,
       rotation: 'rotate-3',
-      mustacheStyle: "artistic"
     },
     {
-      name: "Sofia 'The Frame Thief'",
-      crime: "GRAND THEFT OF IMAGINATION",
-      bounty: "$6,200",
-      description: "Wanted for stealing impossible creative briefs and turning them into award-winning masterpieces. Armed with strategic thinking and dangerous levels of project management skills.",
-      image: sofiaPhoto,
+      name: "Real Estate",
+      capability: "LEAD-TO-CLOSE INTELLIGENCE",
+      impact: "INSTANT PROPERTY MATCHING",
+      description: "Wanted for transforming property searches into instant matches. Master of CRM automation, appointment scheduling, and AI assistants that qualify leads while agents sleep. Warning: Can nurture 1000 leads simultaneously.",
+      image: teamMember2,
       rotation: 'rotate-2',
-      mustacheStyle: "handlebar"
     },
     {
-      name: "Jake 'The Render Rogue'",
-      crime: "MASTERMINDING TECHNICAL HEISTS",
-      bounty: "$11,800",
-      description: "Ringleader of rendering crimes, orchestrating elaborate computational operations. Wanted for leading sophisticated processing schemes that push hardware beyond its limits.",
-      image: jakePhoto,
+      name: "Professional Services",
+      capability: "CONSULTATION-TO-INVOICE FLOW",
+      impact: "AUTOMATED EXPERTISE DELIVERY",
+      description: "Mastermind of scheduling automation, document generation, and client communication systems. Wanted for making consultants look like they have 48-hour days. Expert in calendar sync, proposal automation, and follow-up sequences.",
+      image: teamMember3,
       rotation: 'rotate-2',
-      mustacheStyle: "thick"
     },
     {
-      name: "Maya 'The Code Crusher'",
-      crime: "DIGITAL WIZARDRY & ALGORITHM SORCERY",
-      bounty: "$9,300",
-      description: "Wanted for conjuring flawless code from chaotic requirements using forbidden programming magic. Known to transform complex problems into elegant solutions with mysterious technical powers.",
-      image: mayaPhoto,
+      name: "Healthcare & Wellness",
+      capability: "PATIENT JOURNEY OPTIMIZATION",
+      impact: "ALWAYS-ON CARE COORDINATION",
+      description: "Notorious for automating appointment reminders, prescription refills, and patient education. Wanted for making healthcare providers accessible 24/7. Master of HIPAA-compliant systems and telehealth integration. Side effects: happier patients.",
+      image: teamMember4,
       rotation: '-rotate-2',
-      mustacheStyle: "curly"
     },
     {
-      name: "Connor 'The Digital Desperado'",
-      crime: "PRODUCTION WITH INTENT TO AMAZE",
-      bounty: "$13,700",
-      description: "Mastermind behind revolutionary content creation operations. Wanted for disrupting traditional production methods and making competitors question their entire approach.",
-      image: connorPhoto,
+      name: "Financial Services",
+      capability: "DATA-TO-DECISION ACCELERATION",
+      impact: "INTELLIGENT FINANCIAL ANALYSIS",
+      description: "Wanted for transforming spreadsheets into insights, reports into predictions, and data chaos into strategic advantage. Armed with custom dashboards, automated compliance checks, and AI-powered anomaly detection that never misses a red flag.",
+      image: teamMember5,
       rotation: 'rotate-1',
-      mustacheStyle: "villainous"
     },
     {
-      name: "Zara 'The Motion Maverick'",
-      crime: "ANIMATION MANIPULATION & EFFECT FORGERY",
-      bounty: "$7,900",
-      description: "Notorious for crafting motion graphics so smooth they defy the laws of physics. Armed with After Effects mastery and a dangerous eye for kinetic perfection.",
-      image: zaraPhoto,
+      name: "Manufacturing",
+      capability: "PRODUCTION-TO-DELIVERY TRACKING",
+      impact: "SUPPLY CHAIN INTELLIGENCE",
+      description: "Wanted for connecting legacy systems, IoT sensors, and ERP platforms into unified automation. Master of inventory forecasting, quality control alerts, and predictive maintenance systems. Known for eliminating stockouts and downtime.",
+      image: teamMember6,
       rotation: '-rotate-1',
-      mustacheStyle: "artistic"
     },
     {
-      name: "Leo 'The Effect Enforcer'",
-      crime: "WANDERING VFX SYNTHESIS SCHEMES",
-      bounty: "$10,400",
-      description: "A nomadic visual effects outlaw who drifts from project to project, leaving behind a trail of jaw-dropping composites and impossible cinematic magic. Master of the digital realm.",
-      image: leoPhoto,
+      name: "Hospitality & Tourism",
+      capability: "GUEST EXPERIENCE ORCHESTRATION",
+      impact: "SEAMLESS SERVICE DELIVERY",
+      description: "Notorious for automating reservations, check-ins, concierge services, and guest communications. Wanted for making every interaction feel personalized at scale. Can handle 1000 simultaneous guest requests without breaking a sweat.",
+      image: teamMember7,
       rotation: 'rotate-3',
-      mustacheStyle: "handlebar"
     }
   ]
-
-  const Mustache = ({ style, className }: { style: string, className?: string }) => {
-    const mustaches = {
-      handlebar: "M12 16c-2 0-3-1-4-1s-2 1-4 1c0-1 1-2 4-2s4 1 4 2z M12 16c2 0 3-1 4-1s2 1 4 1c0-1-1-2-4-2s-4 1-4 2z",
-      thick: "M6 16c0-1 2-2 6-2s6 1 6 2c0 1-2 1-6 1s-6 0-6-1z",
-      villainous: "M8 15c-1 0-2 1-2 2s1 1 2 0c1-1 2-1 4-1s3 0 4 1c1 1 2 0 2-1s-1-2-2-2c-2 0-4 1-8 1z",
-      curly: "M6 16c0-2 1-2 2-1s1 1 2 0 1-1 2 0 1-1 2 0 2-1 2 1c0 1-1 1-2 1s-2 0-4 0-4 0-4-1z",
-      artistic: "M7 15c-1 1-1 2 0 2s2-1 3-1h4c1 0 2 1 3 1s1-1 0-2c-1-1-2-1-5-1s-4 0-5 1z"
-    }
-    
-    return (
-      <svg 
-        className={`absolute ${className}`}
-        width="24" 
-        height="24" 
-        viewBox="0 0 24 24" 
-        fill="none"
-      >
-        <path 
-          d={mustaches[style as keyof typeof mustaches]} 
-          fill="#2D1810" 
-          stroke="#1A0F08" 
-          strokeWidth="0.5"
-        />
-      </svg>
-    )
-  }
 
   return (
     <div className="relative py-32 bg-background w-full" style={{ 
@@ -120,24 +86,24 @@ export function Team() {
         {/* Section Header */}
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-3 mb-6">
-            <div className="w-3 h-3 bg-accent-emerald rounded-full animate-pulse" />
+            <div className="w-3 h-3 bg-primary rounded-full animate-pulse" />
             <span className="text-sm font-semibold text-muted-foreground">
-              Meet the Outlaws
+              Industries We Transform
             </span>
-            <div className="w-3 h-3 bg-accent-blue rounded-full animate-pulse" />
+            <div className="w-3 h-3 bg-accent rounded-full animate-pulse" />
           </div>
           
           <h2 className="text-5xl sm:text-6xl lg:text-7xl font-black leading-tight mb-8 text-foreground">
-            <span className="block mb-2">These people are</span>
-            <span className="block text-foreground">WANTED</span>
+            <span className="block mb-2">These Sectors Are</span>
+            <span className="block text-primary">AUTOMATED</span>
           </h2>
           
           <p className="text-2xl lg:text-3xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
-            Highly skilled and creatively dangerous
+            Highly optimized and intelligently powered
           </p>
         </div>
 
-        {/* Framed Wanted Board */}
+        {/* Framed Industry Board */}
         <div className="max-w-7xl mx-auto" style={{ 
           overflow: 'visible', 
           height: 'auto', 
@@ -151,64 +117,64 @@ export function Team() {
             maxHeight: 'none' 
           }}>
             
-            {/* Black Frame */}
-            <div className="bg-gradient-to-br from-black via-gray-900 to-black p-8 rounded-2xl shadow-2xl relative border border-gray-800/50" style={{ 
+            {/* Modern Frame */}
+            <div className="bg-gradient-to-br from-card via-card/95 to-card p-8 rounded-2xl shadow-2xl relative border border-primary/20" style={{ 
               overflow: 'visible', 
               height: 'auto', 
               minHeight: '0', 
               maxHeight: 'none' 
             }}>
               
-              {/* Black frame texture */}
+              {/* Frame texture */}
               <div className="absolute inset-0 opacity-15"
                    style={{
                      backgroundImage: `
-                       linear-gradient(135deg, rgba(55, 65, 81, 0.1) 0%, transparent 50%, rgba(0, 0, 0, 0.2) 100%),
-                       radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.03) 0%, transparent 50%),
-                       radial-gradient(circle at 75% 75%, rgba(0, 0, 0, 0.15) 0%, transparent 50%)
+                       linear-gradient(135deg, hsl(var(--primary) / 0.1) 0%, transparent 50%, hsl(var(--foreground) / 0.05) 100%),
+                       radial-gradient(circle at 25% 25%, hsl(var(--background) / 0.03) 0%, transparent 50%),
+                       radial-gradient(circle at 75% 75%, hsl(var(--foreground) / 0.05) 0%, transparent 50%)
                      `,
                      backgroundSize: '60px 60px, 100px 100px, 80px 80px'
                    }} />
               
               {/* Modern Board Background */}
-              <div className="bg-gradient-to-br from-slate-100 via-gray-50 to-slate-200 rounded-xl p-8 relative border border-slate-300/50" style={{ 
+              <div className="bg-gradient-to-br from-background via-background/95 to-background rounded-xl p-8 relative border border-border/50" style={{ 
                 overflow: 'visible', 
                 height: 'auto', 
                 minHeight: '0', 
                 maxHeight: 'none' 
               }}>
                 
-                {/* Modern subtle texture */}
+                {/* Subtle texture */}
                 <div className="absolute inset-0 opacity-30"
                      style={{
                        backgroundImage: `
-                         radial-gradient(circle at 30% 30%, rgba(71, 85, 105, 0.03) 1px, transparent 1px),
-                         radial-gradient(circle at 70% 70%, rgba(148, 163, 184, 0.02) 1px, transparent 1px),
-                         linear-gradient(135deg, rgba(226, 232, 240, 0.1) 0%, transparent 50%, rgba(241, 245, 249, 0.1) 100%)
+                         radial-gradient(circle at 30% 30%, hsl(var(--primary) / 0.03) 1px, transparent 1px),
+                         radial-gradient(circle at 70% 70%, hsl(var(--accent) / 0.02) 1px, transparent 1px),
+                         linear-gradient(135deg, hsl(var(--muted) / 0.1) 0%, transparent 50%, hsl(var(--muted) / 0.1) 100%)
                        `,
                        backgroundSize: '30px 30px, 45px 45px, 100% 100%'
                      }} />
 
-                {/* Wanted Posters Grid */}
+                {/* Industry Cards Grid */}
                 <div className="relative z-10" style={{ 
                   overflow: 'visible', 
                   height: 'auto', 
                   minHeight: '0', 
                   maxHeight: 'none' 
                 }}>
-                  {/* First row - 4 posters */}
+                  {/* First row - 4 cards */}
                   <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8 mb-8" style={{ 
                     overflow: 'visible', 
                     height: 'auto', 
                     minHeight: '0', 
                     maxHeight: 'none' 
                   }}>
-                    {wantedCriminals.slice(0, 4).map((criminal, index) => (
+                    {industries.slice(0, 4).map((industry, index) => (
                       <div
-                        key={criminal.name}
-                        className={`group transform ${criminal.rotation} hover:rotate-0 transition-all duration-500 hover:scale-105 hover:z-20`}
+                        key={industry.name}
+                        className={`group transform ${industry.rotation} hover:rotate-0 transition-all duration-500 hover:scale-105 hover:z-20`}
                         style={{
-                          filter: 'drop-shadow(4px 4px 8px rgba(0,0,0,0.3))',
+                          filter: `drop-shadow(4px 4px 8px hsl(var(--foreground) / 0.2))`,
                           overflow: 'visible',
                           height: 'auto',
                           minHeight: '0',
@@ -216,66 +182,66 @@ export function Team() {
                         }}
                       >
                         
-                        {/* Black Framed Wanted Poster */}
-                        <div className="bg-gradient-to-b from-white to-gray-50 border-4 border-black relative shadow-lg" style={{ 
+                        {/* Industry Card */}
+                        <div className="bg-gradient-to-b from-card to-muted border-4 border-primary/30 relative shadow-lg" style={{ 
                           overflow: 'visible', 
                           height: 'auto', 
                           minHeight: '0', 
                           maxHeight: 'none' 
                         }}>
                           
-                          {/* Modern push pins */}
-                          <div className="absolute -top-2 left-4 w-4 h-4 bg-gradient-to-br from-red-500 to-red-600 rounded-full shadow-lg border border-red-700" />
-                          <div className="absolute -top-2 right-4 w-4 h-4 bg-gradient-to-br from-red-500 to-red-600 rounded-full shadow-lg border border-red-700" />
+                          {/* Modern pins */}
+                          <div className="absolute -top-2 left-4 w-4 h-4 bg-gradient-to-br from-primary to-primary/80 rounded-full shadow-lg border border-primary/70" />
+                          <div className="absolute -top-2 right-4 w-4 h-4 bg-gradient-to-br from-accent to-accent/80 rounded-full shadow-lg border border-accent/70" />
                           
-                          {/* Subtle modern paper effect */}
-                          <div className="absolute inset-0 bg-gradient-to-br from-slate-50/30 via-transparent to-gray-100/20" />
-                          <div className="absolute top-4 right-4 w-6 h-6 bg-slate-200/40 rounded-full" />
-                          <div className="absolute bottom-6 left-4 w-4 h-4 bg-gray-300/30 rounded-full" />
+                          {/* Subtle effect */}
+                          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5" />
+                          <div className="absolute top-4 right-4 w-6 h-6 bg-primary/10 rounded-full" />
+                          <div className="absolute bottom-6 left-4 w-4 h-4 bg-accent/10 rounded-full" />
 
                           <div className="p-6 text-center relative z-10">
                             
-                            {/* WANTED Header */}
+                            {/* AUTOMATED Header */}
                             <div className="mb-4">
-                              <h3 className="text-3xl font-black text-black mb-2"
+                              <h3 className="text-3xl font-black text-primary mb-2"
                                   style={{ 
                                     fontFamily: 'serif',
                                     letterSpacing: '0.1em'
                                   }}>
-                                WANTED
+                                AUTOMATED
                               </h3>
-                              <div className="w-full h-0.5 bg-black mb-2" />
+                              <div className="w-full h-0.5 bg-primary mb-2" />
                             </div>
 
-                            {/* Photo */}
-                            <div className="relative mb-4 mx-auto w-32 h-32 border-2 border-black bg-gray-100 rounded-sm" style={{ 
+                            {/* Image */}
+                            <div className="relative mb-4 mx-auto w-32 h-32 border-2 border-primary bg-muted rounded-sm" style={{ 
                               overflow: 'visible' 
                             }}>
                               <ImageWithFallback
-                                src={criminal.image}
-                                alt={criminal.name}
-                                className="w-full h-full object-cover rounded-sm"
+                                src={industry.image}
+                                alt={industry.name}
+                                className="w-full h-full object-cover rounded-sm opacity-90 group-hover:opacity-100 transition-opacity"
                                 style={{
-                                  filter: 'sepia(20%) contrast(105%) brightness(100%) hue-rotate(5deg) saturate(90%)'
+                                  filter: 'contrast(105%) brightness(100%) saturate(95%)'
                                 }}
                               />
                               
-                              {/* Subtle modern overlay */}
-                              <div className="absolute inset-0 bg-gradient-to-t from-slate-100/10 to-transparent rounded-sm" />
+                              {/* Overlay */}
+                              <div className="absolute inset-0 bg-gradient-to-t from-primary/10 to-transparent rounded-sm opacity-0 group-hover:opacity-100 transition-opacity" />
                               
-                              {/* Mustache */}
-                              <Mustache 
-                                style={criminal.mustacheStyle} 
-                                className="bottom-4 left-1/2 -translate-x-1/2 opacity-80" 
-                              />
+                              {/* Tech Icon */}
+                              <div className="absolute bottom-2 right-2 w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white text-xs font-bold opacity-0 group-hover:opacity-100 transition-opacity">
+                                AI
+                              </div>
                             </div>
 
                             {/* Details */}
                             <div className="text-left space-y-2" style={{ fontFamily: 'serif' }}>
-                              <div className="font-black text-lg text-black">{criminal.name}</div>
-                              <div className="font-bold text-red-600 text-base">BOUNTY: {criminal.bounty}</div>
-                              <div className="text-sm text-gray-800 leading-relaxed bg-gray-50/50 p-3 border-l-2 border-black">
-                                {criminal.description}
+                              <div className="font-black text-lg text-foreground">{industry.name}</div>
+                              <div className="font-bold text-primary text-base">CAPABILITY: {industry.capability}</div>
+                              <div className="font-bold text-accent text-sm">IMPACT: {industry.impact}</div>
+                              <div className="text-sm text-muted-foreground leading-relaxed bg-muted/50 p-3 border-l-2 border-primary">
+                                {industry.description}
                               </div>
                             </div>
                           </div>
@@ -284,19 +250,19 @@ export function Team() {
                     ))}
                   </div>
                   
-                  {/* Second row - 3 posters centered */}
+                  {/* Second row - 3 cards centered */}
                   <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 max-w-5xl mx-auto" style={{ 
                     overflow: 'visible', 
                     height: 'auto', 
                     minHeight: '0', 
                     maxHeight: 'none' 
                   }}>
-                    {wantedCriminals.slice(4, 7).map((criminal, index) => (
+                    {industries.slice(4, 7).map((industry, index) => (
                       <div
-                        key={criminal.name}
-                        className={`group transform ${criminal.rotation} hover:rotate-0 transition-all duration-500 hover:scale-105 hover:z-20`}
+                        key={industry.name}
+                        className={`group transform ${industry.rotation} hover:rotate-0 transition-all duration-500 hover:scale-105 hover:z-20`}
                         style={{
-                          filter: 'drop-shadow(4px 4px 8px rgba(0,0,0,0.3))',
+                          filter: `drop-shadow(4px 4px 8px hsl(var(--foreground) / 0.2))`,
                           overflow: 'visible',
                           height: 'auto',
                           minHeight: '0',
@@ -304,66 +270,66 @@ export function Team() {
                         }}
                       >
                         
-                        {/* Black Framed Wanted Poster */}
-                        <div className="bg-gradient-to-b from-white to-gray-50 border-4 border-black relative shadow-lg" style={{ 
+                        {/* Industry Card */}
+                        <div className="bg-gradient-to-b from-card to-muted border-4 border-primary/30 relative shadow-lg" style={{ 
                           overflow: 'visible', 
                           height: 'auto', 
                           minHeight: '0', 
                           maxHeight: 'none' 
                         }}>
                           
-                          {/* Modern push pins */}
-                          <div className="absolute -top-2 left-4 w-4 h-4 bg-gradient-to-br from-red-500 to-red-600 rounded-full shadow-lg border border-red-700" />
-                          <div className="absolute -top-2 right-4 w-4 h-4 bg-gradient-to-br from-red-500 to-red-600 rounded-full shadow-lg border border-red-700" />
+                          {/* Modern pins */}
+                          <div className="absolute -top-2 left-4 w-4 h-4 bg-gradient-to-br from-primary to-primary/80 rounded-full shadow-lg border border-primary/70" />
+                          <div className="absolute -top-2 right-4 w-4 h-4 bg-gradient-to-br from-accent to-accent/80 rounded-full shadow-lg border border-accent/70" />
                           
-                          {/* Subtle modern paper effect */}
-                          <div className="absolute inset-0 bg-gradient-to-br from-slate-50/30 via-transparent to-gray-100/20" />
-                          <div className="absolute top-4 right-4 w-6 h-6 bg-slate-200/40 rounded-full" />
-                          <div className="absolute bottom-6 left-4 w-4 h-4 bg-gray-300/30 rounded-full" />
+                          {/* Subtle effect */}
+                          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5" />
+                          <div className="absolute top-4 right-4 w-6 h-6 bg-primary/10 rounded-full" />
+                          <div className="absolute bottom-6 left-4 w-4 h-4 bg-accent/10 rounded-full" />
 
                           <div className="p-6 text-center relative z-10">
                             
-                            {/* WANTED Header */}
+                            {/* AUTOMATED Header */}
                             <div className="mb-4">
-                              <h3 className="text-3xl font-black text-black mb-2"
+                              <h3 className="text-3xl font-black text-primary mb-2"
                                   style={{ 
                                     fontFamily: 'serif',
                                     letterSpacing: '0.1em'
                                   }}>
-                                WANTED
+                                AUTOMATED
                               </h3>
-                              <div className="w-full h-0.5 bg-black mb-2" />
+                              <div className="w-full h-0.5 bg-primary mb-2" />
                             </div>
 
-                            {/* Photo */}
-                            <div className="relative mb-4 mx-auto w-32 h-32 border-2 border-black bg-gray-100 rounded-sm" style={{ 
+                            {/* Image */}
+                            <div className="relative mb-4 mx-auto w-32 h-32 border-2 border-primary bg-muted rounded-sm" style={{ 
                               overflow: 'visible' 
                             }}>
                               <ImageWithFallback
-                                src={criminal.image}
-                                alt={criminal.name}
-                                className="w-full h-full object-cover rounded-sm"
+                                src={industry.image}
+                                alt={industry.name}
+                                className="w-full h-full object-cover rounded-sm opacity-90 group-hover:opacity-100 transition-opacity"
                                 style={{
-                                  filter: 'sepia(20%) contrast(105%) brightness(100%) hue-rotate(5deg) saturate(90%)'
+                                  filter: 'contrast(105%) brightness(100%) saturate(95%)'
                                 }}
                               />
                               
-                              {/* Subtle modern overlay */}
-                              <div className="absolute inset-0 bg-gradient-to-t from-slate-100/10 to-transparent rounded-sm" />
+                              {/* Overlay */}
+                              <div className="absolute inset-0 bg-gradient-to-t from-primary/10 to-transparent rounded-sm opacity-0 group-hover:opacity-100 transition-opacity" />
                               
-                              {/* Mustache */}
-                              <Mustache 
-                                style={criminal.mustacheStyle} 
-                                className="bottom-4 left-1/2 -translate-x-1/2 opacity-80" 
-                              />
+                              {/* Tech Icon */}
+                              <div className="absolute bottom-2 right-2 w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white text-xs font-bold opacity-0 group-hover:opacity-100 transition-opacity">
+                                AI
+                              </div>
                             </div>
 
                             {/* Details */}
                             <div className="text-left space-y-2" style={{ fontFamily: 'serif' }}>
-                              <div className="font-black text-lg text-black">{criminal.name}</div>
-                              <div className="font-bold text-red-600 text-base">BOUNTY: {criminal.bounty}</div>
-                              <div className="text-sm text-gray-800 leading-relaxed bg-gray-50/50 p-3 border-l-2 border-black">
-                                {criminal.description}
+                              <div className="font-black text-lg text-foreground">{industry.name}</div>
+                              <div className="font-bold text-primary text-base">CAPABILITY: {industry.capability}</div>
+                              <div className="font-bold text-accent text-sm">IMPACT: {industry.impact}</div>
+                              <div className="text-sm text-muted-foreground leading-relaxed bg-muted/50 p-3 border-l-2 border-primary">
+                                {industry.description}
                               </div>
                             </div>
                           </div>
@@ -374,12 +340,8 @@ export function Team() {
                 </div>
               </div>
             </div>
-            
-            {/* Black frame shadow */}
-            <div className="absolute -inset-4 bg-black/30 rounded-2xl -z-10 blur-xl" />
           </div>
         </div>
-
       </div>
     </div>
   )
