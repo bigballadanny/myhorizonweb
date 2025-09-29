@@ -9,52 +9,52 @@ export function Services() {
 
   const services = [
     {
-      id: 'campaigns',
-      title: "Campaign & Ad Content",
-      description: "Multi-platform video campaigns ready for every channel—YouTube, TikTok, Instagram, and beyond.",
-      color: 'accent-emerald',
+      id: 'chatbots',
+      title: "AI Chatbots & Virtual Agents",
+      description: "24/7 customer support automation with natural language processing that understands and responds like a human.",
+      color: 'accent-cyan',
       rotation: 'rotate-2',
-      image: 'https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=400&h=300&fit=crop&auto=format'
+      image: 'https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=400&h=300&fit=crop&auto=format'
     },
     {
-      id: 'brand-films',
-      title: "Brand Films & Stories", 
-      description: "Cinematic brand videos that capture your essence and connect with audiences on an emotional level.",
+      id: 'workflow',
+      title: "Workflow Automation", 
+      description: "Process optimization and task automation that eliminates repetitive work and maximizes business efficiency.",
       color: 'accent-blue',
       rotation: '-rotate-1',
-      image: 'https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=400&h=300&fit=crop&auto=format'
+      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop&auto=format'
     },
     {
-      id: 'trailers',
-      title: "Trailers & Promos",
-      description: "High-impact teasers that hook viewers instantly—perfect for launches, events, and announcements.",
+      id: 'crm',
+      title: "CRM Integration & Automation",
+      description: "Sales pipeline automation and intelligent customer data management that turns leads into loyal customers.",
       color: 'accent-purple',
       rotation: 'rotate-1',
-      image: 'https://images.unsplash.com/photo-1518676590629-3dcbd9c5a5c9?w=400&h=300&fit=crop&auto=format'
+      image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop&auto=format'
     },
     {
-      id: 'short-films',
-      title: "Short-Form Films",
-      description: "Festival-ready mini-movies up to 5 minutes—ideal for investors, events, and premium content.",
-      color: 'accent-emerald',
+      id: 'content',
+      title: "Content Generation",
+      description: "AI-powered content creation for marketing, social media, and communications that maintains your brand voice.",
+      color: 'accent-cyan',
       rotation: '-rotate-2',
-      image: 'https://images.unsplash.com/photo-1574267432553-4b4628081c31?w=400&h=300&fit=crop&auto=format'
+      image: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=400&h=300&fit=crop&auto=format'
     },
     {
-      id: 'animation',
-      title: "Animation & Motion",
-      description: "Stylized animated content that explains complex ideas without needing live actors.",
+      id: 'analytics',
+      title: "Data Analysis & Insights",
+      description: "Automated reporting and business intelligence that transforms raw data into actionable strategic decisions.",
       color: 'accent-blue',
       rotation: 'rotate-3',
-      image: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?w=400&h=300&fit=crop&auto=format'
+      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop&auto=format'
     },
     {
-      id: 'social',
-      title: "Social Content",
-      description: "Thumb-stopping vertical videos delivered in batches to keep your feed consistently engaging.",
+      id: 'custom',
+      title: "Custom AI Solutions",
+      description: "Tailored automation systems designed specifically for your unique business needs and workflows.",
       color: 'accent-purple',
       rotation: '-rotate-1',
-      image: 'https://images.unsplash.com/photo-1562577309-4932fdd64cd1?w=400&h=300&fit=crop&auto=format'
+      image: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=400&h=300&fit=crop&auto=format'
     }
   ]
 
@@ -65,23 +65,23 @@ export function Services() {
 
   return (
     <section id="services" className="relative py-20" style={{
-      background: 'linear-gradient(135deg, #2d1810 0%, #1a0f08 30%, #0f0704 60%, #1a0f08 100%)',
+      background: 'linear-gradient(135deg, #0a1628 0%, #020617 30%, #000510 60%, #020617 100%)',
       overflow: 'visible'
     }}>
       
-      {/* Photo Lab Background Elements */}
+      {/* AI Lab Background Elements */}
       <div className="absolute inset-0">
-        {/* Darkroom ambient lighting effect */}
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-red-900/20 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-amber-900/15 rounded-full blur-2xl" />
+        {/* Tech ambient lighting effect */}
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '4s' }} />
+        <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-blue-600/10 rounded-full blur-2xl animate-pulse" style={{ animationDuration: '6s' }} />
         
-        {/* Equipment silhouettes */}
-        <div className="absolute bottom-8 left-8 w-16 h-24 bg-black/40 rounded-t-lg transform rotate-3" />
-        <div className="absolute bottom-8 right-8 w-12 h-20 bg-black/30 rounded-lg transform -rotate-2" />
+        {/* Server rack silhouettes */}
+        <div className="absolute bottom-8 left-8 w-16 h-24 bg-black/40 rounded transform rotate-3" />
+        <div className="absolute bottom-8 right-8 w-12 h-20 bg-black/30 rounded transform -rotate-2" />
         
-        {/* Chemical trays suggestion */}
-        <div className="absolute bottom-12 left-1/4 w-32 h-8 bg-black/30 rounded-lg transform rotate-1" />
-        <div className="absolute bottom-12 right-1/4 w-28 h-6 bg-black/25 rounded-lg transform -rotate-1" />
+        {/* Circuit board patterns suggestion */}
+        <div className="absolute bottom-12 left-1/4 w-32 h-8 bg-black/30 rounded transform rotate-1" />
+        <div className="absolute bottom-12 right-1/4 w-28 h-6 bg-black/25 rounded transform -rotate-1" />
       </div>
 
       <div className="container mx-auto px-6 sm:px-8 lg:px-12 relative z-10">
@@ -91,23 +91,23 @@ export function Services() {
           <div className={`inline-flex items-center gap-3 mb-6 transform transition-all duration-1000 ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
           }`}>
-            <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse" />
-            <span className="text-sm font-semibold text-amber-200/80">
-              Fresh from the Darkroom
+            <div className="w-3 h-3 bg-cyan-400 rounded-full animate-pulse" style={{ animationDuration: '2s' }} />
+            <span className="text-sm font-semibold text-cyan-200/80">
+              Fresh from the AI Lab
             </span>
-            <div className="w-3 h-3 bg-amber-500 rounded-full animate-pulse" />
+            <div className="w-3 h-3 bg-blue-500 rounded-full animate-pulse" style={{ animationDuration: '2s' }} />
           </div>
           
-          <h2 className={`text-5xl sm:text-6xl lg:text-7xl font-black leading-tight mb-6 text-amber-100 transform transition-all duration-1000 delay-200 ${
+          <h2 className={`text-5xl sm:text-6xl lg:text-7xl font-black leading-tight mb-6 text-cyan-100 transform transition-all duration-1000 delay-200 ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
           }`}>
-            What We Develop
+            What We Automate
           </h2>
           
-          <p className={`text-xl text-amber-200/90 leading-relaxed max-w-3xl mx-auto transform transition-all duration-1000 delay-400 ${
+          <p className={`text-xl text-cyan-200/90 leading-relaxed max-w-3xl mx-auto transform transition-all duration-1000 delay-400 ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
           }`}>
-            Developed with precision, delivered with passion
+            Engineered with precision, delivered with intelligence
           </p>
         </div>
 
@@ -318,7 +318,7 @@ export function Services() {
                     
                     {/* Developer stamp */}
                     <div className="absolute bottom-2 right-2 text-xs text-gray-400 font-mono opacity-60">
-                      MOJJU LAB
+                      MyHorizon AI
                     </div>
                   </div>
                 </div>
