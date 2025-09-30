@@ -2,3 +2,6 @@ project_id = "ewlvyssrckqdyuxxwxiv"
 
 [functions.elevenlabs-webhook]
 verify_jwt = false
+
+[functions.score-lead]
+verify_jwt = true

@@ -8,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2, Phone, Mail, Building2, Calendar, MessageSquare } from 'lucide-react';
+import { Loader2, Phone, Mail, Building2, Calendar, MessageSquare, Sparkles } from 'lucide-react';
 
 interface Lead {
   id: string;
@@ -42,6 +42,7 @@ const LEAD_STATUSES = [
 export function LeadDetailDialog({ lead, open, onClose, onUpdate }: LeadDetailDialogProps) {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
+  const [isScoring, setIsScoring] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -111,6 +112,43 @@ export function LeadDetailDialog({ lead, open, onClose, onUpdate }: LeadDetailDi
       toast({ title: 'Lead updated successfully' });
       onUpdate();
       onClose();
+    }
+  };
+
+  const handleScoreLead = async () => {
+    if (!lead) return;
+    
+    setIsScoring(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('score-lead', {
+        body: { leadId: lead.id }
+      });
+
+      if (error) throw error;
+
+      if (data) {
+        setFormData({
+          ...formData,
+          ai_score: data.score,
+          notes: formData.notes 
+            ? `${formData.notes}\n\n[AI Analysis] ${data.reasoning}\nNext Steps: ${data.nextSteps}`
+            : `[AI Analysis] ${data.reasoning}\nNext Steps: ${data.nextSteps}`
+        });
+        
+        toast({
+          title: 'Lead scored successfully',
+          description: `Score: ${data.score}/100`
+        });
+      }
+    } catch (error: any) {
+      console.error('Error scoring lead:', error);
+      toast({
+        title: 'Error scoring lead',
+        description: error.message || 'Failed to score lead',
+        variant: 'destructive'
+      });
+    } finally {
+      setIsScoring(false);
     }
   };
 
@@ -191,7 +229,23 @@ export function LeadDetailDialog({ lead, open, onClose, onUpdate }: LeadDetailDi
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="ai_score">AI Score (0-100)</Label>
+              <div className="flex items-center justify-between">
+                <Label htmlFor="ai_score">AI Score (0-100)</Label>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={handleScoreLead}
+                  disabled={isScoring}
+                >
+                  {isScoring ? (
+                    <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                  ) : (
+                    <Sparkles className="h-4 w-4 mr-2" />
+                  )}
+                  Score with AI
+                </Button>
+              </div>
               <Input
                 id="ai_score"
                 type="number"

@@ -54,6 +54,10 @@ export function Navigation() {
     { label: 'Contact', id: 'contact' }
   ]
 
+  const handleAdminClick = () => {
+    window.location.href = '/auth'
+  }
+
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -81,6 +85,13 @@ export function Navigation() {
                 {link.label}
               </button>
             ))}
+            
+            <button
+              onClick={handleAdminClick}
+              className="text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Admin
+            </button>
             
             {/* Theme Toggle */}
             <ThemeToggle />

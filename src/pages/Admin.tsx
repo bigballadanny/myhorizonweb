@@ -10,6 +10,7 @@ import { LeadDetailDialog } from '@/components/admin/LeadDetailDialog';
 import { LeadPipelineBoard } from '@/components/admin/LeadPipelineBoard';
 import { IntegrationsSettings } from '@/components/admin/IntegrationsSettings';
 import { UserManagement } from '@/components/admin/UserManagement';
+import { SampleDataGenerator } from '@/components/admin/SampleDataGenerator';
 import { useAuth } from '@/hooks/useAuth';
 import { Badge } from '@/components/ui/badge';
 
@@ -97,10 +98,13 @@ export default function Admin() {
                 <h2 className="text-2xl font-bold">Lead Pipeline</h2>
                 <p className="text-muted-foreground">Visual overview of your sales pipeline</p>
               </div>
-              <Button onClick={() => setShowCreateLead(true)}>
-                <Plus className="mr-2 h-4 w-4" />
-                New Lead
-              </Button>
+              <div className="flex gap-2">
+                {isSuperAdmin && <SampleDataGenerator />}
+                <Button onClick={() => setShowCreateLead(true)}>
+                  <Plus className="mr-2 h-4 w-4" />
+                  New Lead
+                </Button>
+              </div>
             </div>
             <LeadPipelineBoard 
               onLeadClick={(lead) => {
