@@ -3,12 +3,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
-import { LayoutDashboard, Users, MessageSquare, Calendar, Settings, LogOut, Plus, Edit } from 'lucide-react';
+import { LayoutDashboard, Users, MessageSquare, Calendar, Settings, LogOut, Plus, Edit, Kanban } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { LeadDetailDialog } from '@/components/admin/LeadDetailDialog';
 import { CreateLeadDialog } from '@/components/admin/CreateLeadDialog';
 import { CreateAppointmentDialog } from '@/components/admin/CreateAppointmentDialog';
 import { IntegrationsSettings } from '@/components/admin/IntegrationsSettings';
+import { LeadPipelineBoard } from '@/components/admin/LeadPipelineBoard';
 
 export default function Admin() {
   const { toast } = useToast();
@@ -70,8 +71,12 @@ export default function Admin() {
       </header>
 
       <main className="container mx-auto px-4 py-8">
-        <Tabs defaultValue="dashboard" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-5">
+        <Tabs defaultValue="pipeline" className="space-y-6">
+          <TabsList className="grid w-full grid-cols-6">
+            <TabsTrigger value="pipeline">
+              <Kanban className="w-4 h-4 mr-2" />
+              Pipeline
+            </TabsTrigger>
             <TabsTrigger value="dashboard">
               <LayoutDashboard className="w-4 h-4 mr-2" />
               Dashboard
@@ -93,6 +98,26 @@ export default function Admin() {
               Settings
             </TabsTrigger>
           </TabsList>
+
+          <TabsContent value="pipeline" className="space-y-4">
+            <div className="flex justify-between items-center">
+              <div>
+                <h2 className="text-3xl font-bold tracking-tight">Lead Pipeline</h2>
+                <p className="text-muted-foreground">Visual overview of your sales pipeline</p>
+              </div>
+              <Button onClick={() => setShowCreateLead(true)}>
+                <Plus className="w-4 h-4 mr-2" />
+                New Lead
+              </Button>
+            </div>
+            
+            <LeadPipelineBoard 
+              onLeadClick={(lead) => {
+                setSelectedLead(lead);
+                setShowLeadDetail(true);
+              }} 
+            />
+          </TabsContent>
 
           <TabsContent value="dashboard" className="space-y-6">
             <div className="grid gap-4 md:grid-cols-4">
