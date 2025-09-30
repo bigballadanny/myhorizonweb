@@ -24,6 +24,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { CreateAdminUserDialog } from './CreateAdminUserDialog';
 
 interface AdminUser {
   id: string;
@@ -37,6 +38,7 @@ export function UserManagement() {
   const [users, setUsers] = useState<AdminUser[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [userToDelete, setUserToDelete] = useState<string | null>(null);
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const { toast } = useToast();
   const { isSuperAdmin } = useAuth();
 
@@ -151,7 +153,10 @@ export function UserManagement() {
               <CardTitle>User Management</CardTitle>
               <CardDescription>Manage admin users and their permissions</CardDescription>
             </div>
-            <Button disabled>
+            <Button 
+              disabled={!isSuperAdmin}
+              onClick={() => setIsCreateDialogOpen(true)}
+            >
               <UserPlus className="mr-2 h-4 w-4" />
               Add User
             </Button>
@@ -256,6 +261,12 @@ export function UserManagement() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      <CreateAdminUserDialog
+        open={isCreateDialogOpen}
+        onOpenChange={setIsCreateDialogOpen}
+        onSuccess={fetchUsers}
+      />
     </div>
   );
 }
