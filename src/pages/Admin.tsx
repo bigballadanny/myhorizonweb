@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { LogOut, Calendar, Settings, BarChart3, Loader2, Users, Plus } from 'lucide-react';
+import { LogOut, Calendar, Settings, BarChart3, Loader2, Users, Plus, LayoutDashboard } from 'lucide-react';
 import { CreateLeadDialog } from '@/components/admin/CreateLeadDialog';
 import { CreateAppointmentDialog } from '@/components/admin/CreateAppointmentDialog';
 import { LeadDetailDialog } from '@/components/admin/LeadDetailDialog';
@@ -11,6 +11,8 @@ import { LeadPipelineBoard } from '@/components/admin/LeadPipelineBoard';
 import { IntegrationsSettings } from '@/components/admin/IntegrationsSettings';
 import { UserManagement } from '@/components/admin/UserManagement';
 import { SampleDataGenerator } from '@/components/admin/SampleDataGenerator';
+import { DashboardOverview } from '@/components/admin/DashboardOverview';
+import { AppointmentsCalendar } from '@/components/admin/AppointmentsCalendar';
 import { useAuth } from '@/hooks/useAuth';
 import { Badge } from '@/components/ui/badge';
 
@@ -70,8 +72,12 @@ export default function Admin() {
       </header>
 
       <main className="container mx-auto px-4 py-8">
-        <Tabs defaultValue="pipeline" className="space-y-4">
+        <Tabs defaultValue="dashboard" className="space-y-4">
           <TabsList>
+            <TabsTrigger value="dashboard">
+              <LayoutDashboard className="mr-2 h-4 w-4" />
+              Dashboard
+            </TabsTrigger>
             <TabsTrigger value="pipeline">
               <BarChart3 className="mr-2 h-4 w-4" />
               Pipeline
@@ -91,6 +97,17 @@ export default function Admin() {
               Settings
             </TabsTrigger>
           </TabsList>
+
+          <TabsContent value="dashboard" className="space-y-4">
+            <div className="flex justify-between items-center">
+              <div>
+                <h2 className="text-2xl font-bold">Dashboard Overview</h2>
+                <p className="text-muted-foreground">Real-time analytics and insights</p>
+              </div>
+              {isSuperAdmin && <SampleDataGenerator />}
+            </div>
+            <DashboardOverview />
+          </TabsContent>
 
           <TabsContent value="pipeline" className="space-y-4">
             <div className="flex justify-between items-center">
@@ -115,25 +132,13 @@ export default function Admin() {
           </TabsContent>
 
           <TabsContent value="appointments" className="space-y-4">
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center mb-4">
               <div>
                 <h2 className="text-2xl font-bold">Appointments</h2>
-                <p className="text-muted-foreground">Manage scheduled appointments</p>
+                <p className="text-muted-foreground">Manage scheduled appointments and calendar</p>
               </div>
-              <Button onClick={() => setShowCreateAppointment(true)}>
-                <Calendar className="mr-2 h-4 w-4" />
-                New Appointment
-              </Button>
             </div>
-            <Card>
-              <CardHeader>
-                <CardTitle>Upcoming Appointments</CardTitle>
-                <CardDescription>View and manage your scheduled meetings</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">Appointment calendar coming soon...</p>
-              </CardContent>
-            </Card>
+            <AppointmentsCalendar onCreateAppointment={() => setShowCreateAppointment(true)} />
           </TabsContent>
 
           {isSuperAdmin && (
