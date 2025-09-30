@@ -3,14 +3,22 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
-import { LayoutDashboard, Users, MessageSquare, Calendar, Settings, LogOut } from 'lucide-react';
+import { LayoutDashboard, Users, MessageSquare, Calendar, Settings, LogOut, Plus, Edit } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { LeadDetailDialog } from '@/components/admin/LeadDetailDialog';
+import { CreateLeadDialog } from '@/components/admin/CreateLeadDialog';
+import { CreateAppointmentDialog } from '@/components/admin/CreateAppointmentDialog';
+import { IntegrationsSettings } from '@/components/admin/IntegrationsSettings';
 
 export default function Admin() {
   const { toast } = useToast();
   const [leads, setLeads] = useState<any[]>([]);
   const [conversations, setConversations] = useState<any[]>([]);
   const [appointments, setAppointments] = useState<any[]>([]);
+  const [selectedLead, setSelectedLead] = useState<any>(null);
+  const [showLeadDetail, setShowLeadDetail] = useState(false);
+  const [showCreateLead, setShowCreateLead] = useState(false);
+  const [showCreateAppointment, setShowCreateAppointment] = useState(false);
 
   useEffect(() => {
     // Check authentication
@@ -146,35 +154,58 @@ export default function Admin() {
           <TabsContent value="leads" className="space-y-4">
             <Card>
               <CardHeader>
-                <CardTitle>All Leads</CardTitle>
-                <CardDescription>Manage and track all your leads</CardDescription>
+                <div className="flex justify-between items-center">
+                  <div>
+                    <CardTitle>All Leads</CardTitle>
+                    <CardDescription>Manage and track all your leads</CardDescription>
+                  </div>
+                  <Button onClick={() => setShowCreateLead(true)}>
+                    <Plus className="w-4 h-4 mr-2" />
+                    New Lead
+                  </Button>
+                </div>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {leads.map((lead) => (
-                    <div key={lead.id} className="p-4 border rounded-lg">
-                      <div className="flex justify-between items-start">
-                        <div className="space-y-1">
-                          <h3 className="font-semibold">{lead.name || 'Anonymous Lead'}</h3>
-                          <p className="text-sm text-muted-foreground">{lead.email}</p>
-                          <p className="text-sm text-muted-foreground">{lead.phone}</p>
-                          {lead.company && <p className="text-sm">Company: {lead.company}</p>}
+                  {leads.length === 0 ? (
+                    <p className="text-center text-muted-foreground py-8">No leads yet</p>
+                  ) : (
+                    leads.map((lead) => (
+                      <div key={lead.id} className="p-4 border rounded-lg hover:bg-muted/50 transition-colors">
+                        <div className="flex justify-between items-start">
+                          <div className="space-y-1 flex-1">
+                            <h3 className="font-semibold">{lead.name || 'Anonymous Lead'}</h3>
+                            <p className="text-sm text-muted-foreground">{lead.email}</p>
+                            <p className="text-sm text-muted-foreground">{lead.phone}</p>
+                            {lead.company && <p className="text-sm">Company: {lead.company}</p>}
+                          </div>
+                          <div className="text-right space-y-2">
+                            <span className="text-xs px-2 py-1 rounded-full bg-primary/10">{lead.status}</span>
+                            {lead.ai_score && (
+                              <p className="text-sm font-medium">Score: {lead.ai_score}/100</p>
+                            )}
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => {
+                                setSelectedLead(lead);
+                                setShowLeadDetail(true);
+                              }}
+                            >
+                              <Edit className="w-3 h-3 mr-1" />
+                              Edit
+                            </Button>
+                          </div>
                         </div>
-                        <div className="text-right space-y-2">
-                          <span className="text-xs px-2 py-1 rounded-full bg-primary/10">{lead.status}</span>
-                          {lead.ai_score && (
-                            <p className="text-sm font-medium">Score: {lead.ai_score}/100</p>
-                          )}
-                        </div>
+                        {lead.notes && (
+                          <p className="mt-3 text-sm text-muted-foreground">{lead.notes}</p>
+                        )}
+                        <p className="mt-2 text-xs text-muted-foreground">
+                          Created: {new Date(lead.created_at).toLocaleDateString()}
+                        </p>
                       </div>
-                      {lead.notes && (
-                        <p className="mt-3 text-sm text-muted-foreground">{lead.notes}</p>
-                      )}
-                      <p className="mt-2 text-xs text-muted-foreground">
-                        Created: {new Date(lead.created_at).toLocaleDateString()}
-                      </p>
-                    </div>
-                  ))}
+                    ))
+                  )}
                 </div>
               </CardContent>
             </Card>
@@ -223,50 +254,73 @@ export default function Admin() {
           <TabsContent value="calendar" className="space-y-4">
             <Card>
               <CardHeader>
-                <CardTitle>Appointments</CardTitle>
-                <CardDescription>Scheduled calls and meetings</CardDescription>
+                <div className="flex justify-between items-center">
+                  <div>
+                    <CardTitle>Appointments</CardTitle>
+                    <CardDescription>Scheduled calls and meetings</CardDescription>
+                  </div>
+                  <Button onClick={() => setShowCreateAppointment(true)}>
+                    <Plus className="w-4 h-4 mr-2" />
+                    New Appointment
+                  </Button>
+                </div>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {appointments.map((apt) => (
-                    <div key={apt.id} className="p-4 border rounded-lg">
-                      <div className="flex justify-between items-start">
-                        <div className="space-y-1">
-                          <h3 className="font-semibold">{apt.title}</h3>
-                          <p className="text-sm text-muted-foreground">
-                            {apt.leads?.name || 'No lead assigned'}
-                          </p>
-                          <p className="text-sm">
-                            {new Date(apt.start_time).toLocaleString()}
-                          </p>
+                  {appointments.length === 0 ? (
+                    <p className="text-center text-muted-foreground py-8">No appointments yet</p>
+                  ) : (
+                    appointments.map((apt) => (
+                      <div key={apt.id} className="p-4 border rounded-lg">
+                        <div className="flex justify-between items-start">
+                          <div className="space-y-1">
+                            <h3 className="font-semibold">{apt.title}</h3>
+                            <p className="text-sm text-muted-foreground">
+                              {apt.leads?.name || 'No lead assigned'}
+                            </p>
+                            <p className="text-sm">
+                              {new Date(apt.start_time).toLocaleString()}
+                            </p>
+                          </div>
+                          <span className="text-xs px-2 py-1 rounded-full bg-primary/10">
+                            {apt.status}
+                          </span>
                         </div>
-                        <span className="text-xs px-2 py-1 rounded-full bg-primary/10">
-                          {apt.status}
-                        </span>
+                        {apt.description && (
+                          <p className="mt-3 text-sm text-muted-foreground">{apt.description}</p>
+                        )}
                       </div>
-                      {apt.description && (
-                        <p className="mt-3 text-sm text-muted-foreground">{apt.description}</p>
-                      )}
-                    </div>
-                  ))}
+                    ))
+                  )}
                 </div>
               </CardContent>
             </Card>
           </TabsContent>
 
           <TabsContent value="settings" className="space-y-4">
-            <Card>
-              <CardHeader>
-                <CardTitle>Settings</CardTitle>
-                <CardDescription>Configure your admin panel</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground">Settings panel coming soon...</p>
-              </CardContent>
-            </Card>
+            <IntegrationsSettings />
           </TabsContent>
         </Tabs>
       </main>
+
+      <LeadDetailDialog
+        lead={selectedLead}
+        open={showLeadDetail}
+        onClose={() => setShowLeadDetail(false)}
+        onUpdate={fetchData}
+      />
+
+      <CreateLeadDialog
+        open={showCreateLead}
+        onClose={() => setShowCreateLead(false)}
+        onSuccess={fetchData}
+      />
+
+      <CreateAppointmentDialog
+        open={showCreateAppointment}
+        onClose={() => setShowCreateAppointment(false)}
+        onSuccess={fetchData}
+      />
     </div>
   );
 }
