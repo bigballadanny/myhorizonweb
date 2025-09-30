@@ -8,6 +8,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { ThemeProvider } from "./components/ThemeProvider";
 import App from "./App.tsx";
 import Admin from "./pages/Admin.tsx";
+import Auth from "./pages/Auth.tsx";
 import "./index.css";
 
 createRoot(document.getElementById("root")!).render(
@@ -17,6 +18,7 @@ createRoot(document.getElementById("root")!).render(
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<App />} />
+            <Route path="/auth" element={<Auth />} />
             <Route path="/admin" element={<Admin />} />
           </Routes>
           <Toaster />

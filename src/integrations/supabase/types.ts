@@ -16,6 +16,7 @@ export type Database = {
     Tables: {
       admin_users: {
         Row: {
+          auth_user_id: string | null
           created_at: string
           email: string
           id: string
@@ -24,6 +25,7 @@ export type Database = {
           role: Database["public"]["Enums"]["admin_role"]
         }
         Insert: {
+          auth_user_id?: string | null
           created_at?: string
           email: string
           id?: string
@@ -32,6 +34,7 @@ export type Database = {
           role?: Database["public"]["Enums"]["admin_role"]
         }
         Update: {
+          auth_user_id?: string | null
           created_at?: string
           email?: string
           id?: string
@@ -84,6 +87,53 @@ export type Database = {
             columns: ["lead_id"]
             isOneToOne: false
             referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      audit_logs: {
+        Row: {
+          action: string
+          created_at: string
+          id: string
+          ip_address: string | null
+          new_values: Json | null
+          old_values: Json | null
+          record_id: string | null
+          table_name: string
+          user_agent: string | null
+          user_id: string | null
+        }
+        Insert: {
+          action: string
+          created_at?: string
+          id?: string
+          ip_address?: string | null
+          new_values?: Json | null
+          old_values?: Json | null
+          record_id?: string | null
+          table_name: string
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          action?: string
+          created_at?: string
+          id?: string
+          ip_address?: string | null
+          new_values?: Json | null
+          old_values?: Json | null
+          record_id?: string | null
+          table_name?: string
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "audit_logs_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "admin_users"
             referencedColumns: ["id"]
           },
         ]
