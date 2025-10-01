@@ -2,14 +2,15 @@ import { useState, useEffect } from 'react'
 import { Menu, X } from 'lucide-react'
 import { Button } from './ui/button'
 import { ThemeToggle } from './ThemeToggle'
-import { AdminLogin } from './admin/AdminLogin'
+import { useAuth } from '@/hooks/useAuth'
+import { useNavigate } from 'react-router-dom'
+import logoIcon from '@/assets/myhorizon-logo-icon.png'
 
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [logoClickCount, setLogoClickCount] = useState(0)
-  const [showAdminLogin, setShowAdminLogin] = useState(false)
-  const [lastClickTime, setLastClickTime] = useState(0)
+  const { isAuthenticated } = useAuth()
+  const navigate = useNavigate()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,22 +29,7 @@ export function Navigation() {
   }
 
   const handleLogoClick = () => {
-    const now = Date.now()
-    
-    // Reset counter if more than 2 seconds between clicks
-    if (now - lastClickTime > 2000) {
-      setLogoClickCount(1)
-    } else {
-      setLogoClickCount(prev => prev + 1)
-    }
-    
-    setLastClickTime(now)
-
-    // Open admin login on 8th click
-    if (logoClickCount + 1 >= 8) {
-      setShowAdminLogin(true)
-      setLogoClickCount(0)
-    }
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   const navLinks = [
@@ -55,7 +41,11 @@ export function Navigation() {
   ]
 
   const handleAdminClick = () => {
-    window.location.href = '/auth'
+    if (isAuthenticated) {
+      navigate('/admin')
+    } else {
+      navigate('/auth')
+    }
   }
 
   return (
@@ -72,11 +62,11 @@ export function Navigation() {
             className="flex items-center gap-3 hover:opacity-80 transition-opacity select-none group"
           >
             <img 
-              src="/src/assets/myhorizon-logo.jpg" 
+              src={logoIcon}
               alt="MyHorizon Logo" 
-              className="w-10 h-10 rounded-lg object-cover ring-2 ring-accent-blue/50 group-hover:ring-accent-blue transition-all"
+              className="w-10 h-10 rounded-full object-cover ring-2 ring-primary/30 group-hover:ring-primary transition-all"
             />
-            <span className="text-2xl font-black text-foreground group-hover:text-accent-blue transition-colors">
+            <span className="text-2xl font-black text-foreground group-hover:text-primary transition-colors">
               MyHorizon
             </span>
           </button>
@@ -97,7 +87,7 @@ export function Navigation() {
               onClick={handleAdminClick}
               className="text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors"
             >
-              Admin
+              {isAuthenticated ? 'Dashboard' : 'Admin'}
             </button>
             
             {/* Theme Toggle */}
@@ -154,11 +144,6 @@ export function Navigation() {
           </div>
         )}
       </div>
-
-      <AdminLogin 
-        open={showAdminLogin} 
-        onClose={() => setShowAdminLogin(false)} 
-      />
     </nav>
   )
 }

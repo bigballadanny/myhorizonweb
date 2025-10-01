@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { Volume2, VolumeX } from 'lucide-react'
 import { useState, useRef, useEffect } from 'react'
+import logoFull from '@/assets/myhorizon-logo-full.png'
 
 export function Hero() {
   const [isMuted, setIsMuted] = useState(true)
@@ -63,11 +64,11 @@ export function Hero() {
         transition={{ duration: 1, delay: 0.5 }}
         className="absolute top-24 left-6 sm:left-8 lg:left-12 z-40"
       >
-        <div className="glass-effect p-2 rounded-2xl ring-2 ring-white/20">
+        <div className="glass-effect p-4 rounded-2xl ring-2 ring-white/20 backdrop-blur-md">
           <img 
-            src="/src/assets/myhorizon-logo.jpg" 
-            alt="MyHorizon" 
-            className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 rounded-xl object-cover"
+            src={logoFull}
+            alt="MyHorizon - AI Automation for Business" 
+            className="w-32 sm:w-40 lg:w-48 h-auto object-contain"
           />
         </div>
       </motion.div>

@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { LogOut, Calendar, Settings, BarChart3, Loader2, Users, Plus, LayoutDashboard } from 'lucide-react';
+import logoIcon from '@/assets/myhorizon-logo-icon.png';
 import { CreateLeadDialog } from '@/components/admin/CreateLeadDialog';
 import { CreateAppointmentDialog } from '@/components/admin/CreateAppointmentDialog';
 import { LeadDetailDialog } from '@/components/admin/LeadDetailDialog';
@@ -54,15 +55,27 @@ export default function Admin() {
       <header className="border-b">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-bold">MyHorizon Admin</h1>
-              <div className="flex items-center gap-2 mt-1">
-                <p className="text-sm text-muted-foreground">
-                  {adminUser?.email}
-                </p>
-                <Badge variant={adminUser?.role === 'super_admin' ? 'destructive' : 'default'}>
-                  {adminUser?.role?.replace('_', ' ')}
-                </Badge>
+            <div className="flex items-center gap-4">
+              <button 
+                onClick={() => navigate('/')}
+                className="hover:opacity-80 transition-opacity"
+              >
+                <img 
+                  src={logoIcon}
+                  alt="MyHorizon Logo" 
+                  className="w-10 h-10 rounded-full object-cover ring-2 ring-primary/30 hover:ring-primary transition-all"
+                />
+              </button>
+              <div>
+                <h1 className="text-2xl font-bold">MyHorizon Admin</h1>
+                <div className="flex items-center gap-2 mt-1">
+                  <p className="text-sm text-muted-foreground">
+                    {adminUser?.email}
+                  </p>
+                  <Badge variant={adminUser?.role === 'super_admin' ? 'destructive' : 'default'}>
+                    {adminUser?.role?.replace('_', ' ')}
+                  </Badge>
+                </div>
               </div>
             </div>
             <Button variant="outline" onClick={handleLogout}>

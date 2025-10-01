@@ -1,5 +1,7 @@
 'use client'
 
+import logoIcon from '@/assets/myhorizon-logo-icon.png'
+
 export function Footer() {
   const aiTools = [
     'OpenAI GPT',
@@ -22,8 +24,15 @@ export function Footer() {
           {/* Logo and Description */}
           <div className="col-span-12 md:col-span-4">
             <div>
-              <div className="font-bagel text-background text-3xl tracking-wider mb-4">
-                MyHorizon
+              <div className="flex items-center gap-3 mb-4">
+                <img 
+                  src={logoIcon}
+                  alt="MyHorizon Logo" 
+                  className="w-12 h-12 rounded-full object-cover"
+                />
+                <span className="font-bagel text-background text-3xl tracking-wider">
+                  MyHorizon
+                </span>
               </div>
               <p className="text-background/70 leading-relaxed mb-6">
                 Empowering businesses with cutting-edge AI automation solutions. 
