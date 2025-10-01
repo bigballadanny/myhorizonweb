@@ -69,9 +69,16 @@ export function Navigation() {
           {/* Logo */}
           <button
             onClick={handleLogoClick}
-            className="text-2xl font-black text-foreground hover:text-accent-blue transition-colors select-none"
+            className="flex items-center gap-3 hover:opacity-80 transition-opacity select-none group"
           >
-            MyHorizon
+            <img 
+              src="/src/assets/myhorizon-logo.jpg" 
+              alt="MyHorizon Logo" 
+              className="w-10 h-10 rounded-lg object-cover ring-2 ring-accent-blue/50 group-hover:ring-accent-blue transition-all"
+            />
+            <span className="text-2xl font-black text-foreground group-hover:text-accent-blue transition-colors">
+              MyHorizon
+            </span>
           </button>
 
           {/* Desktop Navigation */}

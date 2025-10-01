@@ -121,7 +121,7 @@ export function Footer() {
               © 2025 MyHorizon. All rights reserved.
             </div>
             <div className="text-sm text-background/70">
-              2847 HIGHLAND AVE. SUITE 310 BIRMINGHAM 35205, AL, USA
+              Brownsville, TX, USA
             </div>
           </div>
         </div>

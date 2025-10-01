@@ -56,6 +56,22 @@ export function Hero() {
         Your browser does not support the video tag.
       </video>
 
+      {/* Logo Overlay - Top Left */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1, delay: 0.5 }}
+        className="absolute top-24 left-6 sm:left-8 lg:left-12 z-40"
+      >
+        <div className="glass-effect p-2 rounded-2xl ring-2 ring-white/20">
+          <img 
+            src="/src/assets/myhorizon-logo.jpg" 
+            alt="MyHorizon" 
+            className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 rounded-xl object-cover"
+          />
+        </div>
+      </motion.div>
+
       {/* Video Control - Fixed at top right, below navbar */}
       <motion.div
         initial={{ opacity: 0 }}
