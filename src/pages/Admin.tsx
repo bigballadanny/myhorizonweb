@@ -12,7 +12,9 @@ import { IntegrationsSettings } from '@/components/admin/IntegrationsSettings';
 import { UserManagement } from '@/components/admin/UserManagement';
 import { SampleDataGenerator } from '@/components/admin/SampleDataGenerator';
 import { DashboardOverview } from '@/components/admin/DashboardOverview';
+import { ActivityFeed } from '@/components/admin/ActivityFeed';
 import { AppointmentsCalendar } from '@/components/admin/AppointmentsCalendar';
+import { ConversationInsights } from '@/components/admin/ConversationInsights';
 import { useAuth } from '@/hooks/useAuth';
 import { Badge } from '@/components/ui/badge';
 
@@ -86,6 +88,9 @@ export default function Admin() {
               <Calendar className="mr-2 h-4 w-4" />
               Appointments
             </TabsTrigger>
+            <TabsTrigger value="conversations">
+              Conversations
+            </TabsTrigger>
             {isSuperAdmin && (
               <TabsTrigger value="users">
                 <Users className="mr-2 h-4 w-4" />
@@ -139,6 +144,10 @@ export default function Admin() {
               </div>
             </div>
             <AppointmentsCalendar onCreateAppointment={() => setShowCreateAppointment(true)} />
+          </TabsContent>
+
+          <TabsContent value="conversations" className="space-y-4">
+            <ConversationInsights />
           </TabsContent>
 
           {isSuperAdmin && (
