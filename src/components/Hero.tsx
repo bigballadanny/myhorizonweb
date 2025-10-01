@@ -3,7 +3,6 @@
 import { motion } from 'framer-motion'
 import { Volume2, VolumeX } from 'lucide-react'
 import { useState, useRef, useEffect } from 'react'
-import logoFull from '@/assets/myhorizon-logo-full.png'
 
 export function Hero() {
   const [isMuted, setIsMuted] = useState(true)
@@ -56,22 +55,6 @@ export function Hero() {
         <source src="https://mojli.s3.us-east-2.amazonaws.com/Mojli+Website+upscaled+(12mb).webm" type="video/webm" />
         Your browser does not support the video tag.
       </video>
-
-      {/* Logo Overlay - Top Left */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1, delay: 0.5 }}
-        className="absolute top-24 left-6 sm:left-8 lg:left-12 z-40"
-      >
-        <div className="glass-effect p-4 rounded-2xl ring-2 ring-white/20 backdrop-blur-md">
-          <img 
-            src={logoFull}
-            alt="MyHorizon - AI Automation for Business" 
-            className="w-32 sm:w-40 lg:w-48 h-auto object-contain"
-          />
-        </div>
-      </motion.div>
 
       {/* Video Control - Fixed at top right, below navbar */}
       <motion.div
