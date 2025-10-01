@@ -4,7 +4,7 @@ import { Button } from './ui/button'
 import { ThemeToggle } from './ThemeToggle'
 import { useAuth } from '@/hooks/useAuth'
 import { useNavigate } from 'react-router-dom'
-import logoIcon from '@/assets/myhorizon-logo-icon.png'
+import logoIcon from '@/assets/myhorizon-logo-clean.png'
 
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -64,7 +64,7 @@ export function Navigation() {
             <img 
               src={logoIcon}
               alt="MyHorizon Logo" 
-              className="w-12 h-12 rounded-full object-contain p-1 bg-primary/5 ring-2 ring-primary/30 group-hover:ring-primary transition-all"
+              className="w-14 h-14 rounded-full object-cover ring-2 ring-primary/30 group-hover:ring-primary transition-all"
             />
             <span className="text-2xl font-black text-foreground group-hover:text-primary transition-colors">
               MyHorizon

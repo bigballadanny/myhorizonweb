@@ -1,6 +1,6 @@
 'use client'
 
-import logoIcon from '@/assets/myhorizon-logo-icon.png'
+import logoIcon from '@/assets/myhorizon-logo-clean.png'
 
 export function Footer() {
   const aiTools = [

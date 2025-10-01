@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { LogOut, Calendar, Settings, BarChart3, Loader2, Users, Plus, LayoutDashboard } from 'lucide-react';
-import logoIcon from '@/assets/myhorizon-logo-icon.png';
+import logoIcon from '@/assets/myhorizon-logo-clean.png';
 import { CreateLeadDialog } from '@/components/admin/CreateLeadDialog';
 import { CreateAppointmentDialog } from '@/components/admin/CreateAppointmentDialog';
 import { LeadDetailDialog } from '@/components/admin/LeadDetailDialog';
