@@ -64,7 +64,7 @@ export function Navigation() {
             <img 
               src={logoIcon}
               alt="MyHorizon Logo" 
-              className="w-10 h-10 rounded-full object-cover ring-2 ring-primary/30 group-hover:ring-primary transition-all"
+              className="w-12 h-12 rounded-full object-contain p-1 bg-primary/5 ring-2 ring-primary/30 group-hover:ring-primary transition-all"
             />
             <span className="text-2xl font-black text-foreground group-hover:text-primary transition-colors">
               MyHorizon
