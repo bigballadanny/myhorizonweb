@@ -5,6 +5,7 @@ import { Users, Calendar, TrendingUp, DollarSign, Phone, BarChart, Target, Clock
 import { LeadConversionChart } from './LeadConversionChart';
 import { RevenueChart } from './RevenueChart';
 import { ActivityFeed } from './ActivityFeed';
+import { ConversationVolumeChart } from './ConversationVolumeChart';
 
 interface DashboardStats {
   totalLeads: number;
@@ -200,6 +201,9 @@ export function DashboardOverview() {
         <LeadConversionChart />
         <RevenueChart />
       </div>
+
+      {/* Conversation Analytics */}
+      <ConversationVolumeChart />
 
       {/* Activity Feed */}
       <ActivityFeed />
