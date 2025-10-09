@@ -12,12 +12,23 @@ serve(async (req) => {
   }
 
   try {
+    console.log('=== ElevenLabs Webhook Received ===');
+    console.log('Timestamp:', new Date().toISOString());
+    
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
     const payload = await req.json();
-    console.log('ElevenLabs webhook received:', payload);
+    console.log('Payload structure:', {
+      has_conversation_id: !!payload.conversation_id,
+      has_agent_id: !!payload.agent_id,
+      has_transcript: !!payload.transcript,
+      has_duration_ms: !!payload.duration_ms,
+      has_metadata: !!payload.metadata,
+      metadata_keys: payload.metadata ? Object.keys(payload.metadata) : []
+    });
+    console.log('Full payload:', JSON.stringify(payload, null, 2));
 
     // Extract conversation data from ElevenLabs webhook
     const {
@@ -33,7 +44,10 @@ serve(async (req) => {
     let leadData = null;
     const contactInfo = metadata?.contact_info || {};
     
+    console.log('Contact info extracted:', contactInfo);
+    
     if (contactInfo.name || contactInfo.email || contactInfo.phone) {
+      console.log('Processing lead with contact info...');
       // Check if lead exists
       const { data: existingLead } = await supabase
         .from('leads')
@@ -42,8 +56,10 @@ serve(async (req) => {
         .single();
 
       if (existingLead) {
+        console.log('Found existing lead:', existingLead.id);
         leadData = existingLead;
       } else {
+        console.log('Creating new lead...');
         // Create new lead
         const { data: newLead, error: leadError } = await supabase
           .from('leads')
@@ -61,12 +77,14 @@ serve(async (req) => {
         if (leadError) {
           console.error('Error creating lead:', leadError);
         } else {
+          console.log('New lead created:', newLead.id);
           leadData = newLead;
         }
       }
     }
 
     // Store conversation
+    console.log('Storing conversation for lead:', leadData?.id);
     const { error: convError } = await supabase
       .from('conversations')
       .insert({
@@ -86,9 +104,12 @@ serve(async (req) => {
       console.error('Error storing conversation:', convError);
       throw convError;
     }
+    
+    console.log('Conversation stored successfully');
 
     // Create interaction record
     if (leadData) {
+      console.log('Creating interaction record...');
       await supabase
         .from('interactions')
         .insert({
@@ -98,8 +119,10 @@ serve(async (req) => {
         });
     }
 
+    console.log('=== Webhook Processing Complete ===');
+    
     return new Response(
-      JSON.stringify({ success: true }),
+      JSON.stringify({ success: true, message: 'Conversation processed successfully' }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
 
