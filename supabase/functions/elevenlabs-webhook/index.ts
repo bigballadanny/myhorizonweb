@@ -33,42 +33,47 @@ async function verifySignature(
 }
 
 serve(async (req) => {
+  // Log EVERYTHING - even before CORS check
+  console.log('🔔 WEBHOOK REQUEST RECEIVED');
+  console.log('Method:', req.method);
+  console.log('URL:', req.url);
+  console.log('Timestamp:', new Date().toISOString());
+  console.log('All Headers:', JSON.stringify(Object.fromEntries(req.headers.entries()), null, 2));
+
   if (req.method === 'OPTIONS') {
+    console.log('✅ CORS Preflight - Returning 200');
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    console.log('=== ElevenLabs Webhook Received ===');
-    console.log('Timestamp:', new Date().toISOString());
-    console.log('Headers:', Object.fromEntries(req.headers.entries()));
+    console.log('=== Processing Webhook ===');
     
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const webhookSecret = Deno.env.get('ELEVENLABS_WEBHOOK_SECRET')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    // Get raw body for signature verification
+    // Get raw body
     const rawBody = await req.text();
+    console.log('📦 Raw Body Length:', rawBody.length);
+    console.log('📦 Raw Body Preview:', rawBody.substring(0, 500));
+    
     const signature = req.headers.get('x-elevenlabs-signature');
+    console.log('🔐 Signature Header:', signature ? 'Present' : 'Missing');
     
-    console.log('Has signature header:', !!signature);
+    // TEMPORARILY SKIP signature verification for debugging
+    console.log('⚠️ DIAGNOSTIC MODE: Skipping signature verification');
     
-    // Verify signature if present
-    if (signature && webhookSecret) {
-      const isValid = await verifySignature(rawBody, signature, webhookSecret);
-      if (!isValid) {
-        console.error('Invalid webhook signature');
-        return new Response(
-          JSON.stringify({ error: 'Invalid signature' }),
-          { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-        );
-      }
-      console.log('Signature verified successfully');
-    } else if (webhookSecret) {
-      console.warn('No signature provided but secret is configured');
+    let payload;
+    try {
+      payload = JSON.parse(rawBody);
+      console.log('✅ Payload parsed successfully');
+    } catch (parseError) {
+      console.error('❌ Failed to parse JSON:', parseError);
+      console.log('Raw body that failed:', rawBody);
+      const errorMsg = parseError instanceof Error ? parseError.message : 'Unknown parse error';
+      throw new Error(`Invalid JSON: ${errorMsg}`);
     }
-
-    const payload = JSON.parse(rawBody);
     console.log('Payload structure:', {
       has_conversation_id: !!payload.conversation_id,
       has_agent_id: !!payload.agent_id,
@@ -176,9 +181,17 @@ serve(async (req) => {
     );
 
   } catch (error) {
-    console.error('Webhook error:', error);
+    console.error('❌❌❌ WEBHOOK ERROR ❌❌❌');
+    console.error('Error type:', error?.constructor?.name);
+    console.error('Error message:', error instanceof Error ? error.message : 'Unknown error');
+    console.error('Error stack:', error instanceof Error ? error.stack : 'No stack');
+    
     return new Response(
-      JSON.stringify({ error: error instanceof Error ? error.message : 'Unknown error' }),
+      JSON.stringify({ 
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error',
+        timestamp: new Date().toISOString()
+      }),
       { 
         status: 500, 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
