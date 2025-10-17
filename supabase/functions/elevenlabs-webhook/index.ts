@@ -3,8 +3,34 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-elevenlabs-signature',
 };
+
+// Verify webhook signature
+async function verifySignature(
+  payload: string,
+  signature: string,
+  secret: string
+): Promise<boolean> {
+  const encoder = new TextEncoder();
+  const keyData = encoder.encode(secret);
+  const messageData = encoder.encode(payload);
+  
+  const cryptoKey = await crypto.subtle.importKey(
+    'raw',
+    keyData,
+    { name: 'HMAC', hash: 'SHA-256' },
+    false,
+    ['sign']
+  );
+  
+  const signatureBytes = await crypto.subtle.sign('HMAC', cryptoKey, messageData);
+  const computedSignature = Array.from(new Uint8Array(signatureBytes))
+    .map(b => b.toString(16).padStart(2, '0'))
+    .join('');
+  
+  return computedSignature === signature;
+}
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -14,12 +40,35 @@ serve(async (req) => {
   try {
     console.log('=== ElevenLabs Webhook Received ===');
     console.log('Timestamp:', new Date().toISOString());
+    console.log('Headers:', Object.fromEntries(req.headers.entries()));
     
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    const webhookSecret = Deno.env.get('ELEVENLABS_WEBHOOK_SECRET')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    const payload = await req.json();
+    // Get raw body for signature verification
+    const rawBody = await req.text();
+    const signature = req.headers.get('x-elevenlabs-signature');
+    
+    console.log('Has signature header:', !!signature);
+    
+    // Verify signature if present
+    if (signature && webhookSecret) {
+      const isValid = await verifySignature(rawBody, signature, webhookSecret);
+      if (!isValid) {
+        console.error('Invalid webhook signature');
+        return new Response(
+          JSON.stringify({ error: 'Invalid signature' }),
+          { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+      console.log('Signature verified successfully');
+    } else if (webhookSecret) {
+      console.warn('No signature provided but secret is configured');
+    }
+
+    const payload = JSON.parse(rawBody);
     console.log('Payload structure:', {
       has_conversation_id: !!payload.conversation_id,
       has_agent_id: !!payload.agent_id,
