@@ -154,7 +154,7 @@ export function Hero() {
               size="lg"
               variant="outline"
               onClick={scrollToServices}
-              className="border-white/30 text-white hover:bg-white/10 text-lg px-8 py-6"
+              className="bg-white/15 border-white/40 text-white hover:bg-white/25 backdrop-blur-sm text-lg px-8 py-6"
             >
               See What We Build
             </Button>

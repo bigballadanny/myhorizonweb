@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { TrendingUp, Clock, Zap } from 'lucide-react'
+import aiWorkflowVisual from '@/assets/ai-workflow-visual.png'
 
 interface CounterProps {
   end: number
@@ -90,21 +91,43 @@ export function Results() {
       <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-accent-emerald/5 rounded-full blur-2xl" />
       
       <div className="container mx-auto px-6 sm:px-8 lg:px-12 relative z-10">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black leading-tight mb-4 text-foreground">
-            Systems That <span className="text-accent-emerald">Pay For Themselves</span>
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Real results from businesses running on our AI infrastructure
-          </p>
-        </motion.div>
+        
+        {/* Two-column layout: Visual + Header */}
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center mb-16">
+          
+          {/* Left: AI Workflow Visual */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="relative"
+          >
+            <div className="relative rounded-2xl overflow-hidden clean-border">
+              <img 
+                src={aiWorkflowVisual} 
+                alt="AI workflow automation visualization" 
+                className="w-full h-auto"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent" />
+            </div>
+          </motion.div>
+          
+          {/* Right: Header */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black leading-tight mb-4 text-foreground">
+              Systems That <span className="text-accent-emerald">Pay For Themselves</span>
+            </h2>
+            <p className="text-lg text-muted-foreground">
+              Real results from businesses running on our AI infrastructure. These aren't projections—they're actual outcomes from clients who deployed our systems.
+            </p>
+          </motion.div>
+        </div>
 
         {/* Metrics Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
