@@ -89,12 +89,15 @@ export function Hero() {
         transition={{ duration: 1, delay: 1.5 }}
         className="absolute bottom-12 left-6 sm:left-8 lg:left-12 z-40"
       >
-        <div className="max-w-2xl">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-black leading-tight text-white">
-            <span className="block">AI AUTOMATION</span>
-            <span className="block">FOR YOUR</span>
-            <span className="block">BUSINESS</span>
+        <div className="max-w-3xl">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-black leading-tight text-white mb-6">
+            <span className="block">AI SYSTEMS THAT</span>
+            <span className="block">ACTUALLY GENERATE</span>
+            <span className="block">REVENUE</span>
           </h1>
+          <p className="text-lg sm:text-xl lg:text-2xl text-white/80 leading-relaxed max-w-2xl">
+            Custom AI chatbots, workflow automation, and intelligent systems that save 20+ hours/week and drive measurable results.
+          </p>
         </div>
       </motion.div>
     </div>
