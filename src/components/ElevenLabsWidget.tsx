@@ -184,7 +184,7 @@ export function ElevenLabsWidget() {
   const isSpeaking = conversation.isSpeaking;
 
   return (
-    <div className="fixed bottom-6 right-6 z-50">
+    <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50">
       {/* Tooltip */}
       <AnimatePresence>
         {showTooltip && !isConnected && !isConnecting && (
@@ -240,7 +240,7 @@ export function ElevenLabsWidget() {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         className={`
-          relative w-16 h-16 rounded-full shadow-xl
+          relative w-14 h-14 sm:w-16 sm:h-16 rounded-full shadow-xl
           flex items-center justify-center
           transition-all duration-300
           ${isConnected 

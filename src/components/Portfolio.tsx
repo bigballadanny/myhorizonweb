@@ -53,29 +53,29 @@ export function Portfolio() {
   ]
 
   return (
-    <section id="portfolio" className="relative py-32 bg-background">
-      <div className="container mx-auto px-6 sm:px-8 lg:px-12">
+    <section id="portfolio" className="relative py-16 sm:py-24 lg:py-32 bg-background">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-12">
         {/* Section Header */}
-        <div className="text-center mb-20">
-          <div className="inline-flex items-center gap-3 mb-6">
-            <div className="w-3 h-3 bg-accent-emerald rounded-full animate-pulse" />
-            <span className="text-sm font-semibold text-muted-foreground">
+        <div className="text-center mb-12 sm:mb-16 lg:mb-20">
+          <div className="inline-flex items-center gap-3 mb-4 sm:mb-6">
+            <div className="w-2 h-2 sm:w-3 sm:h-3 bg-accent-emerald rounded-full animate-pulse" />
+            <span className="text-xs sm:text-sm font-semibold text-muted-foreground">
               Featured Automation Projects
             </span>
-            <div className="w-3 h-3 bg-accent-blue rounded-full animate-pulse" />
+            <div className="w-2 h-2 sm:w-3 sm:h-3 bg-accent-blue rounded-full animate-pulse" />
           </div>
           
-          <h2 className="text-5xl sm:text-6xl lg:text-7xl font-black leading-tight mb-8">
+          <h2 className="text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-black leading-tight mb-4 sm:mb-8">
             <span className="block mb-2">Real Results</span>
           </h2>
           
-          <p className="text-2xl lg:text-3xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
+          <p className="text-lg sm:text-xl lg:text-2xl xl:text-3xl text-muted-foreground max-w-4xl mx-auto leading-relaxed px-2">
             See how we've helped businesses save time, reduce costs, and scale with intelligent automation
           </p>
         </div>
 
-        {/* Case Studies Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+        {/* Case Studies Grid - Stack on mobile */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-7xl mx-auto">
           {caseStudies.map((study, index) => {
             const Icon = study.icon
             return (
@@ -86,7 +86,7 @@ export function Portfolio() {
                 {/* Gradient Background */}
                 <div className={`absolute inset-0 bg-gradient-to-br ${study.bgGradient} opacity-50`} />
                 
-                <div className="relative p-8">
+                <div className="relative p-5 sm:p-6 lg:p-8">
                   {/* Icon & Industry */}
                   <div className="flex items-center justify-between mb-6">
                     <div className={`w-14 h-14 rounded-2xl bg-${study.color}/10 border border-${study.color}/20 flex items-center justify-center`}>
