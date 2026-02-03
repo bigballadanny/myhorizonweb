@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { Check, Zap, Shield, ArrowRight } from 'lucide-react'
 import { Button } from './ui/button'
+import synthiosHeroImage from '@/assets/synthios-box-hero.jpg'
 
 export function SynthiosProduct() {
   const features = [
@@ -124,24 +125,20 @@ export function SynthiosProduct() {
               </div>
               
               {/* Product Visual */}
-              <div className="aspect-square bg-gradient-to-br from-foreground/5 via-muted to-foreground/10 rounded-2xl flex items-center justify-center relative overflow-hidden">
+              <div className="aspect-square rounded-2xl relative overflow-hidden">
+                {/* Hero Image */}
+                <img 
+                  src={synthiosHeroImage} 
+                  alt="SYNTHIOS Box - Mac Mini M4 with AI holographic interface, entrepreneur relaxing in background" 
+                  className="w-full h-full object-cover rounded-2xl"
+                />
                 
-                {/* Clean Product Representation */}
-                <div className="relative flex flex-col items-center">
-                  {/* Device Icon */}
-                  <div className="w-32 h-32 sm:w-40 sm:h-40 bg-gradient-to-b from-muted-foreground/80 to-foreground rounded-2xl shadow-2xl flex items-center justify-center mb-6">
-                    <div className="w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-accent-blue via-accent-emerald to-accent-blue rounded-xl flex items-center justify-center animate-pulse">
-                      <Zap className="w-10 h-10 sm:w-12 sm:h-12 text-white" />
-                    </div>
-                  </div>
-                  
-                  <p className="text-foreground font-bold text-xl sm:text-2xl">SYNTHIOS Box</p>
-                  <p className="text-muted-foreground text-sm mt-1">Mac Mini M4 • AI-Powered</p>
-                </div>
+                {/* Subtle overlay for depth */}
+                <div className="absolute inset-0 bg-gradient-to-t from-background/20 via-transparent to-transparent rounded-2xl" />
                 
                 {/* Floating status indicators */}
                 <motion.div 
-                  className="absolute top-6 right-6 bg-background/95 backdrop-blur-sm clean-border rounded-lg px-3 py-2 text-xs font-medium shadow-lg"
+                  className="absolute top-4 right-4 bg-background/95 backdrop-blur-sm clean-border rounded-lg px-3 py-2 text-xs font-medium shadow-lg"
                   animate={{ y: [0, -5, 0] }}
                   transition={{ repeat: Infinity, duration: 3 }}
                 >
@@ -149,7 +146,7 @@ export function SynthiosProduct() {
                 </motion.div>
                 
                 <motion.div 
-                  className="absolute bottom-6 left-6 bg-background/95 backdrop-blur-sm clean-border rounded-lg px-3 py-2 text-xs font-medium shadow-lg"
+                  className="absolute bottom-4 left-4 bg-background/95 backdrop-blur-sm clean-border rounded-lg px-3 py-2 text-xs font-medium shadow-lg"
                   animate={{ y: [0, -5, 0] }}
                   transition={{ repeat: Infinity, duration: 3, delay: 1.5 }}
                 >
