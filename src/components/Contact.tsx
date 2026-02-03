@@ -34,15 +34,15 @@ export function Contact() {
         }; 
       })(window, "https://app.cal.com/embed/embed.js", "init");
       
-      Cal("init", "mojju-discovery-call", {origin:"https://app.cal.com"});
+      Cal("init", "myhorizon-discovery-call", {origin:"https://app.cal.com"});
       
-      Cal.ns["mojju-discovery-call"]("inline", {
-        elementOrSelector:"#my-cal-inline-mojju-discovery-call",
+      Cal.ns["myhorizon-discovery-call"]("inline", {
+        elementOrSelector:"#my-cal-inline-myhorizon-discovery-call",
         config: {"layout":"month_view"},
         calLink: "zqlovable/30min",
       });
       
-      Cal.ns["mojju-discovery-call"]("ui", {"hideEventTypeDetails":false,"layout":"month_view"});
+      Cal.ns["myhorizon-discovery-call"]("ui", {"hideEventTypeDetails":false,"layout":"month_view"});
     `
     
     document.body.appendChild(script)
@@ -107,7 +107,7 @@ export function Contact() {
                   height: '600px',
                   overflow: 'scroll'
                 }} 
-                id="my-cal-inline-mojju-discovery-call"
+                id="my-cal-inline-myhorizon-discovery-call"
               />
             </div>
           </div>
