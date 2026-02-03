@@ -1,6 +1,5 @@
 import { Navigation } from './components/Navigation'
 import { Hero } from './components/Hero'
-import { SocialProofStrip } from './components/SocialProofStrip'
 import { Services } from './components/Services'
 import { Results } from './components/Results'
 import { SynthiosProduct } from './components/SynthiosProduct'
@@ -17,7 +16,6 @@ export default function App() {
         <section id="hero" aria-label="Hero section">
           <Hero />
         </section>
-        <SocialProofStrip />
         <section id="services" aria-label="Services section">
           <Services />
         </section>

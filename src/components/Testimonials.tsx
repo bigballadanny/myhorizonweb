@@ -2,6 +2,9 @@
 
 import { motion } from 'framer-motion'
 import { Quote, CheckCircle2 } from 'lucide-react'
+import testimonialAvatar1 from '@/assets/testimonial-avatar-1.png'
+import testimonialAvatar2 from '@/assets/testimonial-avatar-2.png'
+import testimonialAvatar3 from '@/assets/testimonial-avatar-3.png'
 
 const testimonials = [
   {
@@ -9,21 +12,21 @@ const testimonials = [
     name: "Sarah Chen",
     role: "COO",
     company: "TechFlow Solutions",
-    avatar: "SC"
+    avatar: testimonialAvatar1
   },
   {
     quote: "The SYNTHIOS Box paid for itself in the first month. I save at least 3 hours every single day on email and scheduling.",
     name: "Marcus Rivera",
     role: "Founder",
     company: "Rivera Consulting",
-    avatar: "MR"
+    avatar: testimonialAvatar2
   },
   {
     quote: "We went from 12 manual processes to 2 automated workflows. Our lead response time dropped from hours to seconds.",
     name: "Emily Zhang",
     role: "VP of Operations",
     company: "GrowthPath Inc",
-    avatar: "EZ"
+    avatar: testimonialAvatar3
   }
 ]
 
@@ -77,9 +80,11 @@ export function Testimonials() {
                 {/* Author */}
                 <div className="flex items-center gap-4 pt-6 border-t border-border">
                   {/* Avatar */}
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-accent-blue to-accent-emerald flex items-center justify-center text-white font-bold text-sm">
-                    {testimonial.avatar}
-                  </div>
+                  <img 
+                    src={testimonial.avatar} 
+                    alt={testimonial.name}
+                    className="w-12 h-12 rounded-full object-cover"
+                  />
                   
                   <div className="flex-1">
                     <div className="flex items-center gap-2">

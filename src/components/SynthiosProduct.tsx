@@ -7,12 +7,12 @@ import synthiosHeroImage from '@/assets/synthios-box-hero.jpg'
 
 export function SynthiosProduct() {
   const features = [
-    "Mac Mini M4 with pre-installed AI",
-    "Handles email, calendar, and tasks automatically",
-    "Text via Telegram or WhatsApp",
-    "5 Hours Saved Or Free guarantee",
+    "Mac Mini M4 with pre-installed AI infrastructure",
+    "Automates inbox, calendar, and coordination—freeing your mind",
+    "Command via Telegram, WhatsApp, or Discord",
+    "5+ Hours Reclaimed Daily—reinvest in what moves the needle",
     "One-time purchase, no subscriptions",
-    "Full setup and training included"
+    "Full setup, training, and ongoing support included"
   ]
 
   return (
@@ -40,11 +40,11 @@ export function SynthiosProduct() {
             
             {/* Headline */}
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black leading-tight mb-6 text-foreground">
-              The SYNTHIOS Box
+              Unlock Your Full Capacity
             </h2>
             
             <p className="text-xl lg:text-2xl text-muted-foreground leading-relaxed mb-8">
-              Your personal AI assistant that lives on your desk. Not another subscription—a one-time purchase that saves you hours every single day.
+              For professionals who want to do <span className="text-accent-emerald font-semibold">MORE</span>. Delegate the tedious, focus on what matters, and 10x your impact. The SYNTHIOS Box is your personal AI that lives on your desk.
             </p>
             
             {/* Features */}
@@ -103,7 +103,7 @@ export function SynthiosProduct() {
             {/* Trust badge */}
             <div className="flex items-center gap-2 mt-8 text-sm text-muted-foreground">
               <Shield className="w-4 h-4 text-accent-blue" />
-              <span>5 Hours Saved Or Free — Our Guarantee</span>
+              <span>5 Hours Reclaimed Daily — More Time for What Matters</span>
             </div>
           </motion.div>
           
