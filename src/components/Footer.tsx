@@ -42,7 +42,7 @@ export function Footer() {
               <div className="flex items-center space-x-6">
                 {/* X (Twitter) */}
                 <a
-                  href="https://x.com/Mojjuai"
+                  href="https://x.com/SynthiosAI"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:scale-110 gentle-animation cursor-pointer"
@@ -54,7 +54,7 @@ export function Footer() {
 
                 {/* TikTok */}
                 <a
-                  href="https://www.tiktok.com/@mojju.ai"
+                  href="https://www.tiktok.com/@myhorizon.ai"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:scale-110 gentle-animation cursor-pointer"
@@ -66,7 +66,7 @@ export function Footer() {
 
                 {/* Instagram */}
                 <a
-                  href="https://www.instagram.com/mojju.ai"
+                  href="https://www.instagram.com/myhorizon.ai"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:scale-110 gentle-animation cursor-pointer"
@@ -85,7 +85,7 @@ export function Footer() {
 
                 {/* LinkedIn */}
                 <a
-                  href="https://linkedin.com/company/mojju"
+                  href="https://linkedin.com/company/myhorizon"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:scale-110 gentle-animation cursor-pointer"
@@ -127,7 +127,7 @@ export function Footer() {
         <div className="border-t border-background/20 pt-8 mt-16">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="text-sm text-background/70 mb-4 md:mb-0">
-              © 2025 MyHorizon. All rights reserved.
+              © 2026 MyHorizon. All rights reserved.
             </div>
             <div className="text-sm text-background/70">
               Brownsville, TX, USA
