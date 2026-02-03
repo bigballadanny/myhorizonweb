@@ -33,9 +33,8 @@ export function Navigation() {
   }
 
   const navLinks = [
-    { label: 'Results', id: 'portfolio' },
-    { label: 'About', id: 'about' },
     { label: 'Services', id: 'services' },
+    { label: 'SYNTHIOS', id: 'synthios' },
     { label: 'Contact', id: 'contact' }
   ]
 
