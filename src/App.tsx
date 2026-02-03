@@ -1,7 +1,10 @@
 import { Navigation } from './components/Navigation'
 import { Hero } from './components/Hero'
+import { SocialProofStrip } from './components/SocialProofStrip'
 import { Services } from './components/Services'
+import { Results } from './components/Results'
 import { SynthiosProduct } from './components/SynthiosProduct'
+import { Testimonials } from './components/Testimonials'
 import { Contact } from './components/Contact'
 import { Footer } from './components/Footer'
 import { ElevenLabsWidget } from './components/ElevenLabsWidget'
@@ -14,12 +17,15 @@ export default function App() {
         <section id="hero" aria-label="Hero section">
           <Hero />
         </section>
+        <SocialProofStrip />
         <section id="services" aria-label="Services section">
           <Services />
         </section>
+        <Results />
         <section id="synthios" aria-label="SYNTHIOS Product section">
           <SynthiosProduct />
         </section>
+        <Testimonials />
         <section id="contact" aria-label="Contact section">
           <Contact />
         </section>

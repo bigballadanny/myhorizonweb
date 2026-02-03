@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { motion } from 'framer-motion'
 import { Bot, Workflow, Users, FileText, BarChart3, Cog, ArrowRight } from 'lucide-react'
 import { Button } from './ui/button'
 
@@ -74,7 +75,13 @@ export function Services() {
       <div className="container mx-auto px-6 sm:px-8 lg:px-12 relative z-10">
         
         {/* Header */}
-        <div className="text-center mb-16">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
           <div className="inline-flex items-center gap-3 mb-6">
             <div className="w-3 h-3 bg-accent-emerald rounded-full animate-pulse" />
             <span className="text-sm font-semibold text-muted-foreground tracking-wide uppercase">
@@ -90,25 +97,38 @@ export function Services() {
           <p className="text-lg lg:text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">
             Enterprise-grade AI systems, agents, and workflows—architected for your business.
           </p>
-        </div>
+        </motion.div>
 
         {/* Services Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mb-16">
-          {services.map((service) => {
+          {services.map((service, index) => {
             const Icon = service.icon
             const isHovered = hoveredService === service.id
             
             return (
-              <div
+              <motion.div
                 key={service.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1, duration: 0.5 }}
                 className={`group relative bg-card clean-border rounded-2xl p-8 transition-all duration-300 cursor-pointer ${
                   isHovered ? 'elevated-shadow -translate-y-1' : 'subtle-shadow'
                 }`}
                 onMouseEnter={() => setHoveredService(service.id)}
                 onMouseLeave={() => setHoveredService(null)}
               >
+                {/* Glow effect on hover */}
+                <div className={`absolute inset-0 rounded-2xl transition-opacity duration-300 pointer-events-none ${
+                  isHovered ? 'opacity-100' : 'opacity-0'
+                } ${
+                  service.accent === 'accent-blue' ? 'bg-accent-blue/5' :
+                  service.accent === 'accent-emerald' ? 'bg-accent-emerald/5' :
+                  'bg-accent-purple/5'
+                }`} />
+                
                 {/* Icon */}
-                <div className={`w-14 h-14 rounded-xl flex items-center justify-center mb-6 transition-colors duration-300 ${
+                <div className={`relative w-14 h-14 rounded-xl flex items-center justify-center mb-6 transition-colors duration-300 ${
                   service.accent === 'accent-blue' ? 'bg-accent-blue/10 text-accent-blue' :
                   service.accent === 'accent-emerald' ? 'bg-accent-emerald/10 text-accent-emerald' :
                   'bg-accent-purple/10 text-accent-purple'
@@ -117,16 +137,16 @@ export function Services() {
                 </div>
                 
                 {/* Content */}
-                <h3 className="text-xl font-bold text-foreground mb-3">
+                <h3 className="relative text-xl font-bold text-foreground mb-3">
                   {service.title}
                 </h3>
                 
-                <p className="text-muted-foreground leading-relaxed mb-4">
+                <p className="relative text-muted-foreground leading-relaxed mb-4">
                   {service.description}
                 </p>
                 
                 {/* Stats badge */}
-                <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium ${
+                <div className={`relative inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium ${
                   service.accent === 'accent-blue' ? 'bg-accent-blue/10 text-accent-blue' :
                   service.accent === 'accent-emerald' ? 'bg-accent-emerald/10 text-accent-emerald' :
                   'bg-accent-purple/10 text-accent-purple'
@@ -140,13 +160,19 @@ export function Services() {
                 }`}>
                   <ArrowRight className="w-5 h-5 text-muted-foreground" />
                 </div>
-              </div>
+              </motion.div>
             )
           })}
         </div>
 
         {/* CTA Section */}
-        <div className="text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="text-center"
+        >
           <div className="inline-flex flex-col sm:flex-row items-center gap-4 bg-card clean-border rounded-2xl p-6 sm:p-8">
             <div className="text-center sm:text-left">
               <p className="text-lg font-semibold text-foreground mb-1">
@@ -165,7 +191,7 @@ export function Services() {
               <ArrowRight className="w-4 h-4 ml-2" />
             </Button>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   )
