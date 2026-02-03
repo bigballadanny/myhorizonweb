@@ -54,7 +54,7 @@ export function About() {
   }, [])
 
   return (
-    <section id="about" className="relative py-20 bg-background overflow-hidden">
+    <section id="about" className="relative py-16 sm:py-20 bg-background overflow-hidden">
       
       {/* Cinematic Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-card/20 to-background" />
@@ -68,23 +68,23 @@ export function About() {
         }} />
       </div>
 
-      <div className="container mx-auto px-6 sm:px-8 lg:px-12 relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
         
         {/* Header */}
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-3 mb-6">
-            <div className="w-3 h-3 bg-accent-emerald rounded-full animate-pulse" />
-            <span className="text-sm font-semibold text-muted-foreground">
+        <div className="text-center mb-10 sm:mb-16">
+          <div className="inline-flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+            <div className="w-2 h-2 sm:w-3 sm:h-3 bg-accent-emerald rounded-full animate-pulse" />
+            <span className="text-xs sm:text-sm font-semibold text-muted-foreground">
               Our Process
             </span>
-            <div className="w-3 h-3 bg-accent-blue rounded-full animate-pulse" />
+            <div className="w-2 h-2 sm:w-3 sm:h-3 bg-accent-blue rounded-full animate-pulse" />
           </div>
           
-          <h2 className="text-5xl sm:text-6xl lg:text-7xl font-black leading-tight mb-6 text-foreground">
+          <h2 className="text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-black leading-tight mb-4 sm:mb-6 text-foreground px-2">
             How We Transform Your Business
           </h2>
           
-          <p className="text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">
+          <p className="text-base sm:text-lg lg:text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto px-2">
             Watch our AI automation process unfold step by step
           </p>
         </div>
@@ -268,29 +268,29 @@ export function About() {
         </div>
 
         {/* Film Controls */}
-        <div className="mt-12 text-center">
-          <div className="inline-flex items-center gap-6 bg-card/80 backdrop-blur-sm clean-border rounded-2xl px-8 py-4 subtle-shadow">
+        <div className="mt-8 sm:mt-12 text-center">
+          <div className="inline-flex flex-wrap items-center justify-center gap-3 sm:gap-6 bg-card/80 backdrop-blur-sm clean-border rounded-xl sm:rounded-2xl px-4 sm:px-8 py-3 sm:py-4 subtle-shadow">
             
             {/* Uptime Indicator */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 sm:gap-3">
               <div className="w-2 h-2 bg-accent-emerald rounded-full animate-pulse" />
-              <span className="text-sm font-semibold text-foreground">24/7 Uptime</span>
+              <span className="text-xs sm:text-sm font-semibold text-foreground">24/7 Uptime</span>
             </div>
             
-            <div className="w-px h-6 bg-border" />
+            <div className="hidden sm:block w-px h-6 bg-border" />
             
             {/* Duration */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 sm:gap-3">
               <div className="w-2 h-2 bg-accent-blue rounded-full animate-pulse" style={{animationDelay: '0.5s'}} />
-              <span className="text-sm font-semibold text-foreground">2-4 Weeks</span>
+              <span className="text-xs sm:text-sm font-semibold text-foreground">2-4 Weeks</span>
             </div>
             
-            <div className="w-px h-6 bg-border" />
+            <div className="hidden sm:block w-px h-6 bg-border" />
             
             {/* Quality */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 sm:gap-3">
               <div className="w-2 h-2 bg-accent-purple rounded-full animate-pulse" style={{animationDelay: '1s'}} />
-              <span className="text-sm font-semibold text-foreground">Enterprise Grade</span>
+              <span className="text-xs sm:text-sm font-semibold text-foreground">Enterprise Grade</span>
             </div>
           </div>
         </div>

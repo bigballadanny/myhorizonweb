@@ -87,15 +87,15 @@ export function Hero() {
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 1, delay: 1.5 }}
-        className="absolute bottom-12 left-6 sm:left-8 lg:left-12 z-40"
+        className="absolute bottom-8 sm:bottom-12 left-4 sm:left-6 lg:left-12 right-4 sm:right-auto z-40"
       >
         <div className="max-w-3xl">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-black leading-tight text-white mb-6">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-black leading-tight text-white mb-4 sm:mb-6">
             <span className="block">AI SYSTEMS THAT</span>
             <span className="block">ACTUALLY GENERATE</span>
             <span className="block">REVENUE</span>
           </h1>
-          <p className="text-lg sm:text-xl lg:text-2xl text-white/80 leading-relaxed max-w-2xl">
+          <p className="text-sm sm:text-base lg:text-lg xl:text-xl 2xl:text-2xl text-white/80 leading-relaxed max-w-2xl">
             Custom AI chatbots, workflow automation, and intelligent systems that save 20+ hours/week and drive measurable results.
           </p>
         </div>

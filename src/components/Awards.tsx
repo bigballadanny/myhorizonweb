@@ -53,55 +53,55 @@ export function Awards() {
   ]
 
   return (
-    <section id="awards" className="relative py-20 bg-background overflow-hidden">
+    <section id="awards" className="relative py-16 sm:py-20 bg-background overflow-hidden">
       
       {/* Elegant Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-card/30 to-background" />
 
-      <div className="container mx-auto px-6 sm:px-8 lg:px-12 relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
         
         {/* Header */}
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-3 mb-6">
-            <div className="w-3 h-3 bg-accent-purple rounded-full animate-pulse" />
-            <span className="text-sm font-semibold text-muted-foreground">
+        <div className="text-center mb-10 sm:mb-16">
+          <div className="inline-flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+            <div className="w-2 h-2 sm:w-3 sm:h-3 bg-accent-purple rounded-full animate-pulse" />
+            <span className="text-xs sm:text-sm font-semibold text-muted-foreground">
               Technology Partners
             </span>
-            <div className="w-3 h-3 bg-accent-blue rounded-full animate-pulse" />
+            <div className="w-2 h-2 sm:w-3 sm:h-3 bg-accent-blue rounded-full animate-pulse" />
           </div>
           
-          <h2 className="text-5xl sm:text-6xl lg:text-7xl font-black leading-tight mb-6 text-foreground">
+          <h2 className="text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-black leading-tight mb-4 sm:mb-6 text-foreground px-2">
             Powered By Industry Leaders
           </h2>
           
-          <p className="text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">
+          <p className="text-base sm:text-lg lg:text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto px-2">
             We leverage cutting-edge technologies to deliver world-class AI automation solutions
           </p>
         </div>
 
-        {/* Partners Grid */}
+        {/* Partners Grid - 2 columns on mobile */}
         <div className="relative max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
             {partners.map((partner, index) => (
               <div
                 key={index}
                 className="group relative"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <div className={`relative h-full bg-gradient-to-br ${partner.color} rounded-2xl border border-border ${partner.hoverColor} transition-all duration-500 hover:scale-105 overflow-hidden`}>
+                <div className={`relative h-full bg-gradient-to-br ${partner.color} rounded-xl sm:rounded-2xl border border-border ${partner.hoverColor} transition-all duration-500 hover:scale-105 overflow-hidden`}>
                   
                   {/* Card Content */}
-                  <div className="relative p-8 flex flex-col items-center text-center h-full">
+                  <div className="relative p-4 sm:p-6 lg:p-8 flex flex-col items-center text-center h-full">
                     
                     {/* Logo/Text */}
-                    <div className="mb-6 mt-4">
-                      <h3 className={`${partner.logo} text-foreground tracking-tight`}>
+                    <div className="mb-3 sm:mb-6 mt-2 sm:mt-4">
+                      <h3 className="text-2xl sm:text-4xl lg:text-5xl font-black text-foreground tracking-tight">
                         {partner.text}
                       </h3>
                     </div>
 
                     {/* Description */}
-                    <p className="text-sm text-muted-foreground leading-relaxed">
+                    <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
                       {partner.description}
                     </p>
 
@@ -117,8 +117,8 @@ export function Awards() {
         </div>
 
         {/* Social Proof */}
-        <div className="mt-16 text-center">
-          <p className="text-lg text-muted-foreground">
+        <div className="mt-10 sm:mt-16 text-center">
+          <p className="text-sm sm:text-base lg:text-lg text-muted-foreground px-2">
             Trusted by <span className="font-bold text-foreground">100+ businesses</span> to automate their workflows
           </p>
         </div>
