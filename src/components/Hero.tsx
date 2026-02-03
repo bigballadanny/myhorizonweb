@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Volume2, VolumeX } from 'lucide-react'
+import { Volume2, VolumeX, Users } from 'lucide-react'
 import { useState, useRef, useEffect } from 'react'
 
 export function Hero() {
@@ -56,6 +56,9 @@ export function Hero() {
         Your browser does not support the video tag.
       </video>
 
+      {/* Dark overlay for better text readability */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-black/50" />
+
       {/* Video Control - Fixed at top right, below navbar */}
       <motion.div
         initial={{ opacity: 0 }}
@@ -90,6 +93,28 @@ export function Hero() {
         className="absolute bottom-8 sm:bottom-12 left-4 sm:left-6 lg:left-12 right-4 sm:right-auto z-40"
       >
         <div className="max-w-3xl">
+          {/* Social Proof Bar */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 2 }}
+            className="flex items-center gap-3 mb-6"
+          >
+            <div className="flex -space-x-2">
+              {[...Array(4)].map((_, i) => (
+                <div 
+                  key={i} 
+                  className="w-8 h-8 rounded-full bg-gradient-to-br from-accent-blue to-accent-emerald border-2 border-black flex items-center justify-center"
+                >
+                  <Users className="w-4 h-4 text-white" />
+                </div>
+              ))}
+            </div>
+            <span className="text-white/80 text-sm font-medium">
+              Trusted by innovative businesses
+            </span>
+          </motion.div>
+
           <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-black leading-tight text-white mb-4 sm:mb-6">
             <span className="block">AI SYSTEMS THAT</span>
             <span className="block">ACTUALLY GENERATE</span>
