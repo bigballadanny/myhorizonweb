@@ -108,11 +108,11 @@ export function Contact() {
           </div>
           
           <h2 className="text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-black leading-tight mb-4 sm:mb-8 px-2">
-            <span className="block mb-2">Ready to Automate Your Business?</span>
+            <span className="block mb-2">Ready to Deploy AI That Works?</span>
           </h2>
           
           <p className="text-lg sm:text-xl lg:text-2xl xl:text-3xl text-muted-foreground max-w-4xl mx-auto leading-relaxed px-2">
-            Choose the call type that fits your needs
+            Schedule a strategy session with our team
           </p>
         </div>
 

@@ -9,52 +9,52 @@ export function Services() {
 
   const services = [
     {
-      id: 'chatbots',
-      title: "AI Chatbots & Agents",
-      description: "24/7 customer support that understands context, handles complex queries, and never sleeps.",
+      id: 'agents',
+      title: "AI Agents & Voice Systems",
+      description: "Autonomous agents that handle customer conversations, qualify leads, and execute tasks without human intervention.",
       icon: Bot,
       accent: 'accent-blue',
-      stats: "90% query resolution"
+      stats: "24/7 Operations"
     },
     {
       id: 'workflow',
-      title: "Workflow Automation", 
-      description: "Eliminate repetitive tasks. Connect your tools. Let AI handle the boring stuff.",
+      title: "Intelligent Workflows", 
+      description: "AI-driven process automation that connects your systems and makes decisions in real-time.",
       icon: Workflow,
       accent: 'accent-emerald',
       stats: "20+ hrs saved/week"
     },
     {
       id: 'crm',
-      title: "CRM Integration",
-      description: "Intelligent lead scoring, automated follow-ups, and pipeline optimization that converts.",
+      title: "CRM & Pipeline Automation",
+      description: "Smart lead scoring, automated nurturing sequences, and pipeline optimization that closes deals.",
       icon: Users,
       accent: 'accent-purple',
       stats: "3x conversion rate"
     },
     {
       id: 'content',
-      title: "Content Generation",
-      description: "AI-powered content that maintains your brand voice across all channels.",
+      title: "Content & Marketing AI",
+      description: "Multi-agent systems that create, schedule, and optimize content across all your channels.",
       icon: FileText,
       accent: 'accent-blue',
       stats: "10x faster output"
     },
     {
       id: 'analytics',
-      title: "Data & Insights",
-      description: "Transform raw data into actionable intelligence with automated reporting.",
+      title: "AI Analytics & Insights",
+      description: "Intelligent reporting systems that surface insights and trigger automated actions.",
       icon: BarChart3,
       accent: 'accent-emerald',
-      stats: "Real-time dashboards"
+      stats: "Real-time intelligence"
     },
     {
       id: 'custom',
-      title: "Custom Solutions",
-      description: "Tailored automation systems designed for your unique business challenges.",
+      title: "Custom AI Systems",
+      description: "Full-stack AI infrastructure—agents, swarms, and workflows—architected for your business.",
       icon: Cog,
       accent: 'accent-purple',
-      stats: "Built for you"
+      stats: "Enterprise-grade"
     }
   ]
 
@@ -78,17 +78,17 @@ export function Services() {
           <div className="inline-flex items-center gap-3 mb-6">
             <div className="w-3 h-3 bg-accent-emerald rounded-full animate-pulse" />
             <span className="text-sm font-semibold text-muted-foreground tracking-wide uppercase">
-              What We Automate
+              What We Build
             </span>
             <div className="w-3 h-3 bg-accent-blue rounded-full animate-pulse" />
           </div>
           
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black leading-tight mb-6 text-foreground">
-            AI Solutions That <span className="text-accent-blue">Actually Work</span>
+            AI Infrastructure That <span className="text-accent-blue">Scales</span>
           </h2>
           
           <p className="text-lg lg:text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">
-            Stop paying for tools you don't use. Get automation that delivers measurable ROI from day one.
+            Enterprise-grade AI systems, agents, and workflows—architected for your business.
           </p>
         </div>
 
