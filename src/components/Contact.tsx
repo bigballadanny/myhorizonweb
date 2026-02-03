@@ -177,40 +177,6 @@ export function Contact() {
           </Tabs>
         </div>
 
-        {/* Bottom Info */}
-        <div className="text-center mt-8 sm:mt-12">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 max-w-4xl mx-auto">
-            <div className="bg-background clean-border rounded-xl sm:rounded-2xl p-4 sm:p-6 subtle-shadow">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-accent-blue/10 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
-                <div className="w-5 h-5 sm:w-6 sm:h-6 bg-accent-blue rounded-full" />
-              </div>
-              <h4 className="font-black text-foreground mb-2 text-sm sm:text-base">Project Discussion</h4>
-              <p className="text-muted-foreground text-xs sm:text-sm">
-                Share your vision and requirements with our team
-              </p>
-            </div>
-            
-            <div className="bg-background clean-border rounded-xl sm:rounded-2xl p-4 sm:p-6 subtle-shadow">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-accent-emerald/10 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
-                <div className="w-5 h-5 sm:w-6 sm:h-6 bg-accent-emerald rounded-full" />
-              </div>
-              <h4 className="font-black text-foreground mb-2 text-sm sm:text-base">Custom Strategy</h4>
-              <p className="text-muted-foreground text-xs sm:text-sm">
-                Get a tailored approach for your unique project
-              </p>
-            </div>
-            
-            <div className="bg-background clean-border rounded-xl sm:rounded-2xl p-4 sm:p-6 subtle-shadow">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-accent-purple/10 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
-                <div className="w-5 h-5 sm:w-6 sm:h-6 bg-accent-purple rounded-full" />
-              </div>
-              <h4 className="font-black text-foreground mb-2 text-sm sm:text-base">Next Steps</h4>
-              <p className="text-muted-foreground text-xs sm:text-sm">
-                Clear timeline and roadmap to bring your idea to life
-              </p>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   )
