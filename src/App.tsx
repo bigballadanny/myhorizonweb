@@ -4,6 +4,7 @@ import { Portfolio } from './components/Portfolio'
 import { Awards } from './components/Awards'
 import { About } from './components/About'
 import { Services } from './components/Services'
+import { SynthiosProduct } from './components/SynthiosProduct'
 import { Team } from './components/Team'
 import { Contact } from './components/Contact'
 import { Footer } from './components/Footer'
@@ -28,6 +29,9 @@ export default function App() {
         </section>
         <section id="services" aria-label="Services section">
           <Services />
+        </section>
+        <section id="synthios" aria-label="SYNTHIOS Product section">
+          <SynthiosProduct />
         </section>
         <section id="team" aria-label="Team section" style={{ overflow: 'visible', height: 'auto', minHeight: '0', maxHeight: 'none' }}>
           <Team />
