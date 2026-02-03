@@ -34,15 +34,15 @@ export function Contact() {
         }; 
       })(window, "https://app.cal.com/embed/embed.js", "init");
       
-      Cal("init", "myhorizon-discovery-call", {origin:"https://app.cal.com"});
+      Cal("init", "myhorizon-consultation", {origin:"https://app.cal.com"});
       
-      Cal.ns["myhorizon-discovery-call"]("inline", {
-        elementOrSelector:"#my-cal-inline-myhorizon-discovery-call",
-        config: {"layout":"month_view"},
-        calLink: "zqlovable/30min",
+      Cal.ns["myhorizon-consultation"]("inline", {
+        elementOrSelector:"#my-cal-inline-myhorizon-consultation",
+        config: {"layout":"month_view","theme":"auto"},
+        calLink: "myhorizon/consultation",
       });
       
-      Cal.ns["myhorizon-discovery-call"]("ui", {"hideEventTypeDetails":false,"layout":"month_view"});
+      Cal.ns["myhorizon-consultation"]("ui", {"hideEventTypeDetails":false,"layout":"month_view"});
     `
     
     document.body.appendChild(script)
@@ -105,7 +105,7 @@ export function Contact() {
                 style={{
                   overflow: 'auto'
                 }} 
-                id="my-cal-inline-myhorizon-discovery-call"
+                id="my-cal-inline-myhorizon-consultation"
               />
             </div>
           </div>
