@@ -1,7 +1,5 @@
 'use client'
 
-import storyboardImage from '@/assets/storyboard-image.avif'
-
 export function About() {
   const processSteps = [
     {
@@ -52,11 +50,11 @@ export function About() {
           </div>
           
           <h2 className="text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-black leading-tight mb-4 sm:mb-6 text-foreground px-2">
-            How We Transform Your Business
+            How We Build Your AI Systems
           </h2>
           
           <p className="text-base sm:text-lg lg:text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto px-2">
-            A proven 5-step process to implement AI automation that delivers results
+            A proven 5-step process to architect and deploy AI infrastructure that scales
           </p>
         </div>
 
@@ -116,47 +114,6 @@ export function About() {
           </div>
         </div>
 
-        {/* Gallery Image */}
-        <div className="relative max-w-6xl mx-auto">
-          <div className="text-center mb-8">
-            <p className="text-muted-foreground">
-              From manual processes to intelligent automation
-            </p>
-          </div>
-          
-          <div className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-2xl p-4 overflow-hidden">
-            
-            {/* Film grain overlay for authenticity */}
-            <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
-                 style={{
-                   backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255,255,255,0.8) 1px, transparent 0)`,
-                   backgroundSize: '4px 4px'
-                 }} />
-            
-            {/* Main gallery image */}
-            <img 
-              src={storyboardImage}
-              alt="Visual representation of workflow automation and AI integration processes"
-              className="w-full h-auto rounded-xl"
-              style={{
-                filter: 'contrast(1.05) saturate(1.1) brightness(0.95)'
-              }}
-            />
-            
-            {/* Subtle overlay gradient for depth */}
-            <div className="absolute inset-4 rounded-xl pointer-events-none"
-                 style={{
-                   background: 'linear-gradient(135deg, rgba(37,99,235,0.03) 0%, transparent 20%, transparent 80%, rgba(124,58,237,0.03) 100%)'
-                 }} />
-          </div>
-          
-          {/* Caption */}
-          <div className="mt-6 text-center">
-            <p className="text-sm text-muted-foreground italic">
-              "Every automation journey is unique — tailored to your specific business needs"
-            </p>
-          </div>
-        </div>
       </div>
       
     </section>

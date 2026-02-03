@@ -121,7 +121,7 @@ export function Hero() {
             <span className="block">REVENUE</span>
           </h1>
           <p className="text-sm sm:text-base lg:text-lg xl:text-xl 2xl:text-2xl text-white/80 leading-relaxed max-w-2xl">
-            Custom AI chatbots, workflow automation, and intelligent systems that save 20+ hours/week and drive measurable results.
+            Complete AI systems, autonomous agents, and intelligent workflows that run your business 24/7.
           </p>
         </div>
       </motion.div>

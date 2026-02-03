@@ -1,7 +1,6 @@
 'use client'
 
-import { Brain, ShoppingCart, TrendingUp, ArrowRight } from 'lucide-react'
-import { Button } from './ui/button'
+import { Brain, ShoppingCart, TrendingUp } from 'lucide-react'
 
 export function Portfolio() {
   const caseStudies = [
@@ -60,17 +59,17 @@ export function Portfolio() {
           <div className="inline-flex items-center gap-3 mb-4 sm:mb-6">
             <div className="w-2 h-2 sm:w-3 sm:h-3 bg-accent-emerald rounded-full animate-pulse" />
             <span className="text-xs sm:text-sm font-semibold text-muted-foreground">
-              Featured Automation Projects
+              AI Systems in Action
             </span>
             <div className="w-2 h-2 sm:w-3 sm:h-3 bg-accent-blue rounded-full animate-pulse" />
           </div>
           
           <h2 className="text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-black leading-tight mb-4 sm:mb-8">
-            <span className="block mb-2">Real Results</span>
+            <span className="block mb-2">Proven Results</span>
           </h2>
           
           <p className="text-lg sm:text-xl lg:text-2xl xl:text-3xl text-muted-foreground max-w-4xl mx-auto leading-relaxed px-2">
-            See how we've helped businesses save time, reduce costs, and scale with intelligent automation
+            See how our AI agents and intelligent workflows drive measurable business outcomes
           </p>
         </div>
 
@@ -159,13 +158,6 @@ export function Portfolio() {
           })}
         </div>
 
-        {/* CTA */}
-        <div className="text-center mt-16">
-          <Button size="lg" className="group">
-            View More Projects
-            <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </Button>
-        </div>
       </div>
     </section>
   )
