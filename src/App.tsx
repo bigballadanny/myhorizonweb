@@ -5,7 +5,7 @@ import { Awards } from './components/Awards'
 import { About } from './components/About'
 import { Services } from './components/Services'
 import { SynthiosProduct } from './components/SynthiosProduct'
-import { Team } from './components/Team'
+// Team import removed - section deprecated
 import { Contact } from './components/Contact'
 import { Footer } from './components/Footer'
 import { ElevenLabsWidget } from './components/ElevenLabsWidget'
@@ -33,9 +33,7 @@ export default function App() {
         <section id="synthios" aria-label="SYNTHIOS Product section">
           <SynthiosProduct />
         </section>
-        <section id="team" aria-label="Team section" style={{ overflow: 'visible', height: 'auto', minHeight: '0', maxHeight: 'none' }}>
-          <Team />
-        </section>
+        {/* Team section removed - outdated aesthetic */}
         <section id="contact" aria-label="Contact section">
           <Contact />
         </section>
