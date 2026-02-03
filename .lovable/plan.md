@@ -1,116 +1,119 @@
 
 
-# MyHorizon Site Upgrade Plan
+# Site Cleanup & Copy Modernization Plan
 
-## What I Discovered
+## Summary
 
-### Your Product Ecosystem (This is exciting!)
-
-**1. SYNTHIOS Box** (synthios.myhorizon.ai) - Your flagship hardware product
-- Mac Mini M4 with pre-installed AI assistant
-- $2,000 one-time purchase
-- Handles email, calendar, tasks
-- Text via Telegram/WhatsApp
-- "5 Hours Or Free" guarantee
-- Clean, dark theme with cyan/teal accents
-
-**2. Pocket Marketer** (pocketmarketer.ai) - Your SaaS product
-- AI marketing strategy + execution platform
-- "The Software That Replaces $100K Worth of Marketers"
-- Strong social proof (testimonials, video testimonials, case studies)
-- Clean, light theme with blue accents
-- Great design patterns: problem/solution framing, comparison tables, persona targeting
-
-### Design Patterns to Adopt from Pocket Marketer
-
-| Pattern | What They Do | How to Apply |
-|---------|--------------|--------------|
-| Problem Framing | "3 Invisible Traps" section | Reframe services as solutions to pain points |
-| Social Proof Bar | Avatar stack + "Join Hundreds of business owners" | Add trust indicators near CTAs |
-| Comparison Table | Shows agency vs freelancer vs tools costs | Show ROI of AI automation |
-| Persona Cards | "A Small Business Owner wants X, We give Y" | Target different customer types |
-| Video Testimonials | Embedded testimonial.to videos | Add video proof section |
-| Clean Hero | Split layout with illustration + clear value prop | Modernize hero (keep video but simplify overlay) |
-
-### Current Issues with myhorizon.ai
-
-1. **Outdated Aesthetic**: Clotheslines, wooden clothespins, vintage photo effects don't match the modern SYNTHIOS and Pocket Marketer brands
-2. **No Product Integration**: SYNTHIOS Box is a real product but isn't featured
-3. **Cal.com Setup**: Only using 1 of 3 booking links
+This plan addresses two major issues:
+1. **Remove outdated/misplaced sections** - The "film reel" style Portfolio display with random images doesn't fit the modern aesthetic
+2. **Modernize all copy** - Shift language from "chatbots" to "AI systems, agents, workflows, and swarms" to reflect what MyHorizon actually builds
 
 ---
 
-## Cal.com Booking Strategy
+## What We're Fixing
 
-### Recommended Configuration
+### Problem 1: The Portfolio Section Display Issue
+The screenshot shows a chaotic grid of forest/animal images that don't belong. Looking at the code, the Portfolio section has proper case study cards - but there may be rendering issues or the section itself is competing with the modern aesthetic.
 
-| Booking Type | Link | Where to Use | Best For |
-|--------------|------|--------------|----------|
-| **SYNTHIOS Box** | `myhorizon/synthios-box` (15 min) | SYNTHIOS product cards, navigation "Buy SYNTHIOS" CTA | Prospects who want to buy the hardware product |
-| **Business Integration** | `myhorizon/business-integration` (30 min) | Services section, "Get a Custom Quote" buttons | Companies needing custom automation work |
-| **General Consultation** | `myhorizon/consultation` (30 min) | Main Contact section (keep as-is), Hero "Get Started" | General inquiries, first-time visitors |
+**Decision:** Either completely redesign Portfolio or temporarily remove it since the case studies could be better showcased through a different approach (testimonials, logos, or results-focused design).
 
-### Implementation Approach
-
-**Option A: Tabbed Calendar Interface (Recommended)**
-Create a booking section with 3 tabs so visitors can self-select:
-
-```
-[ SYNTHIOS Box Questions ] [ Custom Automation ] [ General Consultation ]
-         15 min                  30 min                30 min
-```
-
-Each tab loads the appropriate Cal.com embed.
-
-**Option B: Smart CTA Routing**
-Keep one calendar in Contact section (general), but add contextual booking buttons throughout:
-- SYNTHIOS product cards link to `synthios-box`
-- Services section links to `business-integration`
-- Navigation/Hero links to `consultation`
+### Problem 2: Outdated Copy Throughout Site
+Current language uses terms like "chatbots" which undersells what you actually build. You're working with:
+- Full AI **systems**
+- Autonomous **agents**
+- Intelligent **workflows**
+- Multi-agent **swarms**
 
 ---
 
-## Site Redesign Plan
+## Changes to Make
 
-### Phase 1: Immediate Fixes (Clean Up)
+### 1. Navigation Cleanup
+**File:** `src/components/Navigation.tsx`
 
-1. **Remove vintage aesthetic from Services section**
-   - Replace clotheslines with clean grid cards
-   - Use icon + title + description format (like Pocket Marketer)
-   - Keep the dark theme but modernize
+- Remove "Team" from nav links (section was already deleted)
+- Update nav to reflect actual sections: Portfolio → "Case Studies" or remove
 
-2. **Add SYNTHIOS Box feature section**
-   - Create a dedicated "Our Product" or "SYNTHIOS" section
-   - Link to synthios.myhorizon.ai for full details
-   - Add the $2,000 pricing and key features
+### 2. Hero Section Copy Update
+**File:** `src/components/Hero.tsx`
 
-3. **Implement all 3 Cal.com booking links**
-   - Either tabbed interface or contextual buttons
+**Current:**
+> "Custom AI chatbots, workflow automation, and intelligent systems..."
 
-### Phase 2: Adopt Pocket Marketer Patterns
+**New:**
+> "Complete AI systems, autonomous agents, and intelligent workflows that run your business 24/7."
 
-1. **Add social proof bar** under hero headline
-   - Avatar stack + "Trusted by X businesses"
-   - Scrolling logo bar of client companies
+### 3. Services Section Overhaul
+**File:** `src/components/Services.tsx`
 
-2. **Create problem/solution framing**
-   - "Why Your Current Approach Isn't Working" section
-   - Mirror the "3 Invisible Traps" structure
+| Current Title | New Title | Why |
+|--------------|-----------|-----|
+| "AI Chatbots & Agents" | "AI Agents & Voice Systems" | You build full agents, not just chatbots |
+| "Workflow Automation" | "Intelligent Workflows" | Emphasize AI-driven, not just Zapier |
+| "CRM Integration" | "CRM & Pipeline Automation" | Same |
+| "Content Generation" | "Content & Marketing AI" | Same |
+| "Data & Insights" | "AI Analytics & Insights" | Same |
+| "Custom Solutions" | "Custom AI Systems" | Emphasize systems thinking |
 
-3. **Add persona targeting section**
-   - "Who We Help" with cards for different business types
-   - Each persona links to appropriate booking type
+**Section header update:**
+- Current: "What We Automate"
+- New: "What We Build"
+- Subtitle: From "Stop paying for tools you don't use..." to "Enterprise-grade AI infrastructure scaled for your business."
 
-4. **Video testimonials section**
-   - Integrate testimonial.to or similar
-   - Add 2-3 video testimonials
+### 4. Portfolio Section Decision
+**File:** `src/App.tsx` and `src/components/Portfolio.tsx`
 
-### Phase 3: Polish
+**Option A (Recommended):** Simplify to a "Results" section
+- Keep the 3 case studies but present as compact cards
+- Remove the "View More Projects" button if there aren't more
+- Focus on metrics and outcomes
 
-1. **Modernize Team section** (remove "WANTED poster" aesthetic)
-2. **Clean up About section** (remove film strip elements)
-3. **Add Pocket Marketer cross-promotion** (as a featured product)
-4. **Performance optimization** (compress hero video)
+**Option B:** Remove temporarily
+- Delete Portfolio section entirely
+- Add it back when you have proper video testimonials and client logos
+
+### 5. About Section Copy Update
+**File:** `src/components/About.tsx`
+
+The storyboard image caption currently says:
+> "Every automation journey is unique — tailored to your specific business needs"
+
+**New:**
+> "Every AI system is architected for your specific business requirements"
+
+### 6. Contact Section Copy Update
+**File:** `src/components/Contact.tsx`
+
+**Current header:**
+> "Ready to Automate Your Business?"
+
+**New:**
+> "Ready to Deploy AI Systems That Work?"
+
+**Current subtitle:**
+> "Choose the call type that fits your needs"
+
+**New:**
+> "Schedule a strategy session with our team"
+
+---
+
+## Updated Messaging Framework
+
+### New Language to Use Throughout
+
+| Old Term | New Term |
+|----------|----------|
+| Chatbot | AI Agent / Voice Agent / System |
+| Automation | Intelligent Workflow / AI System |
+| Tools | AI Infrastructure |
+| Integrate | Architect / Deploy |
+| Repetitive tasks | Manual operations |
+
+### Tagline Options
+- "AI Systems That Actually Work"
+- "AI Infrastructure for Growing Businesses"
+- "Deploy AI. Automate Everything."
 
 ---
 
@@ -120,57 +123,51 @@ Keep one calendar in Contact section (general), but add contextual booking butto
 
 | File | Changes |
 |------|---------|
-| `src/components/Services.tsx` | Complete redesign - remove clotheslines, use modern card grid |
-| `src/components/Contact.tsx` | Add tabbed Cal.com interface with all 3 booking types |
-| `src/components/Navigation.tsx` | Add direct booking link or dropdown for booking options |
-| `src/components/Hero.tsx` | Add social proof bar, direct booking button |
-| `src/App.tsx` | Add SYNTHIOS product section |
-| New: `src/components/SynthiosProduct.tsx` | SYNTHIOS Box feature section |
-| New: `src/components/WhoWeHelp.tsx` | Persona targeting section |
+| `src/components/Navigation.tsx` | Remove "Team" link from navLinks array |
+| `src/components/Hero.tsx` | Update tagline copy |
+| `src/components/Services.tsx` | Update service titles, descriptions, and section headers |
+| `src/components/About.tsx` | Update caption text |
+| `src/components/Contact.tsx` | Update section headers |
+| `src/App.tsx` | Optionally remove Portfolio section or keep |
 
-### Cal.com Tab Implementation
+### Estimated Changes
 
+Navigation cleanup:
 ```tsx
-const bookingOptions = [
-  {
-    id: 'synthios-box',
-    title: 'SYNTHIOS Box Questions',
-    duration: '15 min',
-    calLink: 'myhorizon/synthios-box',
-    description: 'Quick call about our AI hardware product'
-  },
-  {
-    id: 'business-integration',
-    title: 'Custom Automation',
-    duration: '30 min',
-    calLink: 'myhorizon/business-integration',
-    description: 'Discuss custom AI solutions for your business'
-  },
-  {
-    id: 'consultation',
-    title: 'General Consultation',
-    duration: '30 min',
-    calLink: 'myhorizon/consultation',
-    description: 'Explore how AI can help your business'
-  }
+const navLinks = [
+  { label: 'Results', id: 'portfolio' },  // or remove
+  { label: 'About', id: 'about' },
+  { label: 'Services', id: 'services' },
+  // Team removed
+  { label: 'Contact', id: 'contact' }
 ]
 ```
 
-### Cross-Site Brand Consistency
-
-All three sites should share:
-- Dark themes with cyan/teal accent colors
-- Clean, modern typography (no vintage effects)
-- Similar button styles and CTAs
-- Consistent pricing presentation
+Services array update example:
+```tsx
+const services = [
+  {
+    id: 'agents',
+    title: "AI Agents & Voice Systems",
+    description: "Autonomous agents that handle customer conversations, qualify leads, and execute tasks without human intervention.",
+    icon: Bot,
+    accent: 'accent-blue',
+    stats: "24/7 Operations"
+  },
+  // ...more updated services
+]
+```
 
 ---
 
-## Summary
+## Summary of Changes
 
-This plan unifies your three properties (myhorizon.ai, synthios.myhorizon.ai, pocketmarketer.ai) into a cohesive brand experience while implementing all three Cal.com booking options in a user-friendly way.
+1. Remove "Team" from navigation (already deleted section)
+2. Update Hero copy to emphasize "AI systems" over "chatbots"
+3. Modernize all 6 Services titles and descriptions
+4. Update section headers across About, Contact
+5. Either simplify Portfolio or remove temporarily
+6. Consistent language: agents, systems, workflows throughout
 
-The key insight: **myhorizon.ai should be the "agency" hub that showcases SYNTHIOS Box as your product and Pocket Marketer as a partner tool, while offering custom automation services.**
-
-Ready to implement when you approve.
+This positions MyHorizon as a serious AI infrastructure company, not just a "chatbot builder."
 
