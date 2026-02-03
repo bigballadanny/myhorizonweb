@@ -1,109 +1,176 @@
-# MyHorizon Complete Transformation Plan
 
-## Status: Sprint 1 Complete ✅
+
+# MyHorizon Site Upgrade Plan
+
+## What I Discovered
+
+### Your Product Ecosystem (This is exciting!)
+
+**1. SYNTHIOS Box** (synthios.myhorizon.ai) - Your flagship hardware product
+- Mac Mini M4 with pre-installed AI assistant
+- $2,000 one-time purchase
+- Handles email, calendar, tasks
+- Text via Telegram/WhatsApp
+- "5 Hours Or Free" guarantee
+- Clean, dark theme with cyan/teal accents
+
+**2. Pocket Marketer** (pocketmarketer.ai) - Your SaaS product
+- AI marketing strategy + execution platform
+- "The Software That Replaces $100K Worth of Marketers"
+- Strong social proof (testimonials, video testimonials, case studies)
+- Clean, light theme with blue accents
+- Great design patterns: problem/solution framing, comparison tables, persona targeting
+
+### Design Patterns to Adopt from Pocket Marketer
+
+| Pattern | What They Do | How to Apply |
+|---------|--------------|--------------|
+| Problem Framing | "3 Invisible Traps" section | Reframe services as solutions to pain points |
+| Social Proof Bar | Avatar stack + "Join Hundreds of business owners" | Add trust indicators near CTAs |
+| Comparison Table | Shows agency vs freelancer vs tools costs | Show ROI of AI automation |
+| Persona Cards | "A Small Business Owner wants X, We give Y" | Target different customer types |
+| Video Testimonials | Embedded testimonial.to videos | Add video proof section |
+| Clean Hero | Split layout with illustration + clear value prop | Modernize hero (keep video but simplify overlay) |
+
+### Current Issues with myhorizon.ai
+
+1. **Outdated Aesthetic**: Clotheslines, wooden clothespins, vintage photo effects don't match the modern SYNTHIOS and Pocket Marketer brands
+2. **No Product Integration**: SYNTHIOS Box is a real product but isn't featured
+3. **Cal.com Setup**: Only using 1 of 3 booking links
 
 ---
 
-## Completed Tasks
+## Cal.com Booking Strategy
 
-### ✅ ElevenLabs Connector Linked
-- Connected "MyHorizon Asst" ElevenLabs connector
-- `ELEVENLABS_API_KEY` now available in edge functions
+### Recommended Configuration
 
-### ✅ ElevenLabs Widget Rebuilt with React SDK
-- Replaced embed widget with `@elevenlabs/react` SDK
-- Uses `useConversation` hook for full lifecycle control
-- Real-time transcript capture via `onMessage` callbacks
-- Automatic conversation save on disconnect
-- Custom UI with status indicators and tooltips
-- Supports both public (agentId) and private (signedUrl) agents
+| Booking Type | Link | Where to Use | Best For |
+|--------------|------|--------------|----------|
+| **SYNTHIOS Box** | `myhorizon/synthios-box` (15 min) | SYNTHIOS product cards, navigation "Buy SYNTHIOS" CTA | Prospects who want to buy the hardware product |
+| **Business Integration** | `myhorizon/business-integration` (30 min) | Services section, "Get a Custom Quote" buttons | Companies needing custom automation work |
+| **General Consultation** | `myhorizon/consultation` (30 min) | Main Contact section (keep as-is), Hero "Get Started" | General inquiries, first-time visitors |
 
-### ✅ Conversation Token Edge Function
-- Created `elevenlabs-conversation-token` function
-- Auto-detects public vs private agents
-- Returns `agent_id` for public agents, `signed_url` for private
+### Implementation Approach
 
-### ✅ Sync Conversations Edge Function
-- `sync-elevenlabs` function polls ElevenLabs API
-- Fallback for any missed conversations
-- Creates leads from collected contact info
+**Option A: Tabbed Calendar Interface (Recommended)**
+Create a booking section with 3 tabs so visitors can self-select:
 
-### ✅ Admin Panel Integration
-- Added ElevenLabs section to IntegrationsSettings
-- "Sync Conversations" button for manual sync
-- Shows last sync time and agent ID
+```
+[ SYNTHIOS Box Questions ] [ Custom Automation ] [ General Consultation ]
+         15 min                  30 min                30 min
+```
+
+Each tab loads the appropriate Cal.com embed.
+
+**Option B: Smart CTA Routing**
+Keep one calendar in Contact section (general), but add contextual booking buttons throughout:
+- SYNTHIOS product cards link to `synthios-box`
+- Services section links to `business-integration`
+- Navigation/Hero links to `consultation`
 
 ---
 
-## Next: Sprint 2 - Landing Page Transformation
+## Site Redesign Plan
+
+### Phase 1: Immediate Fixes (Clean Up)
+
+1. **Remove vintage aesthetic from Services section**
+   - Replace clotheslines with clean grid cards
+   - Use icon + title + description format (like Pocket Marketer)
+   - Keep the dark theme but modernize
+
+2. **Add SYNTHIOS Box feature section**
+   - Create a dedicated "Our Product" or "SYNTHIOS" section
+   - Link to synthios.myhorizon.ai for full details
+   - Add the $2,000 pricing and key features
+
+3. **Implement all 3 Cal.com booking links**
+   - Either tabbed interface or contextual buttons
+
+### Phase 2: Adopt Pocket Marketer Patterns
+
+1. **Add social proof bar** under hero headline
+   - Avatar stack + "Trusted by X businesses"
+   - Scrolling logo bar of client companies
+
+2. **Create problem/solution framing**
+   - "Why Your Current Approach Isn't Working" section
+   - Mirror the "3 Invisible Traps" structure
+
+3. **Add persona targeting section**
+   - "Who We Help" with cards for different business types
+   - Each persona links to appropriate booking type
+
+4. **Video testimonials section**
+   - Integrate testimonial.to or similar
+   - Add 2-3 video testimonials
+
+### Phase 3: Polish
+
+1. **Modernize Team section** (remove "WANTED poster" aesthetic)
+2. **Clean up About section** (remove film strip elements)
+3. **Add Pocket Marketer cross-promotion** (as a featured product)
+4. **Performance optimization** (compress hero video)
+
+---
+
+## Technical Details
 
 ### Files to Modify
-| File | Action | Description |
-|------|--------|-------------|
-| `src/components/Services.tsx` | Complete rewrite | Remove clothesline, modern grid |
-| `src/components/About.tsx` | Complete rewrite | Remove film strip, clean timeline |
-| `src/components/Team.tsx` | Remove/Replace | Replace with tools showcase |
-| `src/components/Awards.tsx` | Already updated | Clean technology partners grid |
-| `src/components/Hero.tsx` | Minor edits | Keep video, refine overlay text |
 
-### New Components to Create
-- `src/components/ProblemSection.tsx` - Pain points with solutions
-- `src/components/HowItWorks.tsx` - 3-4 step process timeline
+| File | Changes |
+|------|---------|
+| `src/components/Services.tsx` | Complete redesign - remove clotheslines, use modern card grid |
+| `src/components/Contact.tsx` | Add tabbed Cal.com interface with all 3 booking types |
+| `src/components/Navigation.tsx` | Add direct booking link or dropdown for booking options |
+| `src/components/Hero.tsx` | Add social proof bar, direct booking button |
+| `src/App.tsx` | Add SYNTHIOS product section |
+| New: `src/components/SynthiosProduct.tsx` | SYNTHIOS Box feature section |
+| New: `src/components/WhoWeHelp.tsx` | Persona targeting section |
 
-### Design Philosophy (pocketmarketer.ai inspired)
-- Direct, confrontational headlines
-- Problem-first structure
-- Clean visual hierarchy with lots of whitespace
-- No gimmicks - no clotheslines, vintage effects, or film strips
+### Cal.com Tab Implementation
 
----
+```tsx
+const bookingOptions = [
+  {
+    id: 'synthios-box',
+    title: 'SYNTHIOS Box Questions',
+    duration: '15 min',
+    calLink: 'myhorizon/synthios-box',
+    description: 'Quick call about our AI hardware product'
+  },
+  {
+    id: 'business-integration',
+    title: 'Custom Automation',
+    duration: '30 min',
+    calLink: 'myhorizon/business-integration',
+    description: 'Discuss custom AI solutions for your business'
+  },
+  {
+    id: 'consultation',
+    title: 'General Consultation',
+    duration: '30 min',
+    calLink: 'myhorizon/consultation',
+    description: 'Explore how AI can help your business'
+  }
+]
+```
 
-## Sprint 3: Back Office Enhancements
+### Cross-Site Brand Consistency
 
-### Planned Improvements
-- Lead activity timeline in LeadDetailDialog
-- Enhanced conversation analysis display
-- Quick action buttons (Email, Schedule, Call)
-- Business metrics dashboard improvements
-
----
-
-## Sprint 4: Google Calendar Integration (Future)
-
-- Replace Cal.com with native Google Calendar API
-- Requires Google Cloud Console setup
-- Custom booking UI in React
-
----
-
-## Technical Notes
-
-### Secrets Configured
-| Secret | Status |
-|--------|--------|
-| ELEVENLABS_API_KEY | ✅ From connector |
-| ELEVENLABS_WEBHOOK_SECRET | ✅ Exists |
-| Eleven_Labs | ✅ Legacy, exists |
-| LOVABLE_API_KEY | ✅ System managed |
-
-### Edge Functions Deployed
-- `elevenlabs-conversation-token` ✅
-- `elevenlabs-webhook` ✅
-- `sync-elevenlabs` ✅
-- `analyze-conversation` ✅
-- `score-lead` ✅
+All three sites should share:
+- Dark themes with cyan/teal accent colors
+- Clean, modern typography (no vintage effects)
+- Similar button styles and CTAs
+- Consistent pricing presentation
 
 ---
 
-## Success Metrics
+## Summary
 
-### ElevenLabs Integration
-- ✅ Connector linked and working
-- ✅ React SDK captures conversations client-side
-- ✅ Manual sync fallback available
-- 🔲 Test end-to-end with real conversation
+This plan unifies your three properties (myhorizon.ai, synthios.myhorizon.ai, pocketmarketer.ai) into a cohesive brand experience while implementing all three Cal.com booking options in a user-friendly way.
 
-### Landing Page (Sprint 2)
-- Remove all vintage/creative elements
-- Implement problem-first structure
-- Premium, minimalist aesthetic
+The key insight: **myhorizon.ai should be the "agency" hub that showcases SYNTHIOS Box as your product and Pocket Marketer as a partner tool, while offering custom automation services.**
+
+Ready to implement when you approve.
+
