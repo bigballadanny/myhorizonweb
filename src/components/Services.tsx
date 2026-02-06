@@ -117,6 +117,7 @@ export function Services() {
                 }`}
                 onMouseEnter={() => setHoveredService(service.id)}
                 onMouseLeave={() => setHoveredService(null)}
+                onClick={scrollToContact}
               >
                 {/* Glow effect on hover */}
                 <div className={`absolute inset-0 rounded-2xl transition-opacity duration-300 pointer-events-none ${
