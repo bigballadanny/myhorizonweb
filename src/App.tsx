@@ -3,7 +3,6 @@ import { Hero } from './components/Hero'
 import { Services } from './components/Services'
 import { Results } from './components/Results'
 import { SynthiosProduct } from './components/SynthiosProduct'
-import { Testimonials } from './components/Testimonials'
 import { Contact } from './components/Contact'
 import { Footer } from './components/Footer'
 import { ElevenLabsWidget } from './components/ElevenLabsWidget'
@@ -23,7 +22,6 @@ export default function App() {
         <section id="synthios" aria-label="SYNTHIOS Product section">
           <SynthiosProduct />
         </section>
-        <Testimonials />
         <section id="contact" aria-label="Contact section">
           <Contact />
         </section>

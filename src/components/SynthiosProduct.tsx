@@ -18,9 +18,9 @@ export function SynthiosProduct() {
   return (
     <section className="relative py-24 lg:py-32 bg-gradient-to-b from-background via-card/50 to-background overflow-hidden">
       
-      {/* Ambient glow */}
-      <div className="absolute top-1/2 left-1/4 w-96 h-96 bg-accent-blue/5 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-accent-emerald/5 rounded-full blur-2xl" />
+      {/* Enhanced ambient glow */}
+      <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] bg-accent-emerald/8 rounded-full blur-[120px]" />
+      <div className="absolute bottom-1/4 right-1/3 w-96 h-96 bg-accent-blue/5 rounded-full blur-[100px]" />
 
       <div className="container mx-auto px-6 sm:px-8 lg:px-12 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
@@ -38,13 +38,13 @@ export function SynthiosProduct() {
               Our Flagship Product
             </div>
             
-            {/* Headline */}
-            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black leading-tight mb-6 text-foreground">
+            {/* Headline - Bigger */}
+            <h2 className="text-5xl sm:text-6xl lg:text-7xl font-black leading-tight mb-6 text-foreground">
               Unlock Your Full Capacity
             </h2>
             
             <p className="text-xl lg:text-2xl text-muted-foreground leading-relaxed mb-8">
-              For professionals who want to do <span className="text-accent-emerald font-semibold">MORE</span>. Delegate the tedious, focus on what matters, and 10x your impact. The SYNTHIOS Box is your personal AI that lives on your desk.
+              For professionals who want to do <span className="text-accent-emerald font-semibold">MORE</span>. Delegate the tedious, focus on what matters, and 10x your impact.
             </p>
             
             {/* Features */}
@@ -69,12 +69,16 @@ export function SynthiosProduct() {
             {/* Price & CTA */}
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
               <div>
-                <div className="flex items-baseline gap-2">
+                <div className="flex items-baseline gap-3">
+                  <span className="text-xl text-muted-foreground line-through">$5,000+</span>
                   <span className="text-4xl font-black text-foreground">$2,000</span>
                   <span className="text-muted-foreground">one-time</span>
                 </div>
                 <p className="text-sm text-muted-foreground mt-1">
                   Includes hardware + setup + training
+                </p>
+                <p className="text-sm text-accent-emerald font-semibold mt-2">
+                  Founder's Batch — Limited Units
                 </p>
               </div>
               
@@ -90,6 +94,7 @@ export function SynthiosProduct() {
                 <Button 
                   size="lg"
                   variant="outline"
+                  className="border-border hover:bg-muted"
                   onClick={() => {
                     const contact = document.getElementById('contact')
                     if (contact) contact.scrollIntoView({ behavior: 'smooth' })
@@ -107,7 +112,7 @@ export function SynthiosProduct() {
             </div>
           </motion.div>
           
-          {/* Right Column - Visual */}
+          {/* Right Column - Visual with enhanced glow */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -115,6 +120,9 @@ export function SynthiosProduct() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="relative"
           >
+            {/* Glow behind card */}
+            <div className="absolute -inset-4 bg-accent-emerald/10 rounded-[2rem] blur-2xl" />
+            
             <div className="relative bg-gradient-to-br from-card via-card to-muted rounded-3xl p-8 lg:p-12 clean-border elevated-shadow">
               
               {/* Limited Availability Badge */}
@@ -126,14 +134,12 @@ export function SynthiosProduct() {
               
               {/* Product Visual */}
               <div className="aspect-square rounded-2xl relative overflow-hidden">
-                {/* Hero Image */}
                 <img 
                   src={synthiosHeroImage} 
-                  alt="SYNTHIOS Box - Mac Mini M4 with AI holographic interface, entrepreneur relaxing in background" 
+                  alt="SYNTHIOS Box - Mac Mini M4 AI workstation" 
                   className="w-full h-full object-cover rounded-2xl"
                 />
                 
-                {/* Subtle overlay for depth */}
                 <div className="absolute inset-0 bg-gradient-to-t from-background/20 via-transparent to-transparent rounded-2xl" />
                 
                 {/* Floating status indicators */}

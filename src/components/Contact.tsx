@@ -141,6 +141,11 @@ export function Contact() {
               })}
             </TabsList>
 
+            {/* Reassurance line */}
+            <p className="text-center text-sm text-muted-foreground mb-6">
+              All calls are free. No sales pressure. We'll map out your opportunities together.
+            </p>
+
             {/* Tab Content */}
             {bookingOptions.map((option) => (
               <TabsContent key={option.id} value={option.id} className="mt-0">

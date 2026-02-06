@@ -195,7 +195,7 @@ export function ElevenLabsWidget() {
             className="absolute bottom-full right-0 mb-3 whitespace-nowrap"
           >
             <div className="bg-foreground text-background px-4 py-2 rounded-lg shadow-lg text-sm font-medium">
-              Talk to our AI assistant
+              Talk to our AI
               <div className="absolute -bottom-1 right-6 w-2 h-2 bg-foreground rotate-45" />
             </div>
           </motion.div>
@@ -260,12 +260,18 @@ export function ElevenLabsWidget() {
           <Phone className="w-7 h-7 text-primary-foreground" />
         )}
 
-        {/* Pulsing ring when connected */}
-        {isConnected && (
+        {/* Pulsing ring - idle or connected */}
+        {isConnected ? (
           <motion.div
             className="absolute inset-0 rounded-full border-2 border-destructive"
             animate={{ scale: [1, 1.3, 1], opacity: [1, 0, 1] }}
             transition={{ duration: 2, repeat: Infinity }}
+          />
+        ) : !isConnecting && (
+          <motion.div
+            className="absolute inset-0 rounded-full border-2 border-primary/40"
+            animate={{ scale: [1, 1.4, 1], opacity: [0.6, 0, 0.6] }}
+            transition={{ duration: 3, repeat: Infinity }}
           />
         )}
       </motion.button>

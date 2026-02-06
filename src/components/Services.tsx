@@ -128,12 +128,12 @@ export function Services() {
                 }`} />
                 
                 {/* Icon */}
-                <div className={`relative w-14 h-14 rounded-xl flex items-center justify-center mb-6 transition-colors duration-300 ${
+                <div className={`relative w-16 h-16 rounded-xl flex items-center justify-center mb-6 transition-colors duration-300 ${
                   service.accent === 'accent-blue' ? 'bg-accent-blue/10 text-accent-blue' :
                   service.accent === 'accent-emerald' ? 'bg-accent-emerald/10 text-accent-emerald' :
                   'bg-accent-purple/10 text-accent-purple'
                 }`}>
-                  <Icon className="w-7 h-7" />
+                  <Icon className="w-8 h-8" />
                 </div>
                 
                 {/* Content */}
