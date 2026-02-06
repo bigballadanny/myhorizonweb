@@ -130,7 +130,7 @@ export function Footer() {
               © 2026 MyHorizon. All rights reserved.
             </div>
             <div className="text-sm text-background/70">
-              Brownsville, TX, USA
+              AI Systems & Automation
             </div>
           </div>
         </div>

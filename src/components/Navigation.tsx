@@ -2,15 +2,11 @@ import { useState, useEffect } from 'react'
 import { Menu, X } from 'lucide-react'
 import { Button } from './ui/button'
 import { ThemeToggle } from './ThemeToggle'
-import { useAuth } from '@/hooks/useAuth'
-import { useNavigate } from 'react-router-dom'
 import logoIcon from '@/assets/myhorizon-logo-clean.png'
 
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const { isAuthenticated } = useAuth()
-  const navigate = useNavigate()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -37,14 +33,6 @@ export function Navigation() {
     { label: 'SYNTHIOS', id: 'synthios' },
     { label: 'Contact', id: 'contact' }
   ]
-
-  const handleAdminClick = () => {
-    if (isAuthenticated) {
-      navigate('/admin')
-    } else {
-      navigate('/auth')
-    }
-  }
 
   return (
     <nav
@@ -80,13 +68,6 @@ export function Navigation() {
                 {link.label}
               </button>
             ))}
-            
-            <button
-              onClick={handleAdminClick}
-              className="text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors"
-            >
-              {isAuthenticated ? 'Dashboard' : 'Admin'}
-            </button>
             
             {/* Theme Toggle */}
             <ThemeToggle />
