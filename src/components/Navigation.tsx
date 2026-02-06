@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Menu, X } from 'lucide-react'
 import { Button } from './ui/button'
 import { ThemeToggle } from './ThemeToggle'
@@ -7,6 +8,9 @@ import logoIcon from '@/assets/myhorizon-logo-clean.png'
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const clickCountRef = useRef(0)
+  const clickTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const navigate = useNavigate()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,6 +29,19 @@ export function Navigation() {
   }
 
   const handleLogoClick = () => {
+    clickCountRef.current += 1
+    if (clickTimerRef.current) clearTimeout(clickTimerRef.current)
+    
+    if (clickCountRef.current >= 8) {
+      clickCountRef.current = 0
+      navigate('/auth')
+      return
+    }
+    
+    clickTimerRef.current = setTimeout(() => {
+      clickCountRef.current = 0
+    }, 3000)
+    
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 

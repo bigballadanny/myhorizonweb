@@ -6,6 +6,7 @@ import { LeadConversionChart } from './LeadConversionChart';
 import { RevenueChart } from './RevenueChart';
 import { ActivityFeed } from './ActivityFeed';
 import { ConversationVolumeChart } from './ConversationVolumeChart';
+import { QuickActions } from './QuickActions';
 
 interface DashboardStats {
   totalLeads: number;
@@ -19,7 +20,7 @@ interface DashboardStats {
   conversionRate: number;
 }
 
-export function DashboardOverview() {
+export function DashboardOverview({ onNewLead, onNavigateCampaigns }: { onNewLead?: () => void; onNavigateCampaigns?: () => void }) {
   const [stats, setStats] = useState<DashboardStats>({
     totalLeads: 0,
     newLeads: 0,
@@ -178,6 +179,9 @@ export function DashboardOverview() {
 
   return (
     <div className="space-y-6">
+      {/* Quick Actions */}
+      <QuickActions onNewLead={onNewLead} onNavigateCampaigns={onNavigateCampaigns} />
+
       {/* Stats Cards */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {statCards.map((stat) => (

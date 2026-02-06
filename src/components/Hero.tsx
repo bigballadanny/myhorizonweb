@@ -32,6 +32,18 @@ export function Hero() {
         className="absolute bottom-16 sm:bottom-20 left-4 sm:left-6 lg:left-12 right-4 sm:right-auto z-40"
       >
         <div className="max-w-3xl">
+          {/* Agency Badge */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="mb-4"
+          >
+            <span className="inline-block px-4 py-1.5 text-xs font-bold tracking-widest uppercase bg-white/10 border border-white/20 rounded-full text-white/90 backdrop-blur-sm">
+              AI Automation Agency
+            </span>
+          </motion.div>
+
           {/* Social Proof Bar */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}

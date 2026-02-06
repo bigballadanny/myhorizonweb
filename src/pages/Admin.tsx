@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { LogOut, Calendar, Settings, BarChart3, Loader2, Users, Plus, LayoutDashboard } from 'lucide-react';
+import { LogOut, Calendar, Settings, BarChart3, Loader2, Users, Plus, LayoutDashboard, Mail } from 'lucide-react';
 import logoIcon from '@/assets/myhorizon-logo-clean.png';
 import { CreateLeadDialog } from '@/components/admin/CreateLeadDialog';
 import { CreateAppointmentDialog } from '@/components/admin/CreateAppointmentDialog';
@@ -16,6 +16,7 @@ import { DashboardOverview } from '@/components/admin/DashboardOverview';
 import { ActivityFeed } from '@/components/admin/ActivityFeed';
 import { AppointmentsCalendar } from '@/components/admin/AppointmentsCalendar';
 import { ConversationInsights } from '@/components/admin/ConversationInsights';
+import { EmailCampaigns } from '@/components/admin/EmailCampaigns';
 import { useAuth } from '@/hooks/useAuth';
 import { Badge } from '@/components/ui/badge';
 
@@ -24,6 +25,7 @@ export default function Admin() {
   const [showCreateAppointment, setShowCreateAppointment] = useState(false);
   const [selectedLead, setSelectedLead] = useState<any>(null);
   const [showLeadDetail, setShowLeadDetail] = useState(false);
+  const [activeTab, setActiveTab] = useState('dashboard');
   const navigate = useNavigate();
   const { isAuthenticated, isLoading, adminUser, signOut, isSuperAdmin } = useAuth();
 
@@ -87,7 +89,7 @@ export default function Admin() {
       </header>
 
       <main className="container mx-auto px-4 py-8">
-        <Tabs defaultValue="dashboard" className="space-y-4">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
           <TabsList>
             <TabsTrigger value="dashboard">
               <LayoutDashboard className="mr-2 h-4 w-4" />
@@ -103,6 +105,10 @@ export default function Admin() {
             </TabsTrigger>
             <TabsTrigger value="conversations">
               Conversations
+            </TabsTrigger>
+            <TabsTrigger value="campaigns">
+              <Mail className="mr-2 h-4 w-4" />
+              Campaigns
             </TabsTrigger>
             {isSuperAdmin && (
               <TabsTrigger value="users">
@@ -124,7 +130,10 @@ export default function Admin() {
               </div>
               {isSuperAdmin && <SampleDataGenerator />}
             </div>
-            <DashboardOverview />
+            <DashboardOverview
+              onNewLead={() => setShowCreateLead(true)}
+              onNavigateCampaigns={() => setActiveTab('campaigns')}
+            />
           </TabsContent>
 
           <TabsContent value="pipeline" className="space-y-4">
@@ -161,6 +170,10 @@ export default function Admin() {
 
           <TabsContent value="conversations" className="space-y-4">
             <ConversationInsights />
+          </TabsContent>
+
+          <TabsContent value="campaigns" className="space-y-4">
+            <EmailCampaigns />
           </TabsContent>
 
           {isSuperAdmin && (

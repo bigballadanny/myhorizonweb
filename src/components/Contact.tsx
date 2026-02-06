@@ -169,7 +169,7 @@ export function Contact() {
                   </div>
                   
                   {/* Cal.com Embed Container */}
-                  <div className="p-0 bg-white">
+                  <div className="p-0 bg-background dark:bg-card/50">
                     <div 
                       className="w-full min-h-[500px] sm:min-h-[600px]"
                       style={{ overflow: 'auto' }} 
