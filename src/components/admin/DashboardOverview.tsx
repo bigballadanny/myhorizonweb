@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { supabase } from '@/integrations/supabase/client';
-import { Users, Calendar, TrendingUp, Phone, BarChart, Target, DollarSign } from 'lucide-react';
+import { Users, Calendar, TrendingUp, Phone, BarChart, Target, DollarSign, Eye } from 'lucide-react';
 import { LeadConversionChart } from './LeadConversionChart';
 import { RevenueChart } from './RevenueChart';
 import { ActivityFeed } from './ActivityFeed';
@@ -21,6 +21,7 @@ interface DashboardStats {
   weekLeads: number; lastWeekLeads: number;
   weekAppointments: number; lastWeekAppointments: number;
   weekConversations: number; lastWeekConversations: number;
+  uniqueVisitors: number; returningVisitors: number;
 }
 
 export function DashboardOverview({ onNewLead, onNavigateCampaigns }: { onNewLead?: () => void; onNavigateCampaigns?: () => void }) {
@@ -29,7 +30,7 @@ export function DashboardOverview({ onNewLead, onNavigateCampaigns }: { onNewLea
     totalAppointments: 0, upcomingAppointments: 0, totalConversations: 0,
     avgLeadScore: 0, conversionRate: 0, pipelineValue: 0,
     weekLeads: 0, lastWeekLeads: 0, weekAppointments: 0, lastWeekAppointments: 0,
-    weekConversations: 0, lastWeekConversations: 0,
+    weekConversations: 0, lastWeekConversations: 0, uniqueVisitors: 0, returningVisitors: 0,
   });
   const [isLoading, setIsLoading] = useState(true);
 
@@ -50,6 +51,7 @@ export function DashboardOverview({ onNewLead, onNavigateCampaigns }: { onNewLea
     const { data: leads } = await supabase.from('leads').select('status, ai_score, created_at');
     const { data: appointments } = await supabase.from('appointments').select('start_time, status, created_at');
     const { data: conversations } = await supabase.from('conversations').select('id, created_at');
+    const { data: visitors } = await supabase.from('visitor_sessions').select('fingerprint_hash, is_returning, visit_count, session_duration_seconds, pages_viewed, last_seen_at');
 
     const totalLeads = leads?.length || 0;
     const newLeads = leads?.filter(l => l.status === 'new').length || 0;
@@ -72,10 +74,15 @@ export function DashboardOverview({ onNewLead, onNavigateCampaigns }: { onNewLea
     const weekConversations = conversations?.filter(c => isAfter(new Date(c.created_at), weekAgo)).length || 0;
     const lastWeekConversations = conversations?.filter(c => isAfter(new Date(c.created_at), twoWeeksAgo) && !isAfter(new Date(c.created_at), weekAgo)).length || 0;
 
+    const uniqueFingerprints = new Set(visitors?.map(v => v.fingerprint_hash) || []);
+    const uniqueVisitors = uniqueFingerprints.size;
+    const returningVisitors = visitors?.filter(v => v.is_returning).length || 0;
+
     setStats({
       totalLeads, newLeads, qualifiedLeads, convertedLeads, totalAppointments, upcomingAppointments,
       totalConversations, avgLeadScore, conversionRate, pipelineValue,
       weekLeads, lastWeekLeads, weekAppointments, lastWeekAppointments, weekConversations, lastWeekConversations,
+      uniqueVisitors, returningVisitors,
     });
     setIsLoading(false);
   };
@@ -92,7 +99,7 @@ export function DashboardOverview({ onNewLead, onNavigateCampaigns }: { onNewLea
     { title: 'Qualified Leads', value: stats.qualifiedLeads, change: `${stats.conversionRate}% conversion`, icon: Target, color: 'text-green-600', bgColor: 'bg-green-100 dark:bg-green-900/20' },
     { title: 'Appointments', value: stats.totalAppointments, change: `${stats.upcomingAppointments} upcoming`, icon: Calendar, color: 'text-purple-600', bgColor: 'bg-purple-100 dark:bg-purple-900/20' },
     { title: 'Conversations', value: stats.totalConversations, change: 'AI powered calls', icon: Phone, color: 'text-orange-600', bgColor: 'bg-orange-100 dark:bg-orange-900/20' },
-    { title: 'Converted', value: stats.convertedLeads, change: `${stats.conversionRate}% rate`, icon: TrendingUp, color: 'text-emerald-600', bgColor: 'bg-emerald-100 dark:bg-emerald-900/20' },
+    { title: 'Visitors', value: stats.uniqueVisitors, change: `${stats.returningVisitors} returning`, icon: Eye, color: 'text-cyan-600', bgColor: 'bg-cyan-100 dark:bg-cyan-900/20' },
   ];
 
   if (isLoading) {
@@ -147,6 +154,7 @@ export function DashboardOverview({ onNewLead, onNavigateCampaigns }: { onNewLea
           </Card>
         ))}
       </div>
+
 
       <div className="grid gap-4 md:grid-cols-2"><LeadConversionChart /><RevenueChart /></div>
       <ConversationVolumeChart />

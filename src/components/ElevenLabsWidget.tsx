@@ -33,8 +33,11 @@ export function ElevenLabsWidget() {
       console.log('ElevenLabs: Disconnected from agent');
       conversationDataRef.current.endTime = new Date();
       
-      // Save conversation to database when disconnected
-      await saveConversation();
+      // Save conversation to database then process for lead extraction
+      const convId = await saveConversation();
+      if (convId) {
+        processConversation(convId);
+      }
     },
     onMessage: (message) => {
       console.log('ElevenLabs message:', message);
@@ -76,21 +79,34 @@ export function ElevenLabsWidget() {
     return () => clearTimeout(timer);
   }, []);
 
-  const saveConversation = async () => {
+  const processConversation = async (conversationId: string) => {
+    try {
+      const { data, error } = await supabase.functions.invoke('process-conversation', {
+        body: { conversation_id: conversationId },
+      });
+      if (error) {
+        console.error('Process conversation error:', error);
+      } else {
+        console.log('Lead extracted:', data);
+      }
+    } catch (err) {
+      console.error('Failed to process conversation:', err);
+    }
+  };
+
+  const saveConversation = async (): Promise<string | null> => {
     const data = conversationDataRef.current;
     
     if (data.transcripts.length === 0) {
       console.log('No transcripts to save');
-      return;
+      return null;
     }
 
     try {
-      // Format transcript
       const formattedTranscript = data.transcripts
         .map(t => `${t.role}: ${t.text}`)
         .join('\n');
 
-      // Calculate duration
       const durationSeconds = data.startTime && data.endTime
         ? Math.floor((data.endTime.getTime() - data.startTime.getTime()) / 1000)
         : null;
@@ -100,7 +116,6 @@ export function ElevenLabsWidget() {
         duration: durationSeconds 
       });
 
-      // Insert conversation
       const { data: convData, error: convError } = await supabase
         .from('conversations')
         .insert({
@@ -119,12 +134,15 @@ export function ElevenLabsWidget() {
 
       if (convError) {
         console.error('Error saving conversation:', convError);
+        return null;
       } else {
         console.log('Conversation saved:', convData?.id);
+        return convData?.id || null;
       }
 
     } catch (err) {
       console.error('Failed to save conversation:', err);
+      return null;
     }
   };
 

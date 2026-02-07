@@ -7,6 +7,7 @@ import { SynthiosProduct } from './components/SynthiosProduct'
 import { Contact } from './components/Contact'
 import { Footer } from './components/Footer'
 import { ElevenLabsWidget } from './components/ElevenLabsWidget'
+import { useVisitorTracking } from './hooks/useVisitorTracking'
 
 const sectionVariants = {
   hidden: { opacity: 0, y: 30 },
@@ -14,6 +15,7 @@ const sectionVariants = {
 }
 
 export default function App() {
+  useVisitorTracking();
   return (
     <div className="min-h-screen bg-background text-foreground" style={{ overflow: 'visible' }}>
       <Navigation />

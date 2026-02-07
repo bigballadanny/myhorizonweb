@@ -14,6 +14,33 @@ export type Database = {
   }
   public: {
     Tables: {
+      admin_chat_messages: {
+        Row: {
+          admin_user_id: string
+          content: string
+          created_at: string
+          id: string
+          metadata: Json | null
+          role: string
+        }
+        Insert: {
+          admin_user_id: string
+          content: string
+          created_at?: string
+          id?: string
+          metadata?: Json | null
+          role: string
+        }
+        Update: {
+          admin_user_id?: string
+          content?: string
+          created_at?: string
+          id?: string
+          metadata?: Json | null
+          role?: string
+        }
+        Relationships: []
+      }
       admin_users: {
         Row: {
           auth_user_id: string | null
@@ -426,6 +453,81 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      visitor_sessions: {
+        Row: {
+          conversation_id: string | null
+          created_at: string
+          fingerprint_hash: string
+          first_seen_at: string
+          id: string
+          is_returning: boolean
+          language: string
+          last_seen_at: string
+          lead_id: string | null
+          page_url: string
+          pages_viewed: Json
+          referrer: string | null
+          screen_resolution: string
+          session_duration_seconds: number | null
+          timezone: string
+          user_agent: string
+          visit_count: number
+        }
+        Insert: {
+          conversation_id?: string | null
+          created_at?: string
+          fingerprint_hash: string
+          first_seen_at?: string
+          id?: string
+          is_returning?: boolean
+          language?: string
+          last_seen_at?: string
+          lead_id?: string | null
+          page_url?: string
+          pages_viewed?: Json
+          referrer?: string | null
+          screen_resolution?: string
+          session_duration_seconds?: number | null
+          timezone?: string
+          user_agent?: string
+          visit_count?: number
+        }
+        Update: {
+          conversation_id?: string | null
+          created_at?: string
+          fingerprint_hash?: string
+          first_seen_at?: string
+          id?: string
+          is_returning?: boolean
+          language?: string
+          last_seen_at?: string
+          lead_id?: string | null
+          page_url?: string
+          pages_viewed?: Json
+          referrer?: string | null
+          screen_resolution?: string
+          session_duration_seconds?: number | null
+          timezone?: string
+          user_agent?: string
+          visit_count?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "visitor_sessions_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "conversations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "visitor_sessions_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
