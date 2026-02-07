@@ -4,6 +4,12 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Bot, Workflow, Users, FileText, BarChart3, Cog, ArrowRight } from 'lucide-react'
 import { Button } from './ui/button'
+import serviceAgents from '@/assets/service-ai-agents.png'
+import serviceWorkflows from '@/assets/service-workflows.png'
+import serviceCrm from '@/assets/service-crm.png'
+import serviceContent from '@/assets/service-content.png'
+import serviceAnalytics from '@/assets/service-analytics.png'
+import serviceCustom from '@/assets/service-custom.png'
 
 export function Services() {
   const [hoveredService, setHoveredService] = useState<string | null>(null)
@@ -15,7 +21,8 @@ export function Services() {
       description: "Autonomous agents that handle customer conversations, qualify leads, and execute tasks without human intervention.",
       icon: Bot,
       accent: 'accent-blue',
-      stats: "24/7 Operations"
+      stats: "24/7 Operations",
+      image: serviceAgents,
     },
     {
       id: 'workflow',
@@ -23,7 +30,8 @@ export function Services() {
       description: "AI-driven process automation that connects your systems and makes decisions in real-time.",
       icon: Workflow,
       accent: 'accent-emerald',
-      stats: "20+ hrs saved/week"
+      stats: "20+ hrs saved/week",
+      image: serviceWorkflows,
     },
     {
       id: 'crm',
@@ -31,7 +39,8 @@ export function Services() {
       description: "Smart lead scoring, automated nurturing sequences, and pipeline optimization that closes deals.",
       icon: Users,
       accent: 'accent-purple',
-      stats: "3x conversion rate"
+      stats: "3x conversion rate",
+      image: serviceCrm,
     },
     {
       id: 'content',
@@ -39,7 +48,8 @@ export function Services() {
       description: "Multi-agent systems that create, schedule, and optimize content across all your channels.",
       icon: FileText,
       accent: 'accent-blue',
-      stats: "10x faster output"
+      stats: "10x faster output",
+      image: serviceContent,
     },
     {
       id: 'analytics',
@@ -47,7 +57,8 @@ export function Services() {
       description: "Intelligent reporting systems that surface insights and trigger automated actions.",
       icon: BarChart3,
       accent: 'accent-emerald',
-      stats: "Real-time intelligence"
+      stats: "Real-time intelligence",
+      image: serviceAnalytics,
     },
     {
       id: 'custom',
@@ -55,7 +66,8 @@ export function Services() {
       description: "Full-stack AI infrastructure—agents, swarms, and workflows—architected for your business.",
       icon: Cog,
       accent: 'accent-purple',
-      stats: "Enterprise-grade"
+      stats: "Enterprise-grade",
+      image: serviceCustom,
     }
   ]
 
@@ -112,54 +124,66 @@ export function Services() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1, duration: 0.5 }}
-                className={`group relative bg-card clean-border rounded-2xl p-8 transition-all duration-300 cursor-pointer ${
+                className={`group relative bg-card clean-border rounded-2xl overflow-hidden transition-all duration-300 cursor-pointer ${
                   isHovered ? 'elevated-shadow -translate-y-1' : 'subtle-shadow'
                 }`}
                 onMouseEnter={() => setHoveredService(service.id)}
                 onMouseLeave={() => setHoveredService(null)}
                 onClick={scrollToContact}
               >
-                {/* Glow effect on hover */}
-                <div className={`absolute inset-0 rounded-2xl transition-opacity duration-300 pointer-events-none ${
-                  isHovered ? 'opacity-100' : 'opacity-0'
-                } ${
-                  service.accent === 'accent-blue' ? 'bg-accent-blue/5' :
-                  service.accent === 'accent-emerald' ? 'bg-accent-emerald/5' :
-                  'bg-accent-purple/5'
-                }`} />
-                
-                {/* Icon */}
-                <div className={`relative w-16 h-16 rounded-xl flex items-center justify-center mb-6 transition-colors duration-300 ${
-                  service.accent === 'accent-blue' ? 'bg-accent-blue/10 text-accent-blue' :
-                  service.accent === 'accent-emerald' ? 'bg-accent-emerald/10 text-accent-emerald' :
-                  'bg-accent-purple/10 text-accent-purple'
-                }`}>
-                  <Icon className="w-8 h-8" />
+                {/* Card image */}
+                <div className="h-40 overflow-hidden relative">
+                  <img 
+                    src={service.image} 
+                    alt={service.title}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-card via-card/50 to-transparent" />
                 </div>
-                
-                {/* Content */}
-                <h3 className="relative text-xl font-bold text-foreground mb-3">
-                  {service.title}
-                </h3>
-                
-                <p className="relative text-muted-foreground leading-relaxed mb-4">
-                  {service.description}
-                </p>
-                
-                {/* Stats badge */}
-                <div className={`relative inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium ${
-                  service.accent === 'accent-blue' ? 'bg-accent-blue/10 text-accent-blue' :
-                  service.accent === 'accent-emerald' ? 'bg-accent-emerald/10 text-accent-emerald' :
-                  'bg-accent-purple/10 text-accent-purple'
-                }`}>
-                  {service.stats}
-                </div>
-                
-                {/* Hover arrow */}
-                <div className={`absolute bottom-8 right-8 transition-all duration-300 ${
-                  isHovered ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-2'
-                }`}>
-                  <ArrowRight className="w-5 h-5 text-muted-foreground" />
+
+                <div className="p-8 pt-4 relative">
+                  {/* Glow effect on hover */}
+                  <div className={`absolute inset-0 rounded-2xl transition-opacity duration-300 pointer-events-none ${
+                    isHovered ? 'opacity-100' : 'opacity-0'
+                  } ${
+                    service.accent === 'accent-blue' ? 'bg-accent-blue/5' :
+                    service.accent === 'accent-emerald' ? 'bg-accent-emerald/5' :
+                    'bg-accent-purple/5'
+                  }`} />
+                  
+                  {/* Icon */}
+                  <div className={`relative w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-colors duration-300 ${
+                    service.accent === 'accent-blue' ? 'bg-accent-blue/10 text-accent-blue' :
+                    service.accent === 'accent-emerald' ? 'bg-accent-emerald/10 text-accent-emerald' :
+                    'bg-accent-purple/10 text-accent-purple'
+                  }`}>
+                    <Icon className="w-6 h-6" />
+                  </div>
+                  
+                  {/* Content */}
+                  <h3 className="relative text-xl font-bold text-foreground mb-3">
+                    {service.title}
+                  </h3>
+                  
+                  <p className="relative text-muted-foreground leading-relaxed mb-4">
+                    {service.description}
+                  </p>
+                  
+                  {/* Stats badge */}
+                  <div className={`relative inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium ${
+                    service.accent === 'accent-blue' ? 'bg-accent-blue/10 text-accent-blue' :
+                    service.accent === 'accent-emerald' ? 'bg-accent-emerald/10 text-accent-emerald' :
+                    'bg-accent-purple/10 text-accent-purple'
+                  }`}>
+                    {service.stats}
+                  </div>
+                  
+                  {/* Hover arrow */}
+                  <div className={`absolute bottom-8 right-8 transition-all duration-300 ${
+                    isHovered ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-2'
+                  }`}>
+                    <ArrowRight className="w-5 h-5 text-muted-foreground" />
+                  </div>
                 </div>
               </motion.div>
             )
