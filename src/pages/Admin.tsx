@@ -18,6 +18,7 @@ import { AppointmentsCalendar } from '@/components/admin/AppointmentsCalendar';
 import { ConversationInsights } from '@/components/admin/ConversationInsights';
 import { EmailCampaigns } from '@/components/admin/EmailCampaigns';
 import { AICommandCenter } from '@/components/admin/AICommandCenter';
+import { FloatingAIButton } from '@/components/admin/FloatingAIButton';
 import { useAuth } from '@/hooks/useAuth';
 import { Badge } from '@/components/ui/badge';
 
@@ -55,7 +56,7 @@ export default function Admin() {
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="border-b">
+      <header className="border-b border-border/60 bg-gradient-to-r from-background to-muted/30">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
@@ -91,7 +92,7 @@ export default function Admin() {
 
       <main className="container mx-auto px-4 py-8">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-          <TabsList>
+          <TabsList className="flex-wrap">
             <TabsTrigger value="dashboard">
               <LayoutDashboard className="mr-2 h-4 w-4" />
               Dashboard
@@ -126,6 +127,8 @@ export default function Admin() {
               Settings
             </TabsTrigger>
           </TabsList>
+
+          <div className="animate-fade-in">
 
           <TabsContent value="dashboard" className="space-y-4">
             <div className="flex justify-between items-center">
@@ -194,8 +197,11 @@ export default function Admin() {
           <TabsContent value="settings" className="space-y-4">
             <IntegrationsSettings />
           </TabsContent>
+          </div>
         </Tabs>
       </main>
+
+      <FloatingAIButton />
 
       <CreateLeadDialog
         open={showCreateLead}

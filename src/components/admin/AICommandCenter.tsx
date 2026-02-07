@@ -14,7 +14,7 @@ interface Message {
   timestamp: Date;
 }
 
-export function AICommandCenter() {
+export function AICommandCenter({ embedded }: { embedded?: boolean } = {}) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -126,24 +126,26 @@ export function AICommandCenter() {
   }, [messages, isLoading]);
 
   return (
-    <div className="flex flex-col h-[calc(100vh-200px)] max-h-[800px]">
-      {/* Header */}
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-3">
-          <div className="p-2 rounded-lg bg-gradient-to-br from-accent-emerald/10 to-accent-blue/10 border border-border/50">
-            <Sparkles className="h-5 w-5 text-accent-emerald" />
+    <div className={`flex flex-col ${embedded ? 'h-full' : 'h-[calc(100vh-200px)] max-h-[800px]'}`}>
+      {/* Header - hidden in embedded mode */}
+      {!embedded && (
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-3">
+            <div className="p-2 rounded-lg bg-gradient-to-br from-accent-emerald/10 to-accent-blue/10 border border-border/50">
+              <Sparkles className="h-5 w-5 text-accent-emerald" />
+            </div>
+            <div>
+              <h2 className="text-xl font-bold">Horizon AI</h2>
+              <p className="text-xs text-muted-foreground">Your intelligent CRM assistant</p>
+            </div>
           </div>
-          <div>
-            <h2 className="text-xl font-bold">Horizon AI</h2>
-            <p className="text-xs text-muted-foreground">Your intelligent CRM assistant</p>
-          </div>
+          {messages.length > 0 && (
+            <Button variant="ghost" size="sm" onClick={() => setMessages([])}>
+              <Trash2 className="h-4 w-4 mr-1" /> Clear
+            </Button>
+          )}
         </div>
-        {messages.length > 0 && (
-          <Button variant="ghost" size="sm" onClick={() => setMessages([])}>
-            <Trash2 className="h-4 w-4 mr-1" /> Clear
-          </Button>
-        )}
-      </div>
+      )}
 
       {/* Chat Area */}
       <Card className="flex-1 overflow-hidden border-border/50">

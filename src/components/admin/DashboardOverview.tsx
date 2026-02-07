@@ -7,6 +7,7 @@ import { RevenueChart } from './RevenueChart';
 import { ActivityFeed } from './ActivityFeed';
 import { ConversationVolumeChart } from './ConversationVolumeChart';
 import { QuickActions } from './QuickActions';
+import { useCountUp } from '@/hooks/useCountUp';
 import { subDays, isAfter } from 'date-fns';
 
 const STAGE_VALUES: Record<string, number> = {
@@ -23,6 +24,20 @@ interface DashboardStats {
   weekConversations: number; lastWeekConversations: number;
   uniqueVisitors: number; returningVisitors: number;
 }
+
+function AnimatedNumber({ value, prefix = '', suffix = '' }: { value: number; prefix?: string; suffix?: string }) {
+  const animated = useCountUp(value, 800);
+  return <>{prefix}{animated.toLocaleString()}{suffix}</>;
+}
+
+const STAT_GRADIENTS = [
+  'from-emerald-500/10 to-emerald-500/5 dark:from-emerald-500/15 dark:to-emerald-500/5',
+  'from-blue-500/10 to-blue-500/5 dark:from-blue-500/15 dark:to-blue-500/5',
+  'from-green-500/10 to-green-500/5 dark:from-green-500/15 dark:to-green-500/5',
+  'from-purple-500/10 to-purple-500/5 dark:from-purple-500/15 dark:to-purple-500/5',
+  'from-orange-500/10 to-orange-500/5 dark:from-orange-500/15 dark:to-orange-500/5',
+  'from-cyan-500/10 to-cyan-500/5 dark:from-cyan-500/15 dark:to-cyan-500/5',
+];
 
 export function DashboardOverview({ onNewLead, onNavigateCampaigns }: { onNewLead?: () => void; onNavigateCampaigns?: () => void }) {
   const [stats, setStats] = useState<DashboardStats>({
@@ -94,7 +109,7 @@ export function DashboardOverview({ onNewLead, onNavigateCampaigns }: { onNewLea
   };
 
   const statCards = [
-    { title: 'Pipeline Value', value: `$${stats.pipelineValue.toLocaleString()}`, change: `${stats.totalLeads} active leads`, icon: DollarSign, color: 'text-emerald-600', bgColor: 'bg-emerald-100 dark:bg-emerald-900/20' },
+    { title: 'Pipeline Value', value: stats.pipelineValue, prefix: '$', change: `${stats.totalLeads} active leads`, icon: DollarSign, color: 'text-emerald-600', bgColor: 'bg-emerald-100 dark:bg-emerald-900/20' },
     { title: 'Total Leads', value: stats.totalLeads, change: `${stats.newLeads} new`, icon: Users, color: 'text-blue-600', bgColor: 'bg-blue-100 dark:bg-blue-900/20' },
     { title: 'Qualified Leads', value: stats.qualifiedLeads, change: `${stats.conversionRate}% conversion`, icon: Target, color: 'text-green-600', bgColor: 'bg-green-100 dark:bg-green-900/20' },
     { title: 'Appointments', value: stats.totalAppointments, change: `${stats.upcomingAppointments} upcoming`, icon: Calendar, color: 'text-purple-600', bgColor: 'bg-purple-100 dark:bg-purple-900/20' },
@@ -106,7 +121,16 @@ export function DashboardOverview({ onNewLead, onNavigateCampaigns }: { onNewLea
     return (
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {[...Array(6)].map((_, i) => (
-          <Card key={i}><CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2"><div className="h-4 bg-muted animate-pulse rounded w-24" /><div className="h-4 w-4 bg-muted animate-pulse rounded" /></CardHeader><CardContent><div className="h-8 bg-muted animate-pulse rounded w-16 mb-2" /><div className="h-3 bg-muted animate-pulse rounded w-20" /></CardContent></Card>
+          <Card key={i}>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <div className="h-4 bg-muted animate-pulse rounded w-24" />
+              <div className="h-4 w-4 bg-muted animate-pulse rounded" />
+            </CardHeader>
+            <CardContent>
+              <div className="h-8 bg-muted animate-pulse rounded w-16 mb-2" />
+              <div className="h-3 bg-muted animate-pulse rounded w-20" />
+            </CardContent>
+          </Card>
         ))}
       </div>
     );
@@ -126,11 +150,11 @@ export function DashboardOverview({ onNewLead, onNavigateCampaigns }: { onNewLea
           const change = getChangeIndicator(item.current, item.previous);
           const isPositive = change.startsWith('+');
           return (
-            <Card key={item.label}>
+            <Card key={item.label} className="hover:shadow-md transition-all duration-200 hover:scale-[1.01]">
               <CardContent className="p-4">
                 <p className="text-xs text-muted-foreground">{item.label}</p>
                 <div className="flex items-baseline gap-2 mt-1">
-                  <span className="text-2xl font-bold">{item.current}</span>
+                  <span className="text-2xl font-bold"><AnimatedNumber value={item.current} /></span>
                   <span className={`text-xs font-medium ${isPositive ? 'text-emerald-600' : 'text-red-500'}`}>{change} vs last week</span>
                 </div>
               </CardContent>
@@ -141,20 +165,21 @@ export function DashboardOverview({ onNewLead, onNavigateCampaigns }: { onNewLea
 
       {/* Stats Cards */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {statCards.map((stat) => (
-          <Card key={stat.title}>
+        {statCards.map((stat, i) => (
+          <Card key={stat.title} className={`bg-gradient-to-br ${STAT_GRADIENTS[i]} hover:shadow-lg hover:scale-[1.02] transition-all duration-200`}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">{stat.title}</CardTitle>
               <div className={`p-2 rounded-lg ${stat.bgColor}`}><stat.icon className={`h-4 w-4 ${stat.color}`} /></div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{stat.value}</div>
+              <div className="text-2xl font-bold">
+                <AnimatedNumber value={stat.value} prefix={stat.prefix || ''} />
+              </div>
               <p className="text-xs text-muted-foreground">{stat.change}</p>
             </CardContent>
           </Card>
         ))}
       </div>
-
 
       <div className="grid gap-4 md:grid-cols-2"><LeadConversionChart /><RevenueChart /></div>
       <ConversationVolumeChart />

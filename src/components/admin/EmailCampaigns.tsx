@@ -7,9 +7,10 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import { Plus, Send, Eye, Mail, Users, BarChart3, Loader2, ArrowLeft, Copy, Trash2, FileText } from 'lucide-react';
+import { Plus, Send, Eye, Mail, Users, BarChart3, Loader2, ArrowLeft, Copy, Trash2, FileText, Code } from 'lucide-react';
 import { format } from 'date-fns';
 
 interface Campaign {
@@ -51,6 +52,13 @@ const LEAD_STATUS_OPTIONS = [
   { value: 'appointment_scheduled', label: 'Appointment Scheduled' },
 ];
 
+const sanitizeHtml = (html: string) => {
+  return html
+    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+    .replace(/on\w+="[^"]*"/gi, '')
+    .replace(/on\w+='[^']*'/gi, '');
+};
+
 export function EmailCampaigns() {
   const { toast } = useToast();
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
@@ -62,6 +70,7 @@ export function EmailCampaigns() {
   const [selectedCampaign, setSelectedCampaign] = useState<Campaign | null>(null);
   const [isSaving, setIsSaving] = useState(false);
   const [leadCount, setLeadCount] = useState(0);
+  const [editorTab, setEditorTab] = useState('code');
 
   const [subject, setSubject] = useState('');
   const [bodyHtml, setBodyHtml] = useState('');
@@ -108,7 +117,7 @@ export function EmailCampaigns() {
   };
 
   const resetForm = () => {
-    setShowCreate(false); setSubject(''); setBodyHtml(''); setRecipientFilter('all');
+    setShowCreate(false); setSubject(''); setBodyHtml(''); setRecipientFilter('all'); setEditorTab('code');
   };
 
   const handleClone = async (campaign: Campaign) => {
@@ -168,16 +177,34 @@ export function EmailCampaigns() {
                 { label: 'Open Rate', value: `${openRate(selectedCampaign)}%`, icon: Eye },
                 { label: 'Click Rate', value: `${clickRate(selectedCampaign)}%`, icon: BarChart3 },
               ].map((stat) => (
-                <Card key={stat.label}><CardContent className="p-4 text-center"><stat.icon className="h-5 w-5 mx-auto mb-2 text-muted-foreground" /><div className="text-2xl font-bold">{stat.value}</div><div className="text-xs text-muted-foreground">{stat.label}</div></CardContent></Card>
+                <Card key={stat.label}>
+                  <CardContent className="p-4 text-center">
+                    <stat.icon className="h-5 w-5 mx-auto mb-2 text-muted-foreground" />
+                    <div className="text-2xl font-bold">{stat.value}</div>
+                    <div className="text-xs text-muted-foreground">{stat.label}</div>
+                  </CardContent>
+                </Card>
               ))}
             </div>
             <div>
               <Label className="text-sm font-medium">Email Body Preview</Label>
-              <div className="mt-2 border rounded-lg p-4 bg-muted/30 text-sm" dangerouslySetInnerHTML={{ __html: selectedCampaign.body_html || 'No content' }} />
+              <div className="mt-2 border rounded-lg p-6 bg-white dark:bg-muted/10 text-sm text-foreground" dangerouslySetInnerHTML={{ __html: sanitizeHtml(selectedCampaign.body_html || 'No content') }} />
             </div>
             <div className="text-sm text-muted-foreground">Created: {format(new Date(selectedCampaign.created_at), 'PPp')}{selectedCampaign.sent_at && <> · Sent: {format(new Date(selectedCampaign.sent_at), 'PPp')}</>}</div>
           </CardContent>
         </Card>
+
+        {/* Send confirm reused */}
+        <Dialog open={!!showSendConfirm} onOpenChange={() => setShowSendConfirm(null)}>
+          <DialogContent>
+            <DialogHeader><DialogTitle>Send Campaign?</DialogTitle></DialogHeader>
+            <p className="text-muted-foreground">This will mark "<strong>{showSendConfirm?.subject}</strong>" as sent to {showSendConfirm?.total_recipients} recipients.</p>
+            <div className="flex justify-end gap-2 mt-4">
+              <Button variant="outline" onClick={() => setShowSendConfirm(null)}>Cancel</Button>
+              <Button onClick={() => showSendConfirm && handleSend(showSendConfirm)}><Send className="h-4 w-4 mr-2" /> Send Now</Button>
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
     );
   }
@@ -202,7 +229,15 @@ export function EmailCampaigns() {
           { label: 'Sent', value: campaigns.filter(c => c.status === 'sent').length, icon: Send },
           { label: 'Drafts', value: campaigns.filter(c => c.status === 'draft').length, icon: Eye },
         ].map((stat) => (
-          <Card key={stat.label}><CardContent className="p-4 flex items-center gap-3"><div className="p-2 rounded-lg bg-primary/10"><stat.icon className="h-5 w-5 text-primary" /></div><div><div className="text-2xl font-bold">{stat.value}</div><div className="text-xs text-muted-foreground">{stat.label}</div></div></CardContent></Card>
+          <Card key={stat.label}>
+            <CardContent className="p-4 flex items-center gap-3">
+              <div className="p-2 rounded-lg bg-primary/10"><stat.icon className="h-5 w-5 text-primary" /></div>
+              <div>
+                <div className="text-2xl font-bold">{stat.value}</div>
+                <div className="text-xs text-muted-foreground">{stat.label}</div>
+              </div>
+            </CardContent>
+          </Card>
         ))}
       </div>
 
@@ -238,27 +273,75 @@ export function EmailCampaigns() {
         </div>
       )}
 
-      {/* Create Campaign Dialog */}
+      {/* Create Campaign Dialog - Fixed z-index */}
       <Dialog open={showCreate} onOpenChange={setShowCreate}>
-        <DialogContent className="max-w-2xl">
+        <DialogContent className="max-w-2xl z-[60]">
           <DialogHeader><DialogTitle>Create New Campaign</DialogTitle></DialogHeader>
-          <div className="space-y-4">
+          <div className="space-y-5">
             <div className="space-y-2">
               <Label>Subject Line</Label>
               <Input placeholder="e.g. Discover how AI can save you 20+ hours/week" value={subject} onChange={(e) => setSubject(e.target.value)} />
             </div>
+
+            <div className="border-t border-border" />
+
             <div className="space-y-2">
               <Label>Recipients</Label>
               <Select value={recipientFilter} onValueChange={setRecipientFilter}>
                 <SelectTrigger><SelectValue /></SelectTrigger>
-                <SelectContent>{LEAD_STATUS_OPTIONS.map((opt) => <SelectItem key={opt.value} value={opt.value}>{opt.label}</SelectItem>)}</SelectContent>
+                <SelectContent className="z-[70]">
+                  {LEAD_STATUS_OPTIONS.map((opt) => <SelectItem key={opt.value} value={opt.value}>{opt.label}</SelectItem>)}
+                </SelectContent>
               </Select>
               <p className="text-sm text-muted-foreground">{leadCount} leads will receive this campaign</p>
             </div>
+
+            <div className="border-t border-border" />
+
             <div className="space-y-2">
-              <Label>Email Body (HTML)</Label>
-              <Textarea rows={10} placeholder="Write your email content..." value={bodyHtml} onChange={(e) => setBodyHtml(e.target.value)} />
+              <Label>Email Body</Label>
+              <Tabs value={editorTab} onValueChange={setEditorTab}>
+                <TabsList className="h-8">
+                  <TabsTrigger value="code" className="text-xs gap-1.5 h-7"><Code className="h-3 w-3" /> Code</TabsTrigger>
+                  <TabsTrigger value="preview" className="text-xs gap-1.5 h-7"><Eye className="h-3 w-3" /> Preview</TabsTrigger>
+                </TabsList>
+                <TabsContent value="code" className="mt-2">
+                  <Textarea 
+                    rows={10} 
+                    placeholder="Write your email HTML content..." 
+                    value={bodyHtml} 
+                    onChange={(e) => setBodyHtml(e.target.value)} 
+                    className="font-mono text-xs"
+                  />
+                  <div className="flex gap-2 mt-2 flex-wrap">
+                    <span className="text-xs text-muted-foreground">Variables:</span>
+                    {['{{name}}', '{{company}}', '{{email}}'].map(v => (
+                      <button 
+                        key={v} 
+                        type="button"
+                        onClick={() => setBodyHtml(prev => prev + v)}
+                        className="text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary hover:bg-primary/20 transition-colors"
+                      >
+                        {v}
+                      </button>
+                    ))}
+                  </div>
+                </TabsContent>
+                <TabsContent value="preview" className="mt-2">
+                  {bodyHtml ? (
+                    <div 
+                      className="border rounded-lg p-6 min-h-[200px] bg-white dark:bg-muted/10 text-foreground text-sm"
+                      dangerouslySetInnerHTML={{ __html: sanitizeHtml(bodyHtml) }} 
+                    />
+                  ) : (
+                    <div className="border rounded-lg p-6 min-h-[200px] flex items-center justify-center text-muted-foreground text-sm border-dashed">
+                      Write some HTML in the Code tab to see a preview
+                    </div>
+                  )}
+                </TabsContent>
+              </Tabs>
             </div>
+
             <div className="flex justify-end gap-2">
               <Button variant="outline" onClick={() => setShowCreate(false)}>Cancel</Button>
               <Button onClick={handleCreate} disabled={isSaving}>{isSaving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}Save as Draft</Button>
