@@ -342,6 +342,21 @@ html {
   scroll-behavior: smooth;
 }
 
+/* AI Prose Styles */
+.ai-prose table {
+  border-collapse: collapse;
+}
+
+.ai-prose pre {
+  margin: 0;
+}
+
+/* AI typing bounce */
+@keyframes ai-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
 /* Performance optimizations */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
