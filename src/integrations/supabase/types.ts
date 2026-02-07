@@ -286,6 +286,30 @@ export type Database = {
           },
         ]
       }
+      email_templates: {
+        Row: {
+          body_html: string
+          created_at: string
+          id: string
+          name: string
+          subject: string
+        }
+        Insert: {
+          body_html?: string
+          created_at?: string
+          id?: string
+          name: string
+          subject: string
+        }
+        Update: {
+          body_html?: string
+          created_at?: string
+          id?: string
+          name?: string
+          subject?: string
+        }
+        Relationships: []
+      }
       interactions: {
         Row: {
           created_at: string
@@ -334,6 +358,7 @@ export type Database = {
           company: string | null
           created_at: string
           email: string | null
+          estimated_value: number | null
           id: string
           name: string | null
           notes: string | null
@@ -347,6 +372,7 @@ export type Database = {
           company?: string | null
           created_at?: string
           email?: string | null
+          estimated_value?: number | null
           id?: string
           name?: string | null
           notes?: string | null
@@ -360,6 +386,7 @@ export type Database = {
           company?: string | null
           created_at?: string
           email?: string | null
+          estimated_value?: number | null
           id?: string
           name?: string | null
           notes?: string | null

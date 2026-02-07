@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { supabase } from '@/integrations/supabase/client';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { MoreVertical, Search, Download, Filter, Mail, Phone, Building2 } from 'lucide-react';
+import { Search, Download, Mail, Phone, Building2, Clock, GripVertical } from 'lucide-react';
 import { toast } from 'sonner';
 import { exportLeadsToCSV } from '@/lib/exportUtils';
+import { formatDistanceToNow } from 'date-fns';
 
 interface Lead {
   id: string;
@@ -36,12 +36,23 @@ const PIPELINE_STAGES = [
   { value: 'closed_lost', label: 'Lost', color: 'bg-red-500' },
 ];
 
+const STAGE_VALUES: Record<string, number> = {
+  new: 500,
+  contacted: 1000,
+  qualified: 2000,
+  nurturing: 1500,
+  appointment_scheduled: 3500,
+  closed_won: 5000,
+  closed_lost: 0,
+};
+
 export function LeadPipelineBoard({ onLeadClick }: LeadPipelineBoardProps) {
   const [leads, setLeads] = useState<Lead[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [scoreFilter, setScoreFilter] = useState<string>('all');
   const [sourceFilter, setSourceFilter] = useState<string>('all');
+  const [dragOverStage, setDragOverStage] = useState<string | null>(null);
 
   useEffect(() => {
     fetchLeads();
@@ -72,6 +83,9 @@ export function LeadPipelineBoard({ onLeadClick }: LeadPipelineBoardProps) {
   };
 
   const handleStatusChange = async (leadId: string, newStatus: string) => {
+    // Optimistic update
+    setLeads(prev => prev.map(l => l.id === leadId ? { ...l, status: newStatus } : l));
+    
     const { error } = await supabase
       .from('leads')
       .update({ status: newStatus as any })
@@ -79,8 +93,35 @@ export function LeadPipelineBoard({ onLeadClick }: LeadPipelineBoardProps) {
 
     if (error) {
       toast.error('Error updating lead');
+      fetchLeads(); // Revert
     } else {
-      toast.success('Lead status updated');
+      toast.success('Lead moved to ' + PIPELINE_STAGES.find(s => s.value === newStatus)?.label);
+    }
+  };
+
+  const handleDragStart = (e: React.DragEvent, lead: Lead) => {
+    e.dataTransfer.setData('leadId', lead.id);
+    e.dataTransfer.setData('fromStatus', lead.status);
+    e.dataTransfer.effectAllowed = 'move';
+  };
+
+  const handleDragOver = (e: React.DragEvent, stageValue: string) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+    setDragOverStage(stageValue);
+  };
+
+  const handleDragLeave = () => {
+    setDragOverStage(null);
+  };
+
+  const handleDrop = (e: React.DragEvent, stageValue: string) => {
+    e.preventDefault();
+    setDragOverStage(null);
+    const leadId = e.dataTransfer.getData('leadId');
+    const fromStatus = e.dataTransfer.getData('fromStatus');
+    if (fromStatus !== stageValue) {
+      handleStatusChange(leadId, stageValue);
     }
   };
 
@@ -99,6 +140,8 @@ export function LeadPipelineBoard({ onLeadClick }: LeadPipelineBoardProps) {
 
     return matchesSearch && matchesScore && matchesSource;
   });
+
+  const pipelineValue = filteredLeads.reduce((sum, lead) => sum + (STAGE_VALUES[lead.status] || 0), 0);
 
   const handleExport = () => {
     exportLeadsToCSV(filteredLeads);
@@ -127,9 +170,9 @@ export function LeadPipelineBoard({ onLeadClick }: LeadPipelineBoardProps) {
 
   return (
     <div className="space-y-4">
-      {/* Filters */}
+      {/* Filters + Pipeline Value */}
       <Card className="p-4">
-        <div className="flex flex-col sm:flex-row gap-4">
+        <div className="flex flex-col sm:flex-row gap-4 items-center">
           <div className="flex-1 relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
@@ -161,9 +204,15 @@ export function LeadPipelineBoard({ onLeadClick }: LeadPipelineBoardProps) {
               <SelectItem value="manual">Manual</SelectItem>
             </SelectContent>
           </Select>
-          <Button onClick={handleExport} variant="outline" size="icon">
-            <Download className="h-4 w-4" />
-          </Button>
+          <div className="flex items-center gap-3">
+            <div className="text-right">
+              <p className="text-xs text-muted-foreground">Pipeline Value</p>
+              <p className="text-lg font-bold text-emerald-600">${pipelineValue.toLocaleString()}</p>
+            </div>
+            <Button onClick={handleExport} variant="outline" size="icon">
+              <Download className="h-4 w-4" />
+            </Button>
+          </div>
         </div>
       </Card>
 
@@ -171,35 +220,51 @@ export function LeadPipelineBoard({ onLeadClick }: LeadPipelineBoardProps) {
       <div className="flex gap-4 overflow-x-auto pb-4">
         {PIPELINE_STAGES.map((stage) => {
           const stageLeads = filteredLeads.filter((lead) => lead.status === stage.value);
+          const stageValue = stageLeads.reduce((sum, l) => sum + (STAGE_VALUES[l.status] || 0), 0);
+          const isDragOver = dragOverStage === stage.value;
           
           return (
-            <div key={stage.value} className="flex-shrink-0 w-80">
-              <div className="mb-4">
-                <div className="flex items-center gap-2 mb-2">
+            <div
+              key={stage.value}
+              className={`flex-shrink-0 w-80 rounded-xl transition-all duration-200 ${
+                isDragOver ? 'bg-primary/5 ring-2 ring-primary/30' : ''
+              }`}
+              onDragOver={(e) => handleDragOver(e, stage.value)}
+              onDragLeave={handleDragLeave}
+              onDrop={(e) => handleDrop(e, stage.value)}
+            >
+              <div className="mb-4 p-2">
+                <div className="flex items-center gap-2 mb-1">
                   <div className={`w-3 h-3 rounded-full ${stage.color}`}></div>
                   <h3 className="font-semibold">{stage.label}</h3>
                   <Badge variant="secondary" className="ml-auto">
                     {stageLeads.length}
                   </Badge>
                 </div>
+                <p className="text-xs text-muted-foreground">${stageValue.toLocaleString()}</p>
               </div>
 
-              <div className="space-y-3">
+              <div className="space-y-3 min-h-[200px] p-2">
                 {stageLeads.map((lead) => (
                   <Card
                     key={lead.id}
-                    className="p-4 cursor-pointer hover:shadow-md transition-shadow"
+                    draggable
+                    onDragStart={(e) => handleDragStart(e, lead)}
+                    className="p-4 cursor-grab hover:shadow-md transition-all active:cursor-grabbing active:opacity-70 active:scale-95"
                     onClick={() => onLeadClick(lead)}
                   >
                     <div className="space-y-2">
                       <div className="flex items-start justify-between">
-                        <h4 className="font-medium text-sm">
-                          {lead.name || 'Unnamed Lead'}
-                        </h4>
-                        {lead.ai_score && (
+                        <div className="flex items-center gap-2">
+                          <GripVertical className="w-3 h-3 text-muted-foreground/50" />
+                          <h4 className="font-medium text-sm">
+                            {lead.name || 'Unnamed Lead'}
+                          </h4>
+                        </div>
+                        {lead.ai_score != null && (
                           <Badge 
                             variant={lead.ai_score >= 70 ? 'default' : lead.ai_score >= 40 ? 'secondary' : 'outline'}
-                            className={`ml-2 ${
+                            className={`ml-2 text-xs ${
                               lead.ai_score >= 70 ? 'bg-green-500 text-white' : 
                               lead.ai_score >= 40 ? 'bg-yellow-500 text-white' : 
                               'bg-red-500 text-white'
@@ -217,13 +282,6 @@ export function LeadPipelineBoard({ onLeadClick }: LeadPipelineBoardProps) {
                         </div>
                       )}
 
-                      {lead.phone && (
-                        <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                          <Phone className="w-3 h-3" />
-                          <span>{lead.phone}</span>
-                        </div>
-                      )}
-
                       {lead.company && (
                         <div className="flex items-center gap-2 text-xs text-muted-foreground">
                           <Building2 className="w-3 h-3" />
@@ -231,28 +289,19 @@ export function LeadPipelineBoard({ onLeadClick }: LeadPipelineBoardProps) {
                         </div>
                       )}
 
-                      <select
-                        className="w-full text-xs border rounded px-2 py-1 bg-background"
-                        value={lead.status}
-                        onChange={(e) => {
-                          e.stopPropagation();
-                          handleStatusChange(lead.id, e.target.value);
-                        }}
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        {PIPELINE_STAGES.map((s) => (
-                          <option key={s.value} value={s.value}>
-                            {s.label}
-                          </option>
-                        ))}
-                      </select>
+                      <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                        <Clock className="w-3 h-3" />
+                        <span>{formatDistanceToNow(new Date(lead.created_at), { addSuffix: true })}</span>
+                      </div>
                     </div>
                   </Card>
                 ))}
 
                 {stageLeads.length === 0 && (
-                  <div className="text-center py-8 text-sm text-muted-foreground">
-                    No leads in this stage
+                  <div className={`text-center py-8 text-sm text-muted-foreground border-2 border-dashed rounded-lg ${
+                    isDragOver ? 'border-primary/40' : 'border-muted'
+                  }`}>
+                    Drop leads here
                   </div>
                 )}
               </div>
