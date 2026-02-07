@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { LogOut, Calendar, Settings, BarChart3, Loader2, Users, Plus, LayoutDashboard, Mail } from 'lucide-react';
+import { LogOut, Calendar, Settings, BarChart3, Loader2, Users, Plus, LayoutDashboard, Mail, Sparkles } from 'lucide-react';
 import logoIcon from '@/assets/myhorizon-logo-clean.png';
 import { CreateLeadDialog } from '@/components/admin/CreateLeadDialog';
 import { CreateAppointmentDialog } from '@/components/admin/CreateAppointmentDialog';
@@ -17,6 +17,7 @@ import { ActivityFeed } from '@/components/admin/ActivityFeed';
 import { AppointmentsCalendar } from '@/components/admin/AppointmentsCalendar';
 import { ConversationInsights } from '@/components/admin/ConversationInsights';
 import { EmailCampaigns } from '@/components/admin/EmailCampaigns';
+import { AICommandCenter } from '@/components/admin/AICommandCenter';
 import { useAuth } from '@/hooks/useAuth';
 import { Badge } from '@/components/ui/badge';
 
@@ -110,6 +111,10 @@ export default function Admin() {
               <Mail className="mr-2 h-4 w-4" />
               Campaigns
             </TabsTrigger>
+            <TabsTrigger value="ai-assistant">
+              <Sparkles className="mr-2 h-4 w-4" />
+              AI Assistant
+            </TabsTrigger>
             {isSuperAdmin && (
               <TabsTrigger value="users">
                 <Users className="mr-2 h-4 w-4" />
@@ -174,6 +179,10 @@ export default function Admin() {
 
           <TabsContent value="campaigns" className="space-y-4">
             <EmailCampaigns />
+          </TabsContent>
+
+          <TabsContent value="ai-assistant" className="space-y-4">
+            <AICommandCenter />
           </TabsContent>
 
           {isSuperAdmin && (
