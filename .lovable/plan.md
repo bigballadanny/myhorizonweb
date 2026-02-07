@@ -1,62 +1,128 @@
 
+# Image Upgrade & Back Office Deep Build
 
-# Hero Enhancement, Footer Cleanup & Admin Login Fix
+## Overview
 
-## Summary
-
-Three focused improvements:
-1. Upgrade the hero particle animation to a premium starfield/nebula effect
-2. Strip the "Technologies We Use" section from the footer and make it dark-mode consistent
-3. Reset Daniel's password to `123123` so you can access the admin area
+Two tracks: (1) Generate fresh, professional AI images for the public site using AI image generation, and (2) significantly deepen the back office with missing features that make it a true all-in-one business management system.
 
 ---
 
-## 1. Premium Starfield Hero Background
+## Track 1: Image Upgrades
 
-**File:** `src/components/ParticleNetwork.tsx`
+The project has many legacy image assets from a previous film/awards era that are no longer used. Only two images are actively used on the public site:
+- `synthios-box-hero.jpg` -- the SYNTHIOS product photo
+- `myhorizon-logo-clean.png` -- the logo (used in nav, footer, admin)
 
-Replace the current simple connected-dots animation with a multi-layered cosmic starfield:
+### 1.1 Generate New SYNTHIOS Product Image
+**File:** `src/components/SynthiosProduct.tsx`
 
-- **Layer 1 -- Deep stars**: ~200 tiny static dots of varying brightness, some with a faint twinkle (opacity oscillation). Sizes range from 0.5px to 2px. Colors: warm whites, faint blues, occasional pale gold.
-- **Layer 2 -- Drifting particles**: ~40 slightly larger particles that drift very slowly (current behavior but slower, more ethereal). Faint glow effect using `ctx.shadowBlur`.
-- **Layer 3 -- Nebula haze**: 3-4 large, soft radial gradients painted at low opacity (~0.03-0.06) in deep blue, purple, and teal. These create the "Milky Way" atmospheric depth without being distracting. They drift very slowly or remain static.
-- **Layer 4 -- Occasional shooting star**: Every 8-12 seconds, a single thin bright streak travels across the canvas and fades. Subtle, not flashy.
+Use AI image generation (Lovable AI) to create a premium product lifestyle shot:
+- A sleek Mac Mini M4 on a clean desk with ambient emerald/blue lighting
+- Modern, minimal workspace setting
+- Professional product photography style
 
-The background gradient stays dark navy (`#050a15` to `#0c1425` to `#080e1a`) for a true deep-space feel.
+The generated image will be stored in Lovable Cloud file storage and referenced via URL instead of the local asset.
 
-Connection lines between particles are removed -- this is a starfield now, not a network diagram. The result is something that feels like staring into a calm, beautiful night sky.
+### 1.2 Generate Service Card Visuals
+**File:** `src/components/Services.tsx`
 
-### Technical approach
-- Same canvas-based component, same `requestAnimationFrame` loop
-- Stars stored as arrays with individual twinkle phase offsets
-- Nebula painted once on resize (or on a separate offscreen canvas for performance)
-- Shooting star triggered on a random timer, animated as a line with decreasing alpha trail
-- Device pixel ratio (`window.devicePixelRatio`) used for crisp rendering on retina displays
+Add a small illustrative image or icon visual to each of the 6 service cards to make them more visually distinct:
+- Generate 6 abstract/minimal AI-themed illustrations (one per service: AI Agents, Workflows, CRM, Content, Analytics, Custom Systems)
+- Each image will be a subtle background or top-of-card visual
+- Upload to file storage
+
+### 1.3 Clean Up Unused Assets
+Remove all legacy images that are no longer imported anywhere:
+- All `award` images (beyond-border, creative-vision, digital-arts, etc.)
+- All `team-member` images (1-7)
+- All `testimonial-avatar` images (1-3)
+- `storyboard-image.avif`, `ai-workflow-visual.png`
+- Keep: `myhorizon-logo-clean.png`, `synthios-box-hero.jpg` (will be replaced), other logo variants
 
 ---
 
-## 2. Footer Cleanup
+## Track 2: Back Office Deep Build
 
-**File:** `src/components/Footer.tsx`
+The current back office has good foundations but several tabs feel thin. Here's what each tab needs:
 
-- Remove the entire "TECHNOLOGIES WE USE" section (the right 8-column grid with the tool list)
-- Change the footer layout to a single centered column: logo, description, social icons, then the copyright bar
-- Change footer background from `bg-foreground text-background` (which is white in dark mode) to a consistent dark style: `bg-[#0a0a0a] text-white` or use dark-mode-aware classes so it stays dark regardless of theme
-- Keep: logo, tagline, social media links (X, TikTok, Instagram, LinkedIn), copyright line
+### 2.1 Dashboard -- Add Revenue Tracking Widget
+**File:** `src/components/admin/DashboardOverview.tsx`
+
+- Add an estimated pipeline value card: sum of leads by stage with assigned values (e.g., qualified = $2,000, appointment = $3,500, closed_won = actual)
+- Add a "This Week" vs "Last Week" comparison row showing leads gained, appointments booked, conversations had
+
+### 2.2 Pipeline -- Add Drag-and-Drop
+**File:** `src/components/admin/LeadPipelineBoard.tsx`
+
+The current pipeline uses a `<select>` dropdown to change status. Enhance it:
+- Make the board visually richer with a horizontal scrolling Kanban layout (already exists but basic)
+- Add drag-and-drop between columns using HTML5 drag events (no extra dependency)
+- Show lead age (days since created) on each card
+- Add a "Last Activity" line showing the most recent interaction
+
+### 2.3 Appointments -- Add Edit/Delete & Lead Association
+**File:** `src/components/admin/AppointmentsCalendar.tsx`
+
+- Add ability to click an appointment to edit it (title, time, status)
+- Add delete appointment button
+- Show the associated lead name on each appointment card
+- Add "Mark Complete" and "Mark No-Show" quick actions
+
+### 2.4 Conversations -- Add Full Transcript Viewer
+**File:** `src/components/admin/ConversationInsights.tsx`
+
+- When clicking a conversation card, open a dialog showing the full transcript
+- Format the transcript as a chat-style view (alternating agent/user messages)
+- Add a "Re-analyze" button to re-run AI analysis
+- Show conversation recording duration as a visual timeline bar
+
+### 2.5 Campaigns -- Add Send Functionality & Templates
+**File:** `src/components/admin/EmailCampaigns.tsx`
+
+- Add a "Send Campaign" button on draft campaigns (with confirmation dialog)
+- Add 3 pre-built email templates users can start from:
+  - "Introduction" -- introducing MyHorizon's services
+  - "Follow-Up" -- checking in after a conversation
+  - "Case Study" -- sharing results/ROI data
+- Add campaign duplication ("Clone Campaign")
+- Add delete campaign
+
+### 2.6 Lead Detail -- Deeper Timeline with Campaign History
+**File:** `src/components/admin/LeadDetailDialog.tsx`
+
+- Add email campaign engagement section: which campaigns were sent to this lead, did they open/click
+- Add a "Send Individual Email" button (for one-off messages)
+- Add "Add Note" quick action that creates an interaction record
+- Show lead age and last activity timestamp
+
+### 2.7 Settings -- Add Webhook & API Configuration Panel
+**File:** `src/components/admin/IntegrationsSettings.tsx`
+
+- Add a section showing active webhook URLs (ElevenLabs webhook endpoint)
+- Add a "Test Webhook" button
+- Show system health: edge function status, last sync time
+- Add email configuration section (sender domain, from address)
 
 ---
 
-## 3. Admin Login -- Reset Daniel's Password
+## Database Changes
 
-Daniel's account (`daniel@myhorizon.ai`) already exists in the auth system. I'll update the password to `123123` using the authentication system's admin API via an edge function or direct password update.
+### New table: `email_templates`
+```text
+email_templates:
+  - id (uuid, PK)
+  - name (text)
+  - subject (text)
+  - body_html (text)
+  - created_at (timestamptz)
+```
 
-**Approach:** Use a database migration to call `auth.admin_update_user` -- however, since we cannot modify the `auth` schema directly, the cleanest approach is:
-- Temporarily enable auto-confirm (if not already)
-- The user signs in at `/auth` with `daniel@myhorizon.ai` / `123123`
+### Add column to leads: `estimated_value`
+```text
+ALTER TABLE leads ADD COLUMN estimated_value numeric DEFAULT 0;
+```
 
-Since I cannot reset passwords through SQL migrations on the `auth` schema, I will create a small one-time edge function that resets the password using the Supabase admin client, call it once, then remove it. Alternatively, the simplest path: I'll update the Auth settings and have you use the "forgot password" flow -- but since there's no forgot-password UI, the edge function approach is cleanest.
-
-**Implementation:** Create `supabase/functions/reset-admin-password/index.ts` that uses the service role key to update Daniel's password, call it once after deploy, then delete it.
+This allows pipeline value tracking per lead.
 
 ---
 
@@ -64,67 +130,72 @@ Since I cannot reset passwords through SQL migrations on the `auth` schema, I wi
 
 | File | Action |
 |------|--------|
-| `src/components/ParticleNetwork.tsx` | Major rewrite -- starfield with twinkling stars, nebula haze, shooting stars |
-| `src/components/Footer.tsx` | Remove tech list, simplify layout, make always-dark background |
-| `supabase/functions/reset-admin-password/index.ts` | NEW (temporary) -- one-time password reset for daniel@myhorizon.ai |
+| `src/components/SynthiosProduct.tsx` | Replace product image with AI-generated one |
+| `src/components/Services.tsx` | Add generated visuals to service cards |
+| `src/components/admin/DashboardOverview.tsx` | Pipeline value widget, week comparison |
+| `src/components/admin/LeadPipelineBoard.tsx` | Drag-and-drop, lead age, last activity |
+| `src/components/admin/AppointmentsCalendar.tsx` | Edit/delete appointments, lead names, quick actions |
+| `src/components/admin/ConversationInsights.tsx` | Full transcript viewer dialog |
+| `src/components/admin/EmailCampaigns.tsx` | Send button, templates, clone, delete |
+| `src/components/admin/LeadDetailDialog.tsx` | Campaign history, individual email, notes |
+| `src/components/admin/IntegrationsSettings.tsx` | Webhook status, system health, email config |
+| Database migration | email_templates table, leads.estimated_value column |
+| Asset cleanup | Delete ~25 unused image files |
+
+---
+
+## Implementation Order
+
+1. Database migration (email_templates + estimated_value column)
+2. Generate and upload new SYNTHIOS product image
+3. Generate and upload 6 service card visuals
+4. Update SynthiosProduct.tsx and Services.tsx with new images
+5. Clean up unused asset files
+6. Dashboard pipeline value + weekly comparison
+7. Pipeline drag-and-drop + lead enrichment
+8. Appointments edit/delete + lead association
+9. Conversation full transcript viewer
+10. Campaigns send/templates/clone/delete
+11. Lead detail campaign history + notes
+12. Settings webhook/health panel
 
 ---
 
 ## Technical Details
 
-### Starfield Particle Types
+### Drag-and-Drop (Pipeline)
+Using HTML5 native drag events -- no new dependencies:
 ```text
-Star {
-  x, y: number           -- position
-  radius: number          -- 0.3 to 2px
-  baseAlpha: number       -- 0.3 to 1.0
-  twinkleSpeed: number    -- 0.005 to 0.02 (radians per frame)
-  twinklePhase: number    -- random start offset
-  color: string           -- '#ffffff', '#c4d4ff', '#ffe8c4'
-}
-
-DriftParticle {
-  x, y, vx, vy: number   -- position + velocity (very slow)
-  radius: number          -- 1 to 3px
-  alpha: number           -- 0.2 to 0.6
-  glowRadius: number      -- 4 to 8px
-}
-
-ShootingStar {
-  x, y: number            -- current position
-  angle: number           -- travel direction
-  speed: number           -- 3 to 6px per frame
-  length: number          -- trail length 40-80px
-  alpha: number           -- starts at 1, fades to 0
-  active: boolean
-}
-
-NebulaCloud {
-  x, y: number            -- center position (% of canvas)
-  radius: number          -- 200-500px
-  color: string           -- deep blue/purple/teal
-  alpha: number           -- 0.02 to 0.05
-}
+- onDragStart: store lead ID + current status in dataTransfer
+- onDragOver: highlight target column
+- onDrop: update lead status via Supabase, optimistic UI update
+- Visual: dragged card gets opacity reduction, target column gets border highlight
 ```
 
-### Footer Simplified Structure
+### AI Image Generation
+Using Lovable AI's image generation endpoint to create:
+- 1 SYNTHIOS product photo (1024x1024)
+- 6 service illustrations (512x512 each)
+Images stored in Lovable Cloud file storage bucket, referenced by public URL.
+
+### Transcript Chat View
+Parse transcript text (typically "Agent: ... User: ..." format) into alternating message bubbles:
 ```text
-<footer className="bg-[#0a0a0a] text-white py-16">
-  <div className="container text-center">
-    -- Logo + name
-    -- Tagline (1 line)
-    -- Social icons (horizontal row)
-    -- Divider
-    -- Copyright + "AI Systems & Automation"
-  </div>
-</footer>
+- Split on "Agent:" and "User:" markers
+- Render as chat bubbles: agent on left (blue), user on right (gray)
+- Show timestamps if available in metadata
 ```
 
-### Password Reset Edge Function
+### Pipeline Value Calculation
 ```text
--- Uses SUPABASE_SERVICE_ROLE_KEY (auto-available in edge functions)
--- Calls supabase.auth.admin.updateUserById(userId, { password: '123123' })
--- Returns success/failure
--- Will be called once via curl, then deleted
-```
+Stage values (configurable):
+  new: $500
+  contacted: $1,000
+  qualified: $2,000
+  nurturing: $1,500
+  appointment_scheduled: $3,500
+  closed_won: lead.estimated_value or $5,000
+  closed_lost: $0
 
+Total pipeline = sum of all non-lost leads * stage value
+```
