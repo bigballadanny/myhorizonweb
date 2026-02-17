@@ -95,23 +95,15 @@ export function Contact() {
   }, [activeTab, calLoaded])
 
   return (
-    <section id="contact" className="relative py-16 sm:py-24 lg:py-32 bg-card/30">
+    <section id="contact" className="relative py-16 sm:py-24 lg:py-32 bg-card">
       <div className="container mx-auto px-4 sm:px-6 lg:px-12">
         {/* Section Header */}
-        <div className="text-center mb-10 sm:mb-16">
-          <div className="inline-flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
-            <div className="w-2 h-2 sm:w-3 sm:h-3 bg-accent-emerald rounded-full animate-pulse" />
-            <span className="text-xs sm:text-sm font-semibold text-muted-foreground">
-              Let's Build Together
-            </span>
-            <div className="w-2 h-2 sm:w-3 sm:h-3 bg-accent-blue rounded-full animate-pulse" />
-          </div>
-          
-          <h2 className="text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-black leading-tight mb-4 sm:mb-8 px-2">
-            <span className="block mb-2">Let's Build Something Together</span>
+        <div className="mb-10 sm:mb-16">
+          <p className="section-label mb-6">Let's Build Together</p>
+          <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl text-foreground leading-tight mb-4 sm:mb-6 max-w-2xl">
+            Let's Build Something Together
           </h2>
-
-          <p className="text-lg sm:text-xl lg:text-2xl xl:text-3xl text-muted-foreground max-w-4xl mx-auto leading-relaxed px-2">
+          <p className="text-lg sm:text-xl text-muted-foreground max-w-xl leading-relaxed">
             Pick a time that works. Every call is free, no pressure.
           </p>
         </div>
@@ -162,7 +154,6 @@ export function Contact() {
                         </p>
                       </div>
                       <div className="flex items-center space-x-2">
-                        <div className="w-2 h-2 sm:w-3 sm:h-3 bg-accent-emerald rounded-full" />
                         <span className="text-xs sm:text-sm text-muted-foreground font-medium">Available now</span>
                       </div>
                     </div>

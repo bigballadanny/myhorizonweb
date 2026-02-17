@@ -1,7 +1,9 @@
 import { motion } from 'framer-motion'
 import { Navigation } from './components/Navigation'
 import { Hero } from './components/Hero'
+import { MarqueeStrip } from './components/MarqueeStrip'
 import { Services } from './components/Services'
+import { PullQuote } from './components/PullQuote'
 import { Problem } from './components/Problem'
 import { Industries } from './components/Industries'
 import { Process } from './components/Process'
@@ -25,12 +27,15 @@ export default function App() {
       <Navigation />
       <main className="relative" role="main" style={{ overflow: 'visible' }}>
 
-        {/* 1 — Hero: dark, empathy-first */}
+        {/* 1 — Hero */}
         <section id="hero" aria-label="Hero section">
           <Hero />
         </section>
 
-        {/* 2 — Services: light */}
+        {/* Marquee trust strip — industries we serve */}
+        <MarqueeStrip />
+
+        {/* 2 — Services */}
         <motion.section
           id="services"
           aria-label="Services section"
@@ -43,9 +48,15 @@ export default function App() {
           <Services />
         </motion.section>
 
-        {/* 3 — Problem: dark — why most AI projects fail */}
+        {/* Pull quote — seeds the bigger-picture thinking */}
+        <PullQuote
+          quote="The businesses that embrace AI early won't just save time — they'll build something their competitors can't catch up to."
+          bg="card"
+        />
+
+        {/* 3 — Opportunity (Problem) */}
         <motion.section
-          aria-label="Problem section"
+          aria-label="Opportunity section"
           variants={sectionVariants}
           initial="hidden"
           whileInView="visible"
@@ -55,7 +66,7 @@ export default function App() {
           <Problem />
         </motion.section>
 
-        {/* 4 — Industries: light */}
+        {/* 4 — Industries */}
         <motion.section
           id="industries"
           aria-label="Industries section"
@@ -68,7 +79,7 @@ export default function App() {
           <Industries />
         </motion.section>
 
-        {/* 5 — Process: light */}
+        {/* 5 — Process */}
         <motion.section
           aria-label="Process section"
           variants={sectionVariants}
@@ -80,7 +91,7 @@ export default function App() {
           <Process />
         </motion.section>
 
-        {/* 6 — Results: dark */}
+        {/* 6 — Results */}
         <motion.section
           aria-label="Results section"
           variants={sectionVariants}
@@ -92,7 +103,7 @@ export default function App() {
           <Results />
         </motion.section>
 
-        {/* 7 — Urgency CTA: dark bridge */}
+        {/* 7 — Urgency CTA */}
         <motion.section
           aria-label="Urgency CTA"
           variants={sectionVariants}
@@ -104,7 +115,13 @@ export default function App() {
           <UrgencyCTA />
         </motion.section>
 
-        {/* 8 — SYNTHIOS: light */}
+        {/* Pull quote — plants the SYNTHIOS seed */}
+        <PullQuote
+          quote="Imagine having a team member who knows every customer, never forgets a follow-up, and gets smarter every single day."
+          bg="background"
+        />
+
+        {/* 8 — SYNTHIOS */}
         <motion.section
           id="synthios"
           aria-label="SYNTHIOS Product section"
@@ -117,7 +134,7 @@ export default function App() {
           <SynthiosProduct />
         </motion.section>
 
-        {/* 9 — Contact: subtle gray */}
+        {/* 9 — Contact */}
         <motion.section
           id="contact"
           aria-label="Contact section"

@@ -63,14 +63,14 @@ export function Navigation() {
           {/* Logo */}
           <button
             onClick={handleLogoClick}
-            className="flex items-center gap-3 hover:opacity-80 transition-opacity select-none group"
+            className="flex items-center gap-3 hover:opacity-75 transition-opacity select-none"
           >
             <img
               src={logoIcon}
               alt="MyHorizon Logo"
-              className="w-14 h-14 rounded-full object-cover ring-2 ring-primary/30 group-hover:ring-primary transition-all"
+              className="w-10 h-10 rounded-full object-cover"
             />
-            <span className="text-2xl font-black text-foreground group-hover:text-primary transition-colors">
+            <span className="text-xl font-bold text-foreground" style={{ fontFamily: "'DM Sans', system-ui, sans-serif" }}>
               MyHorizon
             </span>
           </button>
@@ -81,7 +81,7 @@ export function Navigation() {
               <button
                 key={link.id}
                 onClick={() => scrollToSection(link.id)}
-                className="text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors"
+                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200"
               >
                 {link.label}
               </button>
@@ -89,7 +89,11 @@ export function Navigation() {
 
             <ThemeToggle />
 
-            <Button onClick={() => scrollToSection('contact')} size="lg" className="ml-4">
+            <Button
+              onClick={() => scrollToSection('contact')}
+              size="sm"
+              className="ml-2 bg-accent-blue hover:bg-accent-blue/90 text-white px-5 py-2 rounded-lg text-sm"
+            >
               Book a Free Call
             </Button>
           </div>
@@ -101,29 +105,35 @@ export function Navigation() {
               variant="ghost"
               size="icon"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="w-11 h-11"
+              className="w-10 h-10"
               aria-label="Toggle menu"
             >
-              {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </Button>
           </div>
         </div>
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden mt-6 pb-6 space-y-4 animate-fade-in">
+          <div className="md:hidden mt-6 pb-6 space-y-1 border-t border-border pt-6">
             {navLinks.map((link) => (
               <button
                 key={link.id}
                 onClick={() => scrollToSection(link.id)}
-                className="block w-full text-left text-lg font-semibold text-muted-foreground hover:text-foreground transition-colors py-2"
+                className="block w-full text-left text-base font-medium text-muted-foreground hover:text-foreground transition-colors py-3"
               >
                 {link.label}
               </button>
             ))}
-            <Button onClick={() => scrollToSection('contact')} size="lg" className="w-full mt-4">
-              Book a Free Call
-            </Button>
+            <div className="pt-4">
+              <Button
+                onClick={() => scrollToSection('contact')}
+                size="lg"
+                className="w-full bg-accent-blue hover:bg-accent-blue/90 text-white rounded-xl"
+              >
+                Book a Free Call
+              </Button>
+            </div>
           </div>
         )}
       </div>

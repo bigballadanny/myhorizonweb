@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
-import { TrendingUp, Clock, Zap } from 'lucide-react'
 
 interface CounterProps {
   end: number
@@ -54,36 +53,25 @@ const metrics = [
     suffix: '+',
     label: 'Hours Reclaimed Daily',
     description: 'Time your team gets back to focus on what matters',
-    icon: Clock,
-    accent: 'accent-blue',
   },
   {
     value: 24,
     suffix: '/7',
     label: 'Always-On Operations',
     description: 'Your AI systems work while you sleep, travel, and live',
-    icon: Zap,
-    accent: 'accent-emerald',
   },
   {
     value: 3,
     suffix: 'x',
     label: 'Follow-Up Rate',
     description: 'Because AI never forgets to follow up',
-    icon: TrendingUp,
-    accent: 'accent-purple',
   },
 ]
 
 export function Results() {
   return (
-    <section className="relative py-24 lg:py-32 overflow-hidden bg-[#0a0a0a]">
-      {/* Gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] via-[#0f0f0f] to-[#0a0a0a]" />
-      <div className="absolute top-1/2 left-1/4 w-80 h-80 bg-accent-blue/8 rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute bottom-1/3 right-1/4 w-64 h-64 bg-accent-emerald/7 rounded-full blur-[80px] pointer-events-none" />
-
-      <div className="container mx-auto px-6 sm:px-8 lg:px-12 relative z-10">
+    <section className="py-32 lg:py-40 bg-background">
+      <div className="container mx-auto px-6 sm:px-8 lg:px-12">
 
         {/* Header */}
         <motion.div
@@ -91,60 +79,44 @@ export function Results() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="mb-20"
         >
-          <div className="inline-flex items-center gap-2 mb-6">
-            <div className="w-3 h-3 bg-accent-blue rounded-full animate-pulse" />
-            <span className="text-sm font-semibold text-white/40 tracking-wide uppercase">
-              What This Looks Like
-            </span>
-            <div className="w-3 h-3 bg-accent-emerald rounded-full animate-pulse" />
+          <p className="section-label mb-6">What This Looks Like</p>
+          <div className="max-w-2xl">
+            <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl text-foreground leading-tight mb-6">
+              The numbers behind <span className="text-highlight">real AI systems</span>
+            </h2>
+            <p className="text-lg text-muted-foreground leading-relaxed">
+              These aren't projections. They're what happens when AI is actually built into how a business operates — not bolted on as an afterthought.
+            </p>
           </div>
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black leading-tight mb-4 text-white">
-            The Numbers Behind{' '}
-            <span className="text-accent-emerald">Real AI Systems</span>
-          </h2>
-          <p className="text-lg text-white/50 max-w-2xl mx-auto">
-            These aren't projections. They're what happens when AI is actually built into how a business operates — not bolted on as an afterthought.
-          </p>
         </motion.div>
 
-        {/* Metrics */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
-          {metrics.map((metric, index) => {
-            const Icon = metric.icon
-            return (
-              <motion.div
-                key={metric.label}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.15, duration: 0.5 }}
-              >
-                <div className="bg-white/[0.04] border border-white/[0.08] rounded-2xl p-10 text-center hover:bg-white/[0.06] hover:-translate-y-1 transition-all duration-300">
-                  <div className={`w-16 h-16 mx-auto rounded-xl flex items-center justify-center mb-6 ${
-                    metric.accent === 'accent-blue' ? 'bg-accent-blue/15 text-accent-blue' :
-                    metric.accent === 'accent-emerald' ? 'bg-accent-emerald/15 text-accent-emerald' :
-                    'bg-accent-purple/15 text-accent-purple'
-                  }`}>
-                    <Icon className="w-8 h-8" />
-                  </div>
-
-                  <div className={`text-7xl lg:text-8xl font-black mb-3 ${
-                    metric.accent === 'accent-blue' ? 'text-accent-blue' :
-                    metric.accent === 'accent-emerald' ? 'text-accent-emerald' :
-                    'text-accent-purple'
-                  }`}>
-                    <AnimatedCounter end={metric.value} suffix={metric.suffix} />
-                  </div>
-
-                  <h3 className="text-xl font-bold text-white mb-2">{metric.label}</h3>
-                  <p className="text-white/50 text-sm">{metric.description}</p>
-                </div>
-              </motion.div>
-            )
-          })}
+        {/* Metrics — left-aligned row */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
+          {metrics.map((metric, index) => (
+            <motion.div
+              key={metric.label}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.15, duration: 0.5 }}
+              className="border-t border-border pt-10 pb-10 pr-10"
+            >
+              <div className="font-serif text-6xl lg:text-7xl text-accent-blue mb-4 leading-none">
+                <AnimatedCounter end={metric.value} suffix={metric.suffix} />
+              </div>
+              <h3 className="font-sans font-medium text-foreground mb-2 text-base">
+                {metric.label}
+              </h3>
+              <p className="text-sm text-muted-foreground leading-relaxed max-w-xs">
+                {metric.description}
+              </p>
+            </motion.div>
+          ))}
+          <div className="col-span-full border-t border-border" />
         </div>
+
       </div>
     </section>
   )

@@ -1,8 +1,9 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { ArrowRight, ChevronDown } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { Button } from './ui/button'
+import heroAbstract from '@/assets/hero-abstract.png'
 
 export function Hero() {
   const scrollToContact = () => {
@@ -16,121 +17,102 @@ export function Hero() {
   }
 
   return (
-    <div className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-[#0a0a0a]">
-      {/* Subtle grid overlay */}
-      <div className="hero-grid-overlay" />
+    <div className="relative min-h-screen w-full bg-background flex items-center overflow-hidden">
+      {/* Animated gradient mesh — subtle Stripe-style depth */}
+      <div className="hero-gradient-mesh" />
 
-      {/* Radial glow accents */}
-      <div className="absolute top-1/4 left-1/3 w-[600px] h-[600px] bg-accent-blue/10 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-1/3 right-1/4 w-[400px] h-[400px] bg-accent-purple/8 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute top-2/3 left-1/4 w-[300px] h-[300px] bg-accent-emerald/5 rounded-full blur-[100px] pointer-events-none" />
+      <div className="relative z-10 container mx-auto px-6 sm:px-8 lg:px-12 pt-28 pb-20">
+        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
 
-      {/* Hero Content — centered */}
-      <div className="relative z-10 text-center px-6 sm:px-8 max-w-4xl mx-auto pt-24 pb-20">
+          {/* Left — text column */}
+          <div>
+            {/* Section label */}
+            <motion.p
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.15 }}
+              className="section-label mb-8"
+            >
+              AI Systems for Business
+            </motion.p>
 
-        {/* Badge */}
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="mb-8"
-        >
-          <span className="inline-flex items-center gap-2 px-4 py-1.5 text-xs font-semibold tracking-widest uppercase bg-accent-blue/15 border border-accent-blue/30 rounded-full text-accent-blue">
-            <span className="w-1.5 h-1.5 bg-accent-blue rounded-full animate-pulse" />
-            AI Systems for Business
-          </span>
-        </motion.div>
+            {/* Headline — with keyword highlight */}
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.3 }}
+              className="font-serif text-5xl sm:text-6xl lg:text-7xl text-foreground leading-[1.1] mb-8"
+            >
+              What if AI actually{' '}
+              <em className="not-italic"><span className="text-highlight">understood</span></em>{' '}
+              your business?
+            </motion.h1>
 
-        {/* Headline — possibility-forward */}
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.35 }}
-          className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-black leading-[1.08] tracking-tight text-white mb-8"
-        >
-          What if AI actually{' '}
-          <span className="text-gradient-blue">understood</span>{' '}
-          your business?
-        </motion.h1>
+            {/* Subhead */}
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.45 }}
+              className="text-lg lg:text-xl text-muted-foreground leading-relaxed max-w-lg mb-10"
+            >
+              Not just answered questions — but remembered your customers, managed your operations, and made decisions alongside your team.{' '}
+              <span className="text-foreground font-medium">That's what we build.</span>
+            </motion.p>
 
-        {/* Subhead — paint the picture */}
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.5 }}
-          className="text-lg sm:text-xl lg:text-2xl text-white/55 leading-relaxed max-w-2xl mx-auto mb-12"
-        >
-          Not just answered questions — but remembered your customers, managed your operations, and made decisions alongside your team.{' '}
-          <span className="text-white/80 font-medium">That's what we build.</span>
-        </motion.p>
-
-        {/* CTAs */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.65 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16"
-        >
-          <Button
-            size="lg"
-            onClick={scrollToContact}
-            className="bg-accent-blue hover:bg-accent-blue/90 text-white text-base px-9 py-6 rounded-xl shadow-lg shadow-accent-blue/25 transition-all duration-200 hover:shadow-accent-blue/40 hover:-translate-y-0.5"
-          >
-            Book a Free Strategy Call
-            <ArrowRight className="w-5 h-5 ml-2" />
-          </Button>
-          <Button
-            size="lg"
-            variant="outline"
-            onClick={scrollToServices}
-            className="text-base px-8 py-6 rounded-xl border-white/20 text-white/80 bg-white/5 hover:bg-white/10 hover:border-white/30 transition-all duration-200"
-          >
-            See What We Build
-          </Button>
-        </motion.div>
-
-        {/* Social proof — understated */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.85 }}
-          className="flex items-center justify-center gap-3 text-sm text-white/35"
-        >
-          <div className="flex -space-x-1.5">
-            {['blue', 'emerald', 'purple', 'blue', 'emerald'].map((color, i) => (
-              <div
-                key={i}
-                className={`w-7 h-7 rounded-full border-2 border-[#0a0a0a] flex items-center justify-center text-[10px] font-bold text-white ${
-                  color === 'blue' ? 'bg-accent-blue' :
-                  color === 'emerald' ? 'bg-accent-emerald' :
-                  'bg-accent-purple'
-                }`}
+            {/* CTAs */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+              className="flex flex-col sm:flex-row items-start gap-3 mb-12"
+            >
+              <Button
+                size="lg"
+                onClick={scrollToContact}
+                className="bg-accent-blue hover:bg-accent-blue/90 text-white px-8 py-6 rounded-xl text-base transition-all duration-200"
               >
-                {String.fromCharCode(65 + i)}
-              </div>
-            ))}
-          </div>
-          <span>Working with businesses across <strong className="text-white/60">6+ industries</strong></span>
-        </motion.div>
-      </div>
+                Book a Free Strategy Call
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                onClick={scrollToServices}
+                className="px-8 py-6 rounded-xl text-base border-border text-foreground hover:bg-card transition-all duration-200"
+              >
+                See What We Build
+              </Button>
+            </motion.div>
 
-      {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 0.8 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20"
-      >
-        <motion.button
-          onClick={scrollToServices}
-          animate={{ y: [0, 8, 0] }}
-          transition={{ repeat: Infinity, duration: 2.2, ease: 'easeInOut' }}
-          className="text-white/30 hover:text-white/60 transition-colors"
-          aria-label="Scroll down"
-        >
-          <ChevronDown className="w-7 h-7" />
-        </motion.button>
-      </motion.div>
+            {/* Social proof — simple text line */}
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.8 }}
+              className="text-sm text-muted-foreground"
+            >
+              Working with businesses in construction, healthcare, hospitality, and more
+            </motion.p>
+          </div>
+
+          {/* Right — visual column */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.9, delay: 0.5 }}
+            className="hidden lg:block"
+          >
+            <div className="relative">
+              <img
+                src={heroAbstract}
+                alt="AI systems visualization"
+                className="w-full h-auto rounded-2xl object-cover"
+              />
+            </div>
+          </motion.div>
+
+        </div>
+      </div>
     </div>
   )
 }

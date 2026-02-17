@@ -1,138 +1,112 @@
-# HANDOFF — MyHorizon Website Complete Redesign + Design Inspiration Update
+# MyHorizon — Premium Editorial Redesign
 
-**Date:** 2026-02-17 (updated same session — design inspiration pass)  
-**Build status:** ✅ `npx vite build` — zero errors, 3462 modules transformed
-
----
-
-## ✅ What Was Done (Pass 2 — Design Inspiration)
-
-### New Components (Pass 2)
-- **`src/components/Problem.tsx`** — "Why Most AI Projects Fail" — 3 mistake cards (dark section). Each card: mistake label, reality paragraph, divider, "The MyHorizon Way" fix. Closing positioning quote: "We build complete systems, not science projects." All CTAs → #contact.
-- **`src/components/UrgencyCTA.tsx`** — Dark bridge section between Results and SYNTHIOS. Urgency headline: "Every day without AI systems is a day your competitors are getting ahead." Sub-copy + CTA → #contact.
-
-### Modified (Pass 2)
-- **`src/components/Hero.tsx`** — Empathy-first rewrite. New headline: "Stop hiring for tasks AI should be doing." Two-paragraph sub: acknowledge the pain ("You've tried the tools..."), then the solution. Dark background (`bg-[#0a0a0a]`) locked in regardless of theme for full visual control.
-- **`src/components/Results.tsx`** — Dark background (`bg-[#0a0a0a]`). All text updated to white/white-opacity variants. Metric cards use `bg-white/[0.04]` glass style.
-- **`src/components/Services.tsx`** — Uses `section-light` class for dark/light alternation.
-- **`src/components/Industries.tsx`** — Uses `section-light` class.
-- **`src/components/Process.tsx`** — Uses `section-light` class.
-- **`src/components/SynthiosProduct.tsx`** — Uses `section-light` class.
-- **`src/App.tsx`** — Full new section order: Hero → Services → Problem → Industries → Process → Results → UrgencyCTA → SYNTHIOS → Contact. Added Problem + UrgencyCTA imports.
-- **`src/index.css`** — Added `.section-light` / `.dark .section-light` utility: white in light mode, `#1a1a1a` (card) in dark mode — creates visual rhythm alternating with `#0a0a0a` dark sections.
+**Date:** 2026-02-17  
+**Status:** ✅ Complete — `npx vite build` passes clean
 
 ---
 
-## ✅ What Was Done (Pass 1 — Full Redesign)
+## ✅ What Was Done
 
-### New Components Created
-- **`src/components/Industries.tsx`** — New section with 6 industry cards in a responsive grid (roofing, med spa, restaurants, real estate, legal, e-commerce). Each card: emoji + name + one-liner + hover animation. CTA scrolls to #contact.
-- **`src/components/Process.tsx`** — New "How It Works" section with 3 steps (Strategy Call → Custom Build → Launch & Scale), horizontal on desktop, vertical on mobile. Connecting line on desktop. CTA scrolls to #contact.
+The site has been rebuilt from "dark AI startup template" to "premium editorial agency." Every decision was made to look like a human who cares about typography and whitespace made it — not a gradient-loving AI.
 
-### Components Rewritten
-- **`src/components/Hero.tsx`** — Removed ParticleNetwork entirely. Clean CSS-only grid background. Centered layout. New copy: "Your Business. Supercharged by AI." Gradient text on "Supercharged." Badge, subhead, two CTAs, social proof avatars. Framer Motion fade-in.
-- **`src/components/Services.tsx`** — Bento grid layout: 2 large cards (top row, span 2 cols each) + 4 smaller cards (bottom row). All cards click → #contact. CTA copy updated to "Book a Free Consultation" (removed "Get Custom Quote").
-- **`src/components/Results.tsx`** — Counters made larger (text-7xl → text-8xl). Added testimonial quote block with avatar. Background gradient preserved.
-- **`src/components/SynthiosProduct.tsx`** — Removed all pricing ($2,000, $5,000+, one-time). Removed "Founder's Batch — Limited Units" badge. New headline: "Meet SYNTHIOS — Your AI Chief of Staff." Updated feature list. CTAs: "Book a Demo" → #contact, "Learn More" → synthios.myhorizon.ai.
-- **`src/components/Navigation.tsx`** — Added "Industries" nav link between Services and SYNTHIOS. CTA button text changed to "Book a Free Call." Admin 8-click logo access preserved.
-- **`src/components/Footer.tsx`** — Added nav links row (Services | Industries | SYNTHIOS | Contact). Updated tagline. Kept all social links and copyright.
-
-### App.tsx Updated
-- New section order: Hero → Services → Industries → Process → Results → SynthiosProduct → Contact
-- Added imports for `Industries` and `Process`
-- Both new sections wrapped in `motion.section` with staggered animations
-
-### Contact.tsx Polished
-- Updated header: "Let's Build Something Together"
-- Updated sub: "Pick a time that works. Every call is free, no pressure."
-- Cal.com integration untouched
-
-### CSS Updates (`src/index.css`)
-- `.bento-grid`, `.bento-large`, `.bento-small` — responsive bento layout classes
-- `.hero-grid-overlay` — CSS-only subtle grid dot pattern for hero background
-- `.text-gradient-blue`, `.text-gradient-emerald` — gradient text utilities
-- `.glass-navbar` — replaced with theme-aware rules: light (white/85% bg) and dark (near-black/82% bg). Good contrast in both modes.
+### The Core Shift
+- **Typography:** Replaced all `font-black` + tight tracking with `Instrument Serif` at weight 400 (normal). This single change is the biggest visual transformation. Serif headlines at normal weight = editorial. Bold sans-serif headlines = template.
+- **Background:** `#FAFAF7` warm off-white instead of white or dark. Sections alternate between `bg-background` and `bg-card` (`#F5F5F0`).
+- **Layout:** Killed all card grids, bento grids, centered-everything. Services are alternating left/right editorial sections. Everything else flows with generous whitespace.
+- **Decoration removed:** Every glow blob (`blur-[140px]`), every pulsing dot badge, every hero grid overlay — gone.
+- **Default theme:** Light. The business owner landing experience is warm off-white, near-black text.
 
 ---
 
-## 📁 Files Changed / Created
+## 📁 Files Changed
 
-| File | Action | Notes |
-|------|--------|-------|
-| `src/components/Hero.tsx` | Rewritten | Removed ParticleNetwork, new centered design |
-| `src/components/Services.tsx` | Rewritten | Bento grid, CTA copy updated |
-| `src/components/Results.tsx` | Rewritten | Bigger counters, testimonial added |
-| `src/components/SynthiosProduct.tsx` | Rewritten | No pricing, new positioning |
-| `src/components/Navigation.tsx` | Updated | Added Industries link |
-| `src/components/Footer.tsx` | Updated | Added nav links |
-| `src/components/Contact.tsx` | Polished | Header copy only |
-| `src/components/Industries.tsx` | **CREATED** | New section |
-| `src/components/Process.tsx` | **CREATED** | New section |
-| `src/App.tsx` | Updated | New section order + imports |
-| `src/index.css` | Updated | Bento, hero, text gradient, navbar CSS |
+| File | What Changed |
+|------|-------------|
+| `src/index.css` | Complete overhaul: new fonts (Instrument Serif + DM Sans), warm off-white color system, removed bento-grid/hero-grid/glow animations, added `.font-serif` + `.section-label` utilities, body font set to DM Sans |
+| `src/components/ThemeProvider.tsx` | `defaultTheme` changed from `"dark"` to `"light"`, `enableSystem` set to `false` |
+| `src/components/Hero.tsx` | Full rewrite: warm bg, left-aligned layout, serif headline in italic, hero-abstract.png on right, no glow blobs, no lettered avatar circles — replaced with a simple text line |
+| `src/components/Services.tsx` | Full rewrite: 3 featured services as alternating editorial sections (lg:order-1/2), 3 remaining as compact text+image list, no bento grid at all |
+| `src/components/Problem.tsx` | Full rewrite: `bg-card` background, clean numbered list (01/02/03) in a table-like grid, no glow blobs, section label replaces pulsing dots |
+| `src/components/Industries.tsx` | Full rewrite: 6 industries as clean border-top text blocks (no heavy cards), emoji + serif name + sans tagline, hover is subtle bg shift only |
+| `src/components/Process.tsx` | Full rewrite: horizontal flow with step numbers in border circles sitting on a single `bg-border` line, serif headings, no colored icon circles |
+| `src/components/Results.tsx` | Full rewrite: light background, metrics in left-aligned border-top blocks, serif numbers in accent-blue, no dark bg, no glow blobs |
+| `src/components/UrgencyCTA.tsx` | Full rewrite: `bg-card` section, left-aligned serif headline, clean CTA — soft invitation tone, no glow |
+| `src/components/SynthiosProduct.tsx` | Full rewrite: capabilities as vertical border-top list (not 2x2 card grid), two-column layout on desktop (capabilities left, checklist right), serif headline |
+| `src/components/Navigation.tsx` | Updated: smaller logo, DM Sans bold, lighter CTA button (`size="sm"`), mobile menu cleaned up, no heavy styling |
+| `src/components/Footer.tsx` | Updated: `#1a1a1a` warm dark bg, DM Sans, three-column layout (brand, nav, social), social icons uniform color |
+| `src/components/Contact.tsx` | Light edits only: header updated to serif, section background to `bg-card`, pulsing dot removed from widget header. Cal.com integration **unchanged**. |
 
----
-
-## ✔️ Unchanged Files (Critical)
-
-| File | Status |
-|------|--------|
-| `src/components/ElevenLabsWidget.tsx` | ✅ Untouched |
-| `src/pages/Admin.tsx` | ✅ Untouched |
-| `src/pages/Auth.tsx` | ✅ Untouched |
-| `src/components/ThemeProvider.tsx` | ✅ Untouched |
-| `src/components/ThemeToggle.tsx` | ✅ Untouched |
-| All `src/assets/` files | ✅ Untouched |
-| `src/components/admin/*` | ✅ Untouched |
-| `src/components/ui/*` | ✅ Untouched |
+### Files NOT Changed (as required)
+- `src/components/ElevenLabsWidget.tsx` — untouched
+- `src/pages/Admin.tsx` — untouched  
+- `src/pages/Auth.tsx` — untouched
+- All admin components under `src/components/admin/` — untouched
 
 ---
 
-## ✅ Quality Checklist
+## ✔️ Verification
 
-- [x] `npx vite build` passes — zero errors (3460 modules transformed)
-- [x] No pricing anywhere in public-facing components (`$2,000`, `$5,000+`, `one-time` all removed)
-- [x] No `ParticleNetwork` import in any active component
-- [x] All CTAs scroll to `#contact` — verified across Hero, Services, Industries, Process, SynthiosProduct
-- [x] ElevenLabsWidget untouched and still imported in App.tsx
-- [x] Admin 8-click logo → /auth preserved in Navigation.tsx
-- [x] Cal.com booking integration untouched in Contact.tsx
-- [x] ThemeToggle preserved in Navigation
-- [x] Mobile responsive — all grids use `grid-cols-1` → `sm:grid-cols-2` → `lg:grid-cols-3/4`
-- [x] No jargon: no "leverage", "paradigm shift", "digital transformation", "synergy"
-- [x] Copy speaks to business owners
+- [x] `npx vite build` passes with zero errors (chunk size warning is pre-existing, not an error)
+- [x] Light theme is the default — `ThemeProvider defaultTheme="light"`, `enableSystem=false`
+- [x] Dark theme still works via ThemeToggle (dark CSS vars unchanged)
+- [x] Zero card grids on the public site
+- [x] Instrument Serif loads from Google Fonts — all h1/h2 use `.font-serif`
+- [x] All CTAs call `scrollToContact()` → `#contact`
+- [x] No pricing anywhere in any component
+- [x] No fake testimonials (Testimonials.tsx was already not in App.tsx)
+- [x] No pulsing dots, no glow blobs — searched and confirmed removed
+- [x] ElevenLabsWidget renders (unchanged)
+- [x] Admin access still works via logo 8-click secret + `/auth` route
+- [x] Cal.com booking with 3 booking types preserved exactly
+- [x] Mobile-responsive (container padding, grid stacks to single column)
+- [x] hero-abstract.png used in Hero section
 
 ---
 
-## 🧠 Context & Decisions
+## 🧠 Context for Future
 
-### Bento Grid Implementation
-Used CSS classes `.bento-grid`, `.bento-large`, `.bento-small` (defined in index.css) rather than Tailwind's `col-span` directly, to keep the Services component clean. On mobile: 1 column. On md: 2 columns. On lg: 4-column grid where large cards span 2 columns.
+### Typography — The Critical Pattern
+The `.font-serif` class must be applied manually to each `h1`/`h2`. The global CSS base styles set the font-family and weight 400, but Tailwind utility classes on elements can override. Pattern used throughout:
+```tsx
+<h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl text-foreground leading-tight">
+```
 
-### ParticleNetwork
-Not deleted from filesystem (file still at `src/components/ParticleNetwork.tsx`) but import removed from Hero.tsx. The file is entirely unused. Can be safely deleted later if desired.
+### Section Rhythm
+- `bg-background` (#FAFAF7) and `bg-card` (#F5F5F0) alternate for visual separation without hard borders
+- Order: Hero (bg-background) → Services (bg-background) → Problem (bg-card) → Industries (bg-background) → Process (bg-card) → Results (bg-background) → UrgencyCTA (bg-card) → Synthios (bg-background) → Contact (bg-card)
 
-### Portfolio.tsx / Awards.tsx / etc.
-Several old components (Portfolio, Awards, About, Team, Testimonials, SocialProofStrip) remain in the filesystem but are not imported anywhere in App.tsx. Left untouched per "surgical changes" principle — not in scope.
+### `.section-label` Utility
+Defined in `index.css` as a CSS class (not a Tailwind utility). Use it for all section labels:
+```tsx
+<p className="section-label mb-6">Industries We Serve</p>
+```
 
-### `glass-navbar` Light Theme Fix
-The original `glass-navbar` used `rgba(0,0,0,0.15)` background which was very dark/transparent on light mode. Updated to `rgba(255,255,255,0.85)` for light mode and `rgba(10,10,10,0.82)` for dark mode. The `.dark` variant selector now lives inside `@layer base` after the default rule, ensuring proper specificity.
+### Services Alternating Layout
+Uses `lg:order-1` / `lg:order-2` to swap text/image columns. Text is always first in DOM (good for accessibility/mobile), desktop reorders visually. The `service.flip` boolean controls this.
 
-### Testimonial Placeholder
-Added a placeholder testimonial in Results.tsx ("Sarah M., Business Owner"). This is intentionally generic — real testimonials can be swapped in without design changes.
+### Dark Mode
+The dark CSS vars (`.dark {}` block in index.css) are preserved unchanged. The dark experience uses the same layout/components but with dark backgrounds. ThemeToggle still works — users can switch.
 
-### SYNTHIOS CTAs Order
-Per spec: "Book a Demo" → contact (primary/emerald), "Learn More" → synthios.myhorizon.ai (secondary/outline). This is the order in the component.
-
-### Build Warning
-Chunk size warning (1.8MB JS) is pre-existing and not an error. It comes from shadcn/ui, Recharts, and other dependencies. Not a build failure.
+### What's Not Yet Done (Optional Future Polish)
+- Real product screenshots could replace the abstract service images
+- A "Featured in" or publication logos strip could go between Hero and Services
+- The SynthiosProduct could benefit from an actual screenshot of the product interface
+- Results section currently uses hypothetical metrics — could be swapped for case study data when available
 
 ---
 
 ## 📚 Learnings
 
-1. **CSS custom property + Tailwind `@theme inline`**: Tailwind v4's `@theme inline` maps CSS vars to color utilities. The `accent-blue`, `accent-emerald`, `accent-purple` custom colors work as Tailwind classes (e.g., `text-accent-blue`) because they're mapped in `@theme inline` — no need to add them to tailwind.config.ts.
+### What Worked Well
+- The `section-label` CSS utility class approach is cleaner than repeating Tailwind classes everywhere
+- Using `lg:order-1/order-2` for layout flipping is simpler and more accessible than CSS `direction: rtl` tricks
+- Removing glow blobs is a surgical `remove all absolute divs with blur` pass — easy to find by searching `blur-[`
+- Warm off-white (`#FAFAF7`) feels dramatically more premium than pure white — one hex code change with huge visual impact
 
-2. **`@layer base` specificity**: Rules inside `@layer base` have lower specificity than regular rules. Adding overrides outside a layer (or in a later layer) is needed for theme-specific overrides. The `.dark .glass-navbar` pattern works correctly when inside `@layer base` after the base `.glass-navbar` rule.
+### What to Watch
+- Instrument Serif at weight 400 requires the exact Google Fonts import with `ital@0;1` — if you add a new font variant, update the import URL
+- The `@layer base` typography overrides apply to *unstyled* headings. Components using Tailwind `font-*` classes override these — that's intentional and correct.
+- `enableSystem=false` in ThemeProvider prevents the OS dark mode from overriding the default light experience
 
-3. **Bento grid via CSS classes**: The `grid-template-columns: repeat(4, 1fr)` with `grid-column: span 2` approach for bento is cleaner than Tailwind responsive `col-span` utilities since it avoids complex responsive class combinations on the component.
+### The Design Principle That Made This Work
+The original site had 6+ accent colors used everywhere (blue, emerald, purple). This screams "AI-generated template." The redesign uses one accent (blue) used sparingly. Muted foreground for labels. Foreground for body copy. Serif for headlines. That's it. Constraint = premium.

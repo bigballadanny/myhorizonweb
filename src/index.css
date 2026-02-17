@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Bagel+Fat+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -7,35 +7,34 @@
 
 :root {
   --font-size: 16px;
-  --background: #ffffff;
-  --foreground: #0a0a0a;
-  --card: #fafafa;
-  --card-foreground: #0a0a0a;
-  --popover: #ffffff;
-  --popover-foreground: #0a0a0a;
-  --primary: #0a0a0a;
-  --primary-foreground: #ffffff;
-  --secondary: #f4f4f5;
-  --secondary-foreground: #0a0a0a;
-  --muted: #f4f4f5;
-  --muted-foreground: #71717a;
-  --accent: #f4f4f5;
-  --accent-foreground: #0a0a0a;
+  --background: #FAFAF7;
+  --foreground: #1a1a1a;
+  --card: #F5F5F0;
+  --card-foreground: #1a1a1a;
+  --popover: #FAFAF7;
+  --popover-foreground: #1a1a1a;
+  --primary: #1a1a1a;
+  --primary-foreground: #FAFAF7;
+  --secondary: #F0F0EB;
+  --secondary-foreground: #1a1a1a;
+  --muted: #F0F0EB;
+  --muted-foreground: #6b7280;
+  --accent: #F0F0EB;
+  --accent-foreground: #1a1a1a;
   --destructive: #ef4444;
   --destructive-foreground: #ffffff;
-  --border: #e4e4e7;
-  --input: #f4f4f5;
-  --input-background: #ffffff;
-  --switch-background: #e4e4e7;
+  --border: #e5e5e0;
+  --input: #F0F0EB;
+  --input-background: #FAFAF7;
+  --switch-background: #e5e5e0;
   --font-weight-medium: 500;
   --font-weight-normal: 400;
   --ring: #a1a1aa;
-  
-  /* Simplified accent colors */
+
   --accent-blue: #2563eb;
   --accent-emerald: #059669;
   --accent-purple: #7c3aed;
-  
+
   --radius: 0.75rem;
 }
 
@@ -84,12 +83,11 @@
   --color-input-background: var(--input-background);
   --color-switch-background: var(--switch-background);
   --color-ring: var(--ring);
-  
-  /* Simplified accent colors */
+
   --color-accent-blue: var(--accent-blue);
   --color-accent-emerald: var(--accent-emerald);
   --color-accent-purple: var(--accent-purple);
-  
+
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -103,241 +101,182 @@
 
   body {
     @apply bg-background text-foreground overflow-x-hidden;
+    font-family: 'DM Sans', system-ui, sans-serif;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
     width: 100%;
     max-width: 100vw;
   }
-  
+
   * {
     box-sizing: border-box;
   }
-  
+
   /* Ensure no elements can cause horizontal overflow */
   .container {
     max-width: 100%;
     overflow-x: hidden;
   }
-  
-  /* Font utility classes */
-  .font-bagel {
-    font-family: 'Bagel Fat One', cursive;
+
+  /* =====================================================
+     Typography Utilities
+     ===================================================== */
+  .font-serif {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-weight: 400;
   }
-  
-  /* Simplified utility classes */
+
+  .font-sans {
+    font-family: 'DM Sans', system-ui, sans-serif;
+  }
+
+  .section-label {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted-foreground);
+  }
+
+  /* =====================================================
+     Layout Utilities
+     ===================================================== */
   .clean-border {
     border: 1px solid var(--border);
   }
-  
+
   .subtle-shadow {
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.06), 0 1px 2px -1px rgba(0, 0, 0, 0.06);
   }
-  
+
   .elevated-shadow {
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.07);
   }
-  
+
   .gentle-animation {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
-  
-  /* Enhanced Glass Effect */
-  .glass-effect {
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(25px) saturate(1.5);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    box-shadow: 
-      0 8px 32px rgba(0, 0, 0, 0.3),
-      inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  }
-  
-  .glass-effect:hover {
-    background: rgba(255, 255, 255, 0.12);
-    border-color: rgba(255, 255, 255, 0.25);
-    transform: translateY(-2px);
-  }
-  
-  /* Enhanced glass effect for better visibility */
-  /* Light theme (default) */
+
+  /* =====================================================
+     Glass Navbar — warm off-white light theme
+     ===================================================== */
   .glass-navbar {
-    background: rgba(255, 255, 255, 0.85);
+    background: rgba(250, 250, 247, 0.92);
     backdrop-filter: blur(24px) saturate(1.8);
     border: none;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-    box-shadow: 0 1px 12px rgba(0, 0, 0, 0.06);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 1px 12px rgba(0, 0, 0, 0.04);
   }
 
-  /* Dark theme */
   .dark .glass-navbar {
-    background: rgba(10, 10, 10, 0.82);
+    background: rgba(10, 10, 10, 0.88);
     backdrop-filter: blur(30px) saturate(1.8);
     border: none;
     border-bottom: 1px solid rgba(255, 255, 255, 0.07);
     box-shadow: 0 1px 20px rgba(0, 0, 0, 0.6);
   }
-  
-  /* Text shadow utilities for better readability */
-  .text-shadow-strong {
-    text-shadow: 
-      0 2px 4px rgba(0, 0, 0, 0.8),
-      0 1px 2px rgba(0, 0, 0, 0.9),
-      1px 1px 2px rgba(0, 0, 0, 0.8),
-      -1px -1px 2px rgba(0, 0, 0, 0.8);
+
+  /* =====================================================
+     Section alternating rhythm
+     ===================================================== */
+  .section-light {
+    background-color: var(--background);
   }
-  
-  .text-shadow-medium {
-    text-shadow: 
-      0 1px 3px rgba(0, 0, 0, 0.7),
-      0 1px 1px rgba(0, 0, 0, 0.8),
-      1px 1px 1px rgba(0, 0, 0, 0.7),
-      -1px -1px 1px rgba(0, 0, 0, 0.7);
+
+  .dark .section-light {
+    background-color: var(--card);
   }
-  
-  /* Video Optimizations */
-  .video-container {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
+
+  /* =====================================================
+     AI Prose Styles (admin)
+     ===================================================== */
+  .ai-prose table {
+    border-collapse: collapse;
   }
-  
-  .video-container video {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    min-width: 100%;
-    min-height: 100%;
-    width: auto;
-    height: auto;
-    transform: translateX(-50%) translateY(-50%);
-    object-fit: cover;
+
+  .ai-prose pre {
+    margin: 0;
   }
-  
-  /* Advanced Animations */
-  @keyframes float-gentle {
-    0%, 100% { 
-      transform: translateY(0px) rotate(0deg); 
-    }
-    50% { 
-      transform: translateY(-10px) rotate(1deg); 
-    }
-  }
-  
-  @keyframes pulse-glow {
-    0%, 100% { 
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
-    }
-    50% { 
-      box-shadow: 0 0 40px rgba(255, 255, 255, 0.3);
-    }
-  }
-  
-  @keyframes drift-left {
-    0% { transform: translateX(0px); }
-    50% { transform: translateX(-15px); }
-    100% { transform: translateX(0px); }
-  }
-  
-  @keyframes drift-right {
-    0% { transform: translateX(0px); }
-    50% { transform: translateX(15px); }
-    100% { transform: translateX(0px); }
-  }
-  
-  /* Kept utility classes */
-  .float-gentle {
-    animation: float-gentle 6s ease-in-out infinite;
-  }
-  
-  .pulse-glow {
-    animation: pulse-glow 3s ease-in-out infinite;
-  }
-  
-  .drift-left {
-    animation: drift-left 8s ease-in-out infinite;
-  }
-  
-  .drift-right {
-    animation: drift-right 7s ease-in-out infinite;
-  }
-  
-  /* Global animation slowdowns */
-  .animate-pulse {
-    animation-duration: 8s !important;
-  }
-  
-  /* Clean scrollbar */
+
+  /* =====================================================
+     Clean scrollbar
+     ===================================================== */
   ::-webkit-scrollbar {
     width: 6px;
   }
-  
+
   ::-webkit-scrollbar-track {
     background: var(--background);
   }
-  
+
   ::-webkit-scrollbar-thumb {
     background: var(--border);
     border-radius: 3px;
   }
-  
+
   ::-webkit-scrollbar-thumb:hover {
     background: var(--ring);
   }
 }
 
 /**
- * Clean typography system
+ * Typography system — editorial
  */
 @layer base {
   :where(:not(:has([class*=" text-"]), :not(:has([class^="text-"])))) {
     h1 {
-      font-size: 2.25rem; /* 36px */
-      font-weight: 900;
-      line-height: 1.1;
-      letter-spacing: -0.05em;
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-size: 2.5rem;
+      font-weight: 400;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
     }
 
     h2 {
-      font-size: 1.875rem; /* 30px */
-      font-weight: 800;
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-size: 2rem;
+      font-weight: 400;
       line-height: 1.2;
-      letter-spacing: -0.04em;
+      letter-spacing: -0.01em;
     }
 
     h3 {
-      font-size: 1.5rem; /* 24px */
-      font-weight: 700;
-      line-height: 1.3;
-      letter-spacing: -0.03em;
+      font-family: 'DM Sans', system-ui, sans-serif;
+      font-size: 1.25rem;
+      font-weight: 500;
+      line-height: 1.4;
+      letter-spacing: -0.01em;
     }
 
     h4 {
-      font-size: 1.25rem; /* 20px */
-      font-weight: 600;
+      font-family: 'DM Sans', system-ui, sans-serif;
+      font-size: 1.125rem;
+      font-weight: 500;
       line-height: 1.4;
-      letter-spacing: -0.02em;
+      letter-spacing: 0;
     }
 
     p {
-      font-size: 1.125rem; /* 18px */
+      font-size: 1.0625rem;
       font-weight: var(--font-weight-normal);
-      line-height: 1.6;
-      letter-spacing: 0.01em;
+      line-height: 1.7;
+      letter-spacing: 0;
     }
 
     label {
-      font-size: 1rem; /* 16px */
+      font-size: 1rem;
       font-weight: 500;
       line-height: 1.5;
     }
 
     button {
-      font-size: 1rem; /* 16px */
-      font-weight: 600;
+      font-size: 0.9375rem;
+      font-weight: 500;
       line-height: 1.5;
     }
 
     input {
-      font-size: 1rem; /* 16px */
+      font-size: 1rem;
       font-weight: var(--font-weight-normal);
       line-height: 1.5;
     }
@@ -350,118 +289,8 @@ html {
 }
 
 /* =====================================================
-   Section Rhythm — alternating light/dark
+   Performance & Motion
    ===================================================== */
-
-/* "Light" sections: white in light mode, card (#1a1a1a) in dark mode */
-.section-light {
-  background-color: var(--background);
-}
-
-.dark .section-light {
-  background-color: var(--card); /* #1a1a1a — visually distinct from #0a0a0a hero/problem/results */
-}
-
-/* =====================================================
-   Bento Grid Layout
-   ===================================================== */
-.bento-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.5rem;
-}
-
-@media (min-width: 768px) {
-  .bento-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  
-  .bento-large {
-    /* spans full row pair on small breakpoint — no change needed */
-  }
-}
-
-@media (min-width: 1024px) {
-  .bento-grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
-  
-  .bento-large {
-    grid-column: span 2;
-  }
-  
-  .bento-small {
-    grid-column: span 1;
-  }
-}
-
-/* =====================================================
-   Hero Background — CSS-only gradient mesh + grid
-   ===================================================== */
-.hero-bg {
-  background-color: var(--background);
-}
-
-.dark .hero-bg {
-  background-color: var(--background);
-}
-
-.hero-grid-overlay {
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(37, 99, 235, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(37, 99, 235, 0.04) 1px, transparent 1px);
-  background-size: 64px 64px;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.dark .hero-grid-overlay {
-  background-image:
-    linear-gradient(rgba(37, 99, 235, 0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(37, 99, 235, 0.07) 1px, transparent 1px);
-  background-size: 64px 64px;
-}
-
-/* =====================================================
-   Text Gradient Utilities
-   ===================================================== */
-.text-gradient-blue {
-  background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.text-gradient-emerald {
-  background: linear-gradient(135deg, #059669 0%, #2563eb 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* =====================================================
-   Glass Navbar — improved contrast for both themes
-   (placed after @layer base to ensure specificity wins)
-   ===================================================== */
-
-/* AI Prose Styles */
-.ai-prose table {
-  border-collapse: collapse;
-}
-
-.ai-prose pre {
-  margin: 0;
-}
-
-/* AI typing bounce */
-@keyframes ai-bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-4px); }
-}
-
-/* Performance optimizations */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -470,78 +299,128 @@ html {
   }
 }
 
-/* Mobile optimizations for video */
+/* =====================================================
+   Mobile
+   ===================================================== */
 @media (max-width: 768px) {
   html, body {
     overflow-x: hidden !important;
     width: 100%;
     max-width: 100vw;
   }
-  
-  .video-container {
-    height: 100dvh; /* Use dynamic viewport height on mobile */
-  }
-  
-  /* Adjust glass effects for mobile */
-  .glass-effect {
-    backdrop-filter: blur(15px);
-  }
-  
+
   .glass-navbar {
     backdrop-filter: blur(20px);
   }
-  
-  /* Mobile menu optimizations */
+
   .mobile-menu-panel {
-    /* Ensure mobile menu is always on top */
     z-index: 9999;
     max-width: 90vw;
   }
-  
-  /* Prevent horizontal scroll when mobile menu is open */
+
   body.mobile-menu-open {
     overflow-x: hidden;
     position: fixed;
     width: 100%;
   }
-  
-  /* Ensure touch interactions work well on mobile */
+
   .mobile-menu-link {
-    -webkit-tap-highlight-color: rgba(255, 255, 255, 0.1);
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.05);
     touch-action: manipulation;
   }
-  
-  /* Force all sections to stay within viewport */
+
   section {
     max-width: 100vw;
     overflow-x: hidden;
   }
-  
-  /* Ensure containers don't exceed viewport */
+
   .container {
     max-width: 100vw !important;
     padding-left: 1rem;
     padding-right: 1rem;
   }
-  
-  /* Prevent scrollbars in Services section */
+
   #services {
     overflow: visible !important;
   }
-  
+
   #services * {
     overflow: visible !important;
   }
-  
-  #services::-webkit-scrollbar,
-  #services *::-webkit-scrollbar {
-    display: none !important;
-    width: 0 !important;
-    height: 0 !important;
-  }
-  
-  /* Fix any absolute positioned elements that might overflow */
+
   [class*="absolute"] {
     max-width: 100vw;
   }
+}
+
+/* =====================================================
+   Animated Gradient Mesh — Stripe-inspired
+   ===================================================== */
+.hero-gradient-mesh {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(at 27% 37%, hsla(215, 98%, 61%, 0.15) 0px, transparent 50%),
+    radial-gradient(at 97% 21%, hsla(160, 80%, 45%, 0.12) 0px, transparent 50%),
+    radial-gradient(at 52% 99%, hsla(250, 85%, 60%, 0.08) 0px, transparent 50%),
+    radial-gradient(at 10% 29%, hsla(28, 100%, 74%, 0.06) 0px, transparent 50%),
+    radial-gradient(at 97% 96%, hsla(38, 60%, 74%, 0.08) 0px, transparent 50%);
+  animation: mesh-drift 20s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.dark .hero-gradient-mesh {
+  background:
+    radial-gradient(at 27% 37%, hsla(215, 98%, 61%, 0.12) 0px, transparent 50%),
+    radial-gradient(at 97% 21%, hsla(160, 80%, 45%, 0.08) 0px, transparent 50%),
+    radial-gradient(at 52% 99%, hsla(250, 85%, 60%, 0.06) 0px, transparent 50%),
+    radial-gradient(at 10% 29%, hsla(28, 100%, 74%, 0.04) 0px, transparent 50%),
+    radial-gradient(at 97% 96%, hsla(38, 60%, 74%, 0.05) 0px, transparent 50%);
+}
+
+@keyframes mesh-drift {
+  0%, 100% { filter: blur(60px); transform: scale(1); }
+  33%       { filter: blur(70px); transform: scale(1.02) translate(2%, -1%); }
+  66%       { filter: blur(55px); transform: scale(0.98) translate(-1%, 2%); }
+}
+
+/* =====================================================
+   Text Highlight — Anthropic-inspired keyword wash
+   ===================================================== */
+.text-highlight {
+  background: linear-gradient(120deg, hsla(215, 98%, 61%, 0.12) 0%, hsla(215, 98%, 61%, 0.06) 100%);
+  padding: 0.05em 0.15em;
+  border-radius: 0.15em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+.dark .text-highlight {
+  background: linear-gradient(120deg, hsla(215, 98%, 61%, 0.18) 0%, hsla(215, 98%, 61%, 0.10) 100%);
+}
+
+/* =====================================================
+   Marquee strip
+   ===================================================== */
+.animate-marquee {
+  display: inline-flex;
+  animation: marquee 30s linear infinite;
+  min-width: 100%;
+}
+
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Pause on hover */
+.marquee-track:hover .animate-marquee {
+  animation-play-state: paused;
+}
+
+/* AI typing bounce */
+@keyframes ai-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
 }
