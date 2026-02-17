@@ -1,12 +1,29 @@
-# HANDOFF — MyHorizon Website Complete Redesign
+# HANDOFF — MyHorizon Website Complete Redesign + Design Inspiration Update
 
-**Date:** 2026-02-17  
-**Agent:** myhorizon-redesign (subagent)  
-**Build status:** ✅ `npx vite build` — zero errors, 3460 modules transformed
+**Date:** 2026-02-17 (updated same session — design inspiration pass)  
+**Build status:** ✅ `npx vite build` — zero errors, 3462 modules transformed
 
 ---
 
-## ✅ What Was Done
+## ✅ What Was Done (Pass 2 — Design Inspiration)
+
+### New Components (Pass 2)
+- **`src/components/Problem.tsx`** — "Why Most AI Projects Fail" — 3 mistake cards (dark section). Each card: mistake label, reality paragraph, divider, "The MyHorizon Way" fix. Closing positioning quote: "We build complete systems, not science projects." All CTAs → #contact.
+- **`src/components/UrgencyCTA.tsx`** — Dark bridge section between Results and SYNTHIOS. Urgency headline: "Every day without AI systems is a day your competitors are getting ahead." Sub-copy + CTA → #contact.
+
+### Modified (Pass 2)
+- **`src/components/Hero.tsx`** — Empathy-first rewrite. New headline: "Stop hiring for tasks AI should be doing." Two-paragraph sub: acknowledge the pain ("You've tried the tools..."), then the solution. Dark background (`bg-[#0a0a0a]`) locked in regardless of theme for full visual control.
+- **`src/components/Results.tsx`** — Dark background (`bg-[#0a0a0a]`). All text updated to white/white-opacity variants. Metric cards use `bg-white/[0.04]` glass style.
+- **`src/components/Services.tsx`** — Uses `section-light` class for dark/light alternation.
+- **`src/components/Industries.tsx`** — Uses `section-light` class.
+- **`src/components/Process.tsx`** — Uses `section-light` class.
+- **`src/components/SynthiosProduct.tsx`** — Uses `section-light` class.
+- **`src/App.tsx`** — Full new section order: Hero → Services → Problem → Industries → Process → Results → UrgencyCTA → SYNTHIOS → Contact. Added Problem + UrgencyCTA imports.
+- **`src/index.css`** — Added `.section-light` / `.dark .section-light` utility: white in light mode, `#1a1a1a` (card) in dark mode — creates visual rhythm alternating with `#0a0a0a` dark sections.
+
+---
+
+## ✅ What Was Done (Pass 1 — Full Redesign)
 
 ### New Components Created
 - **`src/components/Industries.tsx`** — New section with 6 industry cards in a responsive grid (roofing, med spa, restaurants, real estate, legal, e-commerce). Each card: emoji + name + one-liner + hover animation. CTA scrolls to #contact.

@@ -26,7 +26,7 @@ export function Hero() {
       <div className="absolute top-2/3 left-1/4 w-[300px] h-[300px] bg-accent-emerald/5 rounded-full blur-[100px] pointer-events-none" />
 
       {/* Hero Content — centered */}
-      <div className="relative z-10 text-center px-6 sm:px-8 max-w-5xl mx-auto pt-24 pb-20">
+      <div className="relative z-10 text-center px-6 sm:px-8 max-w-4xl mx-auto pt-24 pb-20">
 
         {/* Badge */}
         <motion.div
@@ -37,46 +37,38 @@ export function Hero() {
         >
           <span className="inline-flex items-center gap-2 px-4 py-1.5 text-xs font-semibold tracking-widest uppercase bg-accent-blue/15 border border-accent-blue/30 rounded-full text-accent-blue">
             <span className="w-1.5 h-1.5 bg-accent-blue rounded-full animate-pulse" />
-            AI Automation Agency
+            AI Systems for Business
           </span>
         </motion.div>
 
-        {/* Empathy-first headline */}
+        {/* Headline — possibility-forward */}
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.35 }}
-          className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black leading-[1.05] tracking-tight text-white mb-6"
+          className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-black leading-[1.08] tracking-tight text-white mb-8"
         >
-          Stop hiring for tasks{' '}
-          <span className="text-gradient-blue">AI should</span>{' '}
-          be doing.
+          What if AI actually{' '}
+          <span className="text-gradient-blue">understood</span>{' '}
+          your business?
         </motion.h1>
 
-        {/* Empathy subhead — acknowledge the pain */}
+        {/* Subhead — paint the picture */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.5 }}
-          className="text-lg sm:text-xl lg:text-2xl text-white/60 leading-relaxed max-w-2xl mx-auto mb-4"
+          className="text-lg sm:text-xl lg:text-2xl text-white/55 leading-relaxed max-w-2xl mx-auto mb-12"
         >
-          You've tried the tools. You've hired the help. Things still fall through the cracks.
-        </motion.p>
-
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.6 }}
-          className="text-lg sm:text-xl text-white/50 leading-relaxed max-w-xl mx-auto mb-12"
-        >
-          We build complete AI systems — not experiments — that run your business 24/7 and actually compound over time.
+          Not just answered questions — but remembered your customers, managed your operations, and made decisions alongside your team.{' '}
+          <span className="text-white/80 font-medium">That's what we build.</span>
         </motion.p>
 
         {/* CTAs */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.72 }}
+          transition={{ duration: 0.6, delay: 0.65 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16"
         >
           <Button
@@ -84,7 +76,7 @@ export function Hero() {
             onClick={scrollToContact}
             className="bg-accent-blue hover:bg-accent-blue/90 text-white text-base px-9 py-6 rounded-xl shadow-lg shadow-accent-blue/25 transition-all duration-200 hover:shadow-accent-blue/40 hover:-translate-y-0.5"
           >
-            Book Your Free Strategy Call
+            Book a Free Strategy Call
             <ArrowRight className="w-5 h-5 ml-2" />
           </Button>
           <Button
@@ -97,12 +89,12 @@ export function Hero() {
           </Button>
         </motion.div>
 
-        {/* Social proof */}
+        {/* Social proof — understated */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.9 }}
-          className="flex items-center justify-center gap-3 text-sm text-white/40"
+          transition={{ duration: 0.6, delay: 0.85 }}
+          className="flex items-center justify-center gap-3 text-sm text-white/35"
         >
           <div className="flex -space-x-1.5">
             {['blue', 'emerald', 'purple', 'blue', 'emerald'].map((color, i) => (
@@ -118,7 +110,7 @@ export function Hero() {
               </div>
             ))}
           </div>
-          <span>Trusted by businesses across <strong className="text-white/70">6+ industries</strong></span>
+          <span>Working with businesses across <strong className="text-white/60">6+ industries</strong></span>
         </motion.div>
       </div>
 

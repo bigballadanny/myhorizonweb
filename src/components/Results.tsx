@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
-import { TrendingUp, Clock, Zap, Quote } from 'lucide-react'
+import { TrendingUp, Clock, Zap } from 'lucide-react'
 
 interface CounterProps {
   end: number
@@ -52,24 +52,24 @@ const metrics = [
   {
     value: 5,
     suffix: '+',
-    label: 'Hours Saved Daily',
-    description: 'Per business, on average',
+    label: 'Hours Reclaimed Daily',
+    description: 'Time your team gets back to focus on what matters',
     icon: Clock,
     accent: 'accent-blue',
   },
   {
     value: 24,
     suffix: '/7',
-    label: 'Non-Stop Operations',
-    description: 'AI systems never take a day off',
+    label: 'Always-On Operations',
+    description: 'Your AI systems work while you sleep, travel, and live',
     icon: Zap,
     accent: 'accent-emerald',
   },
   {
     value: 3,
     suffix: 'x',
-    label: 'Conversion Rate Lift',
-    description: 'With AI-powered follow-up',
+    label: 'Follow-Up Rate',
+    description: 'Because AI never forgets to follow up',
     icon: TrendingUp,
     accent: 'accent-purple',
   },
@@ -96,20 +96,21 @@ export function Results() {
           <div className="inline-flex items-center gap-2 mb-6">
             <div className="w-3 h-3 bg-accent-blue rounded-full animate-pulse" />
             <span className="text-sm font-semibold text-white/40 tracking-wide uppercase">
-              Proven Results
+              What This Looks Like
             </span>
             <div className="w-3 h-3 bg-accent-emerald rounded-full animate-pulse" />
           </div>
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black leading-tight mb-4 text-white">
-            Numbers That <span className="text-accent-emerald">Speak</span>
+            The Numbers Behind{' '}
+            <span className="text-accent-emerald">Real AI Systems</span>
           </h2>
-          <p className="text-lg text-white/50 max-w-xl mx-auto">
-            Real outcomes from businesses running on our AI infrastructure.
+          <p className="text-lg text-white/50 max-w-2xl mx-auto">
+            These aren't projections. They're what happens when AI is actually built into how a business operates — not bolted on as an afterthought.
           </p>
         </motion.div>
 
         {/* Metrics */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
           {metrics.map((metric, index) => {
             const Icon = metric.icon
             return (
@@ -144,31 +145,6 @@ export function Results() {
             )
           })}
         </div>
-
-        {/* Testimonial */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="max-w-3xl mx-auto"
-        >
-          <div className="bg-white/[0.04] border border-white/[0.08] rounded-2xl p-8 sm:p-10 text-center relative">
-            <Quote className="w-8 h-8 text-accent-blue/50 mx-auto mb-4" />
-            <blockquote className="text-xl sm:text-2xl font-semibold text-white leading-relaxed mb-6">
-              "MyHorizon transformed how we operate. What used to take my team hours now just happens automatically — every single day."
-            </blockquote>
-            <div className="flex items-center justify-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-accent-blue to-accent-purple flex items-center justify-center text-white font-bold">
-                S
-              </div>
-              <div className="text-left">
-                <p className="font-semibold text-white text-sm">Sarah M.</p>
-                <p className="text-white/50 text-sm">Business Owner</p>
-              </div>
-            </div>
-          </div>
-        </motion.div>
       </div>
     </section>
   )

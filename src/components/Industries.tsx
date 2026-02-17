@@ -50,9 +50,9 @@ export function Industries() {
   }
 
   return (
-    <section id="industries" className="relative py-24 lg:py-32 bg-background">
+    <section id="industries" className="relative py-24 lg:py-32 section-light">
       {/* Background accent */}
-      <div className="absolute inset-0 bg-gradient-to-b from-card/30 via-background to-background pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-card/50 via-card/30 to-card/10 pointer-events-none" />
 
       <div className="container mx-auto px-6 sm:px-8 lg:px-12 relative z-10">
 

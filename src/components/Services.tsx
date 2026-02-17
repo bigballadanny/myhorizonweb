@@ -86,8 +86,8 @@ export function Services() {
   }
 
   return (
-    <section id="services" className="relative py-24 lg:py-32 bg-background">
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-card/20 pointer-events-none" />
+    <section id="services" className="relative py-24 lg:py-32 section-light">
+      <div className="absolute inset-0 bg-gradient-to-b from-card/60 via-card/40 to-card/10 pointer-events-none" />
 
       <div className="container mx-auto px-6 sm:px-8 lg:px-12 relative z-10">
 

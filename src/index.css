@@ -350,6 +350,19 @@ html {
 }
 
 /* =====================================================
+   Section Rhythm — alternating light/dark
+   ===================================================== */
+
+/* "Light" sections: white in light mode, card (#1a1a1a) in dark mode */
+.section-light {
+  background-color: var(--background);
+}
+
+.dark .section-light {
+  background-color: var(--card); /* #1a1a1a — visually distinct from #0a0a0a hero/problem/results */
+}
+
+/* =====================================================
    Bento Grid Layout
    ===================================================== */
 .bento-grid {

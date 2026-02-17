@@ -39,8 +39,8 @@ export function Process() {
   }
 
   return (
-    <section className="relative py-24 lg:py-32 bg-background">
-      <div className="absolute inset-0 bg-gradient-to-b from-card/20 via-background to-background pointer-events-none" />
+    <section className="relative py-24 lg:py-32 section-light">
+      <div className="absolute inset-0 bg-gradient-to-b from-card/40 via-card/20 to-card/5 pointer-events-none" />
 
       <div className="container mx-auto px-6 sm:px-8 lg:px-12 relative z-10">
 
