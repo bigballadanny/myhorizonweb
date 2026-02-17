@@ -2,27 +2,51 @@
 
 import logoIcon from '@/assets/myhorizon-logo-clean.png'
 
+const navLinks = [
+  { label: 'Services', id: 'services' },
+  { label: 'Industries', id: 'industries' },
+  { label: 'SYNTHIOS', id: 'synthios' },
+  { label: 'Contact', id: 'contact' },
+]
+
 export function Footer() {
+  const scrollToSection = (id: string) => {
+    const el = document.getElementById(id)
+    if (el) el.scrollIntoView({ behavior: 'smooth' })
+  }
+
   return (
     <footer className="relative py-16 bg-[#0a0a0a] text-white">
       <div className="container mx-auto px-6 sm:px-8 lg:px-12">
         <div className="flex flex-col items-center text-center">
-          {/* Logo and Name */}
+
+          {/* Logo */}
           <div className="flex items-center gap-3 mb-4">
-            <img 
+            <img
               src={logoIcon}
-              alt="MyHorizon Logo" 
+              alt="MyHorizon Logo"
               className="w-12 h-12 rounded-full object-cover"
             />
-            <span className="font-bagel text-white text-3xl tracking-wider">
-              MyHorizon
-            </span>
+            <span className="font-bagel text-white text-3xl tracking-wider">MyHorizon</span>
           </div>
 
           {/* Tagline */}
-          <p className="text-white/70 leading-relaxed mb-6 max-w-md">
-            Empowering businesses with cutting-edge AI automation solutions.
+          <p className="text-white/60 leading-relaxed mb-6 max-w-md text-sm">
+            AI systems that work while you sleep. Built for business owners who want to do more.
           </p>
+
+          {/* Nav links */}
+          <div className="flex items-center gap-6 mb-8 flex-wrap justify-center">
+            {navLinks.map((link) => (
+              <button
+                key={link.id}
+                onClick={() => scrollToSection(link.id)}
+                className="text-sm text-white/60 hover:text-white transition-colors font-medium"
+              >
+                {link.label}
+              </button>
+            ))}
+          </div>
 
           {/* Social Media Icons */}
           <div className="flex items-center space-x-6 mb-10">
@@ -61,12 +85,12 @@ export function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-white/20 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="text-sm text-white/70 mb-4 md:mb-0">
+        <div className="border-t border-white/10 pt-8">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <div className="text-sm text-white/50">
               © 2026 MyHorizon. All rights reserved.
             </div>
-            <div className="text-sm text-white/70">
+            <div className="text-sm text-white/50">
               AI Systems & Automation
             </div>
           </div>

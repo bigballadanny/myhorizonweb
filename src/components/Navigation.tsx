@@ -31,24 +31,25 @@ export function Navigation() {
   const handleLogoClick = () => {
     clickCountRef.current += 1
     if (clickTimerRef.current) clearTimeout(clickTimerRef.current)
-    
+
     if (clickCountRef.current >= 8) {
       clickCountRef.current = 0
       navigate('/auth')
       return
     }
-    
+
     clickTimerRef.current = setTimeout(() => {
       clickCountRef.current = 0
     }, 3000)
-    
+
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   const navLinks = [
     { label: 'Services', id: 'services' },
+    { label: 'Industries', id: 'industries' },
     { label: 'SYNTHIOS', id: 'synthios' },
-    { label: 'Contact', id: 'contact' }
+    { label: 'Contact', id: 'contact' },
   ]
 
   return (
@@ -64,9 +65,9 @@ export function Navigation() {
             onClick={handleLogoClick}
             className="flex items-center gap-3 hover:opacity-80 transition-opacity select-none group"
           >
-            <img 
+            <img
               src={logoIcon}
-              alt="MyHorizon Logo" 
+              alt="MyHorizon Logo"
               className="w-14 h-14 rounded-full object-cover ring-2 ring-primary/30 group-hover:ring-primary transition-all"
             />
             <span className="text-2xl font-black text-foreground group-hover:text-primary transition-colors">
@@ -74,7 +75,7 @@ export function Navigation() {
             </span>
           </button>
 
-          {/* Desktop Navigation */}
+          {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
               <button
@@ -85,21 +86,15 @@ export function Navigation() {
                 {link.label}
               </button>
             ))}
-            
-            {/* Theme Toggle */}
+
             <ThemeToggle />
 
-            {/* CTA Button */}
-            <Button
-              onClick={() => scrollToSection('contact')}
-              size="lg"
-              className="ml-4"
-            >
-              Get Started
+            <Button onClick={() => scrollToSection('contact')} size="lg" className="ml-4">
+              Book a Free Call
             </Button>
           </div>
 
-          {/* Mobile Menu Button + Theme Toggle */}
+          {/* Mobile — theme toggle + hamburger */}
           <div className="flex md:hidden items-center gap-2">
             <ThemeToggle />
             <Button
@@ -109,11 +104,7 @@ export function Navigation() {
               className="w-11 h-11"
               aria-label="Toggle menu"
             >
-              {isMobileMenuOpen ? (
-                <X className="h-6 w-6" />
-              ) : (
-                <Menu className="h-6 w-6" />
-              )}
+              {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </Button>
           </div>
         </div>
@@ -130,12 +121,8 @@ export function Navigation() {
                 {link.label}
               </button>
             ))}
-            <Button
-              onClick={() => scrollToSection('contact')}
-              size="lg"
-              className="w-full mt-4"
-            >
-              Get Started
+            <Button onClick={() => scrollToSection('contact')} size="lg" className="w-full mt-4">
+              Book a Free Call
             </Button>
           </div>
         )}
