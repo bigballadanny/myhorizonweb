@@ -12,7 +12,6 @@ import { UrgencyCTA } from './components/UrgencyCTA'
 import { SynthiosProduct } from './components/SynthiosProduct'
 import { Contact } from './components/Contact'
 import { Footer } from './components/Footer'
-import { ElevenLabsWidget } from './components/ElevenLabsWidget'
 import { ChatWidget } from './components/ChatWidget'
 import { useVisitorTracking } from './hooks/useVisitorTracking'
 
@@ -151,7 +150,6 @@ export default function App() {
       </main>
       <Footer />
       <ChatWidget />
-      <ElevenLabsWidget />
     </div>
   )
 }

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
+import resultsMetrics from '@/assets/results-metrics.jpg'
 
 interface CounterProps {
   end: number
@@ -78,7 +79,7 @@ const metrics = [
 export function Results() {
   return (
     <section className="py-20 lg:py-24 bg-background">
-      <div className="container mx-auto px-6 sm:px-8 lg:px-12">
+      <div className="container mx-auto px-5 sm:px-8 lg:px-12">
 
         {/* Header */}
         <motion.div
@@ -100,29 +101,44 @@ export function Results() {
           </div>
         </motion.div>
 
-        {/* Metrics — 2×2 grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0">
-          {metrics.map((metric, index) => (
-            <motion.div
-              key={metric.label}
-              initial={{ opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.1 }}
-              transition={{ delay: index * 0.12, duration: 0.5 }}
-              className="border-t border-border pt-9 pb-9 pr-8"
-            >
-              <div className="font-serif text-5xl lg:text-6xl text-foreground mb-3 leading-none">
-                <AnimatedCounter end={metric.value} suffix={metric.suffix} prefix={metric.prefix} />
-              </div>
-              <h3 className="font-sans font-medium text-foreground mb-2 text-sm uppercase tracking-wide">
-                {metric.label}
-              </h3>
-              <p className="text-sm text-muted-foreground leading-relaxed max-w-[220px]">
-                {metric.description}
-              </p>
-            </motion.div>
-          ))}
-          <div className="col-span-full border-t border-border" />
+        {/* Background accent image */}
+        <div className="relative mb-14">
+          <div className="absolute inset-0 rounded-2xl overflow-hidden opacity-10 pointer-events-none">
+            <img
+              src={resultsMetrics}
+              alt=""
+              aria-hidden="true"
+              className="w-full h-full object-cover"
+            />
+          </div>
+
+          {/* Subtle gradient card behind metrics */}
+          <div className="relative rounded-2xl border border-border/50 bg-card/30 backdrop-blur-sm">
+            {/* Metrics — 2×2 grid on mobile, 4-col on lg */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0">
+              {metrics.map((metric, index) => (
+                <motion.div
+                  key={metric.label}
+                  initial={{ opacity: 0, y: 15 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.1 }}
+                  transition={{ delay: index * 0.12, duration: 0.5 }}
+                  className="border-t border-border pt-9 pb-9 px-7"
+                >
+                  <div className="font-serif text-5xl sm:text-6xl text-foreground mb-3 leading-none">
+                    <AnimatedCounter end={metric.value} suffix={metric.suffix} prefix={metric.prefix} />
+                  </div>
+                  <h3 className="font-sans font-medium text-foreground mb-2 text-sm uppercase tracking-wide">
+                    {metric.label}
+                  </h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed max-w-[220px]">
+                    {metric.description}
+                  </p>
+                </motion.div>
+              ))}
+              <div className="col-span-full border-t border-border" />
+            </div>
+          </div>
         </div>
 
       </div>

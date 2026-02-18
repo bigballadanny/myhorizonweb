@@ -21,8 +21,8 @@ export function Hero() {
       {/* Animated gradient mesh — subtle Stripe-style depth */}
       <div className="hero-gradient-mesh" />
 
-      <div className="relative z-10 container mx-auto px-6 sm:px-8 lg:px-12 pt-28 pb-20">
-        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+      <div className="relative z-10 container mx-auto px-5 sm:px-8 lg:px-12 pt-28 pb-20">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-24 items-center">
 
           {/* Left — text column */}
           <div>
@@ -36,12 +36,12 @@ export function Hero() {
               AI Systems for Business
             </motion.p>
 
-            {/* Headline — with keyword highlight */}
+            {/* Headline */}
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.3 }}
-              className="font-serif text-5xl sm:text-6xl lg:text-7xl text-foreground leading-[1.1] mb-8"
+              className="font-serif text-4xl sm:text-6xl lg:text-7xl text-foreground leading-[1.1] mb-8"
             >
               What if AI actually{' '}
               <em className="not-italic"><span className="text-highlight">understood</span></em>{' '}
@@ -64,12 +64,12 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.6 }}
-              className="flex flex-col sm:flex-row items-start gap-3 mb-12"
+              className="flex flex-col sm:flex-row items-stretch sm:items-start gap-3 mb-12"
             >
               <Button
                 size="lg"
                 onClick={scrollToContact}
-                className="bg-accent-blue hover:bg-accent-blue/90 text-white px-8 py-6 rounded-xl text-base transition-all duration-200"
+                className="w-full sm:w-auto bg-accent-blue hover:bg-accent-blue/90 text-white px-8 py-6 rounded-xl text-base transition-all duration-200"
               >
                 Book a Free Strategy Call
                 <ArrowRight className="w-4 h-4 ml-2" />
@@ -78,7 +78,7 @@ export function Hero() {
                 size="lg"
                 variant="outline"
                 onClick={scrollToServices}
-                className="px-8 py-6 rounded-xl text-base border-border text-foreground hover:bg-card transition-all duration-200"
+                className="w-full sm:w-auto px-8 py-6 rounded-xl text-base border-border text-foreground hover:bg-card transition-all duration-200"
               >
                 See What We Build
               </Button>
@@ -95,18 +95,18 @@ export function Hero() {
             </motion.p>
           </div>
 
-          {/* Right — visual column */}
+          {/* Right — visual column (desktop: side-by-side; mobile: stacked below text) */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.9, delay: 0.5 }}
-            className="hidden lg:block"
+            className="block"
           >
             <div className="relative">
               <img
                 src={heroAbstract}
                 alt="AI systems visualization"
-                className="w-full h-auto rounded-2xl object-cover"
+                className="w-full rounded-2xl object-cover aspect-video lg:aspect-auto lg:h-auto"
               />
             </div>
           </motion.div>

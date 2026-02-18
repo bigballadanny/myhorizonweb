@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 import { Button } from './ui/button'
+import opportunityTransform from '@/assets/opportunity-transform.jpg'
 
 const possibilities = [
   {
@@ -33,7 +34,7 @@ export function Problem() {
 
   return (
     <section className="py-20 lg:py-24 bg-card">
-      <div className="container mx-auto px-6 sm:px-8 lg:px-12">
+      <div className="container mx-auto px-5 sm:px-8 lg:px-12">
 
         {/* Header */}
         <motion.div
@@ -41,7 +42,7 @@ export function Problem() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.6 }}
-          className="mb-14"
+          className="mb-10"
         >
           <p className="section-label mb-5">The Bigger Picture</p>
           <div className="max-w-3xl">
@@ -55,6 +56,21 @@ export function Problem() {
           </div>
         </motion.div>
 
+        {/* Banner image — full width */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ duration: 0.7 }}
+          className="mb-12 aspect-[21/7] rounded-2xl overflow-hidden"
+        >
+          <img
+            src={opportunityTransform}
+            alt="AI transformation visualization"
+            className="w-full h-full object-cover"
+          />
+        </motion.div>
+
         {/* Possibility items */}
         <div className="space-y-0 max-w-4xl mb-14">
           {possibilities.map((item, index) => (
@@ -66,20 +82,20 @@ export function Problem() {
               transition={{ delay: index * 0.1, duration: 0.5 }}
               className="border-t border-border py-9"
             >
-              <div className="grid lg:grid-cols-[72px_1fr_1fr] gap-5 lg:gap-8 items-start">
+              <div className="grid lg:grid-cols-[72px_1fr_1fr] gap-6 lg:gap-8 items-start">
                 {/* Number */}
                 <p className="section-label pt-0.5">{item.number}</p>
 
                 {/* Where you are */}
-                <div>
+                <div className="pb-4 lg:pb-0">
                   <p className="section-label mb-3">Where you are</p>
                   <p className="text-muted-foreground leading-relaxed text-[15px]">
                     {item.today}
                   </p>
                 </div>
 
-                {/* What's possible */}
-                <div>
+                {/* What's possible — elevated card on desktop */}
+                <div className="lg:bg-background lg:rounded-xl lg:p-5 pt-4 lg:pt-5 border-t border-border lg:border-0">
                   <p className="section-label mb-3" style={{ color: 'var(--accent-blue)' }}>What's possible</p>
                   <p className="text-foreground leading-relaxed text-[15px]">
                     {item.tomorrow}
@@ -98,7 +114,7 @@ export function Problem() {
           viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.6, delay: 0.1 }}
         >
-          <p className="font-serif text-2xl sm:text-3xl text-foreground mb-4 max-w-2xl leading-snug">
+          <p className="font-serif text-3xl sm:text-3xl text-foreground mb-4 max-w-2xl leading-snug">
             The businesses that figure this out first will have an incredible advantage — and it's still early.
           </p>
           <p className="text-muted-foreground mb-7 max-w-lg leading-relaxed">
@@ -107,7 +123,7 @@ export function Problem() {
           <Button
             size="lg"
             onClick={scrollToContact}
-            className="bg-accent-blue hover:bg-accent-blue/90 text-white px-8 py-6 rounded-xl"
+            className="w-full sm:w-auto bg-accent-blue hover:bg-accent-blue/90 text-white px-8 py-6 rounded-xl"
           >
             Let's Map It Out Together
             <ArrowRight className="w-5 h-5 ml-2" />

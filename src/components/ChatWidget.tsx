@@ -1,8 +1,13 @@
 'use client'
 
 import { useState, useRef, useEffect, useCallback } from 'react'
+import { useConversation } from '@elevenlabs/react'
+import { supabase } from '@/integrations/supabase/client'
 import { motion, AnimatePresence } from 'framer-motion'
-import { MessageSquare, X, Send } from 'lucide-react'
+import { MessageSquare, X, Send, Phone, PhoneOff, Loader2 } from 'lucide-react'
+
+/* ─── constants ─── */
+const ELEVENLABS_AGENT_ID = 'agent_3701k6bjf9q2e5wsc1y94xbg2r3g'
 
 /* ─── types ─── */
 interface ChatMessage {
@@ -84,6 +89,7 @@ function getReply(input: string): string {
 
 /* ─── component ─── */
 export function ChatWidget() {
+  /* chat state */
   const [isOpen, setIsOpen] = useState(false)
   const [messages, setMessages] = useState<ChatMessage[]>([])
   const [input, setInput] = useState('')
@@ -93,6 +99,128 @@ export function ChatWidget() {
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const initialised = useRef(false)
+
+  /* voice state */
+  const [isVoiceConnecting, setIsVoiceConnecting] = useState(false)
+  const [voiceError, setVoiceError] = useState<string | null>(null)
+  const conversationDataRef = useRef<{
+    transcripts: Array<{ role: string; text: string; timestamp: Date }>
+    startTime: Date | null
+    endTime: Date | null
+  }>({ transcripts: [], startTime: null, endTime: null })
+
+  const conversation = useConversation({
+    onConnect: () => {
+      conversationDataRef.current.startTime = new Date()
+      conversationDataRef.current.transcripts = []
+      setVoiceError(null)
+    },
+    onDisconnect: async () => {
+      conversationDataRef.current.endTime = new Date()
+      const convId = await saveVoiceConversation()
+      if (convId) processVoiceConversation(convId)
+    },
+    onMessage: (message) => {
+      const msg = message as unknown as {
+        type?: string
+        user_transcription_event?: { user_transcript: string }
+        agent_response_event?: { agent_response: string }
+      }
+      if (msg.type === 'user_transcript' && msg.user_transcription_event) {
+        conversationDataRef.current.transcripts.push({
+          role: 'user',
+          text: msg.user_transcription_event.user_transcript,
+          timestamp: new Date(),
+        })
+      }
+      if (msg.type === 'agent_response' && msg.agent_response_event) {
+        conversationDataRef.current.transcripts.push({
+          role: 'agent',
+          text: msg.agent_response_event.agent_response,
+          timestamp: new Date(),
+        })
+      }
+    },
+    onError: () => {
+      setVoiceError('Connection error. Please try again.')
+      setIsVoiceConnecting(false)
+    },
+  })
+
+  const processVoiceConversation = async (conversationId: string) => {
+    try {
+      await supabase.functions.invoke('process-conversation', {
+        body: { conversation_id: conversationId },
+      })
+    } catch { /* ignore */ }
+  }
+
+  const saveVoiceConversation = async (): Promise<string | null> => {
+    const data = conversationDataRef.current
+    if (data.transcripts.length === 0) return null
+    try {
+      const formattedTranscript = data.transcripts.map((t) => `${t.role}: ${t.text}`).join('\n')
+      const durationSeconds =
+        data.startTime && data.endTime
+          ? Math.floor((data.endTime.getTime() - data.startTime.getTime()) / 1000)
+          : null
+      const { data: convData, error: convError } = await supabase
+        .from('conversations')
+        .insert({
+          agent_id: ELEVENLABS_AGENT_ID,
+          transcript: formattedTranscript,
+          duration_seconds: durationSeconds,
+          call_type: 'inbound',
+          metadata: {
+            source: 'chat_widget_voice',
+            page_url: window.location.href,
+            captured_at: new Date().toISOString(),
+          },
+        })
+        .select()
+        .single()
+      if (convError) return null
+      return convData?.id || null
+    } catch {
+      return null
+    }
+  }
+
+  const startVoice = useCallback(async () => {
+    setIsVoiceConnecting(true)
+    setVoiceError(null)
+    try {
+      await navigator.mediaDevices.getUserMedia({ audio: true })
+      const { data, error: fnError } = await supabase.functions.invoke(
+        'elevenlabs-conversation-token',
+      )
+      if (fnError) throw new Error(fnError.message || 'Failed to get conversation token')
+      if (data?.signed_url) {
+        await conversation.startSession({ signedUrl: data.signed_url })
+      } else {
+        await conversation.startSession({
+          agentId: data?.agent_id || ELEVENLABS_AGENT_ID,
+          connectionType: 'webrtc',
+        })
+      }
+    } catch (err) {
+      setVoiceError(err instanceof Error ? err.message : 'Failed to start voice')
+      setIsVoiceConnecting(false)
+    }
+  }, [conversation])
+
+  const endVoice = useCallback(async () => {
+    await conversation.endSession()
+  }, [conversation])
+
+  useEffect(() => {
+    if (conversation.status === 'connected') setIsVoiceConnecting(false)
+  }, [conversation.status])
+
+  const isVoiceConnected = conversation.status === 'connected'
+  const isVoiceSpeaking = conversation.isSpeaking
+
+  /* ─── chat logic ─── */
 
   // Scroll to bottom on new messages
   useEffect(() => {
@@ -109,15 +237,9 @@ export function ChatWidget() {
         const parsed: ChatMessage[] = JSON.parse(saved)
         if (parsed.length) setMessages(parsed.slice(-20))
       }
-    } catch {
-      /* ignore */
-    }
-    // Ensure uid
+    } catch { /* ignore */ }
     if (!localStorage.getItem(UID_KEY)) {
-      localStorage.setItem(
-        UID_KEY,
-        'u_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8),
-      )
+      localStorage.setItem(UID_KEY, 'u_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8))
     }
   }, [])
 
@@ -126,9 +248,7 @@ export function ChatWidget() {
     if (messages.length) {
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(messages.slice(-20)))
-      } catch {
-        /* ignore */
-      }
+      } catch { /* ignore */ }
     }
   }, [messages])
 
@@ -144,7 +264,6 @@ export function ChatWidget() {
     setIsOpen(true)
     setShowNudge(false)
     setNudgeDismissed(true)
-    // Welcome message if first open
     setMessages((prev) => {
       if (prev.length > 0) return prev
       return [
@@ -158,7 +277,11 @@ export function ChatWidget() {
     setTimeout(() => inputRef.current?.focus(), 300)
   }, [])
 
-  const closeChat = () => setIsOpen(false)
+  const closeChat = () => {
+    setIsOpen(false)
+    // End voice if active
+    if (isVoiceConnected) endVoice()
+  }
 
   const sendMessage = useCallback(() => {
     const text = input.trim()
@@ -169,14 +292,10 @@ export function ChatWidget() {
     setInput('')
     setIsTyping(true)
 
-    // Simulate thinking delay (600-1200ms)
     const delay = 600 + Math.random() * 600
     setTimeout(() => {
       const reply = getReply(text)
-      setMessages((prev) => [
-        ...prev,
-        { role: 'bot', text: reply, ts: new Date().toISOString() },
-      ])
+      setMessages((prev) => [...prev, { role: 'bot', text: reply, ts: new Date().toISOString() }])
       setIsTyping(false)
     }, delay)
   }, [input, isTyping])
@@ -210,7 +329,7 @@ export function ChatWidget() {
         )}
       </AnimatePresence>
 
-      {/* FAB trigger */}
+      {/* Single FAB trigger */}
       <AnimatePresence>
         {!isOpen && (
           <motion.button
@@ -224,7 +343,6 @@ export function ChatWidget() {
             aria-label="Open chat"
           >
             <MessageSquare className="w-6 h-6 sm:w-7 sm:h-7" />
-            {/* Pulse ring */}
             <motion.div
               className="absolute inset-0 rounded-full border-2 border-primary/40"
               animate={{ scale: [1, 1.4, 1], opacity: [0.6, 0, 0.6] }}
@@ -249,6 +367,35 @@ export function ChatWidget() {
             <div className="flex items-center gap-3 px-4 py-3 border-b border-border bg-gradient-to-r from-primary/5 to-emerald-500/5 shrink-0">
               <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
               <span className="font-bold text-sm text-foreground flex-1">MyHorizon AI</span>
+
+              {/* Voice call button — inside the header */}
+              <button
+                onClick={isVoiceConnected ? endVoice : startVoice}
+                disabled={isVoiceConnecting}
+                className={`relative p-2 rounded-lg transition-all ${
+                  isVoiceConnected
+                    ? 'bg-destructive/15 text-destructive hover:bg-destructive/25'
+                    : 'bg-primary/10 text-primary hover:bg-primary/20'
+                } ${isVoiceConnecting ? 'cursor-wait opacity-60' : ''}`}
+                aria-label={isVoiceConnected ? 'End voice call' : 'Start voice call'}
+                title={isVoiceConnected ? 'End voice call' : 'Talk to our AI'}
+              >
+                {isVoiceConnecting ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : isVoiceConnected ? (
+                  <PhoneOff className="w-4 h-4" />
+                ) : (
+                  <Phone className="w-4 h-4" />
+                )}
+                {isVoiceConnected && (
+                  <motion.div
+                    className="absolute inset-0 rounded-lg border border-destructive/40"
+                    animate={{ scale: [1, 1.15, 1], opacity: [1, 0, 1] }}
+                    transition={{ duration: 1.5, repeat: Infinity }}
+                  />
+                )}
+              </button>
+
               <button
                 onClick={closeChat}
                 className="p-1.5 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
@@ -257,6 +404,32 @@ export function ChatWidget() {
                 <X className="w-5 h-5" />
               </button>
             </div>
+
+            {/* Voice status bar — shows when call is active */}
+            <AnimatePresence>
+              {isVoiceConnected && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: 'auto', opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  className="overflow-hidden"
+                >
+                  <div className="flex items-center gap-2 px-4 py-2 bg-primary/5 border-b border-border text-xs">
+                    <div
+                      className={`w-2 h-2 rounded-full ${
+                        isVoiceSpeaking ? 'bg-primary animate-pulse' : 'bg-muted-foreground'
+                      }`}
+                    />
+                    <span className="font-medium text-foreground">
+                      {isVoiceSpeaking ? 'AI is speaking…' : 'Listening…'}
+                    </span>
+                    {voiceError && (
+                      <span className="text-destructive ml-auto">{voiceError}</span>
+                    )}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
 
             {/* Messages */}
             <div className="flex-1 overflow-y-auto px-4 py-3 flex flex-col gap-3 scroll-smooth">
