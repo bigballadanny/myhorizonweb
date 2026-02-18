@@ -1,11 +1,11 @@
 'use client'
 
 import logoIcon from '@/assets/myhorizon-logo-clean.png'
+import { NewsletterSignup } from './NewsletterSignup'
 
 const navLinks = [
   { label: 'Services', id: 'services' },
   { label: 'Industries', id: 'industries' },
-  { label: 'SYNTHIOS', id: 'synthios' },
   { label: 'Contact', id: 'contact' },
 ]
 
@@ -17,10 +17,27 @@ export function Footer() {
 
   return (
     <footer
-      className="py-16 text-white"
+      className="text-white"
       style={{ backgroundColor: '#1a1a1a', fontFamily: "'DM Sans', system-ui, sans-serif" }}
     >
-      <div className="container mx-auto px-6 sm:px-8 lg:px-12">
+      {/* Newsletter signup — catches people who scroll all the way down */}
+      <div className="border-b border-white/10 py-10">
+        <div className="container mx-auto px-6 sm:px-8 lg:px-12">
+          <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
+            <div className="flex-1">
+              <h3 className="text-lg font-bold text-white mb-1">
+                Get AI insights for your industry
+              </h3>
+              <p className="text-sm text-white/50">
+                Weekly tips on how businesses like yours are using AI. No spam.
+              </p>
+            </div>
+            <NewsletterSignup variant="minimal" />
+          </div>
+        </div>
+      </div>
+
+      <div className="container mx-auto px-6 sm:px-8 lg:px-12 py-16">
 
         <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-12 mb-12">
 

@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react'
 import { Calendar, Clock, Video } from 'lucide-react'
+import { LeadForm } from './LeadForm'
+import { captureLead } from '@/lib/lead-capture'
 
 export function Contact() {
   const [calLoaded, setCalLoaded] = useState(false)
@@ -58,6 +60,38 @@ export function Contact() {
         calLink: 'myhorizon/consultation',
       })
       Cal.ns['consultation']('ui', { hideEventTypeDetails: false, layout: 'month_view' })
+
+      // Track Cal.com booking events — fire Meta Pixel Lead event
+      Cal.ns['consultation']('on', {
+        action: 'bookingSuccessful',
+        callback: (e: any) => {
+          console.log('Cal.com booking successful:', e)
+          // Fire Lead pixel
+          const fbq = (window as any).fbq
+          if (fbq) {
+            fbq('track', 'Lead', {
+              content_name: 'Cal.com Booking',
+              content_category: 'cal_booking',
+            })
+            fbq('track', 'Schedule', {
+              content_name: 'Consultation Booked',
+            })
+          }
+          // Capture lead if we can extract email from the event
+          const detail = e?.detail?.data
+          if (detail?.email || detail?.booker?.email) {
+            captureLead({
+              email: detail?.email || detail?.booker?.email,
+              name: detail?.name || detail?.booker?.name,
+              source: 'cal_booking',
+              notes: `Booked consultation via Cal.com`,
+            })
+          }
+          // Clarity tag
+          const clarity = (window as any).clarity
+          if (clarity) clarity('set', 'booking_completed', 'true')
+        },
+      })
     }
     setTimeout(tryInit, 500)
   }, [calLoaded])
@@ -95,13 +129,21 @@ export function Contact() {
           </div>
         </div>
 
-        {/* Cal.com embed */}
-        <div className="bg-background rounded-2xl border border-border overflow-hidden">
-          <div
-            id="cal-inline-consultation"
-            className="w-full min-h-[580px]"
-            style={{ overflow: 'auto' }}
-          />
+        {/* Two-column layout: Lead form + Cal.com */}
+        <div className="grid lg:grid-cols-5 gap-6 items-start">
+          {/* Lead capture form — lower friction alternative */}
+          <div className="lg:col-span-2">
+            <LeadForm />
+          </div>
+
+          {/* Cal.com embed — full booking */}
+          <div className="lg:col-span-3 bg-background rounded-2xl border border-border overflow-hidden">
+            <div
+              id="cal-inline-consultation"
+              className="w-full min-h-[580px]"
+              style={{ overflow: 'auto' }}
+            />
+          </div>
         </div>
 
         <p className="text-center text-sm text-muted-foreground mt-5">

@@ -13,6 +13,7 @@ import { SynthiosProduct } from './components/SynthiosProduct'
 import { Contact } from './components/Contact'
 import { Footer } from './components/Footer'
 import { ElevenLabsWidget } from './components/ElevenLabsWidget'
+import { NewsletterSignup } from './components/NewsletterSignup'
 import { useVisitorTracking } from './hooks/useVisitorTracking'
 
 const sectionVariants = {
@@ -114,6 +115,9 @@ export default function App() {
         >
           <UrgencyCTA />
         </motion.section>
+
+        {/* Newsletter signup — catches mid-page visitors */}
+        <NewsletterSignup variant="banner" />
 
         {/* Pull quote — plants the SYNTHIOS seed */}
         <PullQuote
