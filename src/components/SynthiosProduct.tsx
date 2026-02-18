@@ -23,7 +23,7 @@ const capabilities = [
   {
     icon: TrendingUp,
     title: 'Gets Smarter Over Time',
-    description: 'The longer SYNTHIOS runs, the better it understands your operation. It compounds — like a great employee that never stops learning.',
+    description: 'The longer SYNTHIOS runs, the better it understands your operation. It compounds — like a great employee who never stops learning.',
   },
 ]
 
@@ -45,26 +45,26 @@ export function SynthiosProduct() {
   }
 
   return (
-    <section id="synthios" className="py-32 lg:py-40 bg-background">
+    <section id="synthios" className="py-20 lg:py-24 bg-background">
       <div className="container mx-auto px-6 sm:px-8 lg:px-12">
 
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.6 }}
-          className="mb-20"
+          className="mb-14"
         >
-          <div className="inline-flex items-center gap-2 mb-6">
+          <div className="inline-flex items-center gap-2 mb-5">
             <Zap className="w-3.5 h-3.5 text-accent-blue" />
             <p className="section-label" style={{ margin: 0 }}>Our Flagship Product</p>
           </div>
           <div className="max-w-2xl">
-            <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl text-foreground leading-tight mb-6">
+            <h2 className="font-serif text-4xl sm:text-5xl text-foreground leading-tight mb-5">
               Meet SYNTHIOS
             </h2>
-            <p className="text-xl text-muted-foreground leading-relaxed mb-4">
+            <p className="text-xl text-muted-foreground leading-relaxed mb-3">
               Intelligence that grows with your business.
             </p>
             <p className="text-base text-muted-foreground leading-relaxed">
@@ -74,29 +74,29 @@ export function SynthiosProduct() {
         </motion.div>
 
         {/* Two column layout: capabilities + checklist */}
-        <div className="grid lg:grid-cols-2 gap-20 mb-16">
+        <div className="grid lg:grid-cols-2 gap-16 mb-14">
 
           {/* Left — capabilities as vertical list */}
           <div>
-            <p className="section-label mb-10">What makes it different</p>
+            <p className="section-label mb-8">What makes it different</p>
             <div className="space-y-0">
               {capabilities.map((cap, index) => {
                 const Icon = cap.icon
                 return (
                   <motion.div
                     key={cap.title}
-                    initial={{ opacity: 0, y: 16 }}
+                    initial={{ opacity: 0, y: 12 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.1, duration: 0.5 }}
-                    className="border-t border-border py-8"
+                    viewport={{ once: true, amount: 0.1 }}
+                    transition={{ delay: index * 0.09, duration: 0.5 }}
+                    className="border-t border-border py-7"
                   >
                     <div className="flex items-start gap-4">
                       <div className="w-8 h-8 flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <Icon className="w-5 h-5 text-muted-foreground" />
+                        <Icon className="w-4 h-4 text-muted-foreground" />
                       </div>
                       <div>
-                        <h3 className="font-sans font-medium text-foreground mb-2">
+                        <h3 className="font-sans font-medium text-foreground mb-2 text-base">
                           {cap.title}
                         </h3>
                         <p className="text-muted-foreground leading-relaxed text-[15px]">
@@ -113,12 +113,12 @@ export function SynthiosProduct() {
 
           {/* Right — what it handles checklist */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
-            <p className="section-label mb-10">What SYNTHIOS handles for you</p>
+            <p className="section-label mb-8">What SYNTHIOS handles for you</p>
             <div className="space-y-4">
               {handledItems.map((item, i) => (
                 <div key={i} className="flex items-start gap-3">
@@ -135,10 +135,10 @@ export function SynthiosProduct() {
 
         {/* CTA */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.15 }}
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
           className="flex flex-col sm:flex-row items-start gap-3"
         >
           <Button

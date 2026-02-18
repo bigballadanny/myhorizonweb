@@ -11,22 +11,22 @@ export function UrgencyCTA() {
   }
 
   return (
-    <section className="py-32 bg-card">
+    <section className="py-20 bg-card">
       <div className="container mx-auto px-6 sm:px-8 lg:px-12">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.6 }}
           className="max-w-2xl"
         >
-          <p className="section-label mb-8">Let's Talk</p>
+          <p className="section-label mb-6">Let's Talk</p>
 
-          <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl text-foreground leading-tight mb-6">
-            Curious what AI could do for your specific business?
+          <h2 className="font-serif text-4xl sm:text-5xl text-foreground leading-tight mb-5">
+            Ready to see what AI can do for your business?
           </h2>
 
-          <p className="text-lg text-muted-foreground leading-relaxed mb-10">
+          <p className="text-lg text-muted-foreground leading-relaxed mb-8">
             Every business is different — and the best way to find out where AI fits into yours is a real conversation. No pitch deck, no pressure. Just an honest look at what's possible.
           </p>
 
@@ -35,7 +35,7 @@ export function UrgencyCTA() {
             onClick={scrollToContact}
             className="bg-accent-blue hover:bg-accent-blue/90 text-white px-10 py-6 rounded-xl text-base transition-all duration-200"
           >
-            Let's Figure It Out Together
+            Book a Free Consultation
             <ArrowRight className="w-5 h-5 ml-2" />
           </Button>
 

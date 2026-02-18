@@ -11,11 +11,11 @@ export function PullQuote({ quote, bg = 'background' }: PullQuoteProps) {
   return (
     <div className={bg === 'card' ? 'bg-card' : 'bg-background'}>
       <motion.div
-        initial={{ opacity: 0, y: 16 }}
+        initial={{ opacity: 0, y: 12 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-60px' }}
+        viewport={{ once: true, amount: 0.1 }}
         transition={{ duration: 0.7 }}
-        className="max-w-2xl mx-auto px-6 sm:px-8 py-20 sm:py-24 text-center"
+        className="max-w-2xl mx-auto px-6 sm:px-8 py-14 sm:py-16 text-center"
       >
         {/* Opening mark */}
         <span

@@ -4,10 +4,10 @@ import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/hooks/use-toast';
 import { Loader2 } from 'lucide-react';
+import logoIcon from '@/assets/myhorizon-logo-clean.png';
 
 export default function Auth() {
   const [email, setEmail] = useState('');
@@ -17,42 +17,27 @@ export default function Auth() {
   const { toast } = useToast();
 
   useEffect(() => {
-    // Check if user is already logged in
     supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session) {
-        navigate('/admin');
-      }
+      if (session) navigate('/admin');
     });
   }, [navigate]);
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-
     try {
       const { error } = await supabase.auth.signUp({
         email,
         password,
         options: {
           emailRedirectTo: `${window.location.origin}/admin`,
-          data: {
-            role: 'viewer' // Default role for new signups
-          }
+          data: { role: 'viewer' }
         }
       });
-
       if (error) throw error;
-
-      toast({
-        title: "Account Created",
-        description: "You can now sign in with your credentials.",
-      });
+      toast({ title: 'Account Created', description: 'You can now sign in with your credentials.' });
     } catch (error: any) {
-      toast({
-        title: "Sign Up Failed",
-        description: error.message,
-        variant: "destructive",
-      });
+      toast({ title: 'Sign Up Failed', description: error.message, variant: 'destructive' });
     } finally {
       setIsLoading(false);
     }
@@ -61,16 +46,10 @@ export default function Auth() {
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-
     try {
-      const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) throw error;
 
-      // Update last_login
       const { data: { user } } = await supabase.auth.getUser();
       if (user) {
         await supabase
@@ -79,37 +58,33 @@ export default function Auth() {
           .eq('auth_user_id', user.id);
       }
 
-      toast({
-        title: "Welcome Back",
-        description: "Successfully signed in.",
-      });
-
+      toast({ title: 'Welcome Back', description: 'Successfully signed in.' });
       navigate('/admin');
     } catch (error: any) {
-      toast({
-        title: "Sign In Failed",
-        description: error.message,
-        variant: "destructive",
-      });
+      toast({ title: 'Sign In Failed', description: error.message, variant: 'destructive' });
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background to-secondary/20 p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader>
-          <CardTitle>MyHorizon Admin</CardTitle>
-          <CardDescription>Sign in to access the admin dashboard</CardDescription>
-        </CardHeader>
-        <CardContent>
+    <div className="min-h-screen flex items-center justify-center bg-background p-4">
+      <div className="w-full max-w-sm">
+        {/* Brand */}
+        <div className="flex flex-col items-center mb-8">
+          <img src={logoIcon} alt="MyHorizon" className="w-12 h-12 rounded-full object-cover mb-4" />
+          <h1 className="font-serif text-2xl text-foreground">MyHorizon Admin</h1>
+          <p className="text-sm text-muted-foreground mt-1">Sign in to access your dashboard</p>
+        </div>
+
+        {/* Card */}
+        <div className="bg-card border border-border rounded-2xl p-8">
           <Tabs defaultValue="signin" className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
+            <TabsList className="grid w-full grid-cols-2 mb-6">
               <TabsTrigger value="signin">Sign In</TabsTrigger>
               <TabsTrigger value="signup">Sign Up</TabsTrigger>
             </TabsList>
-            
+
             <TabsContent value="signin">
               <form onSubmit={handleSignIn} className="space-y-4">
                 <div className="space-y-2">
@@ -117,7 +92,7 @@ export default function Auth() {
                   <Input
                     id="signin-email"
                     type="email"
-                    placeholder="admin@myhorizon.com"
+                    placeholder="you@myhorizon.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
@@ -135,19 +110,16 @@ export default function Auth() {
                     disabled={isLoading}
                   />
                 </div>
-                <Button type="submit" className="w-full" disabled={isLoading}>
-                  {isLoading ? (
-                    <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      Signing in...
-                    </>
-                  ) : (
-                    'Sign In'
-                  )}
+                <Button
+                  type="submit"
+                  className="w-full bg-accent-blue hover:bg-accent-blue/90 text-white rounded-xl mt-2"
+                  disabled={isLoading}
+                >
+                  {isLoading ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" />Signing in...</> : 'Sign In'}
                 </Button>
               </form>
             </TabsContent>
-            
+
             <TabsContent value="signup">
               <form onSubmit={handleSignUp} className="space-y-4">
                 <div className="space-y-2">
@@ -155,7 +127,7 @@ export default function Auth() {
                   <Input
                     id="signup-email"
                     type="email"
-                    placeholder="admin@myhorizon.com"
+                    placeholder="you@myhorizon.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
@@ -174,21 +146,22 @@ export default function Auth() {
                     minLength={6}
                   />
                 </div>
-                <Button type="submit" className="w-full" disabled={isLoading}>
-                  {isLoading ? (
-                    <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      Creating account...
-                    </>
-                  ) : (
-                    'Sign Up'
-                  )}
+                <Button
+                  type="submit"
+                  className="w-full bg-accent-blue hover:bg-accent-blue/90 text-white rounded-xl mt-2"
+                  disabled={isLoading}
+                >
+                  {isLoading ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" />Creating account...</> : 'Create Account'}
                 </Button>
               </form>
             </TabsContent>
           </Tabs>
-        </CardContent>
-      </Card>
+        </div>
+
+        <p className="text-center text-xs text-muted-foreground mt-6">
+          MyHorizon AI Systems · Admin Portal
+        </p>
+      </div>
     </div>
   );
 }

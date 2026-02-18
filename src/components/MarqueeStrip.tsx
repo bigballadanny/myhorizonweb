@@ -1,18 +1,17 @@
 'use client'
 
 const industries = [
-  'Construction & Roofing',
   'Med Spas & Aesthetics',
-  'Restaurants & Hospitality',
+  'Trades & Home Services',
+  'Construction',
   'Real Estate',
+  'Professional Services',
+  'Restaurants & Hospitality',
+  'Healthcare',
   'Legal Services',
   'E-Commerce',
-  'Healthcare',
-  'Professional Services',
+  'General Small Business',
 ]
-
-// Double the list so the seamless loop works at any viewport
-const items = [...industries, ...industries]
 
 export function MarqueeStrip() {
   return (
@@ -21,18 +20,17 @@ export function MarqueeStrip() {
       style={{ background: 'color-mix(in srgb, var(--card) 40%, transparent)' }}
       aria-hidden="true"
     >
-      <div className="flex">
-        <div className="animate-marquee gap-12 flex items-center">
-          {items.map((item, i) => (
-            <span
-              key={i}
-              className="flex items-center gap-3 text-sm text-muted-foreground/70 font-medium whitespace-nowrap px-3"
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-accent-blue/40 flex-shrink-0" />
-              {item}
-            </span>
-          ))}
-        </div>
+      {/* Two copies ensure seamless loop at all viewport widths */}
+      <div className="animate-marquee flex items-center gap-0">
+        {[...industries, ...industries].map((item, i) => (
+          <span
+            key={i}
+            className="flex items-center gap-3 text-sm text-muted-foreground/70 font-medium whitespace-nowrap px-6"
+          >
+            <span className="w-1.5 h-1.5 rounded-full bg-accent-blue/40 flex-shrink-0" />
+            {item}
+          </span>
+        ))}
       </div>
     </div>
   )

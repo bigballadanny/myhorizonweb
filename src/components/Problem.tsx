@@ -7,21 +7,21 @@ import { Button } from './ui/button'
 const possibilities = [
   {
     number: '01',
-    today: "You ask ChatGPT for help — and it gives you great answers. But tomorrow, it's forgotten everything.",
+    today: "You're already using ChatGPT and getting real value. But every conversation starts from scratch — it doesn't remember you.",
     tomorrow:
-      "What if your AI remembered every conversation, every customer preference, every decision you've ever made — and used all of it to help you better every single day?",
+      'What if your AI remembered every conversation, every customer preference, every decision you\'ve ever made — and used all of it to help you better, every single day?',
   },
   {
     number: '02',
-    today: "You've automated a few things — emails, maybe scheduling. But each tool lives on its own little island.",
+    today: "You've automated a few things — maybe emails or scheduling. But each tool is on its own island, disconnected from everything else.",
     tomorrow:
-      'What if your entire operation ran as one connected system? Your CRM talks to your calendar, your calendar talks to your AI, and your AI handles the follow-ups — automatically.',
+      'What if your entire operation ran as one connected system? CRM talks to calendar, calendar talks to AI, and your AI handles follow-ups — automatically.',
   },
   {
     number: '03',
-    today: 'Your team is talented. But they spend hours every week on work that\'s important, just... repetitive.',
+    today: 'Your team is talented. But hours every week go to work that\'s important, just repetitive — data entry, scheduling, first-pass drafts.',
     tomorrow:
-      'What if AI handled the routine — the data entry, the scheduling, the first-pass analysis — so your people could focus entirely on the work that actually grows your business?',
+      'What if AI handled all of that, so your people could focus entirely on the work that actually grows your business?',
   },
 ]
 
@@ -32,40 +32,41 @@ export function Problem() {
   }
 
   return (
-    <section className="py-32 lg:py-40 bg-card">
+    <section className="py-20 lg:py-24 bg-card">
       <div className="container mx-auto px-6 sm:px-8 lg:px-12">
 
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.6 }}
-          className="mb-20"
+          className="mb-14"
         >
-          <p className="section-label mb-6">The Bigger Picture</p>
+          <p className="section-label mb-5">The Bigger Picture</p>
           <div className="max-w-3xl">
-            <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl text-foreground leading-tight mb-6">
-              You're already using AI. Here's <span className="text-highlight">what comes next.</span>
+            <h2 className="font-serif text-4xl sm:text-5xl text-foreground leading-tight mb-5">
+              You're already using AI. Here's{' '}
+              <span className="text-highlight">what comes next.</span>
             </h2>
             <p className="text-lg text-muted-foreground leading-relaxed max-w-xl">
-              If you're getting real value from ChatGPT or other AI tools — and most business owners are — imagine what becomes possible when that intelligence is woven into your actual operations.
+              If you're getting real value from AI tools — and most business owners are — imagine what becomes possible when that intelligence is woven into your actual operations.
             </p>
           </div>
         </motion.div>
 
         {/* Possibility items */}
-        <div className="space-y-0 max-w-4xl mb-20">
+        <div className="space-y-0 max-w-4xl mb-14">
           {possibilities.map((item, index) => (
             <motion.div
               key={item.number}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.12, duration: 0.55 }}
-              className="border-t border-border py-10"
+              viewport={{ once: true, amount: 0.1 }}
+              transition={{ delay: index * 0.1, duration: 0.5 }}
+              className="border-t border-border py-9"
             >
-              <div className="grid lg:grid-cols-[80px_1fr_1fr] gap-6 lg:gap-10 items-start">
+              <div className="grid lg:grid-cols-[72px_1fr_1fr] gap-5 lg:gap-8 items-start">
                 {/* Number */}
                 <p className="section-label pt-0.5">{item.number}</p>
 
@@ -79,7 +80,7 @@ export function Problem() {
 
                 {/* What's possible */}
                 <div>
-                  <p className="section-label mb-3 text-accent-blue" style={{ color: 'var(--accent-blue)' }}>What's possible</p>
+                  <p className="section-label mb-3" style={{ color: 'var(--accent-blue)' }}>What's possible</p>
                   <p className="text-foreground leading-relaxed text-[15px]">
                     {item.tomorrow}
                   </p>
@@ -92,15 +93,15 @@ export function Problem() {
 
         {/* CTA */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.15 }}
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
         >
           <p className="font-serif text-2xl sm:text-3xl text-foreground mb-4 max-w-2xl leading-snug">
             The businesses that figure this out first will have an incredible advantage — and it's still early.
           </p>
-          <p className="text-muted-foreground mb-8 max-w-lg leading-relaxed">
+          <p className="text-muted-foreground mb-7 max-w-lg leading-relaxed">
             We help you see exactly where AI fits into your operation, and then we build it. One conversation is all it takes to start.
           </p>
           <Button
