@@ -12,7 +12,7 @@ import { UrgencyCTA } from './components/UrgencyCTA'
 import { SynthiosProduct } from './components/SynthiosProduct'
 import { Contact } from './components/Contact'
 import { Footer } from './components/Footer'
-import { ChatWidget } from './components/ChatWidget'
+import { ElevenLabsWidget } from './components/ElevenLabsWidget'
 import { useVisitorTracking } from './hooks/useVisitorTracking'
 
 const sectionVariants = {
@@ -149,7 +149,7 @@ export default function App() {
 
       </main>
       <Footer />
-      <ChatWidget />
+      <ElevenLabsWidget />
     </div>
   )
 }
