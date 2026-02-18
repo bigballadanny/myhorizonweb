@@ -24,7 +24,7 @@ export function PullQuote({ quote, bg = 'background' }: PullQuoteProps) {
         >
           &ldquo;
         </span>
-        <p className="font-serif italic text-2xl sm:text-3xl text-foreground/65 leading-relaxed">
+        <p className="font-serif italic text-xl sm:text-2xl text-foreground/65 leading-relaxed">
           {quote}
         </p>
       </motion.div>
