@@ -3,6 +3,9 @@
 import { motion } from 'framer-motion'
 import { ArrowRight, Bot, Workflow, BarChart3, Megaphone, LineChart, Layers } from 'lucide-react'
 import { Button } from './ui/button'
+import serviceAgentsImg from '@/assets/service-agents-web.jpg'
+import serviceWorkflowsImg from '@/assets/service-workflows-web.jpg'
+import serviceCrmImg from '@/assets/service-crm-web.jpg'
 
 const featuredServices = [
   {
@@ -13,6 +16,8 @@ const featuredServices = [
     description:
       'Autonomous agents that handle customer conversations, qualify leads, and execute tasks around the clock. Your business stays responsive whether your team is in the office or not.',
     detail: 'Handles inbound inquiries, books appointments, answers FAQs, and escalates complex issues — all without human intervention.',
+    image: serviceAgentsImg,
+    imageAlt: 'AI Agents & Voice Systems',
     flip: false,
   },
   {
@@ -23,6 +28,8 @@ const featuredServices = [
     description:
       'AI-driven process automation that connects your systems and makes real-time decisions across your business. When one thing happens, the right things follow — automatically.',
     detail: 'Connects your CRM, calendar, email, and ops tools into a single intelligent layer that runs itself.',
+    image: serviceWorkflowsImg,
+    imageAlt: 'Intelligent Workflows',
     flip: true,
   },
   {
@@ -33,6 +40,8 @@ const featuredServices = [
     description:
       'Smart lead scoring, automated nurturing, and pipeline optimization built around how your sales team actually works. Fewer dropped balls, more closed deals.',
     detail: 'AI that qualifies leads, triggers follow-ups at the right moment, and surfaces who\'s most likely to convert.',
+    image: serviceCrmImg,
+    imageAlt: 'CRM & Pipeline Automation',
     flip: false,
   },
 ]

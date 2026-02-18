@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 import { Button } from './ui/button'
-import heroAbstract from '@/assets/hero-abstract-new.png'
+import heroAbstract from '@/assets/hero-web.jpg'
 
 export function Hero() {
   const scrollToContact = () => {

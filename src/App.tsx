@@ -13,6 +13,7 @@ import { SynthiosProduct } from './components/SynthiosProduct'
 import { Contact } from './components/Contact'
 import { Footer } from './components/Footer'
 import { ElevenLabsWidget } from './components/ElevenLabsWidget'
+import { ChatWidget } from './components/ChatWidget'
 import { useVisitorTracking } from './hooks/useVisitorTracking'
 
 const sectionVariants = {
@@ -149,6 +150,7 @@ export default function App() {
 
       </main>
       <Footer />
+      <ChatWidget />
       <ElevenLabsWidget />
     </div>
   )
