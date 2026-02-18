@@ -133,12 +133,14 @@ export function Services() {
                     </button>
                   </div>
 
-                  {/* Detail column — typography-driven callout */}
+                  {/* Image column */}
                   <div className={`${service.flip ? 'lg:[direction:ltr]' : ''} flex items-start`}>
-                    <div className="bg-card rounded-2xl p-8 w-full border border-border/60">
-                      <p className="font-serif text-xl text-foreground leading-relaxed">
-                        {service.detail}
-                      </p>
+                    <div className="rounded-2xl overflow-hidden bg-card aspect-[4/3] w-full">
+                      <img
+                        src={service.image}
+                        alt={service.imageAlt}
+                        className="w-full h-full object-cover"
+                      />
                     </div>
                   </div>
                 </div>

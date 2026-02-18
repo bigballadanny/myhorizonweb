@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { Check, Zap, Brain, MessageSquare, Clock, TrendingUp, ArrowRight } from 'lucide-react'
 import { Button } from './ui/button'
+import synthiosImg from '@/assets/synthios-web.jpg'
 
 const capabilities = [
   {
@@ -70,6 +71,23 @@ export function SynthiosProduct() {
             <p className="text-base text-muted-foreground leading-relaxed">
               SYNTHIOS is a personal AI system that understands your business deeply — your customers, your processes, your priorities — and helps you operate at a level that wasn't possible before.
             </p>
+          </div>
+        </motion.div>
+
+        {/* Hero image */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ duration: 0.7 }}
+          className="mb-14"
+        >
+          <div className="rounded-2xl overflow-hidden w-full aspect-[16/7]">
+            <img
+              src={synthiosImg}
+              alt="SYNTHIOS AI system"
+              className="w-full h-full object-cover"
+            />
           </div>
         </motion.div>
 
