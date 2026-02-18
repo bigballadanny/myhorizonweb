@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { ArrowRight, Sparkles, Wrench, HardHat, Briefcase, Home, Store } from 'lucide-react'
+import { ArrowRight, Sparkles, Wrench, HardHat, Briefcase, Home, Store, ShieldCheck, FileSearch, TrendingUp } from 'lucide-react'
 import { Button } from './ui/button'
 
 const industries = [
@@ -34,6 +34,21 @@ const industries = [
     icon: Store,
     name: 'General Small Business',
     tagline: 'Custom AI systems built around your exact operation, whatever that looks like.',
+  },
+  {
+    icon: ShieldCheck,
+    name: 'Underwriters',
+    tagline: 'AI-powered risk assessment, automated document analysis, and faster approvals with fewer errors.',
+  },
+  {
+    icon: FileSearch,
+    name: 'M&A & Due Diligence',
+    tagline: 'Deal analysis, financial modeling, and automated quality of earnings reports in a fraction of the time.',
+  },
+  {
+    icon: TrendingUp,
+    name: 'Financial Services',
+    tagline: 'Portfolio analytics, compliance automation, and client reporting that runs itself.',
   },
 ]
 

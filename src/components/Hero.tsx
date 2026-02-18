@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 import { Button } from './ui/button'
-import heroAbstract from '@/assets/hero-abstract.png'
+import heroAbstract from '@/assets/hero-abstract-new.png'
 
 export function Hero() {
   const scrollToContact = () => {
@@ -91,7 +91,7 @@ export function Hero() {
               transition={{ duration: 0.6, delay: 0.8 }}
               className="text-sm text-muted-foreground"
             >
-              Working with businesses in construction, healthcare, hospitality, and more
+              Working with businesses in M&A, financial services, construction, healthcare, and more
             </motion.p>
           </div>
 

@@ -6,11 +6,11 @@ const industries = [
   'Construction',
   'Real Estate',
   'Professional Services',
-  'Restaurants & Hospitality',
-  'Healthcare',
-  'Legal Services',
-  'E-Commerce',
+  'Underwriters',
+  'M&A & Due Diligence',
+  'Financial Services',
   'General Small Business',
+  'Healthcare',
 ]
 
 export function MarqueeStrip() {
