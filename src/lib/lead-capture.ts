@@ -8,6 +8,8 @@
 
 import { supabase } from '@/integrations/supabase/client'
 
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || 'https://ewlvyssrckqdyuxxwxiv.supabase.co'
+
 export interface LeadData {
   email: string
   name?: string
@@ -66,31 +68,25 @@ function storeLocal(data: LeadData) {
   }
 }
 
-/** Attempt Supabase insert */
+/** Store lead via edge function (bypasses RLS) */
 async function storeSupabase(data: LeadData) {
   try {
-    const sourceMap: Record<string, string> = {
-      chat_widget: 'website_chat',
-      newsletter: 'other',
-      lead_form: 'website_chat',
-      cal_booking: 'website_chat',
-      exit_intent: 'other',
-      voice_widget: 'inbound_call',
-    }
-
-    const { error } = await supabase.from('leads').insert({
-      email: data.email,
-      name: data.name || null,
-      phone: data.phone || null,
-      company: data.company || null,
-      source: sourceMap[data.source] || 'other',
-      status: 'new',
-      notes: data.notes || `Captured via ${data.source} on ${window.location.pathname}`,
+    const res = await fetch(`${SUPABASE_URL}/functions/v1/capture-lead`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: data.email,
+        name: data.name,
+        phone: data.phone,
+        company: data.company,
+        source: data.source,
+        notes: data.notes || `Captured via ${data.source} on ${window.location.pathname}`,
+      }),
     })
 
-    if (error) {
-      console.warn('Supabase lead insert failed (RLS):', error.message)
-      // Will still be in localStorage
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}))
+      console.warn('Lead capture edge function failed:', err)
     }
   } catch {
     /* network error — localStorage has it */

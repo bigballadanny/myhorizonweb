@@ -1,5 +1,8 @@
 project_id = "ewlvyssrckqdyuxxwxiv"
 
+[functions.capture-lead]
+verify_jwt = false
+
 [functions.elevenlabs-webhook]
 verify_jwt = false
 
