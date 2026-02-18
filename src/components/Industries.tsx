@@ -1,10 +1,12 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { useNavigate } from 'react-router-dom'
 import { ArrowRight, Sparkles, Wrench, HardHat, Briefcase, Home, Store, ShieldCheck, FileSearch, TrendingUp } from 'lucide-react'
 import { Button } from './ui/button'
 
 interface Industry {
+  slug: string
   icon: React.ElementType
   name: string
   tagline: string
@@ -15,6 +17,7 @@ interface Industry {
 
 const industries: Industry[] = [
   {
+    slug: 'med-spas',
     icon: Sparkles,
     name: 'Med Spas & Aesthetics',
     tagline: 'Automated booking, follow-ups, and patient retention that keeps your chairs full.',
@@ -23,6 +26,7 @@ const industries: Industry[] = [
     accentText: '#f472b6',
   },
   {
+    slug: 'trades',
     icon: Wrench,
     name: 'Trades & Home Services',
     tagline: 'Lead gen that books jobs while you\'re on the job — no missed calls, no lost estimates.',
@@ -31,6 +35,7 @@ const industries: Industry[] = [
     accentText: '#fb923c',
   },
   {
+    slug: 'construction',
     icon: HardHat,
     name: 'Construction',
     tagline: 'Bid tracking, subcontractor coordination, and client updates running on autopilot.',
@@ -39,6 +44,7 @@ const industries: Industry[] = [
     accentText: '#fbbf24',
   },
   {
+    slug: 'professional-services',
     icon: Briefcase,
     name: 'Professional Services',
     tagline: 'Client intake, document automation, and follow-up sequences built around how you work.',
@@ -47,6 +53,7 @@ const industries: Industry[] = [
     accentText: '#64748b',
   },
   {
+    slug: 'real-estate',
     icon: Home,
     name: 'Real Estate',
     tagline: 'AI agents that qualify leads and schedule showings 24/7 — even when you\'re showing another property.',
@@ -55,6 +62,7 @@ const industries: Industry[] = [
     accentText: '#10b981',
   },
   {
+    slug: 'small-business',
     icon: Store,
     name: 'General Small Business',
     tagline: 'Custom AI systems built around your exact operation, whatever that looks like.',
@@ -63,6 +71,7 @@ const industries: Industry[] = [
     accentText: '#3b82f6',
   },
   {
+    slug: 'underwriters',
     icon: ShieldCheck,
     name: 'Underwriters',
     tagline: 'AI-powered risk assessment, automated document analysis, and faster approvals with fewer errors.',
@@ -71,6 +80,7 @@ const industries: Industry[] = [
     accentText: '#a855f7',
   },
   {
+    slug: 'ma-due-diligence',
     icon: FileSearch,
     name: 'M&A & Due Diligence',
     tagline: 'Deal analysis, financial modeling, and automated quality of earnings reports in a fraction of the time.',
@@ -79,6 +89,7 @@ const industries: Industry[] = [
     accentText: '#eab308',
   },
   {
+    slug: 'financial-services',
     icon: TrendingUp,
     name: 'Financial Services',
     tagline: 'Portfolio analytics, compliance automation, and client reporting that runs itself.',
@@ -89,6 +100,8 @@ const industries: Industry[] = [
 ]
 
 export function Industries() {
+  const navigate = useNavigate()
+
   const scrollToContact = () => {
     const element = document.getElementById('contact')
     if (element) element.scrollIntoView({ behavior: 'smooth' })
@@ -128,7 +141,7 @@ export function Industries() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.1 }}
                 transition={{ delay: index * 0.07, duration: 0.5 }}
-                onClick={scrollToContact}
+                onClick={() => navigate(`/industry/${industry.slug}`)}
                 className={`group border-t border-border py-8 pr-6 cursor-pointer hover:bg-card/50 transition-all duration-200 px-3 ${industry.accentColor}`}
               >
                 {/* Icon box — tints on hover */}
