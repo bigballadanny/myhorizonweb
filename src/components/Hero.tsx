@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 import { Button } from './ui/button'
+import { HeroCapture } from './HeroCapture'
 import heroAbstract from '@/assets/hero-web.jpg'
 
 export function Hero() {
@@ -84,12 +85,20 @@ export function Hero() {
               </Button>
             </motion.div>
 
+            {/* Hero email capture — catches the 90% who never scroll */}
+            <div className="border-t border-border/40 pt-4 mt-2">
+              <p className="text-sm text-muted-foreground mb-0.5">
+                Not ready to book? Get a free AI game plan for your business:
+              </p>
+              <HeroCapture />
+            </div>
+
             {/* Social proof — simple text line */}
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.8 }}
-              className="text-sm text-muted-foreground"
+              className="text-sm text-muted-foreground mt-5"
             >
               Working with businesses in M&A, financial services, construction, healthcare, and more
             </motion.p>
