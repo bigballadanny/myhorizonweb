@@ -87,3 +87,44 @@ https://clarity.microsoft.com/projects/view/vf1hpu63ir/settings/api
 ---
 
 *Last updated: 2026-02-27 by SYNTHIOS*
+
+---
+
+## ✅ Confirmed Working API (Feb 27 2026)
+
+```bash
+# WORKING endpoint — max numOfDays=3, dimension1=OS|Device|Browser|Country
+curl -s "https://www.clarity.ms/export-data/api/v1/project-live-insights?numOfDays=3&dimension1=OS" \
+  -H "Authorization: Bearer $CLARITY_MYHORIZON_TOKEN"
+```
+
+**Key learnings:**
+- `numOfDays` max = 3 (4+ returns 400)
+- Valid dimensions: `OS`, `Device`, `Browser`, `Country` (not "Pages" or "URL")
+- Token env var: `CLARITY_MYHORIZON_TOKEN` (stored in `~/.zshrc`)
+
+---
+
+## Live Insights — Last 3 Days (Feb 27, 2026)
+
+**864 total sessions across 3 days**
+
+| Metric | Events | % Users Affected | Priority |
+|--------|--------|-----------------|----------|
+| ScriptErrors | 47 | 4.75% | 🔴 HIGH |
+| DeadClicks | 18 | 0.70% | 🟡 Medium |
+| RageClicks | 4 | 0.23% | 🟡 Medium |
+| ExcessiveScroll | 0 | 0% | ✅ Fine |
+| QuickbackClick | 0 | 0% | ✅ Fine |
+
+**Device breakdown:**
+- Android: 596 sessions (69%) ← dominant
+- iOS: 262 sessions (30%)
+- Desktop: 6 sessions (1%)
+
+**Key findings for Antigravity:**
+1. **🔴 Script errors on mobile** — 47 errors hitting 4.75% of users, mostly Android (5.54%) + iOS (3.05%). Check console for JS errors on mobile Safari/Chrome.
+2. **Dead clicks on Android** — 18 dead click events. Users tapping non-interactive elements on mobile. Likely CTAs that look tappable but aren't, or elements with pointer events disabled.
+3. **Rage clicks (4 events)** — Small but watch. Find which element and fix it.
+4. **No excessive scroll** — users are finding what they need without excessive scrolling. Good.
+5. **Site is overwhelmingly mobile** (99%) — every UI decision should be mobile-first.
