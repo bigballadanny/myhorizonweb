@@ -42,7 +42,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.3 }}
-              className="font-serif text-[2.5rem] sm:text-6xl lg:text-7xl text-foreground leading-[1.1] mb-5 sm:mb-8"
+              className="font-serif text-[2.1rem] sm:text-[2.5rem] lg:text-7xl text-foreground leading-[1.1] mb-5 sm:mb-8"
             >
               What if AI actually{' '}
               <em className="not-italic"><span className="text-highlight">understood</span></em>{' '}
@@ -54,7 +54,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.45 }}
-              className="text-base sm:text-lg lg:text-xl text-muted-foreground leading-relaxed max-w-lg mb-8 sm:mb-10"
+              className="text-base sm:text-lg lg:text-xl text-muted-foreground leading-relaxed max-w-lg mb-5 sm:mb-10"
             >
               Not just answered questions — but remembered your customers, managed your operations, and made decisions alongside your team.{' '}
               <span className="text-foreground font-medium">That's what we build.</span>
@@ -65,21 +65,26 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.6 }}
-              className="flex flex-col sm:flex-row items-stretch sm:items-start gap-3 mb-8 sm:mb-12"
+              className="flex flex-col sm:flex-row items-stretch sm:items-start gap-4 sm:gap-3 mb-8 sm:mb-12"
             >
-              <Button
-                size="lg"
-                onClick={scrollToContact}
-                className="w-full sm:w-auto bg-accent-blue hover:bg-accent-blue/90 text-white px-8 py-6 rounded-xl text-base transition-all duration-200"
-              >
-                Book a Free Strategy Call
-                <ArrowRight className="w-4 h-4 ml-2" />
-              </Button>
+              <div className="flex flex-col w-full sm:w-auto">
+                <Button
+                  size="lg"
+                  onClick={scrollToContact}
+                  className="w-full sm:w-auto bg-accent-blue hover:bg-accent-blue/90 text-white px-8 py-6 rounded-xl text-base transition-all duration-200"
+                >
+                  Book a Free Strategy Call
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+                <p className="text-xs text-muted-foreground mt-3 text-center sm:text-left">
+                  Free 30-min call · No commitment · Response within 24hrs
+                </p>
+              </div>
               <Button
                 size="lg"
                 variant="outline"
                 onClick={scrollToServices}
-                className="w-full sm:w-auto px-8 py-6 rounded-xl text-base border-border text-foreground hover:bg-card transition-all duration-200"
+                className="hidden sm:inline-flex w-full sm:w-auto px-8 py-6 rounded-xl text-base border-border text-foreground hover:bg-card transition-all duration-200"
               >
                 See What We Build
               </Button>
@@ -122,6 +127,16 @@ export function Hero() {
 
         </div>
       </div>
+
+      {/* Scroll Indicator */}
+      <motion.div
+        animate={{ y: [0, 8, 0] }}
+        transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 opacity-40 hidden sm:flex pointer-events-none"
+      >
+        <span className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground">Scroll</span>
+        <div className="w-px h-8 bg-gradient-to-b from-muted-foreground to-transparent" />
+      </motion.div>
     </div>
   )
 }

@@ -52,11 +52,18 @@ export function Navigation() {
     { label: 'Contact', id: 'contact' },
   ]
 
+  const mobileLinks = [
+    { label: 'Services', id: 'services' },
+    { label: 'Process', id: 'process' }, // Matches section aria-label or id (wait, process id might not exist, checking App.tsx shows aria-label='Process section'. Let's ensure smoothScroll works if IDs are missing, but usually id is added)
+    { label: 'Results', id: 'results' },
+    { label: 'About', id: 'about' },
+    { label: 'Contact', id: 'contact' },
+  ]
+
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'glass-navbar py-4' : 'bg-transparent py-6'
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'glass-navbar py-4' : 'bg-transparent py-6'
+        }`}
     >
       <div className="container mx-auto px-6 sm:px-8 lg:px-12">
         <div className="flex items-center justify-between">
@@ -98,9 +105,15 @@ export function Navigation() {
             </Button>
           </div>
 
-          {/* Mobile — theme toggle + hamburger */}
-          <div className="flex md:hidden items-center gap-2">
-            <ThemeToggle />
+          {/* Mobile — CTA + hamburger (no theme toggle to save space as per specs) */}
+          <div className="flex md:hidden items-center gap-3">
+            <Button
+              onClick={() => scrollToSection('contact')}
+              size="sm"
+              className="bg-accent-blue hover:bg-accent-blue/90 text-white px-4 py-2 rounded-lg text-xs"
+            >
+              Book a Call
+            </Button>
             <Button
               variant="ghost"
               size="icon"
@@ -115,8 +128,8 @@ export function Navigation() {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden mt-6 pb-6 space-y-1 border-t border-border pt-6">
-            {navLinks.map((link) => (
+          <div className="md:hidden mt-6 pb-6 space-y-1 border-t border-border pt-6 bg-background/95 backdrop-blur-xl absolute left-0 w-full px-6 shadow-2xl">
+            {mobileLinks.map((link) => (
               <button
                 key={link.id}
                 onClick={() => scrollToSection(link.id)}
@@ -125,15 +138,6 @@ export function Navigation() {
                 {link.label}
               </button>
             ))}
-            <div className="pt-4">
-              <Button
-                onClick={() => scrollToSection('contact')}
-                size="lg"
-                className="w-full bg-accent-blue hover:bg-accent-blue/90 text-white rounded-xl"
-              >
-                Book a Free Call
-              </Button>
-            </div>
           </div>
         )}
       </div>

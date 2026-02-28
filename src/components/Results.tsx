@@ -91,7 +91,7 @@ export function Results() {
         >
           <p className="section-label mb-5">What This Looks Like</p>
           <div className="max-w-2xl">
-            <h2 className="font-serif text-4xl sm:text-5xl text-foreground leading-tight mb-5">
+            <h2 className="font-serif text-4xl sm:text-5xl lg:text-[3.5rem] tracking-tight text-foreground leading-[1.1] mb-5">
               The numbers behind{' '}
               <span className="text-highlight">real AI systems</span>
             </h2>
@@ -128,7 +128,7 @@ export function Results() {
                   <div className="font-serif text-5xl sm:text-6xl text-foreground mb-3 leading-none">
                     <AnimatedCounter end={metric.value} suffix={metric.suffix} prefix={metric.prefix} />
                   </div>
-                  <h3 className="font-sans font-medium text-foreground mb-2 text-sm uppercase tracking-wide">
+                  <h3 className="font-serif text-2xl text-foreground mb-3 tracking-tight">
                     {metric.label}
                   </h3>
                   <p className="text-sm text-muted-foreground leading-relaxed max-w-[220px]">

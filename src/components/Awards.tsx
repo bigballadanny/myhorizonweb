@@ -54,26 +54,22 @@ export function Awards() {
 
   return (
     <section id="awards" className="relative py-16 sm:py-20 bg-background overflow-hidden">
-      
+
       {/* Elegant Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-card/30 to-background" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
-        
+
         {/* Header */}
         <div className="text-center mb-10 sm:mb-16">
-          <div className="inline-flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
-            <div className="w-2 h-2 sm:w-3 sm:h-3 bg-accent-purple rounded-full animate-pulse" />
-            <span className="text-xs sm:text-sm font-semibold text-muted-foreground">
-              Technology Partners
-            </span>
-            <div className="w-2 h-2 sm:w-3 sm:h-3 bg-accent-blue rounded-full animate-pulse" />
-          </div>
-          
-          <h2 className="text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-black leading-tight mb-4 sm:mb-6 text-foreground px-2">
+          <p className="section-label mb-5 justify-center">
+            Technology Partners
+          </p>
+
+          <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-tight mb-4 sm:mb-6 text-foreground px-2">
             Powered By Industry Leaders
           </h2>
-          
+
           <p className="text-base sm:text-lg lg:text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto px-2">
             We leverage cutting-edge technologies to deliver world-class AI automation solutions
           </p>
@@ -89,13 +85,13 @@ export function Awards() {
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <div className={`relative h-full bg-gradient-to-br ${partner.color} rounded-xl sm:rounded-2xl border border-border ${partner.hoverColor} transition-all duration-500 hover:scale-105 overflow-hidden`}>
-                  
+
                   {/* Card Content */}
                   <div className="relative p-4 sm:p-6 lg:p-8 flex flex-col items-center text-center h-full">
-                    
+
                     {/* Logo/Text */}
                     <div className="mb-3 sm:mb-6 mt-2 sm:mt-4">
-                      <h3 className="text-2xl sm:text-4xl lg:text-5xl font-black text-foreground tracking-tight">
+                      <h3 className="font-serif text-3xl sm:text-4xl text-foreground tracking-tight">
                         {partner.text}
                       </h3>
                     </div>
@@ -109,7 +105,7 @@ export function Awards() {
 
                   {/* Hover Glow Effect */}
                   <div className="absolute inset-0 bg-gradient-to-t from-accent-blue/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-                  
+
                 </div>
               </div>
             ))}
@@ -124,7 +120,7 @@ export function Awards() {
         </div>
 
       </div>
-      
+
     </section>
   )
 }
