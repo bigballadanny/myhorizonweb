@@ -1,5 +1,14 @@
 # CHANGELOG — MyHorizon Web
 
+## 2026-02-28 (5pm) — Continued Redesign Pass
+- **Footer.tsx**: Redesigned footer
+- **Industries.tsx**: Section rework (57 lines)
+- **Problem.tsx**: Restructured (66 lines)
+- **Results.tsx**: Data display overhaul (48 lines)
+- **Services.tsx**: Further card refinements
+- **PullQuote.tsx**: Quote block update
+- **Hero + Nav**: Final polish pass
+
 ## 2026-02-28 — Major Component Redesign Pass
 - **App.tsx**: Full routing restructure (246 lines changed)
 - **Hero.tsx**: Redesigned (218 lines) — new layout, copy, animations
