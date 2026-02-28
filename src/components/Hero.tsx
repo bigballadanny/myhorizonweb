@@ -22,7 +22,7 @@ export function Hero() {
       {/* Animated gradient mesh — subtle Stripe-style depth */}
       <div className="hero-gradient-mesh" />
 
-      <div className="relative z-10 container mx-auto px-5 sm:px-8 lg:px-12 pt-28 pb-20">
+      <div className="relative z-10 container mx-auto px-5 sm:px-8 lg:px-12 pt-24 pb-12 sm:pt-28 sm:pb-20">
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-24 items-center">
 
           {/* Left — text column */}
@@ -42,7 +42,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.3 }}
-              className="font-serif text-4xl sm:text-6xl lg:text-7xl text-foreground leading-[1.1] mb-8"
+              className="font-serif text-[2.5rem] sm:text-6xl lg:text-7xl text-foreground leading-[1.1] mb-5 sm:mb-8"
             >
               What if AI actually{' '}
               <em className="not-italic"><span className="text-highlight">understood</span></em>{' '}
@@ -54,7 +54,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.45 }}
-              className="text-lg lg:text-xl text-muted-foreground leading-relaxed max-w-lg mb-10"
+              className="text-base sm:text-lg lg:text-xl text-muted-foreground leading-relaxed max-w-lg mb-8 sm:mb-10"
             >
               Not just answered questions — but remembered your customers, managed your operations, and made decisions alongside your team.{' '}
               <span className="text-foreground font-medium">That's what we build.</span>
@@ -65,7 +65,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.6 }}
-              className="flex flex-col sm:flex-row items-stretch sm:items-start gap-3 mb-12"
+              className="flex flex-col sm:flex-row items-stretch sm:items-start gap-3 mb-8 sm:mb-12"
             >
               <Button
                 size="lg"

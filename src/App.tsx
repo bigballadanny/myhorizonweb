@@ -14,6 +14,7 @@ import { Contact } from './components/Contact'
 import { Footer } from './components/Footer'
 import { ElevenLabsWidget } from './components/ElevenLabsWidget'
 import { NewsletterSignup } from './components/NewsletterSignup'
+import { StickyMobileCTA } from './components/StickyMobileCTA'
 import { useVisitorTracking } from './hooks/useVisitorTracking'
 
 const sectionVariants = {
@@ -151,6 +152,7 @@ export default function App() {
           <Contact />
         </motion.section>
 
+        <StickyMobileCTA />
       </main>
       <Footer />
       <ElevenLabsWidget />

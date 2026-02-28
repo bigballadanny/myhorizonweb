@@ -28,11 +28,22 @@ async function generateFingerprint(): Promise<string> {
   const canvasData = canvas.toDataURL();
 
   const raw = components + '|' + canvasData;
-  const encoder = new TextEncoder();
-  const data = encoder.encode(raw);
-  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  try {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(raw);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  } catch (e) {
+    // Fallback for in-app browsers (IG/FB) where crypto.subtle isn't available
+    let simpleHash = 0;
+    for (let i = 0; i < raw.length; i++) {
+      const char = raw.charCodeAt(i);
+      simpleHash = ((simpleHash << 5) - simpleHash) + char;
+      simpleHash = simpleHash & simpleHash; // Convert to 32bit integer
+    }
+    return Math.abs(simpleHash).toString(16) + Date.now().toString(16);
+  }
 }
 
 export function useVisitorTracking() {
