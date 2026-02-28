@@ -78,7 +78,7 @@ const metrics = [
 
 export function Results() {
   return (
-    <section className="py-20 lg:py-24 bg-background">
+    <section className="py-24 lg:py-32 relative z-10">
       <div className="container mx-auto px-5 sm:px-8 lg:px-12">
 
         {/* Header */}
@@ -113,7 +113,7 @@ export function Results() {
           </div>
 
           {/* Subtle gradient card behind metrics */}
-          <div className="relative rounded-2xl border border-border/50 bg-card/30 backdrop-blur-sm">
+          <div className="relative rounded-2xl border border-white/10 bg-black/40 backdrop-blur-xl">
             {/* Metrics — 2×2 grid on mobile, 4-col on lg */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0">
               {metrics.map((metric, index) => (
@@ -123,7 +123,7 @@ export function Results() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.1 }}
                   transition={{ delay: index * 0.12, duration: 0.5 }}
-                  className="border-t border-border pt-9 pb-9 px-7"
+                  className="border-t border-white/10 pt-9 pb-9 px-7"
                 >
                   <div className="font-serif text-5xl sm:text-6xl text-foreground mb-3 leading-none">
                     <AnimatedCounter end={metric.value} suffix={metric.suffix} prefix={metric.prefix} />
@@ -136,7 +136,7 @@ export function Results() {
                   </p>
                 </motion.div>
               ))}
-              <div className="col-span-full border-t border-border" />
+              <div className="col-span-full border-t border-white/10" />
             </div>
           </div>
         </div>

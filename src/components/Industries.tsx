@@ -142,10 +142,10 @@ export function Industries() {
                 viewport={{ once: true, amount: 0.1 }}
                 transition={{ delay: index * 0.07, duration: 0.5 }}
                 onClick={() => navigate(`/industry/${industry.slug}`)}
-                className={`group border-t border-border py-8 pr-6 cursor-pointer hover:bg-card/50 transition-all duration-200 px-3 ${industry.accentColor}`}
+                className={`group border-t border-border py-8 pr-6 cursor-pointer relative z-10 bg-black/40 backdrop-blur-xl border border-white/10 hover:bg-white/5 transition-all duration-500 px-3 ${industry.accentColor}`}
               >
                 {/* Icon box — tints on hover */}
-                <div className={`w-9 h-9 rounded-lg bg-card border border-border flex items-center justify-center mb-5 transition-all duration-200 ${industry.accentIconBg}`}>
+                <div className={`w-9 h-9 rounded-lg relative z-10 bg-black/40 backdrop-blur-xl border border-white/10 flex items-center justify-center mb-5 transition-all duration-500 ${industry.accentIconBg}`}>
                   <Icon className="w-4 h-4 text-muted-foreground group-hover:text-current transition-colors duration-200" />
                 </div>
 

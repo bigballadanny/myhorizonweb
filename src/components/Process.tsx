@@ -37,7 +37,7 @@ export function Process() {
   }
 
   return (
-    <section className="py-20 lg:py-24 bg-card">
+    <section className="py-24 lg:py-32 relative z-10">
       <div className="container mx-auto px-5 sm:px-8 lg:px-12">
 
         {/* Header */}
@@ -46,17 +46,17 @@ export function Process() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.6 }}
-          className="mb-14"
+          className="mb-16 md:mb-24 flex flex-col items-center text-center"
         >
-          <p className="section-label mb-5">How It Works</p>
-          <div className="max-w-2xl">
-            <h2 className="font-serif text-4xl sm:text-5xl text-foreground leading-tight mb-5">
-              From conversation to live AI system
-            </h2>
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              A clear, simple path. No jargon, no complexity — just real progress.
-            </p>
+          <div className="inline-flex items-center gap-2 mb-6 bg-white/5 backdrop-blur-md border border-white/10 px-4 py-1.5 rounded-full">
+            <span className="text-xs font-medium tracking-widest uppercase text-zinc-300">How We Work</span>
           </div>
+          <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl text-white leading-tight tracking-tight mb-6 max-w-3xl drop-shadow-xl">
+            From architecture to <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-zinc-500">autonomous execution.</span>
+          </h2>
+          <p className="text-lg md:text-xl text-zinc-200 leading-relaxed max-w-2xl drop-shadow-md">
+            A precise, engineering-first approach to building your AI infrastructure. No guesswork, just scalable systems.
+          </p>
         </motion.div>
 
         {/* Steps */}
@@ -72,7 +72,7 @@ export function Process() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{ delay: index * 0.15, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                className={`premium-hover relative rounded-[20px] p-8 border border-border/80 ${step.cardBg}`}
+                className="premium-hover h-full p-8 sm:p-10 rounded-2xl border border-white/10 bg-black/40 backdrop-blur-xl relative overflow-hidden group"
               >
                 {/* Large ghost number — behind the title */}
                 <div className="relative mb-5">
@@ -82,14 +82,14 @@ export function Process() {
                 </div>
 
                 {/* Step number circle — compact, sits on top */}
-                <div className="relative z-10 inline-flex items-center justify-center w-10 h-10 mb-5 bg-background border border-border rounded-full">
-                  <span className="section-label text-foreground" style={{ letterSpacing: '0' }}>{step.number}</span>
+                <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mb-6 shadow-sm group-hover:scale-110 group-hover:bg-white/10 transition-all duration-300">
+                  <span className="section-label text-zinc-400 group-hover:text-white transition-colors" style={{ letterSpacing: '0' }}>{step.number}</span>
                 </div>
 
-                <h3 className="font-serif text-2xl text-foreground mb-3">
+                <h3 className="font-serif text-2xl text-white mb-3 drop-shadow-sm">
                   {step.title}
                 </h3>
-                <p className="text-muted-foreground leading-relaxed text-[15px]">
+                <p className="text-base text-zinc-200 leading-relaxed drop-shadow-sm">
                   {step.description}
                 </p>
               </motion.div>

@@ -7,9 +7,9 @@ interface PullQuoteProps {
   bg?: 'background' | 'card'
 }
 
-export function PullQuote({ quote, bg = 'background' }: PullQuoteProps) {
+export function PullQuote({ quote }: PullQuoteProps) {
   return (
-    <div className={bg === 'card' ? 'bg-card' : 'bg-background'}>
+    <div className="relative z-10">
       <motion.div
         initial={{ opacity: 0, y: 12 }}
         whileInView={{ opacity: 1, y: 0 }}

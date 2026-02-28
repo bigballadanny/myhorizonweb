@@ -46,7 +46,7 @@ export function SynthiosProduct() {
   }
 
   return (
-    <section id="synthios" className="py-20 lg:py-24 bg-background">
+    <section id="synthios" className="py-24 lg:py-32 relative z-10">
       <div className="container mx-auto px-6 sm:px-8 lg:px-12">
 
         {/* Header */}

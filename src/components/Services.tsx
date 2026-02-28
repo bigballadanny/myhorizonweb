@@ -74,111 +74,132 @@ export function Services() {
   }
 
   return (
-    <section id="services" className="py-20 lg:py-24 bg-background">
+    <section id="services" className="py-20 lg:py-32 relative z-10">
       <div className="container mx-auto px-6 sm:px-8 lg:px-12">
 
         {/* Section header */}
         <motion.div
-          initial={{ opacity: 0, y: 15 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.1 }}
-          transition={{ duration: 0.6 }}
-          className="mb-16"
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-24 md:mb-32 text-center flex flex-col items-center"
         >
-          <p className="section-label mb-5">What We Build</p>
-          <div className="max-w-2xl">
-            <h2 className="font-serif text-4xl sm:text-5xl lg:text-[3.5rem] text-foreground leading-[1.1] mb-5 tracking-tight">
-              AI Systems That Work for You
-            </h2>
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              From voice agents to full automation stacks — we build the infrastructure that runs your business while you focus on growing it.
-            </p>
+          <div className="inline-flex items-center gap-2 mb-6 bg-white/5 backdrop-blur-md border border-white/10 px-4 py-1.5 rounded-full">
+            <span className="text-xs font-medium tracking-widest uppercase text-zinc-300">What We Build</span>
           </div>
+          <h2 className="font-serif text-5xl sm:text-6xl lg:text-[4.5rem] text-foreground leading-[1] mb-6 tracking-tight drop-shadow-xl max-w-4xl">
+            Systems that <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-zinc-500">think & execute.</span>
+          </h2>
+          <p className="text-lg md:text-xl text-zinc-200 font-medium leading-relaxed max-w-2xl drop-shadow-md">
+            From autonomous voice agents to full pipeline infrastructure—we build the intelligence that runs your business natively.
+          </p>
         </motion.div>
 
-        {/* Featured services — alternating editorial layout */}
-        <div className="space-y-0 mb-16">
+        {/* Featured services — Massive alternating floating cards */}
+        <div className="space-y-24 lg:space-y-40 mb-32">
           {featuredServices.map((service, index) => {
             const Icon = service.icon
+            // Slide in from left for even, right for odd
+            const xInitial = service.flip ? 60 : -60
+
             return (
               <motion.div
                 key={service.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.15 }}
-                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                className="border-t border-border py-12 lg:py-16"
+                initial={{ opacity: 0, y: 40, x: xInitial }}
+                whileInView={{ opacity: 1, y: 0, x: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                className="relative"
               >
-                <div className={`grid lg:grid-cols-[1fr_1.1fr] gap-12 lg:gap-20 items-center ${service.flip ? 'lg:[direction:rtl]' : ''}`}>
-                  {/* Text column */}
-                  <div className={service.flip ? 'lg:[direction:ltr]' : ''}>
-                    <div className="flex items-center gap-4 mb-6">
-                      <div className="w-10 h-10 rounded-lg bg-card border border-border flex items-center justify-center flex-shrink-0">
-                        <Icon className="w-5 h-5 text-muted-foreground" />
+                <div className={`flex flex-col ${service.flip ? 'lg:flex-row-reverse' : 'lg:flex-row'} gap-12 lg:gap-24 items-center`}>
+
+                  {/* Text Block - Floating Glass */}
+                  <div className="w-full lg:w-1/2 relative z-10">
+                    <div className="bg-black/40 backdrop-blur-2xl border border-white/10 p-8 sm:p-12 rounded-[2rem] shadow-2xl relative overflow-hidden group hover:border-white/20 transition-colors duration-500">
+
+                      {/* Subtle inner glow */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                      <div className="relative z-10">
+                        <div className="flex items-center gap-4 mb-8">
+                          <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center backdrop-blur-md">
+                            <Icon className="w-6 h-6 text-zinc-300" />
+                          </div>
+                          <span className="text-sm font-bold tracking-widest text-zinc-500 font-mono">{service.number}</span>
+                        </div>
+
+                        <h3 className="font-serif text-4xl sm:text-5xl text-white mb-6 leading-[1.1] tracking-tight">
+                          {service.title}
+                        </h3>
+
+                        <p className="text-lg text-zinc-200 font-medium leading-relaxed mb-8 drop-shadow-sm">
+                          {service.description}
+                        </p>
+
+                        <button
+                          onClick={scrollToContact}
+                          className="inline-flex items-center gap-2 text-white font-medium hover:gap-4 transition-all duration-300 border-b border-transparent hover:border-white pb-1"
+                        >
+                          Explore Architecture
+                          <ArrowRight className="w-4 h-4" />
+                        </button>
                       </div>
-                      <span className="section-label">{service.number}</span>
                     </div>
-                    <h3 className="font-serif text-3xl sm:text-4xl text-foreground mb-4 leading-snug">
-                      {service.title}
-                    </h3>
-                    <p className="text-base text-muted-foreground leading-relaxed mb-5 max-w-md">
-                      {service.description}
-                    </p>
-                    <button
-                      onClick={scrollToContact}
-                      className="inline-flex items-center gap-2 text-accent-blue text-sm font-medium hover:gap-3 transition-all duration-200"
-                    >
-                      Talk to us about this
-                      <ArrowRight className="w-4 h-4" />
-                    </button>
                   </div>
 
-                  {/* Image column */}
-                  <div className={`${service.flip ? 'lg:[direction:ltr]' : ''} flex items-start`}>
-                    <div className="rounded-2xl overflow-hidden bg-card aspect-[4/3] w-full">
+                  {/* Visual Block - Huge Editorial Image */}
+                  <div className="w-full lg:w-1/2 relative">
+                    <motion.div
+                      whileHover={{ scale: 1.02 }}
+                      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                      className="rounded-[2.5rem] overflow-hidden aspect-[4/5] sm:aspect-square lg:aspect-[4/5] w-full shadow-[0_0_60px_-15px_rgba(0,0,0,0.5)] border border-white/10 relative group"
+                    >
                       <img
                         src={service.image}
                         alt={service.imageAlt}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover scale-105 group-hover:scale-100 transition-transform duration-700 ease-out"
                       />
-                    </div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60" />
+                    </motion.div>
                   </div>
                 </div>
               </motion.div>
             )
           })}
-          <div className="border-t border-border" />
         </div>
 
-        {/* Additional services — compact horizontal list */}
+        {/* Additional services — Floating glass cards */}
         <motion.div
-          initial={{ opacity: 0, y: 15 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.1 }}
-          transition={{ duration: 0.6 }}
-          className="mb-14"
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-24"
         >
-          <p className="section-label mb-8">More Capabilities</p>
+          <div className="text-center mb-16">
+            <h3 className="font-serif text-4xl text-white mb-4">Ecosystem Integrations</h3>
+          </div>
           <div className="grid sm:grid-cols-3 gap-6 lg:gap-8">
             {additionalServices.map((service, index) => {
               const Icon = service.icon
               return (
                 <motion.div
                   key={service.id}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.2 }}
-                  transition={{ delay: index * 0.15, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                  transition={{ delay: index * 0.15, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                   onClick={scrollToContact}
-                  className="premium-hover rounded-2xl cursor-pointer group p-8 lg:p-10 border border-border/50 bg-card/30"
+                  className="rounded-[2rem] cursor-pointer group p-8 lg:p-10 border border-white/10 bg-black/40 backdrop-blur-xl relative overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:border-white/20 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)]"
                 >
-                  <div className="w-[50px] h-[50px] rounded-[14px] bg-background border border-border/80 flex items-center justify-center mb-6 shadow-sm group-hover:scale-110 transition-transform duration-300">
-                    <Icon className="w-5 h-5 text-muted-foreground group-hover:text-foreground transition-colors" />
+                  <div className="w-[60px] h-[60px] rounded-[1rem] bg-white/5 border border-white/10 flex items-center justify-center mb-8 shadow-sm group-hover:scale-110 group-hover:bg-white/10 transition-all duration-500">
+                    <Icon className="w-6 h-6 text-zinc-400 group-hover:text-white transition-colors" />
                   </div>
-                  <h3 className="font-sans font-medium text-foreground mb-3 text-lg group-hover:text-accent-blue transition-colors duration-200">
+                  <h3 className="font-serif text-2xl text-white mb-4 group-hover:text-zinc-200 transition-colors duration-300">
                     {service.title}
                   </h3>
-                  <p className="text-[15px] text-muted-foreground leading-relaxed">
+                  <p className="text-base text-zinc-300 font-medium leading-relaxed">
                     {service.description}
                   </p>
                 </motion.div>
@@ -189,18 +210,20 @@ export function Services() {
 
         {/* CTA */}
         <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.1 }}
-          transition={{ duration: 0.5 }}
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center bg-gradient-to-br from-white/10 to-transparent border border-white/10 p-12 sm:p-20 rounded-[3rem] backdrop-blur-2xl relative overflow-hidden"
         >
-          <p className="text-foreground font-medium mb-3">Not sure where to start?</p>
-          <p className="text-muted-foreground mb-6 max-w-md">
-            Book a free consultation and we'll map out your automation opportunities together.
+          <div className="absolute inset-0 bg-noise opacity-20 mix-blend-overlay pointer-events-none" />
+          <h2 className="font-serif text-3xl sm:text-5xl text-white mb-6 tracking-tight relative z-10">Ready to build the future?</h2>
+          <p className="text-lg text-zinc-100 font-medium mb-10 max-w-xl mx-auto relative z-10 drop-shadow-md">
+            Book a free consultation and we'll map out your automation architecture together.
           </p>
-          <Button onClick={scrollToContact} size="lg" className="bg-accent-blue hover:bg-accent-blue/90 text-white px-8 py-6 rounded-xl">
-            Book a Free Consultation
-            <ArrowRight className="w-4 h-4 ml-2" />
+          <Button onClick={scrollToContact} size="lg" className="bg-white text-black hover:bg-zinc-200 hover:scale-105 transition-all duration-300 px-10 py-7 rounded-full text-lg shadow-[0_0_40px_-10px_rgba(255,255,255,0.3)] relative z-10 font-semibold">
+            Schedule Architecture Review
+            <ArrowRight className="w-5 h-5 ml-2" />
           </Button>
         </motion.div>
 

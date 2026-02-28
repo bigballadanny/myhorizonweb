@@ -16,8 +16,7 @@ const industries = [
 export function MarqueeStrip() {
   return (
     <div
-      className="marquee-track overflow-hidden border-y border-border/50 py-4"
-      style={{ background: 'color-mix(in srgb, var(--card) 40%, transparent)' }}
+      className="marquee-track overflow-hidden border-y border-white/5 py-6 bg-black/20"
       aria-hidden="true"
     >
       {/* Two copies ensure seamless loop at all viewport widths */}
