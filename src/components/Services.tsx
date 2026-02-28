@@ -87,7 +87,7 @@ export function Services() {
         >
           <p className="section-label mb-5">What We Build</p>
           <div className="max-w-2xl">
-            <h2 className="font-serif text-4xl sm:text-5xl text-foreground leading-tight mb-5">
+            <h2 className="font-serif text-4xl sm:text-5xl lg:text-[3.5rem] text-foreground leading-[1.1] mb-5 tracking-tight">
               AI Systems That Work for You
             </h2>
             <p className="text-lg text-muted-foreground leading-relaxed">
@@ -103,13 +103,13 @@ export function Services() {
             return (
               <motion.div
                 key={service.id}
-                initial={{ opacity: 0, y: 15 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.1 }}
-                transition={{ duration: 0.6 }}
-                className="border-t border-border py-12 lg:py-14"
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                className="border-t border-border py-12 lg:py-16"
               >
-                <div className={`grid lg:grid-cols-[1fr_1.2fr] gap-10 lg:gap-16 items-start ${service.flip ? 'lg:[direction:rtl]' : ''}`}>
+                <div className={`grid lg:grid-cols-[1fr_1.1fr] gap-12 lg:gap-20 items-center ${service.flip ? 'lg:[direction:rtl]' : ''}`}>
                   {/* Text column */}
                   <div className={service.flip ? 'lg:[direction:ltr]' : ''}>
                     <div className="flex items-center gap-4 mb-6">
@@ -159,32 +159,31 @@ export function Services() {
           className="mb-14"
         >
           <p className="section-label mb-8">More Capabilities</p>
-          <div className="grid sm:grid-cols-3 gap-0">
+          <div className="grid sm:grid-cols-3 gap-6 lg:gap-8">
             {additionalServices.map((service, index) => {
               const Icon = service.icon
               return (
                 <motion.div
                   key={service.id}
-                  initial={{ opacity: 0, y: 12 }}
+                  initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.1 }}
-                  transition={{ delay: index * 0.08, duration: 0.5 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ delay: index * 0.15, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
                   onClick={scrollToContact}
-                  className="cursor-pointer group border-t border-border py-8 pr-8"
+                  className="premium-hover rounded-2xl cursor-pointer group p-8 lg:p-10 border border-border/50 bg-card/30"
                 >
-                  <div className="w-9 h-9 rounded-lg bg-card border border-border flex items-center justify-center mb-5">
-                    <Icon className="w-4 h-4 text-muted-foreground" />
+                  <div className="w-[50px] h-[50px] rounded-[14px] bg-background border border-border/80 flex items-center justify-center mb-6 shadow-sm group-hover:scale-110 transition-transform duration-300">
+                    <Icon className="w-5 h-5 text-muted-foreground group-hover:text-foreground transition-colors" />
                   </div>
-                  <h3 className="font-sans font-medium text-foreground mb-2 text-base group-hover:text-accent-blue transition-colors duration-200">
+                  <h3 className="font-sans font-medium text-foreground mb-3 text-lg group-hover:text-accent-blue transition-colors duration-200">
                     {service.title}
                   </h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
+                  <p className="text-[15px] text-muted-foreground leading-relaxed">
                     {service.description}
                   </p>
                 </motion.div>
               )
             })}
-            <div className="col-span-full border-t border-border" />
           </div>
         </motion.div>
 

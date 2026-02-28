@@ -68,11 +68,11 @@ export function Process() {
             {steps.map((step, index) => (
               <motion.div
                 key={step.title}
-                initial={{ opacity: 0, y: 15 }}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.1 }}
-                transition={{ delay: index * 0.12, duration: 0.55 }}
-                className={`relative rounded-2xl p-7 border border-border/60 ${step.cardBg}`}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ delay: index * 0.15, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                className={`premium-hover relative rounded-[20px] p-8 border border-border/80 ${step.cardBg}`}
               >
                 {/* Large ghost number — behind the title */}
                 <div className="relative mb-5">
