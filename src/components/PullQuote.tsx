@@ -4,10 +4,11 @@ import { motion } from 'framer-motion'
 
 interface PullQuoteProps {
   quote: string
+  author?: string
   bg?: 'background' | 'card'
 }
 
-export function PullQuote({ quote }: PullQuoteProps) {
+export function PullQuote({ quote, author }: PullQuoteProps) {
   return (
     <div className="relative z-10">
       <motion.div
@@ -27,6 +28,11 @@ export function PullQuote({ quote }: PullQuoteProps) {
         <p className="font-serif italic text-xl sm:text-2xl text-foreground/65 leading-relaxed">
           {quote}
         </p>
+        {author && (
+          <p className="mt-6 text-sm sm:text-base font-medium text-foreground/40 tracking-wider uppercase">
+            — {author}
+          </p>
+        )}
       </motion.div>
     </div>
   )

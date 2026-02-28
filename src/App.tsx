@@ -34,8 +34,8 @@ export default function App() {
           <Hero />
         </section>
 
-        {/* Services & Lower Content Wrapper - Glassmorphic overlay to ensure readability over the fixed hero background while letting "flow" persist */}
-        <div className="relative z-20 bg-black/40 backdrop-blur-[80px] border-t border-white/5">
+        {/* Services & Lower Content Wrapper - Glassmorphic overlay */}
+        <div className="relative z-20 bg-white/70 dark:bg-black/40 backdrop-blur-[80px] border-t border-black/5 dark:border-white/5">
           {/* Marquee trust strip — industries we serve */}
           <MarqueeStrip />
 
@@ -52,9 +52,10 @@ export default function App() {
             <Services />
           </motion.section>
 
-          {/* Pull quote — seeds the bigger-picture thinking */}
+          {/* Pull quote — the MyHorizon play */}
           <PullQuote
-            quote="The businesses that embrace AI early won't just save time — they'll build something their competitors can't catch up to."
+            quote="We can see the tsunami coming, but it's still far out on the horizon."
+            author="Dario Amodei, CEO of Anthropic"
           />
 
           {/* 3 — Opportunity (Problem) */}

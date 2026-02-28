@@ -89,9 +89,9 @@ export function Services() {
             <span className="text-xs font-medium tracking-widest uppercase text-zinc-300">What We Build</span>
           </div>
           <h2 className="font-serif text-5xl sm:text-6xl lg:text-[4.5rem] text-foreground leading-[1] mb-6 tracking-tight drop-shadow-xl max-w-4xl">
-            Systems that <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-zinc-500">think & execute.</span>
+            Systems that <span className="text-transparent bg-clip-text bg-gradient-to-r from-zinc-800 to-zinc-400 dark:from-white dark:to-zinc-500">think & execute.</span>
           </h2>
-          <p className="text-lg md:text-xl text-zinc-200 font-medium leading-relaxed max-w-2xl drop-shadow-md">
+          <p className="text-lg md:text-xl text-zinc-700 dark:text-zinc-200 font-medium leading-relaxed max-w-2xl drop-shadow-md">
             From autonomous voice agents to full pipeline infrastructure—we build the intelligence that runs your business natively.
           </p>
         </motion.div>
@@ -129,7 +129,7 @@ export function Services() {
                           <span className="text-sm font-bold tracking-widest text-zinc-500 font-mono">{service.number}</span>
                         </div>
 
-                        <h3 className="font-serif text-4xl sm:text-5xl text-white mb-6 leading-[1.1] tracking-tight">
+                        <h3 className="font-serif text-4xl sm:text-5xl text-zinc-900 dark:text-white mb-6 leading-[1.1] tracking-tight">
                           {service.title}
                         </h3>
 
@@ -139,7 +139,7 @@ export function Services() {
 
                         <button
                           onClick={scrollToContact}
-                          className="inline-flex items-center gap-2 text-white font-medium hover:gap-4 transition-all duration-300 border-b border-transparent hover:border-white pb-1"
+                          className="inline-flex items-center gap-2 text-zinc-900 dark:text-white font-medium hover:gap-4 transition-all duration-300 border-b border-transparent hover:border-zinc-900 dark:hover:border-white pb-1"
                         >
                           Explore Architecture
                           <ArrowRight className="w-4 h-4" />
@@ -178,7 +178,7 @@ export function Services() {
           className="mb-24"
         >
           <div className="text-center mb-16">
-            <h3 className="font-serif text-4xl text-white mb-4">Ecosystem Integrations</h3>
+            <h3 className="font-serif text-4xl text-zinc-900 dark:text-white mb-4">Ecosystem Integrations</h3>
           </div>
           <div className="grid sm:grid-cols-3 gap-6 lg:gap-8">
             {additionalServices.map((service, index) => {
@@ -196,7 +196,7 @@ export function Services() {
                   <div className="w-[60px] h-[60px] rounded-[1rem] bg-white/5 border border-white/10 flex items-center justify-center mb-8 shadow-sm group-hover:scale-110 group-hover:bg-white/10 transition-all duration-500">
                     <Icon className="w-6 h-6 text-zinc-400 group-hover:text-white transition-colors" />
                   </div>
-                  <h3 className="font-serif text-2xl text-white mb-4 group-hover:text-zinc-200 transition-colors duration-300">
+                  <h3 className="font-serif text-2xl text-zinc-900 dark:text-white mb-4 group-hover:text-zinc-700 dark:group-hover:text-zinc-200 transition-colors duration-300">
                     {service.title}
                   </h3>
                   <p className="text-base text-zinc-300 font-medium leading-relaxed">
@@ -217,11 +217,11 @@ export function Services() {
           className="text-center bg-gradient-to-br from-white/10 to-transparent border border-white/10 p-12 sm:p-20 rounded-[3rem] backdrop-blur-2xl relative overflow-hidden"
         >
           <div className="absolute inset-0 bg-noise opacity-20 mix-blend-overlay pointer-events-none" />
-          <h2 className="font-serif text-3xl sm:text-5xl text-white mb-6 tracking-tight relative z-10">Ready to build the future?</h2>
-          <p className="text-lg text-zinc-100 font-medium mb-10 max-w-xl mx-auto relative z-10 drop-shadow-md">
+          <h2 className="font-serif text-3xl sm:text-5xl text-zinc-900 dark:text-white mb-6 tracking-tight relative z-10">Ready to build the future?</h2>
+          <p className="text-lg text-zinc-700 dark:text-zinc-100 font-medium mb-10 max-w-xl mx-auto relative z-10 drop-shadow-md">
             Book a free consultation and we'll map out your automation architecture together.
           </p>
-          <Button onClick={scrollToContact} size="lg" className="bg-white text-black hover:bg-zinc-200 hover:scale-105 transition-all duration-300 px-10 py-7 rounded-full text-lg shadow-[0_0_40px_-10px_rgba(255,255,255,0.3)] relative z-10 font-semibold">
+          <Button onClick={scrollToContact} size="lg" className="bg-black text-white hover:bg-zinc-800 dark:bg-white dark:text-black dark:hover:bg-zinc-200 hover:scale-105 transition-all duration-300 px-10 py-7 rounded-full text-lg shadow-[0_0_40px_-10px_rgba(0,0,0,0.3)] dark:shadow-[0_0_40px_-10px_rgba(255,255,255,0.3)] relative z-10 font-semibold">
             Schedule Architecture Review
             <ArrowRight className="w-5 h-5 ml-2" />
           </Button>

@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { LogOut, Calendar, Settings, BarChart3, Loader2, Users, Plus, LayoutDashboard, Mail, Sparkles } from 'lucide-react';
-import logoIcon from '@/assets/myhorizon-logo-clean.png';
+import logoIcon from '@/assets/myhorizon-logo-icon.png';
 import { CreateLeadDialog } from '@/components/admin/CreateLeadDialog';
 import { CreateAppointmentDialog } from '@/components/admin/CreateAppointmentDialog';
 import { LeadDetailDialog } from '@/components/admin/LeadDetailDialog';
@@ -60,14 +60,14 @@ export default function Admin() {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <button 
+              <button
                 onClick={() => navigate('/')}
                 className="hover:opacity-80 transition-opacity"
               >
-                <img 
+                <img
                   src={logoIcon}
-                  alt="MyHorizon Logo" 
-                  className="w-10 h-10 rounded-full object-cover ring-2 ring-primary/30 hover:ring-primary transition-all"
+                  alt="MyHorizon Logo"
+                  className="w-10 h-10 rounded-full object-cover ring-2 ring-primary/30 hover:ring-primary transition-all bg-black p-0.5"
                 />
               </button>
               <div>
@@ -82,7 +82,7 @@ export default function Admin() {
                 </div>
               </div>
             </div>
-            <Button variant="outline" onClick={handleLogout}>
+            <Button variant="outline" onClick={handleLogout} className="hover:bg-destructive hover:text-destructive-foreground transition-all duration-300">
               <LogOut className="mr-2 h-4 w-4" />
               Logout
             </Button>
@@ -130,73 +130,73 @@ export default function Admin() {
 
           <div className="animate-fade-in">
 
-          <TabsContent value="dashboard" className="space-y-4">
-            <div className="flex justify-between items-center">
-              <div>
-                <h2 className="text-2xl font-bold">Dashboard Overview</h2>
-                <p className="text-muted-foreground">Real-time analytics and insights</p>
-              </div>
-              {isSuperAdmin && <SampleDataGenerator />}
-            </div>
-            <DashboardOverview
-              onNewLead={() => setShowCreateLead(true)}
-              onNavigateCampaigns={() => setActiveTab('campaigns')}
-            />
-          </TabsContent>
-
-          <TabsContent value="pipeline" className="space-y-4">
-            <div className="flex justify-between items-center">
-              <div>
-                <h2 className="text-2xl font-bold">Lead Pipeline</h2>
-                <p className="text-muted-foreground">Visual overview of your sales pipeline</p>
-              </div>
-              <div className="flex gap-2">
+            <TabsContent value="dashboard" className="space-y-4">
+              <div className="flex justify-between items-center">
+                <div>
+                  <h2 className="text-2xl font-bold">Dashboard Overview</h2>
+                  <p className="text-muted-foreground">Real-time analytics and insights</p>
+                </div>
                 {isSuperAdmin && <SampleDataGenerator />}
-                <Button onClick={() => setShowCreateLead(true)}>
-                  <Plus className="mr-2 h-4 w-4" />
-                  New Lead
-                </Button>
               </div>
-            </div>
-            <LeadPipelineBoard 
-              onLeadClick={(lead) => {
-                setSelectedLead(lead);
-                setShowLeadDetail(true);
-              }}
-            />
-          </TabsContent>
-
-          <TabsContent value="appointments" className="space-y-4">
-            <div className="flex justify-between items-center mb-4">
-              <div>
-                <h2 className="text-2xl font-bold">Appointments</h2>
-                <p className="text-muted-foreground">Manage scheduled appointments and calendar</p>
-              </div>
-            </div>
-            <AppointmentsCalendar onCreateAppointment={() => setShowCreateAppointment(true)} />
-          </TabsContent>
-
-          <TabsContent value="conversations" className="space-y-4">
-            <ConversationInsights />
-          </TabsContent>
-
-          <TabsContent value="campaigns" className="space-y-4">
-            <EmailCampaigns />
-          </TabsContent>
-
-          <TabsContent value="ai-assistant" className="space-y-4">
-            <AICommandCenter />
-          </TabsContent>
-
-          {isSuperAdmin && (
-            <TabsContent value="users" className="space-y-4">
-              <UserManagement />
+              <DashboardOverview
+                onNewLead={() => setShowCreateLead(true)}
+                onNavigateCampaigns={() => setActiveTab('campaigns')}
+              />
             </TabsContent>
-          )}
 
-          <TabsContent value="settings" className="space-y-4">
-            <IntegrationsSettings />
-          </TabsContent>
+            <TabsContent value="pipeline" className="space-y-4">
+              <div className="flex justify-between items-center">
+                <div>
+                  <h2 className="text-2xl font-bold">Lead Pipeline</h2>
+                  <p className="text-muted-foreground">Visual overview of your sales pipeline</p>
+                </div>
+                <div className="flex gap-2">
+                  {isSuperAdmin && <SampleDataGenerator />}
+                  <Button onClick={() => setShowCreateLead(true)} className="hover:scale-105 active:scale-95 transition-all duration-300 shadow-lg">
+                    <Plus className="mr-2 h-4 w-4" />
+                    New Lead
+                  </Button>
+                </div>
+              </div>
+              <LeadPipelineBoard
+                onLeadClick={(lead) => {
+                  setSelectedLead(lead);
+                  setShowLeadDetail(true);
+                }}
+              />
+            </TabsContent>
+
+            <TabsContent value="appointments" className="space-y-4">
+              <div className="flex justify-between items-center mb-4">
+                <div>
+                  <h2 className="text-2xl font-bold">Appointments</h2>
+                  <p className="text-muted-foreground">Manage scheduled appointments and calendar</p>
+                </div>
+              </div>
+              <AppointmentsCalendar onCreateAppointment={() => setShowCreateAppointment(true)} />
+            </TabsContent>
+
+            <TabsContent value="conversations" className="space-y-4">
+              <ConversationInsights />
+            </TabsContent>
+
+            <TabsContent value="campaigns" className="space-y-4">
+              <EmailCampaigns />
+            </TabsContent>
+
+            <TabsContent value="ai-assistant" className="space-y-4">
+              <AICommandCenter />
+            </TabsContent>
+
+            {isSuperAdmin && (
+              <TabsContent value="users" className="space-y-4">
+                <UserManagement />
+              </TabsContent>
+            )}
+
+            <TabsContent value="settings" className="space-y-4">
+              <IntegrationsSettings />
+            </TabsContent>
           </div>
         </Tabs>
       </main>

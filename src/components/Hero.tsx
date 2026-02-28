@@ -65,7 +65,7 @@ export function Hero() {
         >
           <span className="w-2 h-2 rounded-full bg-accent-blue animate-pulse" />
           <span className="text-xs sm:text-sm font-medium tracking-wide uppercase text-foreground/90">
-            AntiGravity Automation
+            Enterprise AI infrastructure.
           </span>
         </motion.div>
 
@@ -85,7 +85,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.5 }}
-          className="text-base sm:text-lg lg:text-xl text-white font-medium leading-relaxed max-w-2xl mb-10 drop-shadow-xl saturate-150"
+          className="text-base sm:text-lg lg:text-xl text-zinc-800 dark:text-white font-medium leading-relaxed max-w-2xl mb-10 drop-shadow-xl saturate-150"
         >
           Hyper-realistic AI agents and immersive automation infrastructure for premium businesses. Not just answered questions—decisions made alongside your team.
         </motion.p>

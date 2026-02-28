@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { Menu, X } from 'lucide-react'
 import { Button } from './ui/button'
 import { ThemeToggle } from './ThemeToggle'
-import logoIcon from '@/assets/myhorizon-logo-clean.png'
+import logoIcon from '@/assets/myhorizon-logo-icon.png'
 
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -42,7 +42,9 @@ export function Navigation() {
       clickCountRef.current = 0
     }, 3000)
 
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    if (clickCountRef.current === 1) {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
   }
 
   const navLinks = [
@@ -75,9 +77,9 @@ export function Navigation() {
             <img
               src={logoIcon}
               alt="MyHorizon Logo"
-              className="w-10 h-10 rounded-full object-cover"
+              className="w-10 h-10 rounded-full object-cover bg-black p-0.5"
             />
-            <span className="text-xl font-bold text-foreground" style={{ fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+            <span className="text-xl font-bold text-white drop-shadow-md" style={{ fontFamily: "'DM Sans', system-ui, sans-serif" }}>
               MyHorizon
             </span>
           </button>
@@ -88,7 +90,7 @@ export function Navigation() {
               <button
                 key={link.id}
                 onClick={() => scrollToSection(link.id)}
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200"
+                className="text-sm font-medium text-zinc-300 hover:text-white transition-colors duration-200 drop-shadow-sm"
               >
                 {link.label}
               </button>
