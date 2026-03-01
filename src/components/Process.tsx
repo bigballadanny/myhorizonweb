@@ -51,10 +51,10 @@ export function Process() {
           <div className="inline-flex items-center gap-2 mb-6 bg-white/5 backdrop-blur-md border border-white/10 px-4 py-1.5 rounded-full">
             <span className="text-xs font-medium tracking-widest uppercase text-zinc-300">How We Work</span>
           </div>
-          <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl text-white leading-tight tracking-tight mb-6 max-w-3xl drop-shadow-xl">
-            From architecture to <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-zinc-500">autonomous execution.</span>
+          <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl text-zinc-900 dark:text-white leading-tight tracking-tight mb-6 max-w-3xl drop-shadow-xl">
+            From architecture to <span className="text-transparent bg-clip-text bg-gradient-to-r from-zinc-800 to-zinc-400 dark:from-white dark:to-zinc-500">autonomous execution.</span>
           </h2>
-          <p className="text-lg md:text-xl text-zinc-200 leading-relaxed max-w-2xl drop-shadow-md">
+          <p className="text-lg md:text-xl text-zinc-700 dark:text-zinc-200 leading-relaxed max-w-2xl drop-shadow-md">
             A precise, engineering-first approach to building your AI infrastructure. No guesswork, just scalable systems.
           </p>
         </motion.div>
@@ -76,20 +76,20 @@ export function Process() {
               >
                 {/* Large ghost number — behind the title */}
                 <div className="relative mb-5">
-                  <span className="font-serif text-5xl text-accent-blue/20 leading-none select-none">
+                  <span className="font-serif text-5xl text-blue-500/10 dark:text-accent-blue/20 leading-none select-none">
                     {step.number}
                   </span>
                 </div>
 
                 {/* Step number circle — compact, sits on top */}
                 <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mb-6 shadow-sm group-hover:scale-110 group-hover:bg-white/10 transition-all duration-300">
-                  <span className="section-label text-zinc-400 group-hover:text-white transition-colors" style={{ letterSpacing: '0' }}>{step.number}</span>
+                  <span className="section-label text-zinc-500 dark:text-zinc-400 group-hover:text-zinc-800 dark:group-hover:text-white transition-colors" style={{ letterSpacing: '0' }}>{step.number}</span>
                 </div>
 
-                <h3 className="font-serif text-2xl text-white mb-3 drop-shadow-sm">
+                <h3 className="font-serif text-2xl text-zinc-900 dark:text-white mb-3 drop-shadow-sm">
                   {step.title}
                 </h3>
-                <p className="text-base text-zinc-200 leading-relaxed drop-shadow-sm">
+                <p className="text-base text-zinc-700 dark:text-zinc-200 leading-relaxed drop-shadow-sm">
                   {step.description}
                 </p>
               </motion.div>
@@ -107,12 +107,12 @@ export function Process() {
           <Button
             size="lg"
             onClick={scrollToContact}
-            className="w-full sm:w-auto bg-accent-blue hover:bg-accent-blue/90 text-white px-8 py-6 rounded-xl"
+            className="bg-black text-white hover:bg-zinc-800 dark:bg-white dark:text-black dark:hover:bg-zinc-200 hover:scale-105 transition-all duration-300 px-10 py-7 rounded-full text-lg shadow-[0_0_40px_-10px_rgba(0,0,0,0.3)] dark:shadow-[0_0_40px_-10px_rgba(255,255,255,0.3)] relative z-10 font-semibold"
           >
             Start with a Free Discovery Call
             <ArrowRight className="w-5 h-5 ml-2" />
           </Button>
-          <p className="text-muted-foreground text-sm mt-3">No commitment. No pressure. Just clarity.</p>
+          <p className="text-zinc-600 dark:text-muted-foreground text-sm mt-5 font-medium">No commitment. No pressure. Just clarity.</p>
         </motion.div>
 
       </div>

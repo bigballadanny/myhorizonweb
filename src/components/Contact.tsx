@@ -46,18 +46,14 @@ export function Contact() {
           </div>
 
           {/* Google Calendar Appointment Embed */}
-          <div className="lg:col-span-3 bg-white rounded-2xl border border-white/10 overflow-hidden min-h-[600px] relative">
-            {/* 
-              TODO FOR DANIEL: 
-              Paste your Google Calendar Appointment Schedule link inside the src="" below.
-              Make sure to append "?gv=true" to the end of the URL if it isn't there, so it renders cleanly.
-            */}
+          <div className="lg:col-span-3 bg-white rounded-2xl border border-white/10 overflow-hidden min-h-[650px] relative">
             <iframe
-              src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ0vUQQ7-PIfBhwG-iY6V1T7q-c-sBmwO9S-p1r2_C3A_hS_N0bM-_8AEX_W8cZqk-c_3_yL8U6Z?gv=true"
-              style={{ border: 0 }}
+              src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ18krdg20jTzduvZO27juOExOgJtqJqUV36YjAu7-vyI1ymQKpoEFNm-6G7Odc8MgS-8_mBxhty?gv=1"
+              style={{ border: 0, borderRadius: '8px' }}
               width="100%"
-              height="600"
+              height="650"
               frameBorder="0"
+              scrolling="no"
               title="Google Calendar Booking"
             />
           </div>

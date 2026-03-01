@@ -16,7 +16,7 @@ const industries = [
 export function MarqueeStrip() {
   return (
     <div
-      className="marquee-track overflow-hidden border-y border-white/5 py-6 bg-black/20"
+      className="marquee-track overflow-hidden border-y border-black/5 dark:border-white/5 py-6 bg-white/30 dark:bg-black/20 backdrop-blur-md"
       aria-hidden="true"
     >
       {/* Two copies ensure seamless loop at all viewport widths */}
@@ -24,9 +24,9 @@ export function MarqueeStrip() {
         {[...industries, ...industries].map((item, i) => (
           <span
             key={i}
-            className="flex items-center gap-3 text-sm text-muted-foreground/70 font-medium whitespace-nowrap px-6"
+            className="flex items-center gap-3 text-sm text-zinc-600 dark:text-zinc-400 font-medium whitespace-nowrap px-6"
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-accent-blue/40 flex-shrink-0" />
+            <span className="w-1.5 h-1.5 rounded-full bg-zinc-400 dark:bg-zinc-600 flex-shrink-0" />
             {item}
           </span>
         ))}

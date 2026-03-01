@@ -108,7 +108,7 @@ export function Industries() {
   }
 
   return (
-    <section id="industries" className="py-20 lg:py-24 bg-background">
+    <section id="industries" className="py-20 lg:py-32 relative z-10">
       <div className="container mx-auto px-5 sm:px-8 lg:px-12">
 
         {/* Header */}
@@ -117,42 +117,46 @@ export function Industries() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.6 }}
-          className="mb-14"
+          className="mb-16 md:mb-24 flex flex-col items-center text-center"
         >
-          <p className="section-label mb-5">Industries We Serve</p>
-          <div className="max-w-2xl">
-            <h2 className="font-serif text-4xl sm:text-5xl text-foreground leading-tight mb-5">
+          <div className="inline-flex items-center gap-2 mb-6 bg-white/5 backdrop-blur-md border border-white/10 px-4 py-1.5 rounded-full">
+            <span className="text-xs font-medium tracking-widest uppercase text-zinc-300">Industries We Serve</span>
+          </div>
+          <div className="max-w-3xl">
+            <h2 className="font-serif text-5xl sm:text-6xl text-zinc-900 dark:text-white leading-[1.1] mb-6 tracking-tight drop-shadow-xl">
               Built for your industry
             </h2>
-            <p className="text-lg text-muted-foreground leading-relaxed">
+            <p className="text-lg sm:text-xl text-zinc-700 dark:text-zinc-200 font-medium leading-relaxed max-w-2xl mx-auto drop-shadow-md">
               We've built AI systems across dozens of verticals. Chances are, we know yours.
             </p>
           </div>
         </motion.div>
 
-        {/* Industry grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-0 mb-14">
+        {/* Industry grid - Spaced Floating Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-20">
           {industries.map((industry, index) => {
             const Icon = industry.icon
             return (
               <motion.div
                 key={industry.name}
-                initial={{ opacity: 0, y: 12 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.1 }}
-                transition={{ delay: index * 0.07, duration: 0.5 }}
+                transition={{ delay: index * 0.1, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                 onClick={() => navigate(`/industry/${industry.slug}`)}
-                className={`group border-t border-border py-8 pr-6 cursor-pointer relative z-10 bg-black/40 backdrop-blur-xl border border-white/10 hover:bg-white/5 transition-all duration-500 px-3 ${industry.accentColor}`}
+                className={`group rounded-[2rem] bg-black/40 backdrop-blur-2xl border border-white/10 p-8 sm:p-10 cursor-pointer relative overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:border-white/20 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)] ${industry.accentColor}`}
               >
+                <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
                 {/* Icon box — tints on hover */}
-                <div className={`w-9 h-9 rounded-lg relative z-10 bg-black/40 backdrop-blur-xl border border-white/10 flex items-center justify-center mb-5 transition-all duration-500 ${industry.accentIconBg}`}>
-                  <Icon className="w-4 h-4 text-muted-foreground group-hover:text-current transition-colors duration-200" />
+                <div className={`w-14 h-14 rounded-xl relative z-10 bg-white/5 backdrop-blur-xl border border-white/10 flex items-center justify-center mb-8 transition-all duration-500 shadow-sm group-hover:scale-110 ${industry.accentIconBg}`}>
+                  <Icon className="w-6 h-6 text-zinc-400 group-hover:text-current transition-colors duration-200" />
                 </div>
 
                 {/* Name — accent color on hover */}
-                <div className="flex items-center gap-2 mb-2">
+                <div className="flex items-center gap-2 mb-4 relative z-10">
                   <h3
-                    className="font-serif text-xl text-foreground leading-snug transition-colors duration-200"
+                    className="font-serif text-2xl text-zinc-900 dark:text-white leading-snug transition-colors duration-200"
                     style={{ '--hover-color': industry.accentText } as React.CSSProperties}
                   >
                     <span className="group-hover:[color:var(--hover-color)] transition-colors duration-200">
@@ -161,7 +165,7 @@ export function Industries() {
                   </h3>
                   {/* Arrow appears on hover */}
                   <span
-                    className="opacity-0 group-hover:opacity-100 translate-x-0 group-hover:translate-x-1 transition-all duration-200 text-sm"
+                    className="opacity-0 group-hover:opacity-100 translate-x-0 group-hover:translate-x-1 transition-all duration-200 text-lg"
                     style={{ color: industry.accentText }}
                     aria-hidden="true"
                   >
@@ -169,32 +173,33 @@ export function Industries() {
                   </span>
                 </div>
 
-                <p className="text-sm text-muted-foreground leading-relaxed">
+                <p className="text-base text-zinc-700 dark:text-zinc-300 leading-relaxed font-medium relative z-10">
                   {industry.tagline}
                 </p>
               </motion.div>
             )
           })}
-          <div className="col-span-full border-t border-border" />
         </div>
 
         {/* Bottom CTA */}
         <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.1 }}
-          transition={{ duration: 0.5, delay: 0.15 }}
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center bg-zinc-100 dark:bg-white/5 border border-zinc-200 dark:border-white/10 p-10 sm:p-14 rounded-[3rem] backdrop-blur-2xl relative overflow-hidden max-w-4xl mx-auto"
         >
-          <p className="text-foreground font-medium mb-3">Don't see your industry?</p>
-          <p className="text-muted-foreground mb-6 max-w-md">
+          <h3 className="font-serif text-3xl text-zinc-900 dark:text-white mb-4 relative z-10">Don't see your industry?</h3>
+          <p className="text-lg text-zinc-700 dark:text-zinc-300 mb-8 max-w-md mx-auto relative z-10">
             We build custom solutions for businesses of every kind.
           </p>
           <Button
+            size="lg"
             onClick={scrollToContact}
-            className="w-full sm:w-auto bg-accent-blue hover:bg-accent-blue/90 text-white px-7 py-5 rounded-xl"
+            className="bg-black text-white hover:bg-zinc-800 dark:bg-white dark:text-black dark:hover:bg-zinc-200 hover:scale-105 transition-all duration-300 px-10 py-7 rounded-full text-lg shadow-[0_0_40px_-10px_rgba(0,0,0,0.3)] dark:shadow-[0_0_40px_-10px_rgba(255,255,255,0.3)] relative z-10 font-semibold"
           >
             Let's Talk
-            <ArrowRight className="w-4 h-4 ml-2" />
+            <ArrowRight className="w-5 h-5 ml-2" />
           </Button>
         </motion.div>
 

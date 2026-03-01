@@ -87,15 +87,17 @@ export function Results() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.6 }}
-          className="mb-14"
+          className="mb-16 md:mb-24 flex flex-col items-center text-center"
         >
-          <p className="section-label mb-5">What This Looks Like</p>
-          <div className="max-w-2xl">
-            <h2 className="font-serif text-4xl sm:text-5xl lg:text-[3.5rem] tracking-tight text-foreground leading-[1.1] mb-5">
+          <div className="inline-flex items-center gap-2 mb-6 bg-white/5 backdrop-blur-md border border-white/10 px-4 py-1.5 rounded-full">
+            <span className="text-xs font-medium tracking-widest uppercase text-zinc-300">What This Looks Like</span>
+          </div>
+          <div className="max-w-3xl">
+            <h2 className="font-serif text-5xl sm:text-6xl text-zinc-900 dark:text-white leading-[1.1] mb-6 tracking-tight drop-shadow-xl">
               The numbers behind{' '}
-              <span className="text-highlight">real AI systems</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-zinc-800 to-zinc-400 dark:from-white dark:to-zinc-500">real AI systems.</span>
             </h2>
-            <p className="text-lg text-muted-foreground leading-relaxed">
+            <p className="text-lg sm:text-xl text-zinc-700 dark:text-zinc-200 font-medium leading-relaxed max-w-2xl mx-auto drop-shadow-md">
               Not projections — what actually happens when AI is built into how a business operates, not bolted on as an afterthought.
             </p>
           </div>
@@ -112,31 +114,33 @@ export function Results() {
             />
           </div>
 
-          {/* Subtle gradient card behind metrics */}
-          <div className="relative rounded-2xl border border-white/10 bg-black/40 backdrop-blur-xl">
-            {/* Metrics — 2×2 grid on mobile, 4-col on lg */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0">
+          {/* Floating Metrics Cards */}
+          <div className="relative z-10">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
               {metrics.map((metric, index) => (
                 <motion.div
                   key={metric.label}
-                  initial={{ opacity: 0, y: 15 }}
+                  initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.1 }}
-                  transition={{ delay: index * 0.12, duration: 0.5 }}
-                  className="border-t border-white/10 pt-9 pb-9 px-7"
+                  transition={{ delay: index * 0.12, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                  className="bg-zinc-100/50 dark:bg-black/40 backdrop-blur-2xl border border-zinc-200 dark:border-white/10 rounded-[2rem] p-8 sm:p-10 relative overflow-hidden group hover:-translate-y-2 hover:shadow-2xl transition-all duration-500 hover:border-zinc-300 dark:hover:border-white/20"
                 >
-                  <div className="font-serif text-5xl sm:text-6xl text-foreground mb-3 leading-none">
-                    <AnimatedCounter end={metric.value} suffix={metric.suffix} prefix={metric.prefix} />
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/20 dark:from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                  <div className="relative z-10">
+                    <div className="font-serif text-6xl lg:text-7xl text-zinc-900 dark:text-white mb-6 leading-none tracking-tighter drop-shadow-sm">
+                      <AnimatedCounter end={metric.value} suffix={metric.suffix} prefix={metric.prefix} />
+                    </div>
+                    <h3 className="font-serif text-2xl text-zinc-900 dark:text-white mb-4 tracking-tight drop-shadow-sm">
+                      {metric.label}
+                    </h3>
+                    <p className="text-base text-zinc-700 dark:text-zinc-300 font-medium leading-relaxed">
+                      {metric.description}
+                    </p>
                   </div>
-                  <h3 className="font-serif text-2xl text-foreground mb-3 tracking-tight">
-                    {metric.label}
-                  </h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed max-w-[220px]">
-                    {metric.description}
-                  </p>
                 </motion.div>
               ))}
-              <div className="col-span-full border-t border-white/10" />
             </div>
           </div>
         </div>
