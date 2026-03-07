@@ -8,6 +8,7 @@ import { Problem } from './components/Problem'
 import { Industries } from './components/Industries'
 import { Process } from './components/Process'
 import { Results } from './components/Results'
+import { Portfolio } from './components/Portfolio'
 import { UrgencyCTA } from './components/UrgencyCTA'
 import { SynthiosProduct } from './components/SynthiosProduct'
 import { Contact } from './components/Contact'
@@ -104,7 +105,20 @@ export default function App() {
           <Results />
         </motion.section>
 
-        {/* 7 — Urgency CTA */}
+        {/* 7 — Portfolio: Products We've Built */}
+        <motion.section
+          id="portfolio"
+          aria-label="Products we've built"
+          variants={sectionVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ duration: 0.6 }}
+        >
+          <Portfolio />
+        </motion.section>
+
+        {/* 8 — Urgency CTA */}
         <motion.section
           aria-label="Urgency CTA"
           variants={sectionVariants}

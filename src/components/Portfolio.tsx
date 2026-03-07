@@ -1,162 +1,174 @@
 'use client'
 
-import { Brain, ShoppingCart, TrendingUp } from 'lucide-react'
+import { motion } from 'framer-motion'
+import { ArrowUpRight, Megaphone, BarChart3 } from 'lucide-react'
+
+const products = [
+  {
+    name: 'Pocket Marketer',
+    tagline: 'AI-powered marketing platform for small businesses',
+    description:
+      'A full marketing intelligence platform — campaign generation, competitor analysis, ad copy, and social content — all AI-driven. Built to give small business owners an unfair advantage over much larger competitors.',
+    url: 'https://pocketmarketer.ai',
+    urlLabel: 'pocketmarketer.ai',
+    icon: Megaphone,
+    accentColor: '#8b5cf6',
+    accentLight: 'rgba(139,92,246,0.08)',
+    accentBorder: 'rgba(139,92,246,0.2)',
+    tags: ['Marketing Automation', 'AI Content', 'Ad Intelligence'],
+    stat: { value: '$8.6k', label: 'monthly recurring revenue' },
+  },
+  {
+    name: 'DealFlow Lite',
+    tagline: 'M&A deal intelligence for acquisition professionals',
+    description:
+      'An end-to-end deal analysis platform — CIM extraction, EBITDA normalization, quality of earnings, and scoring — all AI-powered. Built for buyers who need to evaluate more deals, faster, without sacrificing rigor.',
+    url: 'https://dealflow-lite-143312280982.us-central1.run.app',
+    urlLabel: 'dealflow-lite →',
+    icon: BarChart3,
+    accentColor: '#eab308',
+    accentLight: 'rgba(234,179,8,0.08)',
+    accentBorder: 'rgba(234,179,8,0.2)',
+    tags: ['M&A Intelligence', 'Deal Scoring', 'QoE Automation'],
+    stat: { value: '36+', label: 'deals analyzed in production' },
+  },
+]
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 },
+}
+
+const stagger = {
+  visible: { transition: { staggerChildren: 0.12 } },
+}
 
 export function Portfolio() {
-  const caseStudies = [
-    {
-      icon: Brain,
-      industry: "Financial Services",
-      title: "AI Knowledge Base Chatbot",
-      challenge: "Support team overwhelmed with 500+ repetitive M&A policy questions monthly",
-      solution: "Custom AI chatbot trained on company documentation with Stripe payment integration for premium access",
-      results: [
-        "70% reduction in support tickets",
-        "24/7 instant answers for customers",
-        "$15K/month in new subscription revenue"
-      ],
-      techStack: ["OpenAI GPT-4", "Supabase", "Stripe API"],
-      color: "accent-blue",
-      bgGradient: "from-blue-500/5 to-blue-600/5"
-    },
-    {
-      icon: ShoppingCart,
-      industry: "E-commerce",
-      title: "Order Processing Automation",
-      challenge: "Manual order entry causing 20+ hours/week of work and frequent inventory sync errors",
-      solution: "End-to-end automation pipeline connecting Shopify to fulfillment center with real-time inventory sync",
-      results: [
-        "20 hours/week saved on manual entry",
-        "85% reduction in order errors",
-        "Same-day processing for 99% of orders"
-      ],
-      techStack: ["Zapier", "Shopify API", "Airtable"],
-      color: "accent-emerald",
-      bgGradient: "from-emerald-500/5 to-emerald-600/5"
-    },
-    {
-      icon: TrendingUp,
-      industry: "Real Estate",
-      title: "AI Lead Scoring System",
-      challenge: "Sales team wasting 15+ hours/week on unqualified leads, missing hot prospects",
-      solution: "AI-powered lead scoring with automated nurture sequences and priority notifications for high-intent buyers",
-      results: [
-        "150% increase in qualified leads",
-        "40% faster average closing time",
-        "3x ROI on marketing spend"
-      ],
-      techStack: ["Google Gemini AI", "HubSpot CRM", "Twilio"],
-      color: "accent-purple",
-      bgGradient: "from-purple-500/5 to-purple-600/5"
-    }
-  ]
-
   return (
-    <section id="portfolio" className="relative py-16 sm:py-24 lg:py-32 bg-background">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-        {/* Section Header */}
-        <div className="text-center mb-12 sm:mb-16 lg:mb-20">
-          <div className="inline-flex items-center gap-3 mb-4 sm:mb-6">
-            <div className="w-2 h-2 sm:w-3 sm:h-3 bg-accent-emerald rounded-full animate-pulse" />
-            <span className="text-xs sm:text-sm font-semibold text-muted-foreground">
-              AI Systems in Action
-            </span>
-            <div className="w-2 h-2 sm:w-3 sm:h-3 bg-accent-blue rounded-full animate-pulse" />
+    <section id="portfolio" className="py-24 lg:py-32 bg-background">
+      <div className="container mx-auto px-5 sm:px-8 lg:px-12">
+
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 14 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ duration: 0.55 }}
+          className="mb-16"
+        >
+          <div className="inline-flex items-center gap-2 mb-6 bg-muted border border-border px-4 py-1.5 rounded-full">
+            <span className="text-xs font-medium tracking-widest uppercase text-muted-foreground">Built by MyHorizon</span>
           </div>
-          
-          <h2 className="text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-black leading-tight mb-4 sm:mb-8">
-            <span className="block mb-2">Proven Results</span>
-          </h2>
-          
-          <p className="text-lg sm:text-xl lg:text-2xl xl:text-3xl text-muted-foreground max-w-4xl mx-auto leading-relaxed px-2">
-            See how our AI agents and intelligent workflows drive measurable business outcomes
-          </p>
-        </div>
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+            <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl text-foreground leading-tight tracking-tight max-w-xl">
+              Products we've shipped
+            </h2>
+            <p className="text-base sm:text-lg text-muted-foreground max-w-sm leading-relaxed">
+              Not mockups. Not case studies. Live platforms built on the same systems we deploy for clients.
+            </p>
+          </div>
+        </motion.div>
 
-        {/* Case Studies Grid - Stack on mobile */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-7xl mx-auto">
-          {caseStudies.map((study, index) => {
-            const Icon = study.icon
+        {/* Product Cards */}
+        <motion.div
+          variants={stagger}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          className="grid grid-cols-1 lg:grid-cols-2 gap-6"
+        >
+          {products.map((product) => {
+            const Icon = product.icon
             return (
-              <div
-                key={index}
-                className="group relative bg-card clean-border rounded-3xl overflow-hidden elevated-shadow hover:scale-105 transition-all duration-300"
+              <motion.a
+                key={product.name}
+                href={product.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                variants={fadeUp}
+                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                className="group relative rounded-[2rem] border border-border bg-card overflow-hidden hover:border-border/80 hover:-translate-y-1 hover:shadow-xl transition-all duration-500 block"
+                style={{ '--accent': product.accentColor } as React.CSSProperties}
               >
-                {/* Gradient Background */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${study.bgGradient} opacity-50`} />
-                
-                <div className="relative p-5 sm:p-6 lg:p-8">
-                  {/* Icon & Industry */}
-                  <div className="flex items-center justify-between mb-6">
-                    <div className={`w-14 h-14 rounded-2xl bg-${study.color}/10 border border-${study.color}/20 flex items-center justify-center`}>
-                      <Icon className={`w-7 h-7 text-${study.color}`} />
+                {/* Subtle accent gradient background */}
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-[2rem]"
+                  style={{ background: `radial-gradient(circle at 80% 20%, ${product.accentColor}12, transparent 60%)` }}
+                />
+
+                <div className="relative p-8 sm:p-10 lg:p-12 flex flex-col h-full">
+
+                  {/* Top row — icon + link indicator */}
+                  <div className="flex items-start justify-between mb-8">
+                    <div
+                      className="w-14 h-14 rounded-2xl flex items-center justify-center"
+                      style={{ backgroundColor: product.accentLight, border: `1px solid ${product.accentBorder}` }}
+                    >
+                      <Icon className="w-6 h-6" style={{ color: product.accentColor }} />
                     </div>
-                    <span className={`text-sm font-semibold text-${study.color} px-3 py-1 rounded-full bg-${study.color}/10`}>
-                      {study.industry}
-                    </span>
-                  </div>
-
-                  {/* Title */}
-                  <h3 className="text-2xl font-bold text-foreground mb-4">
-                    {study.title}
-                  </h3>
-
-                  {/* Challenge */}
-                  <div className="mb-4">
-                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">
-                      Challenge
-                    </p>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
-                      {study.challenge}
-                    </p>
-                  </div>
-
-                  {/* Solution */}
-                  <div className="mb-6">
-                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">
-                      Solution
-                    </p>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
-                      {study.solution}
-                    </p>
-                  </div>
-
-                  {/* Results */}
-                  <div className="mb-6">
-                    <p className="text-xs font-semibold text-foreground uppercase tracking-wide mb-3">
-                      Results
-                    </p>
-                    <ul className="space-y-2">
-                      {study.results.map((result, idx) => (
-                        <li key={idx} className="flex items-start gap-2">
-                          <div className={`w-1.5 h-1.5 rounded-full bg-${study.color} mt-1.5 flex-shrink-0`} />
-                          <span className="text-sm text-foreground font-medium">{result}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* Tech Stack */}
-                  <div className="pt-4 border-t border-border">
-                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-3">
-                      Tech Stack
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {study.techStack.map((tech, idx) => (
-                        <span key={idx} className="text-xs px-3 py-1 rounded-full bg-background border border-border">
-                          {tech}
-                        </span>
-                      ))}
+                    <div
+                      className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full opacity-60 group-hover:opacity-100 transition-opacity"
+                      style={{ backgroundColor: product.accentLight, color: product.accentColor }}
+                    >
+                      <span>{product.urlLabel}</span>
+                      <ArrowUpRight className="w-3 h-3" />
                     </div>
                   </div>
+
+                  {/* Name + tagline */}
+                  <div className="mb-6">
+                    <h3 className="font-serif text-2xl sm:text-3xl text-foreground mb-2 leading-tight">
+                      {product.name}
+                    </h3>
+                    <p className="text-sm font-medium" style={{ color: product.accentColor }}>
+                      {product.tagline}
+                    </p>
+                  </div>
+
+                  {/* Description */}
+                  <p className="text-muted-foreground text-base leading-relaxed mb-8 flex-1">
+                    {product.description}
+                  </p>
+
+                  {/* Tags */}
+                  <div className="flex flex-wrap gap-2 mb-8">
+                    {product.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="text-xs px-3 py-1 rounded-full border font-medium"
+                        style={{
+                          backgroundColor: product.accentLight,
+                          borderColor: product.accentBorder,
+                          color: product.accentColor,
+                        }}
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Stat + CTA row */}
+                  <div className="flex items-center justify-between pt-6 border-t border-border">
+                    <div>
+                      <p className="font-serif text-2xl font-semibold leading-none mb-1" style={{ color: product.accentColor }}>
+                        {product.stat.value}
+                      </p>
+                      <p className="text-xs text-muted-foreground">{product.stat.label}</p>
+                    </div>
+                    <div
+                      className="flex items-center gap-2 text-sm font-semibold group-hover:gap-3 transition-all duration-300"
+                      style={{ color: product.accentColor }}
+                    >
+                      Visit site
+                      <ArrowUpRight className="w-4 h-4" />
+                    </div>
+                  </div>
+
                 </div>
-
-                {/* Hover Effect */}
-                <div className="absolute inset-0 bg-gradient-to-t from-background/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-              </div>
+              </motion.a>
             )
           })}
-        </div>
+        </motion.div>
 
       </div>
     </section>
