@@ -16,6 +16,7 @@ export interface IndustryData {
   hook: string
   accentColor: string        // hex for inline styles
   accentColorLight: string   // light tint hex for hero bg
+  demoUrl?: string           // live demo URL (optional)
   painPoints: { title: string; description: string }[]
   solutions: { title: string; description: string }[]
   useCases: UseCase[]
@@ -578,6 +579,7 @@ export const industryData: Record<string, IndustryData> = {
       'The best deals go to the buyers who move fastest without sacrificing rigor. AI systems that automate financial extraction, normalize EBITDA, and surface risk signals let your team evaluate more opportunities — and close with confidence.',
     accentColor: '#eab308',
     accentColorLight: '#fefce8',
+    demoUrl: 'https://dealflow-lite-143312280982.us-central1.run.app',
     painPoints: [
       {
         title: 'CIM Analysis Takes Days',

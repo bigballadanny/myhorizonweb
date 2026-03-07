@@ -5,7 +5,15 @@ import { MessageCircle, X, Loader2, Mic, MicOff, Send } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { captureLead } from '@/lib/lead-capture';
 
-const AGENT_ID = 'agent_8801khq4sqbseqxa56493s1j7anz';
+const DEFAULT_AGENT_ID = 'agent_8801khq4sqbseqxa56493s1j7anz';
+
+export interface ElevenLabsWidgetProps {
+  agentId?: string;
+  accentColor?: string;
+  industryName?: string;
+  openingMessage?: string;
+  hasStickyMobileCTA?: boolean;
+}
 
 interface ChatMessage {
   role: 'user' | 'agent';
@@ -19,7 +27,19 @@ interface ConversationData {
   endTime: Date | null;
 }
 
-export function ElevenLabsWidget() {
+export function ElevenLabsWidget({
+  agentId,
+  accentColor,
+  industryName,
+  openingMessage,
+  hasStickyMobileCTA = false,
+}: ElevenLabsWidgetProps = {}) {
+  const AGENT_ID = agentId || DEFAULT_AGENT_ID;
+  const accent = accentColor || '#2563eb';
+  const displayName = industryName ? `${industryName} AI` : 'MyHorizon AI';
+  const defaultOpening = openingMessage ||
+    "Hi! I'm MyHorizon's AI consultant. I can help you understand how AI automation could work for your business. Ask me anything or tap the mic to talk!";
+
   const [isOpen, setIsOpen] = useState(false);
   const [isConnecting, setIsConnecting] = useState(false);
   const [isVoiceMode, setIsVoiceMode] = useState(false);
@@ -28,7 +48,7 @@ export function ElevenLabsWidget() {
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       role: 'agent',
-      text: "Hi! I'm MyHorizon's AI consultant. I can help you understand how AI automation could work for your business. Ask me anything or tap the mic to talk!",
+      text: defaultOpening,
       timestamp: new Date(),
     },
   ]);
@@ -268,7 +288,11 @@ export function ElevenLabsWidget() {
   const isSpeaking = conversation.isSpeaking;
 
   return (
-    <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50">
+    <div
+      className={`fixed right-4 sm:right-6 z-[110] transition-all duration-300 ${
+        hasStickyMobileCTA ? 'bottom-24 sm:bottom-6' : 'bottom-4 sm:bottom-6'
+      }`}
+    >
       {/* Chat Panel */}
       <AnimatePresence>
         {isOpen && (
@@ -280,10 +304,13 @@ export function ElevenLabsWidget() {
             className="absolute bottom-20 right-0 w-[340px] sm:w-[380px] bg-card border border-border rounded-2xl shadow-2xl overflow-hidden"
           >
             {/* Header */}
-            <div className="bg-foreground text-background px-4 py-3 flex items-center justify-between">
+            <div
+              className="text-white px-4 py-3 flex items-center justify-between"
+              style={{ background: `linear-gradient(135deg, ${accent}cc, ${accent}99)` }}
+            >
               <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                <span className="font-medium text-sm">MyHorizon AI</span>
+                <div className="w-2 h-2 rounded-full bg-white/80 animate-pulse" />
+                <span className="font-medium text-sm">{displayName}</span>
               </div>
               <div className="flex items-center gap-1">
                 {/* Voice toggle */}
@@ -438,12 +465,8 @@ export function ElevenLabsWidget() {
         onClick={() => setIsOpen(!isOpen)}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        className={`
-          relative w-14 h-14 sm:w-16 sm:h-16 rounded-full shadow-xl
-          flex items-center justify-center transition-all duration-300
-          ${isOpen ? 'bg-foreground' : 'bg-accent-blue hover:bg-accent-blue/90'}
-          focus:outline-none focus:ring-4 focus:ring-accent-blue/30
-        `}
+        className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full shadow-xl flex items-center justify-center transition-all duration-300 focus:outline-none focus:ring-4"
+        style={{ backgroundColor: isOpen ? '#18181b' : accent }}
         aria-label={isOpen ? 'Close chat' : 'Open chat'}
       >
         <AnimatePresence mode="wait">
@@ -473,7 +496,8 @@ export function ElevenLabsWidget() {
         {/* Pulse ring when closed */}
         {!isOpen && (
           <motion.div
-            className="absolute inset-0 rounded-full border-2 border-accent-blue/40"
+            className="absolute inset-0 rounded-full border-2"
+            style={{ borderColor: `${accent}60` }}
             animate={{ scale: [1, 1.4, 1], opacity: [0.6, 0, 0.6] }}
             transition={{ duration: 3, repeat: Infinity }}
           />

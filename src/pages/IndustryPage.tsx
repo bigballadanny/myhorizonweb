@@ -20,6 +20,7 @@ import {
 import { Navigation } from '@/components/Navigation'
 import { Footer } from '@/components/Footer'
 import { Button } from '@/components/ui/button'
+import { ElevenLabsWidget } from '@/components/ElevenLabsWidget'
 import { industryData } from '@/data/industryData'
 
 const iconMap: Record<string, React.ElementType> = {
@@ -81,9 +82,21 @@ export default function IndustryPage() {
       <main>
         {/* ─── HERO ─────────────────────────────────────────────────── */}
         <section
-          className="pt-32 pb-20 lg:pt-40 lg:pb-28"
+          className="relative pt-32 pb-20 lg:pt-40 lg:pb-28 overflow-hidden"
           style={{ backgroundColor: industry.accentColorLight }}
         >
+          {/* Dot-grid bg — matches main site identity */}
+          <div className="absolute inset-0 pointer-events-none"
+            style={{
+              backgroundImage: `radial-gradient(circle at 1px 1px, rgba(0,0,0,0.04) 1px, transparent 0)`,
+              backgroundSize: '40px 40px',
+            }}
+          />
+          {/* Ambient glow */}
+          <div
+            className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full blur-[120px] opacity-20 pointer-events-none"
+            style={{ backgroundColor: industry.accentColor }}
+          />
           <div className="container mx-auto px-5 sm:px-8 lg:px-12">
             {/* Back link */}
             <motion.div
@@ -163,9 +176,79 @@ export default function IndustryPage() {
                   </Button>
                 </a>
               </motion.div>
+
+              {/* Hero stat strip — mirrors main page */}
+              <motion.div
+                variants={fadeUp}
+                transition={{ duration: 0.6 }}
+                className="mt-12 pt-10 border-t border-black/10 grid grid-cols-3 gap-8 max-w-lg"
+              >
+                {industry.metrics.slice(0, 3).map((m) => (
+                  <div key={m.label}>
+                    <p className="font-serif text-2xl sm:text-3xl leading-none mb-1 font-semibold" style={{ color: industry.accentColor }}>
+                      {m.value}
+                    </p>
+                    <p className="text-xs text-foreground/40 leading-snug">{m.label}</p>
+                  </div>
+                ))}
+              </motion.div>
             </motion.div>
           </div>
         </section>
+
+        {/* ─── LIVE DEMO (conditional) ──────────────────────────────── */}
+        {industry.demoUrl && (
+          <section className="py-16 bg-background">
+            <div className="container mx-auto px-5 sm:px-8 lg:px-12">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.6 }}
+                className="rounded-2xl border border-border overflow-hidden bg-muted/30"
+              >
+                <div className="flex flex-col lg:flex-row gap-0">
+                  <div className="p-8 sm:p-12 lg:w-1/2 flex flex-col justify-center">
+                    <div
+                      className="inline-flex items-center gap-2 mb-4 px-3 py-1 rounded-full text-xs font-semibold tracking-widest uppercase w-fit"
+                      style={{ backgroundColor: `${industry.accentColor}18`, color: industry.accentColor, border: `1px solid ${industry.accentColor}30` }}
+                    >
+                      Live Platform
+                    </div>
+                    <h2 className="font-serif text-2xl sm:text-3xl text-foreground leading-tight mb-3">
+                      See the real thing in action
+                    </h2>
+                    <p className="text-muted-foreground text-base leading-relaxed mb-6 max-w-md">
+                      We built a working demo — not slides, not mockups. Experience the AI system firsthand and see exactly what your business would get.
+                    </p>
+                    <a
+                      href={industry.demoUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Button
+                        className="w-full sm:w-fit text-white px-8 py-4 rounded-xl font-semibold hover:scale-105 transition-all"
+                        style={{ backgroundColor: industry.accentColor }}
+                      >
+                        Try the Live Demo
+                        <ArrowRight className="w-4 h-4 ml-2" />
+                      </Button>
+                    </a>
+                  </div>
+                  <div
+                    className="lg:w-1/2 flex items-center justify-center p-10 min-h-[200px] relative"
+                    style={{ backgroundColor: `${industry.accentColor}08` }}
+                  >
+                    <div className="text-center">
+                      <p className="text-xs font-semibold tracking-widest uppercase mb-2" style={{ color: industry.accentColor }}>Interactive Demo</p>
+                      <p className="text-muted-foreground text-sm">No signup required</p>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </section>
+        )}
 
         {/* ─── METRICS STRIP ────────────────────────────────────────── */}
         <section className="py-14 border-y border-border bg-background">
@@ -451,6 +534,12 @@ export default function IndustryPage() {
       </main>
 
       <Footer />
+
+      <ElevenLabsWidget
+        accentColor={industry.accentColor}
+        industryName={industry.name}
+        openingMessage={`Hi! I'm the ${industry.name} AI specialist at MyHorizon. I can walk you through exactly how AI automation would work for your business. What's your biggest challenge right now?`}
+      />
     </div>
   )
 }

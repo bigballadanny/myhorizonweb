@@ -87,6 +87,7 @@ const industries: Industry[] = [
     accentColor: 'hover:border-l-4 hover:border-l-yellow-500',
     accentIconBg: 'group-hover:bg-yellow-50 group-hover:border-yellow-200 dark:group-hover:bg-yellow-950/30 dark:group-hover:border-yellow-800',
     accentText: '#eab308',
+    hasDemo: true,
   },
   {
     slug: 'financial-services',

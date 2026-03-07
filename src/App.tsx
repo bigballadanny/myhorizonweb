@@ -153,7 +153,7 @@ export default function App() {
 
       </main>
       <Footer />
-      <ElevenLabsWidget />
+      <ElevenLabsWidget hasStickyMobileCTA />
     </div>
   )
 }
