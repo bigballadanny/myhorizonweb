@@ -454,3 +454,16 @@ html::-webkit-scrollbar-thumb:hover {
   width: 0;
   height: 0;
 }
+
+/* ── Smooth scroll — no trapping, no stopping points ── */
+html {
+  scroll-behavior: smooth;
+  overscroll-behavior: none;
+}
+body {
+  overscroll-behavior: none;
+}
+*:not(html):not(body) {
+  scroll-snap-type: none !important;
+  overscroll-behavior: none;
+}

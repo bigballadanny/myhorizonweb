@@ -141,7 +141,7 @@ export function Contact() {
             <div
               id="cal-inline-consultation"
               className="w-full min-h-[580px]"
-              style={{ overflow: 'auto' }}
+              style={{ overflow: 'hidden' }}
             />
           </div>
         </div>
