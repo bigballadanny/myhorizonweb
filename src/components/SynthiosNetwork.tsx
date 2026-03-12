@@ -71,7 +71,7 @@ const included = [
   'Dedicated SYNTHIOS instance on a private server',
   'Agents configured for your specific workflows and industry',
   'Persistent memory — your context, always available',
-  'Telegram, WhatsApp, and Discord integration',
+  'Telegram integration',
   'Proactive monitoring every 5–10 minutes',
   'Self-healing scripts — issues fixed before you notice',
   'Continuous updates and capability improvements',

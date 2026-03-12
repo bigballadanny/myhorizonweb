@@ -48,7 +48,7 @@ const included = [
   'Dedicated SYNTHIOS instance on a private server',
   'Agents configured for your specific workflows and industry',
   'Persistent memory — your context, always available',
-  'Telegram, WhatsApp, and Discord integration',
+  'Telegram integration',
   'Proactive monitoring every 5–10 minutes',
   'Self-healing scripts — issues fixed before you notice',
   'Continuous updates and capability improvements',
@@ -58,7 +58,7 @@ const included = [
 const faqs = [
   {
     q: 'What exactly am I getting?',
-    a: 'A dedicated AI system built specifically for your business — configured with your workflows, connected to your messaging channels, and managed by our team. You interact with it through Telegram, WhatsApp, or Discord. It handles follow-ups, research, content, briefings, and more — 24/7.',
+    a: 'A dedicated AI system built specifically for your business — configured with your workflows, connected to your messaging channels, and managed by our team. You interact with it through Telegram. It handles follow-ups, research, content, briefings, and more — 24/7.',
   },
   {
     q: 'Do I need to buy any hardware?',

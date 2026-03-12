@@ -14,7 +14,7 @@ const capabilities = [
   {
     icon: MessageSquare,
     title: 'Works Where You Work',
-    description: 'Connect through Telegram, WhatsApp, Discord, or email. No new apps to learn, no new habit to form.',
+    description: 'Connect through Telegram. No new apps to learn, no new habit to form.',
   },
   {
     icon: Clock,
