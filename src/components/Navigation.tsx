@@ -21,10 +21,13 @@ export function Navigation() {
   }, [])
 
   const scrollToSection = (sectionId: string) => {
+    setIsMobileMenuOpen(false)
     const element = document.getElementById(sectionId)
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' })
-      setIsMobileMenuOpen(false)
+    } else {
+      // Not on homepage — navigate there and scroll after load
+      navigate(`/#${sectionId}`)
     }
   }
 
@@ -42,7 +45,11 @@ export function Navigation() {
       clickCountRef.current = 0
     }, 3000)
 
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    if (window.location.pathname === '/') {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    } else {
+      navigate('/')
+    }
   }
 
   const navLinks = [
