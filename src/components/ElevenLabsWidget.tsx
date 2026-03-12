@@ -121,19 +121,7 @@ export function ElevenLabsWidget({
     }
   }, [isOpen, isVoiceMode]);
 
-  // Reposition widget when keyboard opens on mobile (iOS visualViewport)
-  const [keyboardOffset, setKeyboardOffset] = useState(0);
-  useEffect(() => {
-    const vv = window.visualViewport;
-    if (!vv) return;
-    const handler = () => {
-      const hidden = window.innerHeight - vv.height - vv.offsetTop;
-      setKeyboardOffset(hidden > 50 ? hidden : 0);
-    };
-    vv.addEventListener('resize', handler);
-    vv.addEventListener('scroll', handler);
-    return () => { vv.removeEventListener('resize', handler); vv.removeEventListener('scroll', handler); };
-  }, []);
+
 
   // Hide tooltip
   useEffect(() => {
@@ -306,7 +294,7 @@ export function ElevenLabsWidget({
       className={`fixed right-4 sm:right-6 z-[110] transition-all duration-300 ${
         hasStickyMobileCTA ? 'bottom-24 sm:bottom-6' : 'bottom-4 sm:bottom-6'
       }`}
-      style={{ transform: keyboardOffset > 0 ? `translateY(-${keyboardOffset}px)` : undefined }}
+
     >
       {/* Chat Panel */}
       <AnimatePresence>
@@ -317,7 +305,7 @@ export function ElevenLabsWidget({
             exit={{ opacity: 0, y: 20, scale: 0.9 }}
             transition={{ type: 'spring', stiffness: 300, damping: 25 }}
             className="absolute bottom-20 right-0 w-[340px] sm:w-[380px] bg-card border border-border rounded-2xl shadow-2xl overflow-hidden"
-            style={{ maxHeight: 'calc(100dvh - 120px)', display: 'flex', flexDirection: 'column' }}
+            style={{ maxHeight: 'min(560px, calc(100svh - 140px))' }}
           >
             {/* Header */}
             <div
@@ -385,7 +373,7 @@ export function ElevenLabsWidget({
             </AnimatePresence>
 
             {/* Messages */}
-            <div className="h-[320px] overflow-hidden p-4 space-y-3 flex-shrink" style={{minHeight: '80px'}}>
+            <div className="h-[260px] overflow-y-auto p-4 space-y-3" style={{scrollbarWidth:'none'}}>
               {messages.map((msg, i) => (
                 <div
                   key={i}
