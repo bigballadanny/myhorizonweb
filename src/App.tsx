@@ -43,9 +43,9 @@ export default function App() {
   }, [location])
 
   return (
-    <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+    <div className="min-h-screen bg-background text-foreground">
       <Navigation />
-      <main className="relative overflow-x-hidden" role="main">
+      <main className="relative" role="main">
 
         {/* 1 — Hero */}
         <section id="hero" aria-label="Hero section">

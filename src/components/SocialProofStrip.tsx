@@ -13,7 +13,7 @@ const partners = [
 
 export function SocialProofStrip() {
   return (
-    <section className="relative py-8 bg-muted/30 border-y border-border overflow-hidden">
+    <section className="relative py-8 bg-muted/30 border-y border-border">
       <div className="container mx-auto px-6">
         <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-12">
           <span className="text-sm font-medium text-muted-foreground whitespace-nowrap">

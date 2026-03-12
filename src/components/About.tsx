@@ -35,7 +35,7 @@ export function About() {
   ]
 
   return (
-    <section id="about" className="relative py-16 sm:py-24 bg-background overflow-hidden">
+    <section id="about" className="relative py-16 sm:py-24 bg-background">
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
         

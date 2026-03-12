@@ -304,8 +304,9 @@ export function ElevenLabsWidget({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.9 }}
             transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-            className="absolute bottom-20 right-0 w-[340px] sm:w-[380px] bg-card border border-border rounded-2xl shadow-2xl overflow-hidden"
-            style={{ maxHeight: 'min(560px, calc(100svh - 140px))' }}
+            className="fixed inset-0 sm:absolute sm:inset-auto sm:bottom-20 sm:right-0 sm:w-[380px] sm:rounded-2xl bg-card border-0 sm:border sm:border-border shadow-2xl overflow-hidden z-[120] flex flex-col"
+            style={{ maxHeight: 'none', height: '100%' }}
+            id="chat-panel"
           >
             {/* Header */}
             <div
@@ -373,7 +374,7 @@ export function ElevenLabsWidget({
             </AnimatePresence>
 
             {/* Messages */}
-            <div className="h-[260px] overflow-y-auto p-4 space-y-3" style={{scrollbarWidth:'none'}}>
+            <div className="flex-1 min-h-0 overflow-y-auto p-4 space-y-3" style={{scrollbarWidth:'none'}}>
               {messages.map((msg, i) => (
                 <div
                   key={i}

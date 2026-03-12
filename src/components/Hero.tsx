@@ -18,7 +18,7 @@ export function Hero() {
   }
 
   return (
-    <div className="relative min-h-screen w-full bg-background flex items-center overflow-hidden">
+    <div className="relative min-h-screen w-full bg-background flex items-center">
       {/* Animated gradient mesh — subtle Stripe-style depth */}
       <div className="hero-gradient-mesh" />
 

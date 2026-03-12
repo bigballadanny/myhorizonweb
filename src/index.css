@@ -455,9 +455,18 @@ html::-webkit-scrollbar-thumb:hover {
   height: 0;
 }
 
-/* ── Smooth scroll — no trapping, no stopping points ── */
+/* ── Chat widget: full-screen on mobile, bounded on desktop ── */
+@media (min-width: 640px) {
+  #chat-panel {
+    max-height: min(560px, calc(100svh - 140px)) !important;
+    height: auto !important;
+  }
+}
+
+/* ── Smooth scroll — single scroll context, no trapping ── */
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 *:not(html):not(body) {
   scroll-snap-type: none !important;
