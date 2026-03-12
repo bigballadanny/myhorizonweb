@@ -127,21 +127,21 @@ export function Navigation() {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden mt-6 pb-6 space-y-1 border-t border-border pt-6">
+          <div className="md:hidden fixed inset-0 top-[72px] z-40 bg-background border-t border-border flex flex-col px-6 py-8 space-y-2 overflow-y-auto">
             {navLinks.map((link) => (
               <button
                 key={link.id}
                 onClick={() => scrollToSection(link.id)}
-                className="block w-full text-left text-base font-medium text-muted-foreground hover:text-foreground transition-colors py-3"
+                className="block w-full text-left text-lg font-medium text-foreground hover:text-accent-blue transition-colors py-4 border-b border-border/40"
               >
                 {link.label}
               </button>
             ))}
-            <div className="pt-4">
+            <div className="pt-6">
               <Button
                 onClick={handleGetStarted}
                 size="lg"
-                className="w-full bg-accent-blue hover:bg-accent-blue/90 text-white rounded-xl"
+                className="w-full bg-accent-blue hover:bg-accent-blue/90 text-white rounded-xl py-6 text-base"
               >
                 Get Started
               </Button>
