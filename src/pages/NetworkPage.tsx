@@ -183,50 +183,98 @@ export default function NetworkPage() {
               transition={{ duration: 0.6, delay: 0.15 }}
               className="lg:col-span-2 sticky top-24"
             >
-              <div className="bg-zinc-900 dark:bg-black border border-white/10 rounded-[2rem] p-8">
-
-                <p className="text-xs font-medium tracking-widest uppercase text-zinc-500 mb-6">SYNTHIOS Network</p>
-
-                {/* Setup */}
-                <div className="mb-5 pb-5 border-b border-white/10">
-                  <p className="text-zinc-500 text-xs uppercase tracking-widest mb-2">One-time setup</p>
-                  <span className="text-5xl font-bold text-white">$1,500</span>
-                  <p className="text-zinc-500 text-sm mt-1">We configure and deploy everything. Live in 48 hours.</p>
-                </div>
-
-                {/* Monthly */}
-                <div className="mb-8">
-                  <p className="text-zinc-500 text-xs uppercase tracking-widest mb-2">Then monthly</p>
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-4xl font-bold text-white">$400</span>
-                    <span className="text-zinc-400 text-sm">/month</span>
-                  </div>
-                  <p className="text-zinc-500 text-sm mt-1">Monitoring, updates, support — all in.</p>
-                </div>
-
-                {/* Trust */}
-                <div className="space-y-3 mb-8">
-                  {[
-                    { icon: Shield, text: 'Private server — your data stays yours' },
-                    { icon: RefreshCw, text: 'Cancel anytime after 30 days' },
-                    { icon: Clock, text: 'Live within 48 hours of setup' },
-                    { icon: Sparkles, text: 'Continuously updated, no effort required' },
-                  ].map(({ icon: Icon, text }) => (
-                    <div key={text} className="flex items-center gap-3">
-                      <Icon className="w-4 h-4 text-zinc-500 flex-shrink-0" />
-                      <span className="text-zinc-400 text-sm">{text}</span>
-                    </div>
-                  ))}
-                </div>
-
-                <a href={STRIPE_PAYMENT_LINK} target="_blank" rel="noopener noreferrer" className="block mb-4">
-                  <Button size="lg" className="w-full bg-white text-black hover:bg-zinc-100 hover:scale-[1.02] transition-all duration-300 py-6 rounded-full text-base font-semibold shadow-[0_0_40px_-10px_rgba(255,255,255,0.2)]">
-                    Get Started
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </Button>
-                </a>
-                <p className="text-zinc-600 text-xs text-center">Secured by Stripe. Apple Pay, card, and more accepted.</p>
+              {/* Split toggle */}
+              <div className="flex items-center justify-between mb-4 px-1">
+                <span className="text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-widest">Split between 2 companies?</span>
+                <button
+                  onClick={() => setSplitPayment(!splitPayment)}
+                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 focus:outline-none ${splitPayment ? 'bg-white' : 'bg-zinc-700'}`}
+                >
+                  <span className={`inline-block h-4 w-4 transform rounded-full transition-transform duration-200 ${splitPayment ? 'translate-x-6 bg-black' : 'translate-x-1 bg-zinc-400'}`} />
+                </button>
               </div>
+
+              {!splitPayment ? (
+                <div className="bg-zinc-900 dark:bg-black border border-white/10 rounded-[2rem] p-8">
+                  <p className="text-xs font-medium tracking-widest uppercase text-zinc-500 mb-6">SYNTHIOS Network</p>
+                  <div className="mb-5 pb-5 border-b border-white/10">
+                    <p className="text-zinc-500 text-xs uppercase tracking-widest mb-2">One-time setup</p>
+                    <span className="text-5xl font-bold text-white">$1,500</span>
+                    <p className="text-zinc-500 text-sm mt-1">We configure and deploy everything. Live in 48 hours.</p>
+                  </div>
+                  <div className="mb-8">
+                    <p className="text-zinc-500 text-xs uppercase tracking-widest mb-2">Then monthly</p>
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-4xl font-bold text-white">$400</span>
+                      <span className="text-zinc-400 text-sm">/month</span>
+                    </div>
+                    <p className="text-zinc-500 text-sm mt-1">Monitoring, updates, support — all in.</p>
+                  </div>
+                  <div className="space-y-3 mb-8">
+                    {[
+                      { icon: Shield, text: 'Private server — your data stays yours' },
+                      { icon: RefreshCw, text: 'Cancel anytime after 30 days' },
+                      { icon: Clock, text: 'Live within 48 hours of setup' },
+                      { icon: Sparkles, text: 'Continuously updated, no effort required' },
+                    ].map(({ icon: Icon, text }) => (
+                      <div key={text} className="flex items-center gap-3">
+                        <Icon className="w-4 h-4 text-zinc-500 flex-shrink-0" />
+                        <span className="text-zinc-400 text-sm">{text}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <a href={STRIPE_PAYMENT_LINK} target="_blank" rel="noopener noreferrer" className="block mb-4">
+                    <Button size="lg" className="w-full bg-white text-black hover:bg-zinc-100 hover:scale-[1.02] transition-all duration-300 py-6 rounded-full text-base font-semibold shadow-[0_0_40px_-10px_rgba(255,255,255,0.2)]">
+                      Get Started
+                      <ArrowRight className="w-4 h-4 ml-2" />
+                    </Button>
+                  </a>
+                  <p className="text-zinc-600 text-xs text-center">Secured by Stripe. Apple Pay, card, and more accepted.</p>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  <p className="text-xs text-zinc-500 px-1 mb-2">Each company completes their own secure checkout. Service activates when both are paid.</p>
+                  {/* Company A */}
+                  <div className="bg-zinc-900 dark:bg-black border border-white/10 rounded-2xl p-6">
+                    <div className="flex items-center justify-between mb-3">
+                      <p className="text-xs font-medium tracking-widest uppercase text-zinc-500">Company A</p>
+                      <span className="text-xs bg-white/5 border border-white/10 text-zinc-400 rounded-full px-3 py-1">Setup only</span>
+                    </div>
+                    <div className="mb-3">
+                      <span className="text-4xl font-bold text-white">$750</span>
+                      <span className="text-zinc-500 text-sm ml-2">one-time</span>
+                    </div>
+                    <p className="text-zinc-500 text-sm mb-5">Your share of the setup fee. One payment, no recurring charges.</p>
+                    <a href={STRIPE_SPLIT_A} target="_blank" rel="noopener noreferrer" className="block">
+                      <Button size="lg" className="w-full bg-white text-black hover:bg-zinc-100 hover:scale-[1.02] transition-all duration-300 py-5 rounded-full text-sm font-semibold">
+                        Pay Company A Share <ArrowRight className="w-4 h-4 ml-2" />
+                      </Button>
+                    </a>
+                  </div>
+                  {/* Company B */}
+                  <div className="bg-zinc-900 dark:bg-black border border-zinc-600 rounded-2xl p-6">
+                    <div className="flex items-center justify-between mb-3">
+                      <p className="text-xs font-medium tracking-widest uppercase text-zinc-500">Company B</p>
+                      <span className="text-xs bg-zinc-700 text-zinc-300 rounded-full px-3 py-1 font-medium">Activates service</span>
+                    </div>
+                    <div className="mb-1">
+                      <span className="text-4xl font-bold text-white">$750</span>
+                      <span className="text-zinc-500 text-sm ml-2">setup</span>
+                    </div>
+                    <div className="flex items-baseline gap-1 mb-3">
+                      <span className="text-2xl font-bold text-zinc-400">+ $400</span>
+                      <span className="text-zinc-500 text-sm">/month</span>
+                    </div>
+                    <p className="text-zinc-500 text-sm mb-5">Setup share + monthly subscription. Service goes live the moment this is paid.</p>
+                    <a href={STRIPE_SPLIT_B} target="_blank" rel="noopener noreferrer" className="block">
+                      <Button size="lg" className="w-full bg-white text-black hover:bg-zinc-100 hover:scale-[1.02] transition-all duration-300 py-5 rounded-full text-sm font-semibold">
+                        Pay Company B Share + Start <ArrowRight className="w-4 h-4 ml-2" />
+                      </Button>
+                    </a>
+                  </div>
+                  <p className="text-zinc-600 text-xs text-center pt-1">Both checkouts secured by Stripe. Separate invoices per company.</p>
+                </div>
+              )}
             </motion.div>
 
           </div>
