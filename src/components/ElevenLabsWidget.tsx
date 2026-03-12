@@ -54,8 +54,10 @@ export function ElevenLabsWidget({
   ]);
   const [inputText, setInputText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [viewportHeight, setViewportHeight] = useState<number | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const chatPanelRef = useRef<HTMLDivElement>(null);
   const conversationDataRef = useRef<ConversationData>({
     transcripts: [],
     startTime: null,
@@ -122,6 +124,32 @@ export function ElevenLabsWidget({
   }, [isOpen, isVoiceMode]);
 
 
+
+  // Handle mobile keyboard — adjust chat panel height via visualViewport
+  useEffect(() => {
+    if (!isOpen) return;
+    const vv = window.visualViewport;
+    if (!vv) return;
+
+    const onResize = () => {
+      setViewportHeight(vv.height);
+      // Scroll input into view when keyboard opens
+      setTimeout(() => {
+        inputRef.current?.scrollIntoView({ block: 'nearest' });
+        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    };
+
+    vv.addEventListener('resize', onResize);
+    vv.addEventListener('scroll', onResize);
+    onResize(); // set initial
+
+    return () => {
+      vv.removeEventListener('resize', onResize);
+      vv.removeEventListener('scroll', onResize);
+      setViewportHeight(null);
+    };
+  }, [isOpen]);
 
   // Hide tooltip
   useEffect(() => {
@@ -304,8 +332,13 @@ export function ElevenLabsWidget({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.9 }}
             transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-            className="fixed inset-0 sm:absolute sm:inset-auto sm:bottom-20 sm:right-0 sm:w-[380px] sm:rounded-2xl bg-card border-0 sm:border sm:border-border shadow-2xl overflow-hidden z-[120] flex flex-col"
-            style={{ maxHeight: 'none', height: '100%' }}
+            ref={chatPanelRef}
+            className="fixed inset-x-0 top-0 sm:absolute sm:inset-auto sm:bottom-20 sm:right-0 sm:w-[380px] sm:rounded-2xl bg-card border-0 sm:border sm:border-border shadow-2xl overflow-hidden z-[120] flex flex-col"
+            style={{
+              height: viewportHeight ? `${viewportHeight}px` : '100%',
+              maxHeight: viewportHeight ? `${viewportHeight}px` : '100dvh',
+              bottom: 'auto',
+            }}
             id="chat-panel"
           >
             {/* Header */}
