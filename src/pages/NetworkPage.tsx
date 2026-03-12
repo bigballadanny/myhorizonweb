@@ -11,6 +11,8 @@ import { Footer } from '@/components/Footer'
 import { useState } from 'react'
 
 const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/eVq6oH57a6pjgctenx63K03?success_url=https%3A%2F%2Fmyhorizon.ai%2Fwelcome'
+const STRIPE_SPLIT_A = 'https://buy.stripe.com/9B614n9nq14Z6BT5R163K04'
+const STRIPE_SPLIT_B = 'https://buy.stripe.com/aFaaEX0QU8xraS9frB63K06'
 
 const pillars = [
   {
@@ -108,6 +110,7 @@ const fadeUp = {
 }
 
 export default function NetworkPage() {
+  const [splitPayment, setSplitPayment] = useState(false)
   return (
     <div className="min-h-screen bg-white dark:bg-[#080808] text-foreground">
 
