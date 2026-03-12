@@ -44,11 +44,13 @@ export function Footer() {
           {/* Brand */}
           <div className="max-w-xs">
             <div className="flex items-center gap-3 mb-4">
-              <img
-                src={logoIcon}
-                alt="MyHorizon Logo"
-                className="w-10 h-10 rounded-full object-cover"
-              />
+              <div className="w-10 h-10 rounded-full bg-white shrink-0 flex items-center justify-center overflow-hidden shadow-sm">
+                <img
+                  src={logoIcon}
+                  alt="MyHorizon Logo"
+                  className="w-full h-full object-contain p-0.5"
+                />
+              </div>
               <span className="font-bold text-white text-xl">MyHorizon</span>
             </div>
             <p className="text-white/50 text-sm leading-relaxed">

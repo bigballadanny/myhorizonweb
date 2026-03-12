@@ -63,3 +63,16 @@
 - Framer Motion `whileInView` with `initial: { opacity: 0 }` causes invisible sections if viewport threshold is too high. Fix: `amount: 0.1` (not `margin: '-100px'` which can misfire on short viewports).
 - Doubling items for marquee must be inside a single flex container that runs `translateX(-50%)` — putting two separate `animate-marquee` divs doesn't work.
 - `py-32`/`py-40` on every section compounds to enormous vertical height. `py-20` is the max for a premium consulting feel.
+
+---
+## Technical Notes (from TOOLS.md — 2026-03-12)
+
+- **Stack**: Lovable-built Vite + React + shadcn
+- **Supabase project**: `ewlvyssrckqdyuxxwxiv`
+- **Cal.com bookings**: `myhorizon/consultation`, `myhorizon/business-integration`, `myhorizon/synthios-box`
+- **ElevenLabs Agent**: `agent_8801khq4sqbseqxa56493s1j7anz` ("MyHorizon AI Consultant") — voice ID `cjVigY5qzO86Huf0OWal`
+  - ⚠️ Old agent `agent_3701k6bjf9q2e5wsc1y94xbg2r3g` is **orphaned/nonexistent** — do not use
+- **Design Aesthetics**: Instrument Serif + DM Sans, warm off-white #FAFAF7, asymmetric layouts (NO card grids, NO glow blobs)
+- **Hosting**: Vercel (`myhorizon` project, `prj_tRXAAsqkXrVhsPzV28cnVsLfqAs4`) under `bigballadannys-projects`
+- **Deploy**: `npx vercel --prod` from `~/clawd/projects/myhorizonweb`
+- **⚠️ Lovable is dead**: DNS no longer points there — do NOT edit Lovable expecting it to affect live site

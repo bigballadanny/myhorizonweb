@@ -11,6 +11,7 @@ import Admin from "./pages/Admin.tsx";
 import Auth from "./pages/Auth.tsx";
 import IndustryPage from "./pages/IndustryPage.tsx";
 import NetworkPage from "./pages/NetworkPage.tsx";
+import { ScrollProgress } from "./components/ScrollProgress.tsx";
 import "./index.css";
 
 createRoot(document.getElementById("root")!).render(
@@ -18,6 +19,7 @@ createRoot(document.getElementById("root")!).render(
     <ThemeProvider>
       <TooltipProvider>
         <BrowserRouter>
+          <ScrollProgress />
           <Routes>
             <Route path="/" element={<App />} />
             <Route path="/auth" element={<Auth />} />

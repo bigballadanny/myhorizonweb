@@ -369,7 +369,7 @@ export function ElevenLabsWidget({
             </AnimatePresence>
 
             {/* Messages */}
-            <div className="h-[320px] overflow-y-auto p-4 space-y-3">
+            <div className="h-[320px] overflow-y-scroll scrollbar-none p-4 space-y-3" style={{scrollbarWidth:'none', msOverflowStyle:'none'}}>
               {messages.map((msg, i) => (
                 <div
                   key={i}
