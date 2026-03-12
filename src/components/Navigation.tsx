@@ -69,13 +69,11 @@ export function Navigation() {
             onClick={handleLogoClick}
             className="flex items-center gap-2.5 hover:opacity-80 transition-opacity select-none shrink-0 min-w-max"
           >
-            <div className="w-9 h-9 rounded-full overflow-hidden shrink-0 shadow-sm">
-              <img
-                src={logoIcon}
-                alt="MyHorizon Logo"
-                className="w-full h-full object-cover"
-              />
-            </div>
+            <img
+              src={logoIcon}
+              alt="MyHorizon Logo"
+              className="w-10 h-10 rounded-full shrink-0"
+            />
             <span className="text-lg font-bold text-foreground whitespace-nowrap" style={{ fontFamily: "'DM Sans', system-ui, sans-serif" }}>
               MyHorizon
             </span>
