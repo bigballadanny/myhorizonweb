@@ -52,6 +52,10 @@ export function Navigation() {
     { label: 'Contact', id: 'contact' },
   ]
 
+  const handleGetStarted = () => {
+    navigate('/network')
+  }
+
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -63,14 +67,16 @@ export function Navigation() {
           {/* Logo */}
           <button
             onClick={handleLogoClick}
-            className="flex items-center gap-3 hover:opacity-75 transition-opacity select-none"
+            className="flex items-center gap-3 hover:opacity-75 transition-opacity select-none shrink-0"
           >
-            <img
-              src={logoIcon}
-              alt="MyHorizon Logo"
-              className="w-10 h-10 rounded-full object-cover"
-            />
-            <span className="text-xl font-bold text-foreground" style={{ fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+            <div className="w-10 h-10 rounded-full overflow-hidden bg-white flex items-center justify-center">
+              <img
+                src={logoIcon}
+                alt="MyHorizon Logo"
+                className="w-full h-full object-cover scale-[1.35]"
+              />
+            </div>
+            <span className="text-xl font-bold text-foreground whitespace-nowrap" style={{ fontFamily: "'DM Sans', system-ui, sans-serif" }}>
               MyHorizon
             </span>
           </button>
@@ -90,11 +96,11 @@ export function Navigation() {
             <ThemeToggle />
 
             <Button
-              onClick={() => scrollToSection('contact')}
+              onClick={handleGetStarted}
               size="sm"
               className="ml-2 bg-accent-blue hover:bg-accent-blue/90 text-white px-5 py-2 rounded-lg text-sm"
             >
-              Book a Free Call
+              Get Started
             </Button>
           </div>
 
@@ -127,11 +133,11 @@ export function Navigation() {
             ))}
             <div className="pt-4">
               <Button
-                onClick={() => scrollToSection('contact')}
+                onClick={handleGetStarted}
                 size="lg"
                 className="w-full bg-accent-blue hover:bg-accent-blue/90 text-white rounded-xl"
               >
-                Book a Free Call
+                Get Started
               </Button>
             </div>
           </div>
