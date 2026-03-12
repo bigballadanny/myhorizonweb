@@ -1,13 +1,13 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
 import {
   Check, ArrowRight, Zap, Shield, RefreshCw,
-  Clock, X, Brain, Sparkles, ChevronDown, ArrowLeft,
+  Clock, X, Brain, Sparkles, ChevronDown,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Footer } from '@/components/Footer'
+import { Navigation } from '@/components/Navigation'
 import { useState } from 'react'
 
 const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/eVq6oH57a6pjgctenx63K03?success_url=https%3A%2F%2Fmyhorizon.ai%2Fwelcome'
@@ -114,26 +114,12 @@ export default function NetworkPage() {
   return (
     <div className="min-h-screen bg-white dark:bg-[#080808] text-foreground">
 
-      {/* Sticky header */}
-      <header className="sticky top-0 z-50 border-b border-zinc-100 dark:border-white/5 bg-white/80 dark:bg-[#080808]/80 backdrop-blur-md">
-        <div className="container mx-auto px-6 sm:px-8 lg:px-12 h-16 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2 text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors text-sm">
-            <ArrowLeft className="w-4 h-4" />
-            <span>myhorizon.ai</span>
-          </Link>
-          <span className="font-serif text-base text-zinc-900 dark:text-white hidden sm:block">SYNTHIOS Network</span>
-          <a href={STRIPE_PAYMENT_LINK} target="_blank" rel="noopener noreferrer">
-            <Button size="sm" className="bg-zinc-900 text-white hover:bg-zinc-700 dark:bg-white dark:text-black dark:hover:bg-zinc-200 rounded-full px-5 text-sm font-semibold">
-              Get Started →
-            </Button>
-          </a>
-        </div>
-      </header>
+      <Navigation />
 
-      <main>
+      <main className="pt-20">
 
         {/* ── Hero + pricing above the fold ── */}
-        <section className="container mx-auto px-6 sm:px-8 lg:px-12 max-w-6xl pt-20 pb-24">
+        <section className="container mx-auto px-6 sm:px-8 lg:px-12 max-w-6xl pt-10 pb-24">
           <div className="grid lg:grid-cols-5 gap-12 items-start">
 
             {/* Left — hero copy */}
