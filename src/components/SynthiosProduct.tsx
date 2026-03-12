@@ -171,7 +171,7 @@ export function SynthiosProduct() {
             size="lg"
             variant="outline"
             className="border-border hover:bg-card px-8 py-6 rounded-xl"
-            onClick={() => window.open('https://synthios.myhorizon.ai', '_blank')}
+            onClick={() => window.location.href = '/network'}
           >
             Learn More
           </Button>

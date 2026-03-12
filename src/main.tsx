@@ -10,6 +10,7 @@ import App from "./App.tsx";
 import Admin from "./pages/Admin.tsx";
 import Auth from "./pages/Auth.tsx";
 import IndustryPage from "./pages/IndustryPage.tsx";
+import NetworkPage from "./pages/NetworkPage.tsx";
 import "./index.css";
 
 createRoot(document.getElementById("root")!).render(
@@ -22,6 +23,7 @@ createRoot(document.getElementById("root")!).render(
             <Route path="/auth" element={<Auth />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="/industry/:slug" element={<IndustryPage />} />
+            <Route path="/network" element={<NetworkPage />} />
           </Routes>
           <Toaster />
           <Sonner />
