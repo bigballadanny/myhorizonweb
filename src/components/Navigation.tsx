@@ -61,6 +61,7 @@ export function Navigation() {
 
   const handleGetStarted = () => {
     navigate('/network')
+    window.scrollTo({ top: 0, behavior: 'instant' })
   }
 
   return (

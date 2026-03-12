@@ -8,6 +8,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { Footer } from '@/components/Footer'
 import { Navigation } from '@/components/Navigation'
+import { useEffect } from 'react'
 import { useState } from 'react'
 
 const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/eVq6oH57a6pjgctenx63K03?success_url=https%3A%2F%2Fmyhorizon.ai%2Fwelcome'
@@ -111,6 +112,7 @@ const fadeUp = {
 
 export default function NetworkPage() {
   const [splitPayment, setSplitPayment] = useState(false)
+  useEffect(() => { window.scrollTo({ top: 0, behavior: 'instant' }) }, [])
   return (
     <div className="min-h-screen bg-white dark:bg-[#080808] text-foreground">
 
