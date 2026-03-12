@@ -43,9 +43,9 @@ export default function App() {
   }, [location])
 
   return (
-    <div className="min-h-screen bg-background text-foreground" style={{ overflow: 'visible' }}>
+    <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <Navigation />
-      <main className="relative" role="main" style={{ overflow: 'visible' }}>
+      <main className="relative overflow-x-hidden" role="main">
 
         {/* 1 — Hero */}
         <section id="hero" aria-label="Hero section">

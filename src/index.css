@@ -425,21 +425,32 @@ html {
   50% { transform: translateY(-4px); }
 }
 
-/* ── Scrollbar ── */
-::-webkit-scrollbar {
+/* ── Scrollbar: main page only ── */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #2563eb transparent;
+}
+html::-webkit-scrollbar {
   width: 5px;
 }
-::-webkit-scrollbar-track {
+html::-webkit-scrollbar-track {
   background: transparent;
 }
-::-webkit-scrollbar-thumb {
+html::-webkit-scrollbar-thumb {
   background: #2563eb;
   border-radius: 4px;
 }
-::-webkit-scrollbar-thumb:hover {
+html::-webkit-scrollbar-thumb:hover {
   background: #1d4ed8;
 }
-* {
-  scrollbar-width: thin;
-  scrollbar-color: #2563eb transparent;
+
+/* Hide scrollbars on every inner element */
+*:not(html) {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+*:not(html)::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
 }
