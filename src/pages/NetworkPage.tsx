@@ -183,14 +183,19 @@ export default function NetworkPage() {
               transition={{ duration: 0.6, delay: 0.15 }}
               className="lg:col-span-2 sticky top-24"
             >
-              {/* Split toggle */}
-              <div className="flex items-center justify-between mb-4 px-1">
-                <span className="text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-widest">Split between 2 companies?</span>
+              {/* Payment type selector */}
+              <div className="flex gap-2 mb-5 bg-zinc-800/60 p-1 rounded-full">
                 <button
-                  onClick={() => setSplitPayment(!splitPayment)}
-                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 focus:outline-none ${splitPayment ? 'bg-white' : 'bg-zinc-700'}`}
+                  onClick={() => setSplitPayment(false)}
+                  className={`flex-1 text-xs font-semibold py-2 px-4 rounded-full transition-all duration-200 ${!splitPayment ? 'bg-white text-black shadow' : 'text-zinc-400 hover:text-zinc-200'}`}
                 >
-                  <span className={`inline-block h-4 w-4 transform rounded-full transition-transform duration-200 ${splitPayment ? 'translate-x-6 bg-black' : 'translate-x-1 bg-zinc-400'}`} />
+                  Single company
+                </button>
+                <button
+                  onClick={() => setSplitPayment(true)}
+                  className={`flex-1 text-xs font-semibold py-2 px-4 rounded-full transition-all duration-200 ${splitPayment ? 'bg-white text-black shadow' : 'text-zinc-400 hover:text-zinc-200'}`}
+                >
+                  Split between 2
                 </button>
               </div>
 
