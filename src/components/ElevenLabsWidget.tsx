@@ -121,6 +121,20 @@ export function ElevenLabsWidget({
     }
   }, [isOpen, isVoiceMode]);
 
+  // Reposition widget when keyboard opens on mobile (iOS visualViewport)
+  const [keyboardOffset, setKeyboardOffset] = useState(0);
+  useEffect(() => {
+    const vv = window.visualViewport;
+    if (!vv) return;
+    const handler = () => {
+      const hidden = window.innerHeight - vv.height - vv.offsetTop;
+      setKeyboardOffset(hidden > 50 ? hidden : 0);
+    };
+    vv.addEventListener('resize', handler);
+    vv.addEventListener('scroll', handler);
+    return () => { vv.removeEventListener('resize', handler); vv.removeEventListener('scroll', handler); };
+  }, []);
+
   // Hide tooltip
   useEffect(() => {
     const timer = setTimeout(() => setShowTooltip(false), 5000);
@@ -292,6 +306,7 @@ export function ElevenLabsWidget({
       className={`fixed right-4 sm:right-6 z-[110] transition-all duration-300 ${
         hasStickyMobileCTA ? 'bottom-24 sm:bottom-6' : 'bottom-4 sm:bottom-6'
       }`}
+      style={{ transform: keyboardOffset > 0 ? `translateY(-${keyboardOffset}px)` : undefined }}
     >
       {/* Chat Panel */}
       <AnimatePresence>
