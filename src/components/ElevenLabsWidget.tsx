@@ -302,6 +302,7 @@ export function ElevenLabsWidget({
             exit={{ opacity: 0, y: 20, scale: 0.9 }}
             transition={{ type: 'spring', stiffness: 300, damping: 25 }}
             className="absolute bottom-20 right-0 w-[340px] sm:w-[380px] bg-card border border-border rounded-2xl shadow-2xl overflow-hidden"
+            style={{ maxHeight: 'calc(100dvh - 120px)', display: 'flex', flexDirection: 'column' }}
           >
             {/* Header */}
             <div
@@ -369,7 +370,7 @@ export function ElevenLabsWidget({
             </AnimatePresence>
 
             {/* Messages */}
-            <div className="h-[320px] overflow-hidden p-4 space-y-3">
+            <div className="h-[320px] overflow-hidden p-4 space-y-3 flex-shrink" style={{minHeight: '80px'}}>
               {messages.map((msg, i) => (
                 <div
                   key={i}
