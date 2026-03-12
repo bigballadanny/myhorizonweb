@@ -63,20 +63,18 @@ export function Navigation() {
       }`}
     >
       <div className="container mx-auto px-6 sm:px-8 lg:px-12">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between gap-6">
           {/* Logo */}
           <button
             onClick={handleLogoClick}
-            className="flex items-center gap-3 hover:opacity-75 transition-opacity select-none shrink-0"
+            className="flex items-center gap-2.5 hover:opacity-80 transition-opacity select-none shrink-0 min-w-max"
           >
-            <div className="w-10 h-10 rounded-full overflow-hidden bg-white flex items-center justify-center">
-              <img
-                src={logoIcon}
-                alt="MyHorizon Logo"
-                className="w-full h-full object-cover scale-[1.35]"
-              />
-            </div>
-            <span className="text-xl font-bold text-foreground whitespace-nowrap" style={{ fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+            <img
+              src={logoIcon}
+              alt="MyHorizon Logo"
+              className="w-9 h-9 rounded-full object-contain"
+            />
+            <span className="text-lg font-bold text-foreground whitespace-nowrap" style={{ fontFamily: "'DM Sans', system-ui, sans-serif" }}>
               MyHorizon
             </span>
           </button>
