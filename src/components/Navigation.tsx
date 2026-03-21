@@ -127,7 +127,7 @@ export function Navigation() {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden fixed inset-0 top-[72px] z-40 bg-background border-t border-border flex flex-col px-6 py-8 space-y-2 overflow-y-auto">
+          <div className="md:hidden fixed inset-0 top-[72px] z-[999] bg-background border-t border-border flex flex-col px-6 py-8 space-y-2 overflow-y-auto">
             {navLinks.map((link) => (
               <button
                 key={link.id}

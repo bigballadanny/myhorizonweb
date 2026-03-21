@@ -5,7 +5,7 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-const ELEVENLABS_AGENT_ID = 'agent_3701k6bjf9q2e5wsc1y94xbg2r3g';
+const ELEVENLABS_AGENT_ID = 'agent_8801khq4sqbseqxa56493s1j7anz';
 
 serve(async (req) => {
   // Handle CORS preflight
