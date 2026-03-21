@@ -12,6 +12,7 @@ import Auth from "./pages/Auth.tsx";
 import IndustryPage from "./pages/IndustryPage.tsx";
 import NetworkPage from "./pages/NetworkPage.tsx";
 import { ScrollProgress } from "./components/ScrollProgress.tsx";
+import { ScrollToTop } from "./components/ScrollToTop.tsx";
 import "./index.css";
 
 createRoot(document.getElementById("root")!).render(
@@ -19,6 +20,7 @@ createRoot(document.getElementById("root")!).render(
     <ThemeProvider>
       <TooltipProvider>
         <BrowserRouter>
+          <ScrollToTop />
           <ScrollProgress />
           <Routes>
             <Route path="/" element={<App />} />

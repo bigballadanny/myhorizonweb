@@ -12,9 +12,11 @@ import { UrgencyCTA } from './components/UrgencyCTA'
 import { SynthiosProduct } from './components/SynthiosProduct'
 import { Contact } from './components/Contact'
 import { Footer } from './components/Footer'
+import { Philosophy } from './components/Philosophy'
 import { ElevenLabsWidget } from './components/ElevenLabsWidget'
 import { NewsletterSignup } from './components/NewsletterSignup'
 import { useVisitorTracking } from './hooks/useVisitorTracking'
+import { useSEO } from './hooks/useSEO'
 import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 
@@ -26,6 +28,30 @@ const sectionVariants = {
 export default function App() {
   useVisitorTracking()
   const location = useLocation()
+  
+  useSEO({
+    title: 'MyHorizon | SYNTHIOS - AI Infrastructure for Business',
+    description: 'We build custom AI agents that run your operations, remember your customers, and make decisions alongside your team.',
+    keywords: 'AI agent, AI infrastructure, business automation, SYNTHIOS, MyHorizon AI, generative AI, AI assistant, operations automation',
+    schema: {
+      '@context': 'https://schema.org',
+      '@type': 'SoftwareApplication',
+      'name': 'SYNTHIOS',
+      'operatingSystem': 'Cloud',
+      'applicationCategory': 'BusinessApplication',
+      'offers': {
+        '@type': 'Offer',
+        'price': '0',
+        'priceCurrency': 'USD'
+      },
+      'description': 'SYNTHIOS is an AI infrastructure platform that remembers every customer, executes follow-ups, and operates business workflows 24/7.',
+      'creator': {
+        '@type': 'Organization',
+        'name': 'MyHorizon AI',
+        'url': 'https://myhorizon.ai'
+      }
+    }
+  });
 
   useEffect(() => {
     if (location.hash) {
@@ -70,7 +96,8 @@ export default function App() {
 
         {/* Pull quote — seeds the bigger-picture thinking */}
         <PullQuote
-          quote="The businesses that embrace AI early won't just save time — they'll build something their competitors can't catch up to."
+          quote="Artificial intelligence will be infrastructure — like water, electricity and the internet."
+          author="Jensen Huang, CEO of NVIDIA"
           bg="card"
         />
 
@@ -110,6 +137,9 @@ export default function App() {
         >
           <Process />
         </motion.section>
+
+        {/* ATM Philosophy Section */}
+        <Philosophy />
 
         {/* 6 — Results */}
         <motion.section

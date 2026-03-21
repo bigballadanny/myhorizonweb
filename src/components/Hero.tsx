@@ -34,7 +34,7 @@ export function Hero() {
               transition={{ duration: 0.5, delay: 0.15 }}
               className="section-label mb-8"
             >
-              AI Systems for Business
+              SYNTHIOS BY MYHORIZON AI
             </motion.p>
 
             {/* Headline */}
@@ -44,9 +44,7 @@ export function Hero() {
               transition={{ duration: 0.7, delay: 0.3 }}
               className="font-serif text-4xl sm:text-6xl lg:text-7xl text-foreground leading-[1.1] mb-8"
             >
-              What if AI actually{' '}
-              <em className="not-italic"><span className="text-highlight">understood</span></em>{' '}
-              your business?
+              Your business runs 24/7. Your team doesn't. <em className="not-italic"><span className="text-highlight">Now it can.</span></em>
             </motion.h1>
 
             {/* Subhead */}
@@ -56,8 +54,7 @@ export function Hero() {
               transition={{ duration: 0.7, delay: 0.45 }}
               className="text-lg lg:text-xl text-muted-foreground leading-relaxed max-w-lg mb-10"
             >
-              Not just answered questions — but remembered your customers, managed your operations, and made decisions alongside your team.{' '}
-              <span className="text-foreground font-medium">That's what we build.</span>
+              SYNTHIOS is the AI infrastructure that remembers every customer, executes every follow-up, and never misses a lead — while you focus on the work only you can do.
             </motion.p>
 
             {/* CTAs */}
@@ -72,7 +69,7 @@ export function Hero() {
                 onClick={scrollToContact}
                 className="w-full sm:w-auto bg-accent-blue hover:bg-accent-blue/90 text-white px-8 py-6 rounded-xl text-base transition-all duration-200"
               >
-                Book a Free Strategy Call
+                See SYNTHIOS in Action
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
               <Button
@@ -81,7 +78,7 @@ export function Hero() {
                 onClick={scrollToServices}
                 className="w-full sm:w-auto px-8 py-6 rounded-xl text-base border-border text-foreground hover:bg-card transition-all duration-200"
               >
-                See What We Build
+                Get Your Free AI Roadmap
               </Button>
             </motion.div>
 

@@ -24,6 +24,7 @@ import { Footer } from '@/components/Footer'
 import { Button } from '@/components/ui/button'
 import { ElevenLabsWidget } from '@/components/ElevenLabsWidget'
 import { industryData } from '@/data/industryData'
+import { useSEO } from '@/hooks/useSEO'
 
 const iconMap: Record<string, React.ElementType> = {
   Sparkles,
@@ -50,6 +51,23 @@ export default function IndustryPage() {
   const { slug } = useParams<{ slug: string }>()
   const navigate = useNavigate()
   const industry = slug ? industryData[slug] : undefined
+
+  useSEO({
+    title: industry ? `${industry.name} AI Operations | SYNTHIOS by MyHorizon` : 'Industry AI | MyHorizon',
+    description: industry ? `SYNTHIOS AI infrastructure tailored for ${industry.name}. ${industry.tagline}` : '',
+    keywords: `AI for ${industry?.name}, AI agent, business automation, SYNTHIOS, MyHorizon AI`,
+    schema: industry ? {
+      '@context': 'https://schema.org',
+      '@type': 'Service',
+      'name': `SYNTHIOS AI for ${industry.name}`,
+      'provider': {
+        '@type': 'Organization',
+        'name': 'MyHorizon AI',
+        'url': 'https://myhorizon.ai'
+      },
+      'description': industry.hook
+    } : undefined
+  });
 
   if (!industry) {
     return (

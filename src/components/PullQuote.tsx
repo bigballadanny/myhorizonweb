@@ -4,10 +4,11 @@ import { motion } from 'framer-motion'
 
 interface PullQuoteProps {
   quote: string
+  author?: string
   bg?: 'background' | 'card'
 }
 
-export function PullQuote({ quote, bg = 'background' }: PullQuoteProps) {
+export function PullQuote({ quote, author, bg = 'background' }: PullQuoteProps) {
   return (
     <div className={bg === 'card' ? 'bg-card' : 'bg-background'}>
       <motion.div
@@ -15,7 +16,7 @@ export function PullQuote({ quote, bg = 'background' }: PullQuoteProps) {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.1 }}
         transition={{ duration: 0.7 }}
-        className="max-w-2xl mx-auto px-6 sm:px-8 py-14 sm:py-16 text-center"
+        className="max-w-3xl mx-auto px-6 sm:px-8 py-14 sm:py-16 text-center"
       >
         {/* Opening mark */}
         <span
@@ -24,9 +25,14 @@ export function PullQuote({ quote, bg = 'background' }: PullQuoteProps) {
         >
           &ldquo;
         </span>
-        <p className="font-serif italic text-xl sm:text-2xl text-foreground/65 leading-relaxed">
+        <p className="font-serif italic text-2xl sm:text-3xl text-foreground/80 leading-relaxed mb-6">
           {quote}
         </p>
+        {author && (
+          <p className="text-base text-muted-foreground font-medium uppercase tracking-widest">
+            — {author}
+          </p>
+        )}
       </motion.div>
     </div>
   )
