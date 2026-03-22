@@ -4,7 +4,7 @@ interface SEOProps {
   title: string;
   description: string;
   keywords?: string;
-  schema?: Record<string, any>;
+  schema?: Record<string, unknown>;
 }
 
 export function useSEO({ title, description, keywords, schema }: SEOProps) {
