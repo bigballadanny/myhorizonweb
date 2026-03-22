@@ -101,18 +101,6 @@ export default function App() {
           bg="card"
         />
 
-        {/* 3 — Opportunity (Problem) */}
-        <motion.section
-          aria-label="Opportunity section"
-          variants={sectionVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
-          transition={{ duration: 0.6 }}
-        >
-          <Problem />
-        </motion.section>
-
         {/* 4 — Industries */}
         <motion.section
           id="industries"
@@ -124,18 +112,6 @@ export default function App() {
           transition={{ duration: 0.6, delay: 0.05 }}
         >
           <Industries />
-        </motion.section>
-
-        {/* 5 — Process */}
-        <motion.section
-          aria-label="Process section"
-          variants={sectionVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
-          transition={{ duration: 0.6, delay: 0.05 }}
-        >
-          <Process />
         </motion.section>
 
         {/* ATM Philosophy Section */}
@@ -151,40 +127,6 @@ export default function App() {
           transition={{ duration: 0.6 }}
         >
           <Results />
-        </motion.section>
-
-        {/* 8 — Urgency CTA */}
-        <motion.section
-          aria-label="Urgency CTA"
-          variants={sectionVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
-          transition={{ duration: 0.6 }}
-        >
-          <UrgencyCTA />
-        </motion.section>
-
-        {/* Newsletter signup — catches mid-page visitors */}
-        <NewsletterSignup variant="banner" />
-
-        {/* Pull quote — plants the SYNTHIOS seed */}
-        <PullQuote
-          quote="Imagine having a team member who knows every customer, never forgets a follow-up, and gets smarter every single day."
-          bg="background"
-        />
-
-        {/* 8 — SYNTHIOS */}
-        <motion.section
-          id="synthios"
-          aria-label="SYNTHIOS Product section"
-          variants={sectionVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
-          transition={{ duration: 0.6 }}
-        >
-          <SynthiosProduct />
         </motion.section>
 
         {/* 9 — Contact */}
