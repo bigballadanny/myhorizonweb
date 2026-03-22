@@ -34,7 +34,7 @@ export const industryData: Record<string, IndustryData> = {
       'Your treatment rooms should never sit empty. AI agents that handle booking, reminders, and re-engagement free your staff to focus on what they do best — delivering exceptional results that keep clients coming back.',
     accentColor: '#f472b6',
     accentColorLight: '#fdf2f8',
-    ctaImage: 'https://images.unsplash.com/photo-1600334089648-b0d9d3028136?q=80&w=2940&auto=format&fit=crop',
+    ctaImage: '/med-spa-bg.png',
     painPoints: [
       {
         title: 'After-Hours Booking Goes Unanswered',
