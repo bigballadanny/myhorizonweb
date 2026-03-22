@@ -572,29 +572,31 @@ export default function IndustryPage() {
         </section>
 
         {/* ─── CTA ──────────────────────────────────────────────────── */}
-        <section className="relative py-28 lg:py-40 overflow-hidden">
-          {/* Deep vibrant background */}
+        <section className="relative py-32 lg:py-48 overflow-hidden">
+          {/* Unsplash Image Background */}
+          {industry.ctaImage ? (
+            <div 
+              className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 scale-105"
+              style={{ backgroundImage: `url(${industry.ctaImage})` }}
+            />
+          ) : (
+            <div 
+              className="absolute inset-0 transition-colors duration-500" 
+              style={{ backgroundColor: industry.accentColor }} 
+            />
+          )}
+          
+          {/* Clean gradient overlay instead of noisy grid */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/70 to-black/60" />
           <div 
-            className="absolute inset-0 transition-colors duration-500" 
+            className="absolute inset-0 mix-blend-multiply opacity-60" 
             style={{ backgroundColor: industry.accentColor }} 
           />
-          <div className="absolute inset-0 bg-black/20 dark:bg-black/40" /> {/* Contrast overlay */}
-          
-          {/* Abstract background shapes */}
-          <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-            <div className="absolute -top-[30%] -left-[10%] w-[60%] h-[150%] bg-white/10 rotate-12 blur-[120px] rounded-full" />
-            <div className="absolute -bottom-[30%] -right-[10%] w-[50%] h-[120%] bg-black/20 -rotate-12 blur-[100px] rounded-full" />
-            
-            {/* Subtle grid pattern for texture */}
-            <div className="absolute inset-0 opacity-10"
-              style={{
-                backgroundImage: `linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px)`,
-                backgroundSize: '4rem 4rem',
-              }}
-            />
-          </div>
 
-          <div className="container mx-auto px-5 sm:px-8 lg:px-12 relative z-10 text-center">
+          <div className="absolute top-0 inset-x-0 h-32 bg-gradient-to-b from-background to-transparent" />
+          <div className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-background to-transparent" />
+
+          <div className="container mx-auto px-5 sm:px-8 lg:px-12 relative z-10 text-center flex flex-col items-center justify-center">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -602,8 +604,8 @@ export default function IndustryPage() {
               transition={{ duration: 0.6 }}
               className="max-w-4xl mx-auto"
             >
-              <div className="mb-8 inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white shadow-xl">
-                <Users className="w-4 h-4" />
+              <div className="mb-8 inline-flex items-center gap-2 px-5 py-2 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-white shadow-xl">
+                <Users className="w-4 h-4 text-white/80" />
                 <span className="text-sm font-semibold tracking-wide">Join 50+ businesses already using AI</span>
               </div>
               
@@ -612,7 +614,7 @@ export default function IndustryPage() {
                 <span className="opacity-90">{industry.name}</span> operations?
               </h2>
               
-              <p className="text-white/80 text-lg sm:text-xl lg:text-2xl leading-relaxed mb-12 max-w-2xl mx-auto font-light">
+              <p className="text-white/80 text-lg sm:text-xl lg:text-2xl leading-relaxed mb-12 max-w-2xl mx-auto font-light drop-shadow-md">
                 Stop losing hours to manual workflows. Let's map out exactly what AI can do for your business in a free, no-obligation consultation.
               </p>
               
