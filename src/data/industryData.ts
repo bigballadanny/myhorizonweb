@@ -27,7 +27,7 @@ export const industryData: Record<string, IndustryData> = {
   'med-spas': {
     slug: 'med-spas',
     name: 'Med Spas & Aesthetics',
-    iconName: 'Sparkles',
+    iconName: 'Droplets',
     tagline: 'Automated booking, follow-ups, and patient retention that keeps your chairs full.',
     hook:
       'Your treatment rooms should never sit empty. AI agents that handle booking, reminders, and re-engagement free your staff to focus on what they do best — delivering exceptional results that keep clients coming back.',

@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import {
   ArrowLeft,
   ArrowRight,
-  Sparkles,
+  Droplets,
   Wrench,
   HardHat,
   Briefcase,
@@ -27,7 +27,7 @@ import { industryData } from '@/data/industryData'
 import { useSEO } from '@/hooks/useSEO'
 
 const iconMap: Record<string, React.ElementType> = {
-  Sparkles,
+  Droplets,
   Wrench,
   HardHat,
   Briefcase,
@@ -93,7 +93,7 @@ export default function IndustryPage() {
     )
   }
 
-  const Icon = iconMap[industry.iconName] ?? Sparkles
+  const Icon = iconMap[industry.iconName] ?? Zap
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
@@ -297,7 +297,7 @@ export default function IndustryPage() {
                     />
                     <div className="relative z-10 text-center bg-background/80 backdrop-blur-md p-8 rounded-3xl border border-border shadow-2xl">
                       <div className="w-14 h-14 mx-auto mb-5 rounded-2xl flex items-center justify-center shadow-inner" style={{ backgroundColor: `${industry.accentColor}20` }}>
-                        <Sparkles className="w-7 h-7" style={{ color: industry.accentColor }} />
+                        <Zap className="w-7 h-7" style={{ color: industry.accentColor }} />
                       </div>
                       <p className="text-sm font-bold tracking-widest uppercase mb-2" style={{ color: industry.accentColor }}>Interactive Sandbox</p>
                       <p className="text-muted-foreground text-sm font-medium">No signup required</p>
@@ -483,13 +483,12 @@ export default function IndustryPage() {
         </section>
 
         {/* ─── USE CASES (Bento Grid) ───────────────────────────────── */}
-        <section className="py-24 lg:py-32 bg-background relative overflow-hidden">
-          {/* Subtle pattern texture overlay */}
-          <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.04]"
-            style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-            }}
-          />
+        <section className="py-24 lg:py-32 bg-muted/20 relative overflow-hidden">
+          {/* Subtle radial gradients instead of noisy patterns */}
+          <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-to-bl from-background via-transparent to-transparent opacity-80 pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-to-tr from-background via-transparent to-transparent opacity-80 pointer-events-none" />
+          
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.02)_1px,transparent_1px)] dark:bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.02)_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />
 
           <div className="container mx-auto px-5 sm:px-8 lg:px-12 relative z-10">
             <motion.div
@@ -553,7 +552,7 @@ export default function IndustryPage() {
                           borderColor: `${industry.accentColor}20`
                         }}
                       >
-                        <Sparkles className="w-3.5 h-3.5" />
+                        <Zap className="w-3.5 h-3.5" />
                         {uc.title}
                       </div>
                       <blockquote className="text-foreground text-xl sm:text-2xl leading-relaxed font-serif">
