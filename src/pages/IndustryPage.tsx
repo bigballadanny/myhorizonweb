@@ -483,12 +483,9 @@ export default function IndustryPage() {
         </section>
 
         {/* ─── USE CASES (Bento Grid) ───────────────────────────────── */}
-        <section className="py-24 lg:py-32 bg-muted/20 relative overflow-hidden">
-          {/* Subtle radial gradients instead of noisy patterns */}
-          <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-to-bl from-background via-transparent to-transparent opacity-80 pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-to-tr from-background via-transparent to-transparent opacity-80 pointer-events-none" />
-          
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.02)_1px,transparent_1px)] dark:bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.02)_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />
+        <section className="py-24 lg:py-32 bg-background relative overflow-hidden">
+          {/* Removed noisy patterns completely to ensure maximum legibility */}
+          <div className="absolute top-0 right-0 w-full h-[500px] bg-gradient-to-b from-muted/20 to-transparent pointer-events-none" />
 
           <div className="container mx-auto px-5 sm:px-8 lg:px-12 relative z-10">
             <motion.div
