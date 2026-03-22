@@ -587,9 +587,9 @@ export default function IndustryPage() {
           )}
           
           {/* Clean gradient overlay instead of noisy grid */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/70 to-black/60" />
+          <div className="absolute inset-0 bg-black/60 dark:bg-black/70" />
           <div 
-            className="absolute inset-0 mix-blend-multiply opacity-60" 
+            className="absolute inset-0 mix-blend-multiply opacity-20 dark:opacity-40" 
             style={{ backgroundColor: industry.accentColor }} 
           />
 
