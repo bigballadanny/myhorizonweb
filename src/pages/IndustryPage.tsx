@@ -1,5 +1,6 @@
+import { useState } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import {
   ArrowLeft,
   ArrowRight,
@@ -18,13 +19,42 @@ import {
   BarChart3,
   Users,
   Zap,
+  ChevronDown,
 } from 'lucide-react'
+import * as Accordion from '@radix-ui/react-accordion'
 import { Navigation } from '@/components/Navigation'
 import { Footer } from '@/components/Footer'
 import { Button } from '@/components/ui/button'
 import { ElevenLabsWidget } from '@/components/ElevenLabsWidget'
-import { industryData } from '@/data/industryData'
+import { industryData, type IndustryData } from '@/data/industryData'
 import { useSEO } from '@/hooks/useSEO'
+
+const faqs = [
+  {
+    q: 'How long does setup take?',
+    a: 'Most implementations go live within 3-6 weeks. Simpler automations can be running in under 2 weeks.',
+  },
+  {
+    q: 'Do I need technical staff or developers?',
+    a: 'No. We handle the entire build and integration. Your team just uses the finished system.',
+  },
+  {
+    q: 'What tools does it connect to?',
+    a: 'We integrate with the tools you already use — Google Workspace, QuickBooks, most CRMs, scheduling software, and more. If you use it, we can almost certainly connect to it.',
+  },
+  {
+    q: 'How is this different from a generic chatbot?',
+    a: 'Generic chatbots answer FAQs. SYNTHIOS agents take actions — they book appointments, send follow-ups, qualify leads, and run workflows. Built specifically for your business, not a template.',
+  },
+  {
+    q: 'What happens if something breaks or needs updating?',
+    a: 'We monitor the system and handle updates. You have a direct line to us, not a support ticket queue.',
+  },
+  {
+    q: 'What does it cost?',
+    a: 'Every build is different. We start with a free 30-minute strategy call to understand your situation — no pitch, just honest answers about what is and is not worth automating for your business.',
+  },
+]
 
 const iconMap: Record<string, React.ElementType> = {
   Droplets,
@@ -45,6 +75,117 @@ const fadeUp = {
 
 const stagger = {
   visible: { transition: { staggerChildren: 0.15 } },
+}
+
+function UseCaseTabs({ industry }: { industry: IndustryData }) {
+  const [activeTab, setActiveTab] = useState(0)
+
+  return (
+    <section className="py-24 lg:py-32 bg-background relative overflow-hidden">
+      <div className="absolute top-0 right-0 w-full h-[500px] bg-gradient-to-b from-muted/20 to-transparent pointer-events-none" />
+
+      <div className="container mx-auto px-5 sm:px-8 lg:px-12 relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ duration: 0.6 }}
+          className="mb-16 flex flex-col md:flex-row items-start md:items-end justify-between gap-6"
+        >
+          <div className="max-w-xl">
+            <div className="flex items-center gap-3 mb-5">
+              <Lightbulb className="w-5 h-5" style={{ color: industry.accentColor }} />
+              <p className="section-label m-0" style={{ color: industry.accentColor }}>See It in Action</p>
+            </div>
+            <h2 className="font-serif text-4xl sm:text-5xl text-foreground leading-tight">
+              Real scenarios,<br className="hidden sm:block" /> real results
+            </h2>
+          </div>
+          <p className="text-muted-foreground text-lg max-w-md md:text-right pb-2">
+            How our custom AI implementations transform day-to-day operations and bottom-line metrics.
+          </p>
+        </motion.div>
+
+        {/* Tab bar */}
+        <div className="mb-10 overflow-x-auto -mx-5 px-5 sm:mx-0 sm:px-0" style={{ scrollbarWidth: 'none' }}>
+          <div className="flex gap-2 min-w-max">
+            {industry.useCases.map((uc, i) => (
+              <button
+                key={uc.title}
+                onClick={() => setActiveTab(i)}
+                className="relative px-5 py-2.5 rounded-full text-sm font-semibold whitespace-nowrap transition-all duration-300 cursor-pointer"
+                style={
+                  activeTab === i
+                    ? { backgroundColor: industry.accentColor, color: '#fff' }
+                    : { backgroundColor: 'transparent', color: 'var(--muted-foreground)' }
+                }
+              >
+                {activeTab === i && (
+                  <motion.div
+                    layoutId="activeUseCaseTab"
+                    className="absolute inset-0 rounded-full"
+                    style={{ backgroundColor: industry.accentColor }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                  />
+                )}
+                <span className="relative z-10">{uc.title}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Tab content */}
+        <div className="max-w-4xl mx-auto">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.3 }}
+              className="relative bg-background/60 backdrop-blur-xl border border-border shadow-sm rounded-3xl p-10 sm:p-14 overflow-hidden group"
+            >
+              {/* Colored top border */}
+              <div
+                className="absolute top-0 inset-x-0 h-1.5 opacity-80"
+                style={{ backgroundColor: industry.accentColor }}
+              />
+
+              {/* Decorative background gradient orb */}
+              <div
+                className="absolute -right-20 -bottom-20 w-64 h-64 rounded-full blur-[80px] opacity-10 pointer-events-none"
+                style={{ backgroundColor: industry.accentColor }}
+              />
+
+              <div className="relative z-10">
+                <div
+                  className="inline-flex items-center gap-2 text-xs font-bold tracking-widest uppercase px-4 py-2 rounded-full mb-8 border"
+                  style={{
+                    backgroundColor: `${industry.accentColor}10`,
+                    color: industry.accentColor,
+                    borderColor: `${industry.accentColor}20`,
+                  }}
+                >
+                  <Zap className="w-3.5 h-3.5" />
+                  {industry.useCases[activeTab].title}
+                </div>
+                <blockquote className="text-foreground text-2xl sm:text-3xl leading-relaxed font-serif">
+                  "{industry.useCases[activeTab].scenario}"
+                </blockquote>
+              </div>
+
+              <div className="relative z-10 mt-10 pt-6 border-t border-border/50 flex items-center justify-between">
+                <span className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">
+                  Proven Implementation
+                </span>
+                <CheckCircle2 className="w-6 h-6" style={{ color: industry.accentColor }} />
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      </div>
+    </section>
+  )
 }
 
 export default function IndustryPage() {
@@ -482,88 +623,45 @@ export default function IndustryPage() {
           </div>
         </section>
 
-        {/* ─── USE CASES (Bento Grid) ───────────────────────────────── */}
-        <section className="py-24 lg:py-32 bg-background relative overflow-hidden">
-          {/* Removed noisy patterns completely to ensure maximum legibility */}
-          <div className="absolute top-0 right-0 w-full h-[500px] bg-gradient-to-b from-muted/20 to-transparent pointer-events-none" />
+        {/* ─── USE CASES (Tabbed) ─────────────────────────────────── */}
+        <UseCaseTabs industry={industry} />
 
-          <div className="container mx-auto px-5 sm:px-8 lg:px-12 relative z-10">
+        {/* ─── FAQ ──────────────────────────────────────────────────── */}
+        <section className="py-24 lg:py-32 bg-background relative">
+          <div className="container mx-auto px-5 sm:px-8 lg:px-12 max-w-3xl">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.1 }}
               transition={{ duration: 0.6 }}
-              className="mb-16 flex flex-col md:flex-row items-start md:items-end justify-between gap-6"
+              className="mb-14 text-center"
             >
-              <div className="max-w-xl">
-                <div className="flex items-center gap-3 mb-5">
-                  <Lightbulb className="w-5 h-5" style={{ color: industry.accentColor }} />
-                  <p className="section-label m-0" style={{ color: industry.accentColor }}>See It in Action</p>
-                </div>
-                <h2 className="font-serif text-4xl sm:text-5xl text-foreground leading-tight">
-                  Real scenarios,<br className="hidden sm:block" /> real results
-                </h2>
-              </div>
-              <p className="text-muted-foreground text-lg max-w-md md:text-right pb-2">
-                How our custom AI implementations transform day-to-day operations and bottom-line metrics.
-              </p>
+              <h2 className="font-serif text-4xl sm:text-5xl text-foreground leading-tight">
+                Common Questions
+              </h2>
             </motion.div>
 
             <motion.div
-              variants={stagger}
-              initial="hidden"
-              whileInView="visible"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.1 }}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
+              transition={{ duration: 0.6, delay: 0.1 }}
             >
-              {industry.useCases.map((uc, i) => {
-                // Bento sizing - make every 1st and 4th card span 2 cols on lg screens
-                const isWide = (i % 4 === 0) || (i % 4 === 3);
-                return (
-                  <motion.div
-                    key={uc.title}
-                    variants={fadeUp}
-                    transition={{ duration: 0.5 }}
-                    className={`relative bg-background/60 backdrop-blur-xl border border-border shadow-sm rounded-3xl p-8 sm:p-10 flex flex-col justify-between overflow-hidden group hover:shadow-xl transition-all duration-300 ${
-                      isWide ? 'lg:col-span-2' : 'lg:col-span-1'
-                    }`}
-                  >
-                    {/* Colored top border */}
-                    <div 
-                      className="absolute top-0 inset-x-0 h-1.5 opacity-80 group-hover:opacity-100 transition-opacity" 
-                      style={{ backgroundColor: industry.accentColor }} 
-                    />
-                    
-                    {/* Decorative background gradient orb */}
-                    <div 
-                      className="absolute -right-20 -bottom-20 w-64 h-64 rounded-full blur-[80px] opacity-0 group-hover:opacity-20 transition-opacity duration-700 pointer-events-none"
-                      style={{ backgroundColor: industry.accentColor }}
-                    />
-
-                    <div className="relative z-10">
-                      <div
-                        className="inline-flex items-center gap-2 text-xs font-bold tracking-widest uppercase px-4 py-2 rounded-full mb-8 border"
-                        style={{
-                          backgroundColor: `${industry.accentColor}10`,
-                          color: industry.accentColor,
-                          borderColor: `${industry.accentColor}20`
-                        }}
-                      >
-                        <Zap className="w-3.5 h-3.5" />
-                        {uc.title}
-                      </div>
-                      <blockquote className="text-foreground text-xl sm:text-2xl leading-relaxed font-serif">
-                        "{uc.scenario}"
-                      </blockquote>
-                    </div>
-                    
-                    <div className="relative z-10 mt-10 pt-6 border-t border-border/50 flex items-center justify-between">
-                      <span className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">Proven Implementation</span>
-                      <CheckCircle2 className="w-6 h-6" style={{ color: industry.accentColor }} />
-                    </div>
-                  </motion.div>
-                )
-              })}
+              <Accordion.Root type="multiple" className="divide-y divide-border border-y border-border">
+                {faqs.map((faq, i) => (
+                  <Accordion.Item key={i} value={`faq-${i}`} className="group">
+                    <Accordion.Trigger className="flex w-full items-center justify-between py-6 text-left text-lg font-medium text-foreground hover:text-foreground/80 transition-colors cursor-pointer [&[data-state=open]>svg]:rotate-180">
+                      {faq.q}
+                      <ChevronDown className="w-5 h-5 shrink-0 ml-4 text-muted-foreground transition-transform duration-300" />
+                    </Accordion.Trigger>
+                    <Accordion.Content className="overflow-hidden data-[state=open]:animate-accordion-down data-[state=closed]:animate-accordion-up">
+                      <p className="pb-6 text-muted-foreground text-base leading-relaxed pr-8">
+                        {faq.a}
+                      </p>
+                    </Accordion.Content>
+                  </Accordion.Item>
+                ))}
+              </Accordion.Root>
             </motion.div>
           </div>
         </section>
