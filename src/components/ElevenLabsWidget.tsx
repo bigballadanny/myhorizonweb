@@ -367,11 +367,13 @@ export function ElevenLabsWidget({
             exit={{ opacity: 0, y: 20, scale: 0.9 }}
             transition={{ type: 'spring', stiffness: 300, damping: 25 }}
             ref={chatPanelRef}
-            className="fixed inset-x-0 top-0 sm:absolute sm:inset-auto sm:bottom-20 sm:right-0 sm:w-[380px] sm:rounded-2xl bg-card border-0 sm:border sm:border-border shadow-2xl overflow-hidden z-[120] flex flex-col"
+            className="fixed z-[120] bg-card border border-border shadow-2xl overflow-hidden flex flex-col rounded-2xl"
             style={{
-              height: viewportHeight ? `${viewportHeight}px` : '100%',
-              maxHeight: viewportHeight ? `${viewportHeight}px` : '100dvh',
-              bottom: 'auto',
+              bottom: '80px',
+              right: '16px',
+              width: '380px',
+              height: 'min(560px, calc(100svh - 140px))',
+              maxHeight: 'calc(100svh - 140px)',
             }}
             id="chat-panel"
           >
