@@ -132,7 +132,7 @@ export function Industries() {
         </motion.div>
 
         {/* Industry grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-0 mb-14">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-14">
           {industries.map((industry, index) => {
             const Icon = industry.icon
             return (
@@ -143,7 +143,7 @@ export function Industries() {
                 viewport={{ once: true, amount: 0.1 }}
                 transition={{ delay: index * 0.07, duration: 0.5 }}
                 onClick={() => navigate(`/industry/${industry.slug}`)}
-                className={`group border-t border-border py-8 pr-6 cursor-pointer hover:bg-card/50 transition-all duration-200 px-3 ${industry.accentColor}`}
+                className={`group cursor-pointer transition-all duration-300 ease-out px-5 py-7 rounded-xl bg-white dark:bg-card border border-transparent hover:border-border hover:shadow-lg hover:-translate-y-1 ${industry.accentColor}`}
               >
                 {/* Icon box — tints on hover */}
                 <div className={`w-9 h-9 rounded-lg bg-card border border-border flex items-center justify-center mb-5 transition-all duration-200 ${industry.accentIconBg}`}>
@@ -176,7 +176,7 @@ export function Industries() {
               </motion.div>
             )
           })}
-          <div className="col-span-full border-t border-border" />
+          {/* spacer */}
         </div>
 
         {/* Bottom CTA */}

@@ -198,25 +198,6 @@
     margin: 0;
   }
 
-  /* =====================================================
-     Clean scrollbar
-     ===================================================== */
-  ::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  ::-webkit-scrollbar-track {
-    background: var(--background);
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: var(--border);
-    border-radius: 3px;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: var(--ring);
-  }
 }
 
 /**
@@ -447,6 +428,14 @@ html::-webkit-scrollbar-thumb {
 }
 html::-webkit-scrollbar-thumb:hover {
   background: #1d4ed8;
+}
+
+/* ── Prevent inner elements from creating scrollbars ── */
+body, main, div, section, article {
+  scrollbar-width: none;
+}
+body::-webkit-scrollbar, main::-webkit-scrollbar {
+  display: none;
 }
 
 /* Removed aggressive scrollbar hiding that conflicts with nested scrolling containers */
