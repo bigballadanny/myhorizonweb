@@ -2,8 +2,6 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
-import resultsMetrics from '@/assets/results-metrics.jpg'
-
 interface CounterProps {
   end: number
   suffix?: string
@@ -101,19 +99,25 @@ export function Results() {
           </div>
         </motion.div>
 
-        {/* Background accent image */}
+        {/* Metrics container */}
         <div className="relative mb-14">
-          <div className="absolute inset-0 rounded-2xl overflow-hidden opacity-10 pointer-events-none">
-            <img
-              src={resultsMetrics}
-              alt=""
-              aria-hidden="true"
-              className="w-full h-full object-cover"
+          {/* Premium dark gradient background — no photo bleed */}
+          <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
+            <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950" />
+            {/* Subtle accent glows */}
+            <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-[100px]" />
+            <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-violet-600/8 rounded-full blur-[120px]" />
+            {/* Fine dot grid */}
+            <div className="absolute inset-0 opacity-[0.06]"
+              style={{
+                backgroundImage: 'radial-gradient(circle, #ffffff 1px, transparent 1px)',
+                backgroundSize: '28px 28px'
+              }}
             />
           </div>
 
-          {/* Subtle gradient card behind metrics */}
-          <div className="relative rounded-2xl border border-border/50 bg-card/30 backdrop-blur-sm">
+          {/* Card */}
+          <div className="relative rounded-2xl border border-white/8 overflow-hidden">
             {/* Metrics — 2×2 grid on mobile, 4-col on lg */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0">
               {metrics.map((metric, index) => (
@@ -123,20 +127,20 @@ export function Results() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.1 }}
                   transition={{ delay: index * 0.12, duration: 0.5 }}
-                  className="border-t border-border pt-9 pb-9 px-7"
+                  className="border-t border-white/8 pt-9 pb-9 px-7"
                 >
-                  <div className="font-serif text-5xl sm:text-6xl text-foreground mb-3 leading-none">
+                  <div className="font-serif text-5xl sm:text-6xl text-white mb-3 leading-none">
                     <AnimatedCounter end={metric.value} suffix={metric.suffix} prefix={metric.prefix} />
                   </div>
-                  <h3 className="font-sans font-medium text-foreground mb-2 text-sm uppercase tracking-wide">
+                  <h3 className="font-sans font-medium text-white/90 mb-2 text-sm uppercase tracking-wide">
                     {metric.label}
                   </h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed max-w-[220px]">
+                  <p className="text-sm text-white/50 leading-relaxed max-w-[220px]">
                     {metric.description}
                   </p>
                 </motion.div>
               ))}
-              <div className="col-span-full border-t border-border" />
+              <div className="col-span-full border-t border-white/8" />
             </div>
           </div>
         </div>
