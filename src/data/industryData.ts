@@ -28,7 +28,7 @@ export const industryData: Record<string, IndustryData> = {
   'med-spas': {
     slug: 'med-spas',
     name: 'Med Spas & Aesthetics',
-    iconName: 'Droplets',
+    iconName: 'MedSpaIcon',
     tagline: 'Automated booking, follow-ups, and patient retention that keeps your chairs full.',
     hook:
       'Your treatment rooms should never sit empty. AI agents that handle booking, reminders, and re-engagement free your staff to focus on what they do best — delivering exceptional results that keep clients coming back.',
@@ -107,7 +107,7 @@ export const industryData: Record<string, IndustryData> = {
   'trades': {
     slug: 'trades',
     name: 'Trades & Home Services',
-    iconName: 'Wrench',
+    iconName: 'TradesIcon',
     tagline: 'Lead gen that books jobs while you\'re on the job — no missed calls, no lost estimates.',
     hook:
       'Every unanswered call is revenue walking out the door. AI systems built for trades businesses capture, qualify, and schedule leads automatically — so you close more jobs without hiring a dispatcher.',
@@ -186,7 +186,7 @@ export const industryData: Record<string, IndustryData> = {
   'construction': {
     slug: 'construction',
     name: 'Construction',
-    iconName: 'HardHat',
+    iconName: 'ConstructionIcon',
     tagline: 'Bid tracking, subcontractor coordination, and client updates running on autopilot.',
     hook:
       'Construction projects move fast and involve dozens of moving parts. AI workflows keep bids organized, subs coordinated, and clients informed — without adding headcount to your back office.',
@@ -265,7 +265,7 @@ export const industryData: Record<string, IndustryData> = {
   'professional-services': {
     slug: 'professional-services',
     name: 'Professional Services',
-    iconName: 'Briefcase',
+    iconName: 'ProfessionalServicesIcon',
     tagline: 'Client intake, document automation, and follow-up sequences built around how you work.',
     hook:
       'Every hour you spend on intake, proposals, and follow-ups is an hour you\'re not billing. AI systems built for law firms, CPAs, consultants, and agencies turn your back office into a machine — while keeping the client experience genuinely personal.',
@@ -344,7 +344,7 @@ export const industryData: Record<string, IndustryData> = {
   'real-estate': {
     slug: 'real-estate',
     name: 'Real Estate',
-    iconName: 'Home',
+    iconName: 'RealEstateIcon',
     tagline: 'AI agents that qualify leads and schedule showings 24/7 — even when you\'re showing another property.',
     hook:
       'The best real estate agents win on speed and follow-up. AI systems that instantly respond to inquiries, qualify buyers and sellers, and schedule showings let you compete at a level that used to require a full team.',
@@ -423,7 +423,7 @@ export const industryData: Record<string, IndustryData> = {
   'small-business': {
     slug: 'small-business',
     name: 'General Small Business',
-    iconName: 'Store',
+    iconName: 'SmallBusinessIcon',
     tagline: 'Custom AI systems built around your exact operation, whatever that looks like.',
     hook:
       'You don\'t need to be a tech company to run like one. AI systems built around your specific workflows automate the repetitive work, surface the right information at the right time, and help you scale without burning out.',
@@ -502,7 +502,7 @@ export const industryData: Record<string, IndustryData> = {
   'underwriters': {
     slug: 'underwriters',
     name: 'Underwriters',
-    iconName: 'ShieldCheck',
+    iconName: 'UnderwritersIcon',
     tagline: 'AI-powered risk assessment, automated document analysis, and faster approvals with fewer errors.',
     hook:
       'Modern underwriting is a race between speed and precision. AI systems that analyze submissions, surface risk signals, and automate decision support let your team process more volume without compromising accuracy.',
@@ -581,7 +581,7 @@ export const industryData: Record<string, IndustryData> = {
   'ma-due-diligence': {
     slug: 'ma-due-diligence',
     name: 'M&A & Due Diligence',
-    iconName: 'FileSearch',
+    iconName: 'MADueDiligenceIcon',
     tagline: 'Deal analysis, financial modeling, and automated quality of earnings reports in a fraction of the time.',
     hook:
       'The best deals go to the buyers who move fastest without sacrificing rigor. AI systems that automate financial extraction, normalize EBITDA, and surface risk signals let your team evaluate more opportunities — and close with confidence.',
@@ -661,7 +661,7 @@ export const industryData: Record<string, IndustryData> = {
   'financial-services': {
     slug: 'financial-services',
     name: 'Financial Services',
-    iconName: 'TrendingUp',
+    iconName: 'FinancialServicesIcon',
     tagline: 'Portfolio analytics, compliance automation, and client reporting that runs itself.',
     hook:
       'In financial services, trust is built through transparency and consistency. AI systems that automate reporting, surface portfolio insights, and manage compliance workflows let your advisors spend more time on what clients actually pay for — strategic guidance.',

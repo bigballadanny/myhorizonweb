@@ -4,15 +4,6 @@ import { motion, AnimatePresence } from 'framer-motion'
 import {
   ArrowLeft,
   ArrowRight,
-  Droplets,
-  Wrench,
-  HardHat,
-  Briefcase,
-  Home,
-  Store,
-  ShieldCheck,
-  FileSearch,
-  TrendingUp,
   AlertCircle,
   CheckCircle2,
   Lightbulb,
@@ -21,6 +12,120 @@ import {
   Zap,
   ChevronDown,
 } from 'lucide-react'
+
+type IconProps = React.SVGProps<SVGSVGElement>
+
+const MedSpaIcon = (props: IconProps) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="M14.5 4.5L19.5 9.5" />
+    <path d="M12 7L17 12" />
+    <path d="M17 12L20.5 15.5" />
+    <path d="M20.5 15.5L21.5 16.5" strokeWidth="1" />
+    <rect x="6" y="10" width="8" height="4" rx="1" transform="rotate(-45 6 10)" />
+    <path d="M4.5 16.5L3 18" />
+    <path d="M21.5 16.5L23 18L21.5 19.5L20 18Z" strokeWidth="1" fill="currentColor" opacity="0.6" />
+    <path d="M8 4L9 5.5M10 2.5L10.5 4.5M6 6L4.5 6.5" strokeWidth="1" opacity="0.5" />
+  </svg>
+)
+
+const TradesIcon = (props: IconProps) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z" />
+    <circle cx="8" cy="16" r="0.75" fill="currentColor" />
+    <circle cx="10.5" cy="13.5" r="0.75" fill="currentColor" />
+    <path d="M17 2L15 7H18L16 12" strokeWidth="1.5" opacity="0.7" />
+  </svg>
+)
+
+const ConstructionIcon = (props: IconProps) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="M3 21H21" />
+    <path d="M5 21V7L12 3L19 7V21" />
+    <rect x="9" y="13" width="3" height="4" rx="0.5" />
+    <rect x="13.5" y="10" width="2.5" height="2.5" rx="0.5" />
+    <rect x="8" y="9" width="2.5" height="2.5" rx="0.5" />
+    <circle cx="12" cy="3" r="1.5" />
+    <path d="M12 4.5V6" strokeWidth="1" opacity="0.6" />
+    <path d="M11.2 3.8L9 5" strokeWidth="1" opacity="0.6" />
+    <path d="M12.8 3.8L15 5" strokeWidth="1" opacity="0.6" />
+  </svg>
+)
+
+const ProfessionalServicesIcon = (props: IconProps) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+    <polyline points="14 2 14 8 20 8" />
+    <line x1="8" y1="13" x2="13" y2="13" />
+    <line x1="8" y1="17" x2="11" y2="17" />
+    <circle cx="17" cy="14" r="1" />
+    <circle cx="19" cy="16" r="1" />
+    <circle cx="15" cy="16" r="1" />
+    <path d="M17 15L17 15.5M18 14.5L18.5 15.5M16 14.5L15.5 15.5" strokeWidth="1" opacity="0.7" />
+  </svg>
+)
+
+const RealEstateIcon = (props: IconProps) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="M3 21H21" />
+    <path d="M5 21V11" />
+    <path d="M19 21V11" />
+    <polyline points="3 11 7 7 10 9 12 5 14 7 17 4 21 11" />
+    <rect x="9.5" y="15" width="5" height="6" rx="0.5" />
+    <circle cx="17" cy="4" r="1.5" fill="currentColor" opacity="0.8" />
+    <circle cx="21" cy="11" r="1" opacity="0.5" />
+    <circle cx="3" cy="11" r="1" opacity="0.5" />
+  </svg>
+)
+
+const SmallBusinessIcon = (props: IconProps) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="M2 7h20l-2 8H4L2 7z" />
+    <path d="M17 7V5H7V7" />
+    <path d="M2 7L3 3H21L22 7" />
+    <rect x="9" y="11" width="6" height="4" rx="0.5" />
+    <path d="M1 17H4L5.5 14L7 19L8.5 16L10 18" strokeWidth="1" opacity="0.5" />
+    <path d="M11 19V15H13V19" />
+  </svg>
+)
+
+const UnderwritersIcon = (props: IconProps) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="M12 2L4 6V12C4 16.418 7.582 20.418 12 22C16.418 20.418 20 16.418 20 12V6L12 2Z" />
+    <line x1="12" y1="6" x2="12" y2="18" strokeWidth="1" opacity="0.5" />
+    <line x1="6.5" y1="12" x2="17.5" y2="12" strokeWidth="1" opacity="0.5" />
+    <rect x="7.5" y="13.5" width="1.5" height="2.5" rx="0.5" fill="currentColor" opacity="0.6" />
+    <rect x="9.5" y="12.5" width="1.5" height="3.5" rx="0.5" fill="currentColor" opacity="0.6" />
+    <rect x="13.5" y="8" width="1.5" height="2.5" rx="0.5" fill="currentColor" opacity="0.6" />
+    <rect x="15.5" y="7" width="1.5" height="3.5" rx="0.5" fill="currentColor" opacity="0.6" />
+  </svg>
+)
+
+const MADueDiligenceIcon = (props: IconProps) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <circle cx="9" cy="12" r="5" />
+    <circle cx="15" cy="12" r="5" opacity="0.7" />
+    <circle cx="12" cy="10" r="0.75" fill="currentColor" />
+    <circle cx="12" cy="12.5" r="0.75" fill="currentColor" />
+    <circle cx="12" cy="15" r="0.75" fill="currentColor" />
+    <path d="M19 19L22 22" strokeWidth="2" />
+    <rect x="15" y="14" width="1" height="2" rx="0.3" fill="currentColor" opacity="0.5" />
+    <rect x="17" y="13" width="1" height="3" rx="0.3" fill="currentColor" opacity="0.5" />
+  </svg>
+)
+
+const FinancialServicesIcon = (props: IconProps) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <polyline points="3 18 7 13 10 15 13 10 15 12" />
+    <path d="M15 12H17" strokeWidth="1.5" />
+    <circle cx="18" cy="12" r="1" />
+    <path d="M19 12H20" strokeWidth="1.5" />
+    <path d="M20 12V10M20 10H22M20 12V14M20 14H22" strokeWidth="1" />
+    <circle cx="13" cy="10" r="1" />
+    <circle cx="10" cy="15" r="0.75" opacity="0.5" />
+    <line x1="3" y1="20" x2="21" y2="20" strokeWidth="1" opacity="0.3" />
+    <line x1="3" y1="20" x2="3" y2="8" strokeWidth="1" opacity="0.3" />
+  </svg>
+)
 import * as Accordion from '@radix-ui/react-accordion'
 import { Navigation } from '@/components/Navigation'
 import { Footer } from '@/components/Footer'
@@ -56,16 +161,16 @@ const faqs = [
   },
 ]
 
-const iconMap: Record<string, React.ElementType> = {
-  Droplets,
-  Wrench,
-  HardHat,
-  Briefcase,
-  Home,
-  Store,
-  ShieldCheck,
-  FileSearch,
-  TrendingUp,
+const iconMap: Record<string, React.FC<IconProps>> = {
+  MedSpaIcon,
+  TradesIcon,
+  ConstructionIcon,
+  ProfessionalServicesIcon,
+  RealEstateIcon,
+  SmallBusinessIcon,
+  UnderwritersIcon,
+  MADueDiligenceIcon,
+  FinancialServicesIcon,
 }
 
 const fadeUp = {
@@ -234,7 +339,7 @@ export default function IndustryPage() {
     )
   }
 
-  const Icon = iconMap[industry.iconName] ?? Zap
+  const Icon = iconMap[industry.iconName] ?? MedSpaIcon
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
