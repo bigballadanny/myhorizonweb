@@ -120,44 +120,90 @@ function KineticHeadline() {
   )
 }
 
-/* ─── Floating visual for right column ─── */
-function FloatingVisual() {
+/* ─── Premium hero visual: glass dashboard mockup ─── */
+function HeroVisual() {
   return (
-    <div className="relative w-full aspect-square max-w-lg mx-auto">
-      {/* Layered glowing rings */}
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div className="w-[80%] h-[80%] rounded-full border border-accent-blue/20 animate-spin-slow" />
-        <div className="absolute w-[60%] h-[60%] rounded-full border border-purple-500/15 animate-spin-reverse" />
-        <div className="absolute w-[40%] h-[40%] rounded-full border border-emerald-500/20 animate-pulse" />
-      </div>
-      {/* Center glow */}
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div className="w-32 h-32 rounded-full bg-accent-blue/10 blur-2xl animate-pulse" />
-        <div className="absolute w-20 h-20 rounded-full glass-card flex items-center justify-center">
-          <span className="text-3xl font-serif text-accent-blue font-bold">S</span>
+    <div className="relative w-full max-w-xl mx-auto">
+      {/* Ambient glow behind the card */}
+      <div className="absolute -inset-8 bg-accent-blue/8 rounded-3xl blur-3xl" />
+      <div className="absolute -inset-12 bg-purple-500/5 rounded-3xl blur-[60px]" />
+
+      {/* Main glass card — dashboard preview */}
+      <div className="relative glass-card rounded-2xl border border-white/10 p-6 shadow-2xl">
+        {/* Top bar */}
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 rounded-full bg-red-400/60" />
+            <div className="w-3 h-3 rounded-full bg-yellow-400/60" />
+            <div className="w-3 h-3 rounded-full bg-green-400/60" />
+          </div>
+          <span className="text-[10px] text-muted-foreground/50 font-mono">SYNTHIOS Dashboard</span>
+        </div>
+
+        {/* Metric row */}
+        <div className="grid grid-cols-3 gap-3 mb-5">
+          {[
+            { label: 'Active Agents', value: '12', trend: '+3' },
+            { label: 'Leads Today', value: '47', trend: '+18' },
+            { label: 'Response Time', value: '<2m', trend: '-40%' },
+          ].map((m, i) => (
+            <motion.div
+              key={m.label}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.2 + i * 0.15, duration: 0.5 }}
+              className="glass-card rounded-lg p-3"
+            >
+              <p className="text-[10px] text-muted-foreground/60 mb-1">{m.label}</p>
+              <div className="flex items-baseline gap-1.5">
+                <span className="text-lg font-semibold text-foreground">{m.value}</span>
+                <span className="text-[10px] text-emerald-400">{m.trend}</span>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Activity feed */}
+        <div className="space-y-2.5">
+          {[
+            { time: '2m ago', text: 'AI Agent qualified lead — Meridian Construction', dot: 'bg-emerald-400' },
+            { time: '8m ago', text: 'Follow-up sent to 3 prospects automatically', dot: 'bg-accent-blue' },
+            { time: '15m ago', text: 'New appointment booked via voice agent', dot: 'bg-purple-400' },
+            { time: '1h ago', text: 'Pipeline report generated — $2.4M active', dot: 'bg-amber-400' },
+          ].map((item, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 1.8 + i * 0.12, duration: 0.4 }}
+              className="flex items-start gap-2.5 text-xs"
+            >
+              <div className={`w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0 ${item.dot}`} />
+              <div className="flex-1">
+                <span className="text-foreground/80">{item.text}</span>
+              </div>
+              <span className="text-muted-foreground/40 flex-shrink-0">{item.time}</span>
+            </motion.div>
+          ))}
         </div>
       </div>
-      {/* Floating feature tags */}
+
+      {/* Floating notification card — offset */}
       <motion.div
-        animate={{ y: [-8, 8, -8] }}
-        transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute top-[15%] right-[5%] glass-card px-3 py-1.5 rounded-lg text-xs text-muted-foreground"
+        initial={{ opacity: 0, y: 20, x: 20 }}
+        animate={{ opacity: 1, y: 0, x: 0 }}
+        transition={{ delay: 2.5, duration: 0.6, ease: 'easeOut' }}
+        className="absolute -bottom-4 -right-4 glass-card rounded-xl border border-white/10 p-3 shadow-xl max-w-[200px]"
       >
-        24/7 Agents
-      </motion.div>
-      <motion.div
-        animate={{ y: [6, -6, 6] }}
-        transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
-        className="absolute bottom-[20%] left-[0%] glass-card px-3 py-1.5 rounded-lg text-xs text-muted-foreground"
-      >
-        AI Workflows
-      </motion.div>
-      <motion.div
-        animate={{ y: [-5, 7, -5] }}
-        transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-        className="absolute top-[55%] right-[-2%] glass-card px-3 py-1.5 rounded-lg text-xs text-muted-foreground"
-      >
-        Smart CRM
+        <div className="flex items-center gap-2 mb-1">
+          <div className="w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center">
+            <div className="w-2 h-2 rounded-full bg-emerald-400" />
+          </div>
+          <span className="text-[10px] font-medium text-foreground/90">New Lead Captured</span>
+        </div>
+        <p className="text-[10px] text-muted-foreground/60 leading-relaxed">
+          Sarah M. from Valley Roofing — requested AI consultation
+        </p>
       </motion.div>
     </div>
   )
@@ -250,14 +296,14 @@ export function Hero() {
             </motion.div>
           </div>
 
-          {/* Right — floating visual (replaces static JPG) */}
+          {/* Right — glass dashboard visual */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.6, ease: 'easeOut' }}
+            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.6, ease: 'easeOut' }}
             className="hidden lg:block"
           >
-            <FloatingVisual />
+            <HeroVisual />
           </motion.div>
         </div>
       </div>
