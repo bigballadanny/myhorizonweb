@@ -102,6 +102,113 @@ const iconMap: Record<string, React.FC<IconProps>> = {
 
 const solutionIcons = [Calendar, MessageSquare, BarChart, Zap, Users]
 
+/* ─── Industry-specific UI mockup content ─── */
+const industryMockups: Record<string, {
+  appointments?: [string, string, boolean][]
+  campaignName?: string
+  journey?: [string, string, boolean][]
+}> = {
+  'med-spas': {
+    appointments: [['9:00 AM', 'Botox Consultation', true], ['11:30 AM', 'Filler Touch-up', true], ['2:00 PM', 'New Client Intake', false]],
+    campaignName: '90-day lapsed clients',
+    journey: [
+      ['Booking confirmed', 'Intake form sent automatically', true],
+      ['24hr before', 'Pre-care instructions delivered', true],
+      ['Day of visit', 'Reminder + parking info sent', true],
+      ['2hr after visit', 'Post-care follow-up sent', true],
+      ['7 days later', 'Review request & rebooking offer', false],
+    ],
+  },
+  'trades': {
+    appointments: [['8:00 AM', 'HVAC Install — Smith Residence', true], ['10:30 AM', 'Estimate — Kitchen Remodel', true], ['1:00 PM', 'Follow-up — Roof Repair', false]],
+    campaignName: '60-day past customers',
+    journey: [
+      ['Lead captured', 'Auto-response with availability', true],
+      ['Same day', 'Estimate scheduled automatically', true],
+      ['After estimate', 'Follow-up with proposal sent', true],
+      ['Day 3', 'Check-in if no response', true],
+      ['Job complete', 'Review request + referral ask', false],
+    ],
+  },
+  'construction': {
+    appointments: [['9:00 AM', 'Bid Review — Meridian Office', true], ['11:00 AM', 'Sub Kickoff — Electrical', true], ['2:00 PM', 'Client Walkthrough', false]],
+    campaignName: 'Stale bids — 30+ days',
+    journey: [
+      ['Bid submitted', 'Confirmation + timeline sent', true],
+      ['Day 5', 'Automated follow-up to GC', true],
+      ['Day 10', 'Second touch + value add', true],
+      ['Day 14', 'Flagged for personal outreach', true],
+      ['Won/Lost', 'Post-decision feedback request', false],
+    ],
+  },
+  'professional-services': {
+    appointments: [['9:30 AM', 'New Client Intake — Merger', true], ['11:00 AM', 'Document Review Session', true], ['3:00 PM', 'Proposal Follow-up', false]],
+    campaignName: 'Inactive retainer clients',
+    journey: [
+      ['Inquiry received', 'Engagement letter + intake form sent', true],
+      ['Day 1', 'Documents collected automatically', true],
+      ['Day 3', 'First draft delivered for review', true],
+      ['Day 7', 'Follow-up + revision request', true],
+      ['Day 30', 'Satisfaction check + referral ask', false],
+    ],
+  },
+  'real-estate': {
+    appointments: [['10:00 AM', 'Showing — 42 Oak Lane', true], ['1:00 PM', 'Buyer Consult — Pre-Approval', true], ['4:00 PM', 'Open House Prep', false]],
+    campaignName: 'Past buyers — 12 month',
+    journey: [
+      ['Lead captured', 'Auto-response + saved search set up', true],
+      ['Same day', 'AI qualification questions sent', true],
+      ['Day 1', 'Matching listings delivered', true],
+      ['Day 3', 'Showing scheduled automatically', true],
+      ['Post-close', 'Anniversary check-in + referral', false],
+    ],
+  },
+  'small-business': {
+    appointments: [['9:00 AM', 'New Customer Inquiry', true], ['11:30 AM', 'Service Follow-up', true], ['2:00 PM', 'Partnership Discussion', false]],
+    campaignName: 'Inactive customers — 90 days',
+    journey: [
+      ['Inquiry received', 'Instant response + info sent', true],
+      ['Same day', 'Follow-up with availability', true],
+      ['After service', 'Thank you + feedback request', true],
+      ['Day 7', 'Review request sent', true],
+      ['Day 30', 'Re-engagement offer', false],
+    ],
+  },
+  'underwriters': {
+    appointments: [['9:00 AM', 'Submission Review — Commercial', true], ['11:00 AM', 'Risk Assessment — Fleet Policy', true], ['2:30 PM', 'Broker Call — Renewal', false]],
+    campaignName: 'Pending submissions — 7+ days',
+    journey: [
+      ['Submission received', 'Auto-acknowledgment to broker', true],
+      ['Hour 1', 'Document extraction + validation', true],
+      ['Day 1', 'Risk score + preliminary decision', true],
+      ['Day 2', 'Quote delivered to broker', true],
+      ['Day 7', 'Follow-up on unbound quotes', false],
+    ],
+  },
+  'ma-due-diligence': {
+    appointments: [['9:00 AM', 'CIM Review — Target Co', true], ['11:30 AM', 'Financial Model Review', true], ['2:00 PM', 'LOI Discussion', false]],
+    campaignName: 'Stale deals — no activity 14 days',
+    journey: [
+      ['CIM received', 'AI generates initial analysis', true],
+      ['Day 1', 'Financial normalization complete', true],
+      ['Day 3', 'Quality of earnings draft ready', true],
+      ['Day 5', 'Risk flags + deal memo delivered', true],
+      ['LOI stage', 'Diligence checklist activated', false],
+    ],
+  },
+  'financial-services': {
+    appointments: [['9:00 AM', 'Portfolio Review — Johnson', true], ['11:00 AM', 'Compliance Audit Prep', true], ['2:00 PM', 'New Client Onboarding', false]],
+    campaignName: 'Clients without review — 6 months',
+    journey: [
+      ['Client onboarded', 'Welcome packet + access sent', true],
+      ['Week 1', 'Initial portfolio analysis ready', true],
+      ['Monthly', 'Automated performance report', true],
+      ['Quarterly', 'Rebalancing recommendations', true],
+      ['Annual', 'Tax optimization review', false],
+    ],
+  },
+}
+
 const faqs = [
   {
     q: 'How long does setup take?',
@@ -579,7 +686,7 @@ export default function IndustryPage() {
                                 ))}
                               </div>
                               <div className="space-y-2">
-                                {[['9:00 AM', 'Botox Consultation', true], ['11:30 AM', 'Filler Touch-up', true], ['2:00 PM', 'New Client Intake', false]].map(([time, appt, confirmed], ai) => (
+                                {(industryMockups[industry.slug]?.appointments ?? [['9:00 AM', 'Client Consultation', true], ['11:30 AM', 'Follow-up Meeting', true], ['2:00 PM', 'New Prospect Intake', false]]).map(([time, appt, confirmed], ai) => (
                                   <div key={ai} className="flex items-center gap-3 p-2.5 rounded-lg bg-muted/40">
                                     <div className="w-1.5 h-8 rounded-full flex-shrink-0" style={{ backgroundColor: confirmed ? industry.accentColor : '#d1d5db' }} />
                                     <div className="flex-1 min-w-0">
@@ -623,7 +730,7 @@ export default function IndustryPage() {
                               <div className="flex items-center justify-between mb-5">
                                 <div>
                                   <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Win-Back Campaign</div>
-                                  <div className="text-lg font-semibold text-foreground mt-0.5">90-day lapsed clients</div>
+                                  <div className="text-lg font-semibold text-foreground mt-0.5">{industryMockups[industry.slug]?.campaignName ?? '90-day inactive contacts'}</div>
                                 </div>
                                 <div className="text-[10px] px-2 py-1 rounded-full bg-green-100 text-green-700 font-medium">Running</div>
                               </div>
@@ -651,13 +758,13 @@ export default function IndustryPage() {
                                 <div className="text-[10px] text-muted-foreground">Automated</div>
                               </div>
                               <div className="space-y-3">
-                                {[
-                                  ['Booking confirmed', 'Intake form sent automatically', true],
-                                  ['24hr before', 'Pre-care instructions delivered', true],
-                                  ['Day of visit', 'Reminder + parking info sent', true],
-                                  ['2hr after visit', 'Post-care follow-up sent', true],
-                                  ['7 days later', 'Review request & rebooking offer', false],
-                                ].map(([timing, action, done], ti) => (
+                                {(industryMockups[industry.slug]?.journey ?? [
+                                  ['Inquiry received', 'Auto-response sent immediately', true],
+                                  ['Same day', 'Qualification questions sent', true],
+                                  ['Day 2', 'Follow-up with next steps', true],
+                                  ['Day 5', 'Check-in and progress update', true],
+                                  ['Day 14', 'Review request & referral ask', false],
+                                ]).map(([timing, action, done], ti) => (
                                   <div key={ti} className="flex items-start gap-3">
                                     <div className="flex flex-col items-center flex-shrink-0 mt-0.5">
                                       <div className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] ${done ? 'text-white' : 'border-2 border-border'}`}
