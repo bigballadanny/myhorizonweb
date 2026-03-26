@@ -6,6 +6,7 @@ import { ArrowRight, ChevronDown } from 'lucide-react'
 import { Button } from './ui/button'
 import { HeroCapture } from './HeroCapture'
 import { smoothScrollTo } from '../hooks/useSmoothScroll'
+import heroSynthiosDragon from '@/assets/hero-synthios-dragon.jpg'
 import gsap from 'gsap'
 
 /* ─── Magnetic button wrapper ─── */
@@ -120,90 +121,25 @@ function KineticHeadline() {
   )
 }
 
-/* ─── Premium hero visual: glass dashboard mockup ─── */
+/* ─── Hero visual: Synthios dragon emblem ─── */
 function HeroVisual() {
   return (
-    <div className="relative w-full max-w-xl mx-auto">
-      {/* Ambient glow behind the card */}
-      <div className="absolute -inset-8 bg-accent-blue/8 rounded-3xl blur-3xl" />
-      <div className="absolute -inset-12 bg-purple-500/5 rounded-3xl blur-[60px]" />
+    <div className="relative w-full max-w-lg mx-auto flex items-center justify-center">
+      {/* Ambient glow behind the image */}
+      <div className="absolute inset-0 bg-accent-blue/10 rounded-full blur-[80px] scale-75" />
+      <div className="absolute inset-0 bg-purple-500/8 rounded-full blur-[100px] scale-90" />
 
-      {/* Main glass card — dashboard preview */}
-      <div className="relative glass-card rounded-2xl border border-white/10 p-6 shadow-2xl">
-        {/* Top bar */}
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-red-400/60" />
-            <div className="w-3 h-3 rounded-full bg-yellow-400/60" />
-            <div className="w-3 h-3 rounded-full bg-green-400/60" />
-          </div>
-          <span className="text-[10px] text-muted-foreground/50 font-mono">SYNTHIOS Dashboard</span>
-        </div>
-
-        {/* Metric row */}
-        <div className="grid grid-cols-3 gap-3 mb-5">
-          {[
-            { label: 'Active Agents', value: '12', trend: '+3' },
-            { label: 'Leads Today', value: '47', trend: '+18' },
-            { label: 'Response Time', value: '<2m', trend: '-40%' },
-          ].map((m, i) => (
-            <motion.div
-              key={m.label}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.2 + i * 0.15, duration: 0.5 }}
-              className="glass-card rounded-lg p-3"
-            >
-              <p className="text-[10px] text-muted-foreground/60 mb-1">{m.label}</p>
-              <div className="flex items-baseline gap-1.5">
-                <span className="text-lg font-semibold text-foreground">{m.value}</span>
-                <span className="text-[10px] text-emerald-400">{m.trend}</span>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Activity feed */}
-        <div className="space-y-2.5">
-          {[
-            { time: '2m ago', text: 'AI Agent qualified lead — Meridian Construction', dot: 'bg-emerald-400' },
-            { time: '8m ago', text: 'Follow-up sent to 3 prospects automatically', dot: 'bg-accent-blue' },
-            { time: '15m ago', text: 'New appointment booked via voice agent', dot: 'bg-purple-400' },
-            { time: '1h ago', text: 'Pipeline report generated — $2.4M active', dot: 'bg-amber-400' },
-          ].map((item, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 1.8 + i * 0.12, duration: 0.4 }}
-              className="flex items-start gap-2.5 text-xs"
-            >
-              <div className={`w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0 ${item.dot}`} />
-              <div className="flex-1">
-                <span className="text-foreground/80">{item.text}</span>
-              </div>
-              <span className="text-muted-foreground/40 flex-shrink-0">{item.time}</span>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-
-      {/* Floating notification card — offset */}
+      {/* Dragon S emblem with subtle pulse */}
       <motion.div
-        initial={{ opacity: 0, y: 20, x: 20 }}
-        animate={{ opacity: 1, y: 0, x: 0 }}
-        transition={{ delay: 2.5, duration: 0.6, ease: 'easeOut' }}
-        className="absolute -bottom-4 -right-4 glass-card rounded-xl border border-white/10 p-3 shadow-xl max-w-[200px]"
+        animate={{ scale: [1, 1.02, 1] }}
+        transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+        className="relative"
       >
-        <div className="flex items-center gap-2 mb-1">
-          <div className="w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center">
-            <div className="w-2 h-2 rounded-full bg-emerald-400" />
-          </div>
-          <span className="text-[10px] font-medium text-foreground/90">New Lead Captured</span>
-        </div>
-        <p className="text-[10px] text-muted-foreground/60 leading-relaxed">
-          Sarah M. from Valley Roofing — requested AI consultation
-        </p>
+        <img
+          src={heroSynthiosDragon}
+          alt="SYNTHIOS"
+          className="w-full max-w-md rounded-2xl object-contain drop-shadow-[0_0_40px_rgba(124,58,237,0.3)]"
+        />
       </motion.div>
     </div>
   )
