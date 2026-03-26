@@ -266,7 +266,7 @@
 
 html {
   font-size: var(--font-size);
-  scroll-behavior: smooth;
+  /* scroll-behavior removed — Lenis handles smooth scrolling */
 }
 
 /* =====================================================
@@ -457,12 +457,92 @@ body::-webkit-scrollbar, main::-webkit-scrollbar {
   }
 }
 
-/* ── Smooth scroll — single scroll context, no trapping ── */
+/* ── Scroll — Lenis handles smooth scrolling, no CSS competition ── */
 html {
-  scroll-behavior: smooth;
   overflow-x: hidden;
-  overscroll-behavior-y: none;
 }
-*:not(html):not(body) {
-  scroll-snap-type: none !important;
+html.lenis, html.lenis body {
+  height: auto;
 }
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+/* =====================================================
+   Glassmorphism Utilities
+   ===================================================== */
+.glass-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-card-hover {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card-hover:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  transform: translateY(-2px);
+}
+
+/* Light mode glass */
+:not(.dark) .glass-card {
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+:not(.dark) .glass-card-hover:hover {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: rgba(0, 0, 0, 0.12);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.03);
+}
+
+/* =====================================================
+   Hero Gradient Orb Drift Animations
+   ===================================================== */
+@keyframes drift-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25%      { transform: translate(30px, -20px) scale(1.05); }
+  50%      { transform: translate(-10px, 30px) scale(0.95); }
+  75%      { transform: translate(-30px, -10px) scale(1.02); }
+}
+
+@keyframes drift-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25%      { transform: translate(-25px, 15px) scale(1.03); }
+  50%      { transform: translate(20px, -25px) scale(0.97); }
+  75%      { transform: translate(15px, 20px) scale(1.04); }
+}
+
+@keyframes drift-3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%      { transform: translate(20px, 20px) scale(1.06); }
+  66%      { transform: translate(-15px, -15px) scale(0.94); }
+}
+
+.animate-drift-1 { animation: drift-1 15s ease-in-out infinite; }
+.animate-drift-2 { animation: drift-2 18s ease-in-out infinite; }
+.animate-drift-3 { animation: drift-3 12s ease-in-out infinite; }
+
+/* =====================================================
+   Floating Visual — Spinning Rings
+   ===================================================== */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes spin-reverse {
+  from { transform: rotate(360deg); }
+  to   { transform: rotate(0deg); }
+}
+
+.animate-spin-slow    { animation: spin-slow 30s linear infinite; }
+.animate-spin-reverse { animation: spin-reverse 25s linear infinite; }

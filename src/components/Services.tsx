@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { ArrowRight, Bot, Workflow, BarChart3, Megaphone, LineChart, Layers } from 'lucide-react'
 import { Button } from './ui/button'
+import { smoothScrollTo } from '../hooks/useSmoothScroll'
 import serviceAgentsImg from '@/assets/service-agents-web.jpg'
 import serviceWorkflowsImg from '@/assets/service-workflows-web.jpg'
 import serviceCrmImg from '@/assets/service-crm-web.jpg'
@@ -68,10 +69,7 @@ const additionalServices = [
 ]
 
 export function Services() {
-  const scrollToContact = () => {
-    const element = document.getElementById('contact')
-    if (element) element.scrollIntoView({ behavior: 'smooth' })
-  }
+  const scrollToContact = () => smoothScrollTo('contact')
 
   return (
     <section id="services" className="py-20 lg:py-24 bg-background">
@@ -103,10 +101,10 @@ export function Services() {
             return (
               <motion.div
                 key={service.id}
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, x: service.flip ? 40 : -40, y: 10 }}
+                whileInView={{ opacity: 1, x: 0, y: 0 }}
                 viewport={{ once: true, amount: 0.1 }}
-                transition={{ duration: 0.6 }}
+                transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
                 className="border-t border-border py-12 lg:py-14"
               >
                 <div className={`grid lg:grid-cols-[1fr_1.2fr] gap-10 lg:gap-16 items-start ${service.flip ? 'lg:[direction:rtl]' : ''}`}>
