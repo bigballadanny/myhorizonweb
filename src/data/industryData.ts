@@ -1,3 +1,13 @@
+import industryMedSpa from '@/assets/industry-med-spa.jpg'
+import industryTrades from '@/assets/industry-trades.jpg'
+import industryConstruction from '@/assets/industry-construction.jpg'
+import industryProfessionalServices from '@/assets/industry-professional-services.jpg'
+import industryRealEstate from '@/assets/industry-real-estate.jpg'
+import industrySmallBusiness from '@/assets/industry-small-business.jpg'
+import industryUnderwriters from '@/assets/industry-underwriters.jpg'
+import industryMADueDiligence from '@/assets/industry-ma-due-diligence.jpg'
+import industryFinancialServices from '@/assets/industry-financial-services.jpg'
+
 export interface UseCase {
   title: string
   scenario: string
@@ -16,6 +26,7 @@ export interface IndustryData {
   hook: string
   accentColor: string        // hex for inline styles
   accentColorLight: string   // light tint hex for hero bg
+  heroImage?: string          // static import for hero background
   ctaImage: string           // Unsplash or other premium image for CTA section
   demoUrl?: string           // live demo URL (optional)
   painPoints: { title: string; description: string }[]
@@ -34,6 +45,7 @@ export const industryData: Record<string, IndustryData> = {
       'Your treatment rooms should never sit empty. AI agents that handle booking, reminders, and re-engagement free your staff to focus on what they do best — delivering exceptional results that keep clients coming back.',
     accentColor: '#f472b6',
     accentColorLight: '#fdf2f8',
+    heroImage: industryMedSpa,
     ctaImage: '/med-spa-bg.png',
     painPoints: [
       {
@@ -113,6 +125,7 @@ export const industryData: Record<string, IndustryData> = {
       'Every unanswered call is revenue walking out the door. AI systems built for trades businesses capture, qualify, and schedule leads automatically — so you close more jobs without hiring a dispatcher.',
     accentColor: '#fb923c',
     accentColorLight: '#fff7ed',
+    heroImage: industryTrades,
     ctaImage: 'https://images.unsplash.com/photo-1621905252507-b35492cc74b4?q=80&w=2938&auto=format&fit=crop',
     painPoints: [
       {
@@ -192,6 +205,7 @@ export const industryData: Record<string, IndustryData> = {
       'Construction projects move fast and involve dozens of moving parts. AI workflows keep bids organized, subs coordinated, and clients informed — without adding headcount to your back office.',
     accentColor: '#fbbf24',
     accentColorLight: '#fffbeb',
+    heroImage: industryConstruction,
     ctaImage: 'https://images.unsplash.com/photo-1541888086425-d81bb19240f5?q=80&w=2940&auto=format&fit=crop',
     painPoints: [
       {
@@ -271,6 +285,7 @@ export const industryData: Record<string, IndustryData> = {
       'Every hour you spend on intake, proposals, and follow-ups is an hour you\'re not billing. AI systems built for law firms, CPAs, consultants, and agencies turn your back office into a machine — while keeping the client experience genuinely personal.',
     accentColor: '#64748b',
     accentColorLight: '#f8fafc',
+    heroImage: industryProfessionalServices,
     ctaImage: 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2832&auto=format&fit=crop',
     painPoints: [
       {
@@ -350,6 +365,7 @@ export const industryData: Record<string, IndustryData> = {
       'The best real estate agents win on speed and follow-up. AI systems that instantly respond to inquiries, qualify buyers and sellers, and schedule showings let you compete at a level that used to require a full team.',
     accentColor: '#10b981',
     accentColorLight: '#f0fdf4',
+    heroImage: industryRealEstate,
     ctaImage: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=2873&auto=format&fit=crop',
     painPoints: [
       {
@@ -429,6 +445,7 @@ export const industryData: Record<string, IndustryData> = {
       'You don\'t need to be a tech company to run like one. AI systems built around your specific workflows automate the repetitive work, surface the right information at the right time, and help you scale without burning out.',
     accentColor: '#3b82f6',
     accentColorLight: '#eff6ff',
+    heroImage: industrySmallBusiness,
     ctaImage: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=2940&auto=format&fit=crop',
     painPoints: [
       {
@@ -508,6 +525,7 @@ export const industryData: Record<string, IndustryData> = {
       'Modern underwriting is a race between speed and precision. AI systems that analyze submissions, surface risk signals, and automate decision support let your team process more volume without compromising accuracy.',
     accentColor: '#a855f7',
     accentColorLight: '#faf5ff',
+    heroImage: industryUnderwriters,
     ctaImage: 'https://images.unsplash.com/photo-1450101499163-c8848c66cb85?q=80&w=2940&auto=format&fit=crop',
     painPoints: [
       {
@@ -587,6 +605,7 @@ export const industryData: Record<string, IndustryData> = {
       'The best deals go to the buyers who move fastest without sacrificing rigor. AI systems that automate financial extraction, normalize EBITDA, and surface risk signals let your team evaluate more opportunities — and close with confidence.',
     accentColor: '#eab308',
     accentColorLight: '#fefce8',
+    heroImage: industryMADueDiligence,
     ctaImage: 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=2940&auto=format&fit=crop',
     demoUrl: 'https://dealflow-lite-143312280982.us-central1.run.app',
     painPoints: [
@@ -667,6 +686,7 @@ export const industryData: Record<string, IndustryData> = {
       'In financial services, trust is built through transparency and consistency. AI systems that automate reporting, surface portfolio insights, and manage compliance workflows let your advisors spend more time on what clients actually pay for — strategic guidance.',
     accentColor: '#14b8a6',
     accentColorLight: '#f0fdfa',
+    heroImage: industryFinancialServices,
     ctaImage: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2940&auto=format&fit=crop',
     painPoints: [
       {

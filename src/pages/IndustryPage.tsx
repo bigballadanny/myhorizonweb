@@ -306,90 +306,105 @@ export default function IndustryPage() {
 
       <main>
         {/* ─── HERO ─────────────────────────────────────────────── */}
-        <section className="relative pt-32 pb-24 lg:pt-44 lg:pb-32 bg-white dark:bg-black">
-          <div className="container mx-auto px-5 sm:px-8 lg:px-12 relative z-10">
-            {/* Breadcrumb with icon */}
+        <section className="relative min-h-[70vh] flex flex-col justify-end overflow-hidden">
+          {/* Background image */}
+          {industry.heroImage && (
+            <div
+              className="absolute inset-0 bg-cover bg-center"
+              style={{ backgroundImage: `url(${industry.heroImage})` }}
+            />
+          )}
+          {/* Dark overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/60 to-black/40" />
+          {/* Accent tinted overlay */}
+          <div
+            className="absolute inset-0"
+            style={{ backgroundColor: industry.accentColor, opacity: 0.12 }}
+          />
+
+          <div className="container mx-auto px-5 sm:px-8 lg:px-12 relative z-10 pt-40 pb-16 lg:pb-20">
+            {/* Breadcrumb */}
             <motion.div
               initial={{ opacity: 0, x: -8 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.4 }}
-              className="mb-14 flex items-center gap-3"
+              className="mb-10 flex items-center gap-3"
             >
-              <Icon className="w-10 h-10 text-muted-foreground" />
+              <Icon className="w-10 h-10 text-white/70" />
               <Link
                 to="/"
-                className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+                className="inline-flex items-center gap-1.5 text-sm font-medium text-white/60 hover:text-white transition-colors"
               >
                 <ArrowLeft className="w-3.5 h-3.5" />
                 All Industries
               </Link>
             </motion.div>
 
-            <div className="grid lg:grid-cols-2 gap-16 lg:gap-20 items-start">
-              {/* Left: text */}
-              <div>
-                <motion.h1
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
-                  className="font-serif text-5xl sm:text-6xl lg:text-[72px] text-foreground leading-[1.05] tracking-tight mb-6"
-                >
-                  {industry.name}
-                </motion.h1>
+            {/* Title + tagline */}
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="font-serif text-5xl sm:text-6xl lg:text-[72px] text-white leading-[1.05] tracking-tight mb-4 max-w-3xl"
+            >
+              {industry.name}
+            </motion.h1>
 
-                <motion.p
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="text-lg sm:text-xl text-white/70 leading-relaxed max-w-2xl mb-10"
+            >
+              {industry.tagline}
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.2 }}
+              className="mb-14"
+            >
+              <a
+                href="https://cal.com/myhorizon/consultation"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Button
+                  className="text-white px-10 py-7 rounded-2xl text-lg font-bold shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300"
+                  style={{ backgroundColor: industry.accentColor }}
+                >
+                  Book a Free Consultation
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </Button>
+              </a>
+            </motion.div>
+
+            {/* Metric glass cards row */}
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.25 }}
+              className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4"
+            >
+              {industry.metrics.map((m, i) => (
+                <motion.div
+                  key={m.label}
                   initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.1 }}
-                  className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-xl line-clamp-2 mb-10"
+                  transition={{ duration: 0.4, delay: 0.3 + i * 0.08 }}
+                  className="bg-white/10 backdrop-blur-md border border-white/15 rounded-2xl p-5 lg:p-6"
                 >
-                  {industry.hook}
-                </motion.p>
-
-                <motion.div
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: 0.2 }}
-                >
-                  <a
-                    href="https://cal.com/myhorizon/consultation"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <p
+                    className="font-serif text-3xl sm:text-4xl font-semibold mb-1.5"
+                    style={{ color: industry.accentColor }}
                   >
-                    <Button
-                      className="text-white px-10 py-7 rounded-2xl text-lg font-bold shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300"
-                      style={{ backgroundColor: industry.accentColor }}
-                    >
-                      Book a Free Consultation
-                      <ArrowRight className="w-5 h-5 ml-2" />
-                    </Button>
-                  </a>
+                    <AnimatedMetric value={m.value} />
+                  </p>
+                  <p className="text-sm text-white/70 font-medium leading-tight">{m.label}</p>
                 </motion.div>
-              </div>
-
-              {/* Right: metric cards 2x2 */}
-              <motion.div
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.15 }}
-                className="grid grid-cols-2 gap-4"
-              >
-                {industry.metrics.map((m) => (
-                  <div
-                    key={m.label}
-                    className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-6 shadow-sm"
-                  >
-                    <p
-                      className="font-serif text-3xl sm:text-4xl font-semibold mb-1.5"
-                      style={{ color: industry.accentColor }}
-                    >
-                      <AnimatedMetric value={m.value} />
-                    </p>
-                    <p className="text-sm text-muted-foreground font-medium leading-tight">{m.label}</p>
-                  </div>
-                ))}
-              </motion.div>
-            </div>
+              ))}
+            </motion.div>
           </div>
         </section>
 
@@ -476,11 +491,18 @@ export default function IndustryPage() {
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.2 }}
-                    transition={{ duration: 0.5, delay: i * 0.08 }}
+                    transition={{ duration: 0.5, delay: i * 0.1 }}
                   >
-                    <div className="border-l-2 border-zinc-700 pl-6 py-2">
-                      <h3 className="text-white text-xl sm:text-2xl font-medium mb-2">{p.title}</h3>
-                      <p className="text-zinc-400 text-base leading-relaxed">{p.description}</p>
+                    <div className="relative border-l-2 pl-6 py-2" style={{ borderColor: `${industry.accentColor}60` }}>
+                      {/* Decorative watermark number */}
+                      <span
+                        className="absolute -left-3 -top-4 font-serif text-7xl font-bold pointer-events-none select-none"
+                        style={{ color: industry.accentColor, opacity: 0.1 }}
+                      >
+                        {String(i + 1).padStart(2, '0')}
+                      </span>
+                      <h3 className="text-white text-xl sm:text-2xl font-medium mb-2 relative z-10">{p.title}</h3>
+                      <p className="text-zinc-400 text-base leading-relaxed relative z-10">{p.description}</p>
                     </div>
                     {i < industry.painPoints.length - 1 && (
                       <hr className="border-zinc-800 my-8" />
@@ -519,13 +541,16 @@ export default function IndustryPage() {
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.2 }}
-                    transition={{ duration: 0.5, delay: i * 0.08 }}
+                    transition={{ duration: 0.5, delay: i * 0.1 }}
                     className="py-16 first:pt-0 last:pb-0"
                   >
                     <div className={`grid lg:grid-cols-2 gap-10 lg:gap-16 items-center ${isReversed ? 'lg:[direction:rtl]' : ''}`}>
-                      {/* Text */}
-                      <div className={isReversed ? 'lg:[direction:ltr]' : ''}>
-                        <SolIcon className="w-5 h-5 text-muted-foreground mb-4" />
+                      {/* Text — glass card with accent left border */}
+                      <div
+                        className={`rounded-2xl p-6 sm:p-8 bg-white/5 dark:bg-white/[0.03] backdrop-blur-sm border border-border/40 ${isReversed ? 'lg:[direction:ltr]' : ''}`}
+                        style={{ borderLeftWidth: '4px', borderLeftColor: industry.accentColor }}
+                      >
+                        <SolIcon className="w-5 h-5 mb-4" style={{ color: industry.accentColor }} />
                         <h3 className="font-serif text-2xl sm:text-[28px] text-foreground leading-snug mb-3">{s.title}</h3>
                         <p className="text-muted-foreground text-base sm:text-lg leading-relaxed">{s.description}</p>
                       </div>
@@ -705,29 +730,23 @@ export default function IndustryPage() {
 
         {/* ─── CTA ────────────────────────────────────────────── */}
         <section className="relative py-32 lg:py-48 overflow-hidden">
-          {industry.ctaImage ? (
-            <div
-              className="absolute inset-0 bg-cover bg-center"
-              style={{ backgroundImage: `url(${industry.ctaImage})` }}
-            />
-          ) : (
-            <div
-              className="absolute inset-0"
-              style={{ backgroundColor: industry.accentColor }}
-            />
-          )}
+          {/* Use heroImage as background, fall back to ctaImage */}
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: `url(${industry.heroImage || industry.ctaImage})` }}
+          />
 
-          <div className="absolute inset-0 bg-black/60 dark:bg-black/70" />
+          <div className="absolute inset-0 bg-black/70" />
           <div className="absolute top-0 inset-x-0 h-32 bg-gradient-to-b from-background to-transparent" />
           <div className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-background to-transparent" />
 
-          <div className="container mx-auto px-5 sm:px-8 lg:px-12 relative z-10 text-center flex flex-col items-center justify-center">
+          <div className="container mx-auto px-5 sm:px-8 lg:px-12 relative z-10 flex flex-col items-center justify-center">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.6 }}
-              className="max-w-4xl mx-auto"
+              className="max-w-4xl mx-auto bg-white/10 backdrop-blur-xl border border-white/15 rounded-3xl p-10 sm:p-14 lg:p-16 text-center"
             >
               <div className="mb-8 inline-flex items-center gap-2 px-5 py-2 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-white shadow-xl">
                 <Users className="w-4 h-4 text-white/80" />
@@ -736,7 +755,7 @@ export default function IndustryPage() {
 
               <h2 className="font-serif text-5xl sm:text-6xl lg:text-7xl text-white leading-tight mb-8">
                 Ready to scale your <br className="hidden sm:block" />
-                <span className="opacity-90">{industry.name}</span> operations?
+                <span style={{ color: industry.accentColor }}>{industry.name}</span> operations?
               </h2>
 
               <p className="text-white/80 text-lg sm:text-xl lg:text-2xl leading-relaxed mb-12 max-w-2xl mx-auto font-light">
