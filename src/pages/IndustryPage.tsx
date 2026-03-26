@@ -529,48 +529,127 @@ export default function IndustryPage() {
                         <h3 className="font-serif text-2xl sm:text-[28px] text-foreground leading-snug mb-3">{s.title}</h3>
                         <p className="text-muted-foreground text-base sm:text-lg leading-relaxed">{s.description}</p>
                       </div>
-                      {/* Visual card — abstract UI mockup */}
+                      {/* Visual card — contextual per solution index */}
                       <div className={isReversed ? 'lg:[direction:ltr]' : ''}>
                         <div
-                          className="rounded-2xl overflow-hidden border border-border/50 bg-card relative"
-                          style={{ boxShadow: `0 0 0 1px ${industry.accentColor}18, 0 8px 40px rgba(0,0,0,0.08)` }}
+                          className="rounded-2xl overflow-hidden border border-border/60 bg-card shadow-sm"
+                          style={{ minHeight: '260px' }}
                         >
-                          {/* Top bar */}
-                          <div className="flex items-center gap-1.5 px-4 py-3 border-b border-border/50 bg-muted/30">
-                            <div className="w-2.5 h-2.5 rounded-full bg-red-400/60" />
-                            <div className="w-2.5 h-2.5 rounded-full bg-yellow-400/60" />
-                            <div className="w-2.5 h-2.5 rounded-full bg-green-400/60" />
-                            <div className="flex-1 mx-3 h-5 bg-muted rounded-md" />
-                          </div>
-                          {/* Content area */}
-                          <div className="p-6 space-y-3">
-                            {/* Header row */}
-                            <div className="flex items-center justify-between mb-4">
-                              <div className="h-4 w-32 bg-muted rounded" />
-                              <div className="h-7 w-20 rounded-lg" style={{ backgroundColor: `${industry.accentColor}20` }}>
-                                <div className="h-full w-full rounded-lg flex items-center justify-center">
-                                  <div className="h-2 w-12 rounded" style={{ backgroundColor: industry.accentColor }} />
-                                </div>
+                          {i % 4 === 0 && (
+                            /* BOOKING: Calendar view */
+                            <div className="p-6 h-full">
+                              <div className="flex items-center justify-between mb-4">
+                                <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Upcoming Appointments</span>
+                                <span className="text-xs px-2 py-1 rounded-full text-white font-medium" style={{ backgroundColor: industry.accentColor }}>Live</span>
+                              </div>
+                              <div className="grid grid-cols-7 gap-1 mb-4">
+                                {['M','T','W','T','F','S','S'].map((d,di) => (
+                                  <div key={di} className="text-center text-[10px] text-muted-foreground font-medium pb-1">{d}</div>
+                                ))}
+                                {[...Array(7)].map((_,di) => (
+                                  <div key={di} className={`aspect-square rounded-md flex items-center justify-center text-xs font-medium ${di === 2 ? 'text-white' : di === 4 || di === 5 ? 'border border-border/80 text-foreground/70' : 'text-muted-foreground'}`}
+                                    style={di === 2 ? { backgroundColor: industry.accentColor } : {}}>
+                                    {di + 14}
+                                  </div>
+                                ))}
+                              </div>
+                              <div className="space-y-2">
+                                {[['9:00 AM', 'Botox Consultation', true], ['11:30 AM', 'Filler Touch-up', true], ['2:00 PM', 'New Client Intake', false]].map(([time, appt, confirmed], ai) => (
+                                  <div key={ai} className="flex items-center gap-3 p-2.5 rounded-lg bg-muted/40">
+                                    <div className="w-1.5 h-8 rounded-full flex-shrink-0" style={{ backgroundColor: confirmed ? industry.accentColor : '#d1d5db' }} />
+                                    <div className="flex-1 min-w-0">
+                                      <div className="text-xs font-semibold text-foreground truncate">{appt as string}</div>
+                                      <div className="text-[10px] text-muted-foreground">{time as string}</div>
+                                    </div>
+                                    {confirmed && <div className="text-[10px] px-1.5 py-0.5 rounded text-white flex-shrink-0" style={{ backgroundColor: `${industry.accentColor}cc` }}>AI Booked</div>}
+                                  </div>
+                                ))}
                               </div>
                             </div>
-                            {/* Simulated data rows */}
-                            {[85, 60, 75, 45].map((w, ri) => (
-                              <div key={ri} className="flex items-center gap-3">
-                                <div className="w-7 h-7 rounded-lg bg-muted flex-shrink-0" />
-                                <div className="flex-1 space-y-1.5">
-                                  <div className="h-2.5 rounded" style={{ width: `${w}%`, backgroundColor: ri === 0 ? `${industry.accentColor}30` : undefined }} className2="bg-muted" />
-                                  <div className="h-2 bg-muted/60 rounded" style={{ width: `${w * 0.6}%` }} />
+                          )}
+                          {i % 4 === 1 && (
+                            /* REMINDERS: Chat/SMS thread */
+                            <div className="p-6 h-full">
+                              <div className="flex items-center gap-2 mb-5">
+                                <div className="w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center text-white text-xs font-bold" style={{ backgroundColor: industry.accentColor }}>AI</div>
+                                <div>
+                                  <div className="text-xs font-semibold text-foreground">SYNTHIOS Assistant</div>
+                                  <div className="text-[10px] text-muted-foreground flex items-center gap-1"><div className="w-1.5 h-1.5 rounded-full bg-green-500" />Active now</div>
                                 </div>
-                                <div className="h-5 w-12 rounded-md bg-muted flex-shrink-0" />
                               </div>
-                            ))}
-                            {/* Bottom status bar */}
-                            <div className="mt-4 pt-3 border-t border-border/40 flex items-center gap-2">
-                              <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: industry.accentColor }} />
-                              <div className="h-2.5 bg-muted rounded flex-1" />
-                              <div className="h-2.5 w-16 bg-muted/60 rounded" />
+                              <div className="space-y-3">
+                                <div className="flex justify-end"><div className="max-w-[80%] px-3 py-2 rounded-2xl rounded-tr-sm bg-muted text-xs text-foreground">Can I reschedule for Thursday?</div></div>
+                                <div className="flex items-end gap-2">
+                                  <div className="w-6 h-6 rounded-full flex-shrink-0 flex items-center justify-center text-white text-[8px] font-bold" style={{ backgroundColor: industry.accentColor }}>AI</div>
+                                  <div className="max-w-[80%] px-3 py-2 rounded-2xl rounded-tl-sm text-xs text-white" style={{ backgroundColor: industry.accentColor }}>Of course! I have 2pm or 4pm open on Thursday. Which works best?</div>
+                                </div>
+                                <div className="flex justify-end"><div className="max-w-[80%] px-3 py-2 rounded-2xl rounded-tr-sm bg-muted text-xs text-foreground">2pm works 👍</div></div>
+                                <div className="flex items-end gap-2">
+                                  <div className="w-6 h-6 rounded-full flex-shrink-0 flex items-center justify-center text-white text-[8px] font-bold" style={{ backgroundColor: industry.accentColor }}>AI</div>
+                                  <div className="px-3 py-2 rounded-2xl rounded-tl-sm text-xs text-white" style={{ backgroundColor: industry.accentColor }}>Done! Thursday at 2pm confirmed. See you then ✓</div>
+                                </div>
+                                <div className="text-[9px] text-muted-foreground text-right pr-1">Delivered · No staff involved</div>
+                              </div>
                             </div>
-                          </div>
+                          )}
+                          {i % 4 === 2 && (
+                            /* REACTIVATION: Campaign metrics */
+                            <div className="p-6 h-full">
+                              <div className="flex items-center justify-between mb-5">
+                                <div>
+                                  <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Win-Back Campaign</div>
+                                  <div className="text-lg font-semibold text-foreground mt-0.5">90-day lapsed clients</div>
+                                </div>
+                                <div className="text-[10px] px-2 py-1 rounded-full bg-green-100 text-green-700 font-medium">Running</div>
+                              </div>
+                              <div className="grid grid-cols-3 gap-3 mb-5">
+                                {[['847', 'Sent'], ['412', 'Opened'], ['38', 'Booked']].map(([val, lbl], mi) => (
+                                  <div key={mi} className="text-center p-3 rounded-xl bg-muted/40">
+                                    <div className="text-xl font-bold text-foreground" style={mi === 2 ? { color: industry.accentColor } : {}}>{val}</div>
+                                    <div className="text-[10px] text-muted-foreground mt-0.5">{lbl}</div>
+                                  </div>
+                                ))}
+                              </div>
+                              <div className="space-y-2">
+                                <div className="flex items-center justify-between text-[10px] text-muted-foreground mb-1"><span>Open rate</span><span className="font-medium text-foreground">48.6%</span></div>
+                                <div className="h-2 bg-muted rounded-full overflow-hidden"><div className="h-full rounded-full" style={{ width: '48.6%', backgroundColor: industry.accentColor }} /></div>
+                                <div className="flex items-center justify-between text-[10px] text-muted-foreground mb-1 mt-2"><span>Conversion</span><span className="font-medium text-foreground">9.2%</span></div>
+                                <div className="h-2 bg-muted rounded-full overflow-hidden"><div className="h-full rounded-full" style={{ width: '9.2%', backgroundColor: industry.accentColor }} /></div>
+                              </div>
+                            </div>
+                          )}
+                          {i % 4 === 3 && (
+                            /* WORKFLOW: Checklist/Timeline */
+                            <div className="p-6 h-full">
+                              <div className="flex items-center justify-between mb-5">
+                                <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Client Journey</div>
+                                <div className="text-[10px] text-muted-foreground">Automated</div>
+                              </div>
+                              <div className="space-y-3">
+                                {[
+                                  ['Booking confirmed', 'Intake form sent automatically', true],
+                                  ['24hr before', 'Pre-care instructions delivered', true],
+                                  ['Day of visit', 'Reminder + parking info sent', true],
+                                  ['2hr after visit', 'Post-care follow-up sent', true],
+                                  ['7 days later', 'Review request & rebooking offer', false],
+                                ].map(([timing, action, done], ti) => (
+                                  <div key={ti} className="flex items-start gap-3">
+                                    <div className="flex flex-col items-center flex-shrink-0 mt-0.5">
+                                      <div className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] ${done ? 'text-white' : 'border-2 border-border'}`}
+                                        style={done ? { backgroundColor: industry.accentColor } : {}}>
+                                        {done ? '✓' : ''}
+                                      </div>
+                                      {ti < 4 && <div className="w-px h-4 mt-0.5" style={{ backgroundColor: done ? `${industry.accentColor}40` : '#e5e7eb' }} />}
+                                    </div>
+                                    <div className="pb-1">
+                                      <div className="text-[10px] text-muted-foreground">{timing as string}</div>
+                                      <div className={`text-xs font-medium ${done ? 'text-foreground' : 'text-muted-foreground'}`}>{action as string}</div>
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>
