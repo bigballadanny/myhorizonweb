@@ -551,7 +551,7 @@ html.lenis, html.lenis body {
    Hero Image Edge-Fade Mask
    Seamlessly blends into both dark and light backgrounds
    ===================================================== */
-/* Dark mode: gentle fade — image blends naturally into dark bg */
+/* Dark mode: gentle radial fade — image melts into dark bg */
 .dark .hero-image-mask {
   -webkit-mask-image:
     radial-gradient(ellipse 90% 85% at center, black 35%, transparent 70%);
@@ -559,10 +559,13 @@ html.lenis, html.lenis body {
     radial-gradient(ellipse 90% 85% at center, black 35%, transparent 70%);
 }
 
-/* Light mode: tighter mask — only the dragon + horizon glow shows */
+/* Light mode: subtle dark vignette behind dragon, soft feathered edge */
 :not(.dark) .hero-image-mask {
   -webkit-mask-image:
-    radial-gradient(ellipse 65% 60% at center 45%, black 20%, transparent 55%);
+    radial-gradient(ellipse 80% 75% at center, black 25%, transparent 60%);
   mask-image:
-    radial-gradient(ellipse 65% 60% at center 45%, black 20%, transparent 55%);
+    radial-gradient(ellipse 80% 75% at center, black 25%, transparent 60%);
+  background: radial-gradient(ellipse 70% 65% at center, rgba(15,15,30,0.85) 0%, rgba(15,15,30,0.4) 40%, rgba(15,15,30,0.08) 65%, transparent 80%);
+  border-radius: 2rem;
+  padding: 0.5rem;
 }
