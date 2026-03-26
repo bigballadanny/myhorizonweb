@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import { ArrowRight, ChevronDown } from 'lucide-react'
 import { Button } from './ui/button'
 import { HeroCapture } from './HeroCapture'
+import { smoothScrollTo } from '../hooks/useSmoothScroll'
 import gsap from 'gsap'
 
 /* ─── Magnetic button wrapper ─── */
@@ -164,15 +165,8 @@ function FloatingVisual() {
 
 /* ─── Main Hero ─── */
 export function Hero() {
-  const scrollToContact = () => {
-    const element = document.getElementById('contact')
-    if (element) element.scrollIntoView({ behavior: 'smooth' })
-  }
-
-  const scrollToServices = () => {
-    const element = document.getElementById('services')
-    if (element) element.scrollIntoView({ behavior: 'smooth' })
-  }
+  const scrollToContact = () => smoothScrollTo('contact')
+  const scrollToServices = () => smoothScrollTo('services')
 
   return (
     <div className="relative min-h-screen w-full bg-background flex items-center overflow-hidden">

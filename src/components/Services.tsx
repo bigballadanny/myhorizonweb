@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { ArrowRight, Bot, Workflow, BarChart3, Megaphone, LineChart, Layers } from 'lucide-react'
 import { Button } from './ui/button'
+import { smoothScrollTo } from '../hooks/useSmoothScroll'
 import serviceAgentsImg from '@/assets/service-agents-web.jpg'
 import serviceWorkflowsImg from '@/assets/service-workflows-web.jpg'
 import serviceCrmImg from '@/assets/service-crm-web.jpg'
@@ -68,10 +69,7 @@ const additionalServices = [
 ]
 
 export function Services() {
-  const scrollToContact = () => {
-    const element = document.getElementById('contact')
-    if (element) element.scrollIntoView({ behavior: 'smooth' })
-  }
+  const scrollToContact = () => smoothScrollTo('contact')
 
   return (
     <section id="services" className="py-20 lg:py-24 bg-background">

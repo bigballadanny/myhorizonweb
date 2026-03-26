@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { Menu, X } from 'lucide-react'
 import { Button } from './ui/button'
 import { ThemeToggle } from './ThemeToggle'
+import { smoothScrollTo } from '../hooks/useSmoothScroll'
 import logoIcon from '@/assets/myhorizon-logo-clean.png'
 
 export function Navigation() {
@@ -24,7 +25,7 @@ export function Navigation() {
     setIsMobileMenuOpen(false)
     const element = document.getElementById(sectionId)
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
+      smoothScrollTo(sectionId)
     } else {
       // Not on homepage — navigate there and scroll after load
       navigate(`/#${sectionId}`)

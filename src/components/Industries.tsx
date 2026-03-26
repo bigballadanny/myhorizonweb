@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
 import { Button } from './ui/button'
+import { smoothScrollTo } from '../hooks/useSmoothScroll'
 
 type IconProps = React.SVGProps<SVGSVGElement>
 
@@ -217,10 +218,7 @@ const industries: Industry[] = [
 export function Industries() {
   const navigate = useNavigate()
 
-  const scrollToContact = () => {
-    const element = document.getElementById('contact')
-    if (element) element.scrollIntoView({ behavior: 'smooth' })
-  }
+  const scrollToContact = () => smoothScrollTo('contact')
 
   return (
     <section id="industries" className="py-20 lg:py-24 bg-background">

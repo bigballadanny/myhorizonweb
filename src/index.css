@@ -266,7 +266,7 @@
 
 html {
   font-size: var(--font-size);
-  scroll-behavior: smooth;
+  /* scroll-behavior removed — Lenis handles smooth scrolling */
 }
 
 /* =====================================================
@@ -457,14 +457,18 @@ body::-webkit-scrollbar, main::-webkit-scrollbar {
   }
 }
 
-/* ── Smooth scroll — single scroll context, no trapping ── */
+/* ── Scroll — Lenis handles smooth scrolling, no CSS competition ── */
 html {
-  scroll-behavior: smooth;
   overflow-x: hidden;
-  overscroll-behavior-y: none;
 }
-*:not(html):not(body) {
-  scroll-snap-type: none !important;
+html.lenis, html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
 }
 
 /* =====================================================

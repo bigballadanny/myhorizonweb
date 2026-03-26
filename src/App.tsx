@@ -17,7 +17,7 @@ import { Philosophy } from './components/Philosophy'
 import { ElevenLabsWidget } from './components/ElevenLabsWidget'
 import { NewsletterSignup } from './components/NewsletterSignup'
 import { useVisitorTracking } from './hooks/useVisitorTracking'
-import { useSmoothScroll } from './hooks/useSmoothScroll'
+import { useSmoothScroll, smoothScrollTo } from './hooks/useSmoothScroll'
 import { useSEO } from './hooks/useSEO'
 import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
@@ -62,7 +62,7 @@ export default function App() {
       const tryScroll = (attempts = 0) => {
         const el = document.getElementById(id)
         if (el) {
-          el.scrollIntoView({ behavior: 'smooth' })
+          smoothScrollTo(id)
         } else if (attempts < 10) {
           setTimeout(() => tryScroll(attempts + 1), 100)
         }
