@@ -163,15 +163,15 @@ const industryMockups: Record<string, {
       ['Post-close', 'Anniversary check-in + referral', false],
     ],
   },
-  'small-business': {
-    appointments: [['9:00 AM', 'New Customer Inquiry', true], ['11:30 AM', 'Service Follow-up', true], ['2:00 PM', 'Partnership Discussion', false]],
-    campaignName: 'Inactive customers — 90 days',
+  'legal': {
+    appointments: [['9:00 AM', 'New Client Intake — PI Case', true], ['11:00 AM', 'Discovery Review — Smith v. Corp', true], ['2:00 PM', 'Retainer Follow-up', false]],
+    campaignName: 'Stale leads — no retainer signed',
     journey: [
-      ['Inquiry received', 'Instant response + info sent', true],
-      ['Same day', 'Follow-up with availability', true],
-      ['After service', 'Thank you + feedback request', true],
-      ['Day 7', 'Review request sent', true],
-      ['Day 30', 'Re-engagement offer', false],
+      ['Inquiry received', 'Conflict check + intake form sent', true],
+      ['Same day', 'Retainer agreement for e-signature', true],
+      ['Day 1', 'Document request list sent to client', true],
+      ['Day 7', 'Missing doc follow-up (automated)', true],
+      ['Day 30', 'Case status update to client', false],
     ],
   },
   'underwriters': {

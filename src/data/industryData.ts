@@ -3,7 +3,7 @@ import industryTrades from '@/assets/industry-trades.jpg'
 import industryConstruction from '@/assets/industry-construction.jpg'
 import industryProfessionalServices from '@/assets/industry-professional-services.jpg'
 import industryRealEstate from '@/assets/industry-real-estate.jpg'
-import industrySmallBusiness from '@/assets/industry-small-business.jpg'
+import industryLegal from '@/assets/industry-legal.jpg'
 import industryUnderwriters from '@/assets/industry-underwriters.jpg'
 import industryMADueDiligence from '@/assets/industry-ma-due-diligence.jpg'
 import industryFinancialServices from '@/assets/industry-financial-services.jpg'
@@ -360,9 +360,9 @@ export const industryData: Record<string, IndustryData> = {
     slug: 'real-estate',
     name: 'Real Estate',
     iconName: 'RealEstateIcon',
-    tagline: 'AI agents that qualify leads and schedule showings 24/7 — even when you\'re showing another property.',
+    tagline: 'Never lose a lead to a slow response again. AI that qualifies, books showings, and nurtures — 24/7.',
     hook:
-      'The best real estate agents win on speed and follow-up. AI systems that instantly respond to inquiries, qualify buyers and sellers, and schedule showings let you compete at a level that used to require a full team.',
+      'In real estate, the first agent to respond wins. AI systems that instantly engage every Zillow inquiry, qualify buyers in minutes, and schedule showings while you\'re at the closing table — that\'s how solo agents compete with teams of ten.',
     accentColor: '#10b981',
     accentColorLight: '#f0fdf4',
     heroImage: industryRealEstate,
@@ -436,83 +436,83 @@ export const industryData: Record<string, IndustryData> = {
     ],
   },
 
-  'small-business': {
-    slug: 'small-business',
-    name: 'General Small Business',
-    iconName: 'SmallBusinessIcon',
-    tagline: 'Custom AI systems built around your exact operation, whatever that looks like.',
+  'legal': {
+    slug: 'legal',
+    name: 'Law Firms & Legal',
+    iconName: 'ProfessionalServicesIcon',
+    tagline: 'Client intake, document automation, and case management that runs like a machine.',
     hook:
-      'You don\'t need to be a tech company to run like one. AI systems built around your specific workflows automate the repetitive work, surface the right information at the right time, and help you scale without burning out.',
-    accentColor: '#3b82f6',
-    accentColorLight: '#eff6ff',
-    heroImage: industrySmallBusiness,
-    ctaImage: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=2940&auto=format&fit=crop',
+      'Every minute your attorneys spend on admin is a minute they\'re not billing. AI systems built for law firms handle intake, document collection, deadline tracking, and client communication — so your team focuses on the work that actually wins cases.',
+    accentColor: '#6366f1',
+    accentColorLight: '#eef2ff',
+    heroImage: industryLegal,
+    ctaImage: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=2940&auto=format&fit=crop',
     painPoints: [
       {
-        title: 'You\'re Doing the Work of Three People',
+        title: 'Client Intake Is Manual and Inconsistent',
         description:
-          'As a small business owner, you wear every hat. The admin, follow-up, and communication work that should be handled by a team falls on you — limiting what you can actually grow.',
+          'New clients fill out PDFs, call the front desk, or email random documents. Information gets lost, conflict checks are delayed, and first impressions suffer.',
       },
       {
-        title: 'Customer Inquiries Don\'t Get Fast Enough Responses',
+        title: 'Document Collection Is a Constant Chase',
         description:
-          'When a potential customer doesn\'t hear back quickly, they find someone who responds faster. Every delayed reply is a potential lost sale.',
+          'Paralegals spend hours chasing clients for signed retainers, financial disclosures, and supporting documents. Every missing doc delays the case.',
       },
       {
-        title: 'There\'s No System for Repeat Business',
+        title: 'Deadlines and Statutes Create Constant Anxiety',
         description:
-          'Past customers are your highest-value audience — but without an automated follow-up and re-engagement strategy, you\'re leaving revenue on the table.',
+          'Missing a filing deadline or statute of limitations isn\'t just bad — it\'s malpractice. Manual calendar tracking is a ticking time bomb.',
       },
       {
-        title: 'Operations Run on Tribal Knowledge',
+        title: 'Clients Feel Ignored Between Milestones',
         description:
-          'Processes live in your head or on sticky notes. When something goes wrong — or someone new joins — there\'s no system to fall back on.',
+          'Cases take months. Between major events, clients hear nothing — then call frustrated. Status update calls eat attorney time and create friction.',
       },
     ],
     solutions: [
       {
-        title: 'Custom AI Customer Communication Layer',
+        title: 'AI-Powered Client Intake System',
         description:
-          'Whether it\'s a website chat, inbound text, or email, AI handles first contact — answering questions, capturing lead info, and routing people appropriately.',
+          'Prospective clients complete a guided intake flow online — conflict checks run automatically, retainer agreements are generated, and new matters are opened in your case management system without staff intervention.',
       },
       {
-        title: 'Automated Follow-Up for Every Lead',
+        title: 'Automated Document Collection & Reminders',
         description:
-          'Every inquiry that comes in gets a systematic follow-up sequence — no leads fall through the cracks, regardless of how busy you are.',
+          'AI sends personalized document requests, follows up on missing items, and organizes everything by matter. Clients get a simple portal; your team gets complete files.',
       },
       {
-        title: 'Repeat Business & Loyalty Automation',
+        title: 'Smart Deadline & Calendar Management',
         description:
-          'Automated re-engagement campaigns reach past customers at the right intervals — bringing them back without you having to remember who to call.',
+          'Every statute, filing deadline, and court date is tracked automatically. The system sends escalating reminders to responsible attorneys and flags anything at risk of being missed.',
       },
       {
-        title: 'Operations Documentation & Process Automation',
+        title: 'Proactive Client Communication',
         description:
-          'We help you turn your institutional knowledge into documented, automated workflows — so your business can operate consistently, even when you\'re not there.',
+          'Automated case status updates go to clients at defined intervals. They always know where things stand — and your attorneys only get involved when human judgment is needed.',
       },
     ],
     useCases: [
       {
-        title: 'The Owner Who Slept In',
+        title: 'The Midnight Retainer',
         scenario:
-          'A retail shop owner usually answers customer emails first thing in the morning. Their AI handles overnight inquiries automatically — so they wake up to organized, responded-to threads instead of a backlog.',
+          'A potential personal injury client fills out your online intake form at 11 PM. The AI runs a conflict check, sends a retainer agreement for e-signature, and schedules a consult — all before your office opens. The client is retained by 8 AM.',
       },
       {
-        title: 'The 60-Day Reminder',
+        title: 'The Missing Discovery Docs',
         scenario:
-          'A pet grooming shop uses AI to automatically follow up with every client 6 weeks after their last visit. Re-booking rates increase significantly without anyone having to maintain a call list.',
+          'A family law client hasn\'t submitted their financial disclosures. The AI sends a friendly reminder on day 3, a firmer follow-up on day 7, and alerts the paralegal on day 10 — with a link to exactly what\'s still missing.',
       },
       {
-        title: 'The Consistent Onboarding Experience',
+        title: 'The Status Update That Wrote Itself',
         scenario:
-          'A small marketing agency uses automated workflows to onboard every new client identically — collecting assets, setting expectations, and scheduling calls — regardless of which team member is point.',
+          'An immigration case has been pending for 4 months with no major updates. The AI sends the client a status email explaining current processing times and next expected milestones — preventing a frustrated phone call.',
       },
     ],
     metrics: [
-      { value: '50%', label: 'Reduction in time spent on admin tasks' },
-      { value: '35%', label: 'Increase in repeat customer revenue' },
-      { value: '2×', label: 'Faster response time to new inquiries' },
-      { value: '20 hrs', label: 'Owner hours saved per month' },
+      { value: '70%', label: 'Reduction in intake processing time' },
+      { value: '3×', label: 'Faster document collection from clients' },
+      { value: '0', label: 'Missed filing deadlines' },
+      { value: '15 hrs', label: 'Attorney hours saved per week on admin' },
     ],
   },
 
