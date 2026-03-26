@@ -257,7 +257,7 @@ export function Industries() {
                 viewport={{ once: true, amount: 0.1 }}
                 transition={{ delay: index * 0.07, duration: 0.5 }}
                 onClick={() => navigate(`/industry/${industry.slug}`)}
-                className={`group cursor-pointer transition-all duration-300 ease-out px-5 py-7 rounded-xl bg-white dark:bg-card border border-transparent hover:border-border hover:shadow-lg hover:-translate-y-1 ${industry.accentColor}`}
+                className={`group cursor-pointer transition-all duration-400 ease-out px-5 py-7 rounded-xl bg-white dark:bg-card border border-transparent hover:border-border/50 hover:-translate-y-1 glass-card-hover dark:hover:bg-white/[0.04] dark:hover:backdrop-blur-xl dark:hover:border-white/10 dark:hover:shadow-[0_8px_32px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.05)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.08)] ${industry.accentColor}`}
               >
                 {/* Icon box — tints on hover */}
                 <div className={`w-9 h-9 rounded-lg bg-card border border-border flex items-center justify-center mb-5 transition-all duration-200 ${industry.accentIconBg}`}>

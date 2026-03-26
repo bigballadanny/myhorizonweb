@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { Navigation } from './components/Navigation'
+import { ScrollProgress } from './components/ScrollProgress'
 import { Hero } from './components/Hero'
 import { MarqueeStrip } from './components/MarqueeStrip'
 import { Services } from './components/Services'
@@ -16,6 +17,7 @@ import { Philosophy } from './components/Philosophy'
 import { ElevenLabsWidget } from './components/ElevenLabsWidget'
 import { NewsletterSignup } from './components/NewsletterSignup'
 import { useVisitorTracking } from './hooks/useVisitorTracking'
+import { useSmoothScroll } from './hooks/useSmoothScroll'
 import { useSEO } from './hooks/useSEO'
 import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
@@ -27,6 +29,7 @@ const sectionVariants = {
 
 export default function App() {
   useVisitorTracking()
+  useSmoothScroll()
   const location = useLocation()
   
   useSEO({
@@ -70,6 +73,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <ScrollProgress />
       <Navigation />
       <main className="relative" role="main">
 

@@ -1,7 +1,12 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
+
 interface CounterProps {
   end: number
   suffix?: string
@@ -9,39 +14,49 @@ interface CounterProps {
   duration?: number
 }
 
-function AnimatedCounter({ end, suffix = '', prefix = '', duration = 2 }: CounterProps) {
-  const [count, setCount] = useState(0)
-  const [hasStarted, setHasStarted] = useState(false)
+function AnimatedCounter({ end, suffix = '', prefix = '', duration = 2.2 }: CounterProps) {
   const ref = useRef<HTMLSpanElement>(null)
+  const suffixRef = useRef<HTMLSpanElement>(null)
+  const counterObj = useRef({ value: 0 })
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !hasStarted) {
-          setHasStarted(true)
-        }
-      },
-      { threshold: 0.3 }
-    )
-    if (ref.current) observer.observe(ref.current)
-    return () => observer.disconnect()
-  }, [hasStarted])
+    const el = ref.current
+    const suffixEl = suffixRef.current
+    if (!el) return
 
-  useEffect(() => {
-    if (!hasStarted) return
-    let startTime: number
-    const step = (timestamp: number) => {
-      if (!startTime) startTime = timestamp
-      const progress = Math.min((timestamp - startTime) / (duration * 1000), 1)
-      setCount(Math.floor(progress * end))
-      if (progress < 1) requestAnimationFrame(step)
-    }
-    requestAnimationFrame(step)
-  }, [hasStarted, end, duration])
+    // Hide suffix initially for pop-in effect
+    if (suffixEl) gsap.set(suffixEl, { opacity: 0, scale: 0.5 })
+
+    const ctx = gsap.context(() => {
+      gsap.to(counterObj.current, {
+        value: end,
+        duration,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 85%',
+          once: true,
+        },
+        onUpdate: () => {
+          const val = Math.round(counterObj.current.value)
+          el.textContent = `${prefix}${val}`
+        },
+        onComplete: () => {
+          // Pop in suffix after number finishes
+          if (suffixEl) {
+            gsap.to(suffixEl, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2)' })
+          }
+        },
+      })
+    })
+
+    return () => ctx.revert()
+  }, [end, duration, prefix])
 
   return (
-    <span ref={ref}>
-      {prefix}{count}{suffix}
+    <span className="inline-flex items-baseline">
+      <span ref={ref}>{prefix}0</span>
+      <span ref={suffixRef} className="ml-0.5">{suffix}</span>
     </span>
   )
 }
