@@ -121,24 +121,24 @@ function KineticHeadline() {
   )
 }
 
-/* ─── Hero visual: Synthios dragon emblem ─── */
+/* ─── Hero visual: Synthios dragon rising from the horizon ─── */
 function HeroVisual() {
   return (
-    <div className="relative w-full max-w-lg mx-auto flex items-center justify-center">
+    <div className="relative w-full max-w-xl mx-auto flex items-center justify-center">
       {/* Ambient glow behind the image */}
-      <div className="absolute inset-0 bg-accent-blue/10 rounded-full blur-[80px] scale-75" />
-      <div className="absolute inset-0 bg-purple-500/8 rounded-full blur-[100px] scale-90" />
+      <div className="absolute inset-0 bg-accent-blue/8 rounded-full blur-[80px] scale-75" />
+      <div className="absolute inset-0 bg-purple-500/6 rounded-full blur-[100px] scale-90" />
 
-      {/* Dragon S emblem with subtle pulse */}
+      {/* Dragon with edge-fade mask — blends into any background */}
       <motion.div
         animate={{ scale: [1, 1.02, 1] }}
         transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-        className="relative"
+        className="relative hero-image-mask"
       >
         <img
           src={heroSynthiosDragon}
           alt="SYNTHIOS"
-          className="w-full max-w-md rounded-2xl object-contain drop-shadow-[0_0_40px_rgba(124,58,237,0.3)]"
+          className="w-full object-contain"
         />
       </motion.div>
     </div>

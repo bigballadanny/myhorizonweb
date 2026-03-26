@@ -546,3 +546,23 @@ html.lenis, html.lenis body {
 
 .animate-spin-slow    { animation: spin-slow 30s linear infinite; }
 .animate-spin-reverse { animation: spin-reverse 25s linear infinite; }
+
+/* =====================================================
+   Hero Image Edge-Fade Mask
+   Seamlessly blends into both dark and light backgrounds
+   ===================================================== */
+/* Dark mode: gentle fade — image blends naturally into dark bg */
+.dark .hero-image-mask {
+  -webkit-mask-image:
+    radial-gradient(ellipse 90% 85% at center, black 35%, transparent 70%);
+  mask-image:
+    radial-gradient(ellipse 90% 85% at center, black 35%, transparent 70%);
+}
+
+/* Light mode: tighter mask — only the dragon + horizon glow shows */
+:not(.dark) .hero-image-mask {
+  -webkit-mask-image:
+    radial-gradient(ellipse 65% 60% at center 45%, black 20%, transparent 55%);
+  mask-image:
+    radial-gradient(ellipse 65% 60% at center 45%, black 20%, transparent 55%);
+}
