@@ -529,15 +529,48 @@ export default function IndustryPage() {
                         <h3 className="font-serif text-2xl sm:text-[28px] text-foreground leading-snug mb-3">{s.title}</h3>
                         <p className="text-muted-foreground text-base sm:text-lg leading-relaxed">{s.description}</p>
                       </div>
-                      {/* Visual card */}
+                      {/* Visual card — abstract UI mockup */}
                       <div className={isReversed ? 'lg:[direction:ltr]' : ''}>
                         <div
-                          className="bg-zinc-900 rounded-2xl p-10 sm:p-12 relative overflow-hidden min-h-[180px] flex items-end"
-                          style={{ borderTop: `2px solid ${industry.accentColor}` }}
+                          className="rounded-2xl overflow-hidden border border-border/50 bg-card relative"
+                          style={{ boxShadow: `0 0 0 1px ${industry.accentColor}18, 0 8px 40px rgba(0,0,0,0.08)` }}
                         >
-                          <span className="absolute top-6 left-8 font-serif text-[56px] leading-none font-light text-zinc-800 select-none pointer-events-none">
-                            {s.title.split(' ').slice(0, 2).join(' ')}
-                          </span>
+                          {/* Top bar */}
+                          <div className="flex items-center gap-1.5 px-4 py-3 border-b border-border/50 bg-muted/30">
+                            <div className="w-2.5 h-2.5 rounded-full bg-red-400/60" />
+                            <div className="w-2.5 h-2.5 rounded-full bg-yellow-400/60" />
+                            <div className="w-2.5 h-2.5 rounded-full bg-green-400/60" />
+                            <div className="flex-1 mx-3 h-5 bg-muted rounded-md" />
+                          </div>
+                          {/* Content area */}
+                          <div className="p-6 space-y-3">
+                            {/* Header row */}
+                            <div className="flex items-center justify-between mb-4">
+                              <div className="h-4 w-32 bg-muted rounded" />
+                              <div className="h-7 w-20 rounded-lg" style={{ backgroundColor: `${industry.accentColor}20` }}>
+                                <div className="h-full w-full rounded-lg flex items-center justify-center">
+                                  <div className="h-2 w-12 rounded" style={{ backgroundColor: industry.accentColor }} />
+                                </div>
+                              </div>
+                            </div>
+                            {/* Simulated data rows */}
+                            {[85, 60, 75, 45].map((w, ri) => (
+                              <div key={ri} className="flex items-center gap-3">
+                                <div className="w-7 h-7 rounded-lg bg-muted flex-shrink-0" />
+                                <div className="flex-1 space-y-1.5">
+                                  <div className="h-2.5 rounded" style={{ width: `${w}%`, backgroundColor: ri === 0 ? `${industry.accentColor}30` : undefined }} className2="bg-muted" />
+                                  <div className="h-2 bg-muted/60 rounded" style={{ width: `${w * 0.6}%` }} />
+                                </div>
+                                <div className="h-5 w-12 rounded-md bg-muted flex-shrink-0" />
+                              </div>
+                            ))}
+                            {/* Bottom status bar */}
+                            <div className="mt-4 pt-3 border-t border-border/40 flex items-center gap-2">
+                              <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: industry.accentColor }} />
+                              <div className="h-2.5 bg-muted rounded flex-1" />
+                              <div className="h-2.5 w-16 bg-muted/60 rounded" />
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
