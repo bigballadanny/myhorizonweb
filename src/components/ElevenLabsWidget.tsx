@@ -42,6 +42,7 @@ export function ElevenLabsWidget({
 
   const [isOpen, setIsOpen] = useState(false);
   const [isConnecting, setIsConnecting] = useState(false);
+  const [isSessionActive, setIsSessionActive] = useState(false);
   const [isVoiceMode, setIsVoiceMode] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showTooltip, setShowTooltip] = useState(true);
@@ -63,15 +64,19 @@ export function ElevenLabsWidget({
     startTime: null,
     endTime: null,
   });
+  // Track partial agent responses for streaming text
+  const agentResponseBuffer = useRef('');
 
   const conversation = useConversation({
     onConnect: () => {
       conversationDataRef.current.startTime = new Date();
       conversationDataRef.current.transcripts = [];
+      setIsSessionActive(true);
       setError(null);
     },
     onDisconnect: async () => {
       conversationDataRef.current.endTime = new Date();
+      setIsSessionActive(false);
       setIsVoiceMode(false);
       const convId = await saveConversation();
       if (convId) processConversation(convId);
@@ -101,6 +106,25 @@ export function ElevenLabsWidget({
         };
         conversationDataRef.current.transcripts.push(chatMsg);
         setMessages((prev) => [...prev, chatMsg]);
+        setIsTyping(false);
+      }
+    },
+    onAgentChatResponsePart: (event) => {
+      // Streaming text response from agent in text mode
+      const part = event as unknown as { text?: string; is_final?: boolean };
+      if (part.text) {
+        agentResponseBuffer.current += part.text;
+      }
+      if (part.is_final && agentResponseBuffer.current) {
+        const chatMsg: ChatMessage = {
+          role: 'agent',
+          text: agentResponseBuffer.current,
+          timestamp: new Date(),
+        };
+        conversationDataRef.current.transcripts.push(chatMsg);
+        setMessages((prev) => [...prev, chatMsg]);
+        agentResponseBuffer.current = '';
+        setIsTyping(false);
       }
     },
     onError: (error) => {
@@ -108,6 +132,7 @@ export function ElevenLabsWidget({
       setError('Connection error. Please try again.');
       setIsConnecting(false);
       setIsVoiceMode(false);
+      setIsTyping(false);
     },
   });
 
@@ -123,9 +148,7 @@ export function ElevenLabsWidget({
     }
   }, [isOpen, isVoiceMode]);
 
-
-
-  // Handle mobile keyboard — adjust chat panel height via visualViewport
+  // Handle mobile keyboard
   useEffect(() => {
     if (!isOpen) return;
     const vv = window.visualViewport;
@@ -133,7 +156,6 @@ export function ElevenLabsWidget({
 
     const onResize = () => {
       setViewportHeight(vv.height);
-      // Scroll input into view when keyboard opens
       setTimeout(() => {
         inputRef.current?.scrollIntoView({ block: 'nearest' });
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -142,7 +164,7 @@ export function ElevenLabsWidget({
 
     vv.addEventListener('resize', onResize);
     vv.addEventListener('scroll', onResize);
-    onResize(); // set initial
+    onResize();
 
     return () => {
       vv.removeEventListener('resize', onResize);
@@ -190,7 +212,7 @@ export function ElevenLabsWidget({
           call_type: 'inbound',
           metadata: {
             source: 'react_sdk',
-            mode: 'voice',
+            mode: isVoiceMode ? 'voice' : 'text',
             page_url: window.location.href,
             captured_at: new Date().toISOString(),
           },
@@ -209,6 +231,26 @@ export function ElevenLabsWidget({
     }
   };
 
+  // Start a text-only session with ElevenLabs (no mic needed)
+  const startTextSession = useCallback(async () => {
+    if (isSessionActive) return; // already connected
+    setIsConnecting(true);
+    setError(null);
+
+    try {
+      await conversation.startSession({
+        agentId: AGENT_ID,
+        connectionType: 'websocket' as any,
+      });
+    } catch (err) {
+      console.error('Failed to start text session:', err);
+      // Session might already be active or connection failed silently
+      // Don't show error for text mode — just use the session if it's there
+    } finally {
+      setIsConnecting(false);
+    }
+  }, [conversation, isSessionActive]);
+
   const startVoice = useCallback(async () => {
     setIsConnecting(true);
     setError(null);
@@ -216,18 +258,10 @@ export function ElevenLabsWidget({
     try {
       await navigator.mediaDevices.getUserMedia({ audio: true });
 
-      const { data, error: fnError } = await supabase.functions.invoke(
-        'elevenlabs-conversation-token'
-      );
-
-      if (fnError) throw new Error(fnError.message || 'Failed to get conversation token');
-
-      if (data?.signed_url) {
-        await conversation.startSession({ signedUrl: data.signed_url });
-      } else {
+      if (!isSessionActive) {
         await conversation.startSession({
-          agentId: data?.agent_id || AGENT_ID,
-          connectionType: 'webrtc',
+          agentId: AGENT_ID,
+          connectionType: 'webrtc' as any,
         });
       }
       setIsVoiceMode(true);
@@ -237,14 +271,15 @@ export function ElevenLabsWidget({
     } finally {
       setIsConnecting(false);
     }
-  }, [conversation]);
+  }, [conversation, isSessionActive]);
 
   const endVoice = useCallback(async () => {
     await conversation.endSession();
     setIsVoiceMode(false);
+    setIsSessionActive(false);
   }, [conversation]);
 
-  // Text chat — call the ElevenLabs agent via edge function or direct API
+  // Send text message via the native ElevenLabs SDK
   const sendTextMessage = async () => {
     if (!inputText.trim()) return;
 
@@ -254,55 +289,55 @@ export function ElevenLabsWidget({
       timestamp: new Date(),
     };
     setMessages((prev) => [...prev, userMsg]);
+    conversationDataRef.current.transcripts.push(userMsg);
+    const messageText = inputText.trim();
     setInputText('');
     setIsTyping(true);
+    agentResponseBuffer.current = '';
 
     // Check for email in message for lead capture
-    const emailMatch = inputText.match(/[\w.-]+@[\w.-]+\.\w+/);
+    const emailMatch = messageText.match(/[\w.-]+@[\w.-]+\.\w+/);
     if (emailMatch) {
       captureLead({
         email: emailMatch[0],
         source: 'chat_widget',
-        notes: `Provided email via chat: "${inputText.trim()}"`,
+        notes: `Provided email via chat: "${messageText}"`,
       });
     }
 
     try {
-      // Use Supabase edge function to proxy to ElevenLabs text API
-      const { data, error: fnError } = await supabase.functions.invoke(
-        'elevenlabs-text-chat',
-        {
-          body: {
-            agent_id: AGENT_ID,
-            message: inputText.trim(),
-            conversation_history: messages
-              .slice(-10)
-              .map((m) => ({ role: m.role, text: m.text })),
-          },
-        }
-      );
-
-      if (fnError || !data?.response) {
-        // Fallback — smart pattern-matched responses
-        const response = getFallbackResponse(inputText.trim());
-        setMessages((prev) => [
-          ...prev,
-          { role: 'agent', text: response, timestamp: new Date() },
-        ]);
-      } else {
-        setMessages((prev) => [
-          ...prev,
-          { role: 'agent', text: data.response, timestamp: new Date() },
-        ]);
+      // Start a text session if not already connected
+      if (!isSessionActive) {
+        await startTextSession();
+        // Small delay to let the connection establish
+        await new Promise((resolve) => setTimeout(resolve, 500));
       }
+
+      // Use native ElevenLabs SDK to send text message
+      conversation.sendUserMessage(messageText);
+
+      // Set a timeout for the response — if no agent response comes in 15s, show fallback
+      setTimeout(() => {
+        setIsTyping((current) => {
+          if (current) {
+            // Still typing after timeout — agent didn't respond
+            const response = getFallbackResponse(messageText);
+            setMessages((prev) => [
+              ...prev,
+              { role: 'agent', text: response, timestamp: new Date() },
+            ]);
+            return false;
+          }
+          return current;
+        });
+      }, 15000);
     } catch {
-      // Fallback response
-      const response = getFallbackResponse(inputText.trim());
+      // Fallback response if SDK fails
+      const response = getFallbackResponse(messageText);
       setMessages((prev) => [
         ...prev,
         { role: 'agent', text: response, timestamp: new Date() },
       ]);
-    } finally {
       setIsTyping(false);
     }
   };
@@ -322,7 +357,6 @@ export function ElevenLabsWidget({
       className={`fixed right-4 sm:right-6 z-[110] transition-all duration-300 ${
         hasStickyMobileCTA ? 'bottom-24 sm:bottom-6' : 'bottom-4 sm:bottom-6'
       }`}
-
     >
       {/* Chat Panel */}
       <AnimatePresence>
@@ -333,11 +367,13 @@ export function ElevenLabsWidget({
             exit={{ opacity: 0, y: 20, scale: 0.9 }}
             transition={{ type: 'spring', stiffness: 300, damping: 25 }}
             ref={chatPanelRef}
-            className="fixed inset-x-0 top-0 sm:absolute sm:inset-auto sm:bottom-20 sm:right-0 sm:w-[380px] sm:rounded-2xl bg-card border-0 sm:border sm:border-border shadow-2xl overflow-hidden z-[120] flex flex-col"
+            className="fixed z-[120] bg-card border border-border shadow-2xl overflow-hidden flex flex-col rounded-2xl"
             style={{
-              height: viewportHeight ? `${viewportHeight}px` : '100%',
-              maxHeight: viewportHeight ? `${viewportHeight}px` : '100dvh',
-              bottom: 'auto',
+              bottom: '80px',
+              right: '16px',
+              width: '380px',
+              height: 'min(560px, calc(100svh - 140px))',
+              maxHeight: 'calc(100svh - 140px)',
             }}
             id="chat-panel"
           >
@@ -347,24 +383,24 @@ export function ElevenLabsWidget({
               style={{ background: `linear-gradient(135deg, ${accent}cc, ${accent}99)` }}
             >
               <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-white/80 animate-pulse" />
+                <div className={`w-2 h-2 rounded-full ${isConnected ? 'bg-green-400' : 'bg-white/80'} animate-pulse`} />
                 <span className="font-medium text-sm">{displayName}</span>
               </div>
               <div className="flex items-center gap-1">
                 {/* Voice toggle */}
                 <button
-                  onClick={isConnected ? endVoice : startVoice}
+                  onClick={isConnected && isVoiceMode ? endVoice : startVoice}
                   disabled={isConnecting}
                   className={`p-1.5 rounded-lg transition-colors ${
-                    isConnected
+                    isConnected && isVoiceMode
                       ? 'bg-red-500/20 text-red-300 hover:bg-red-500/30'
                       : 'hover:bg-white/10 text-background/70'
                   }`}
-                  title={isConnected ? 'End voice call' : 'Start voice call'}
+                  title={isConnected && isVoiceMode ? 'End voice call' : 'Start voice call'}
                 >
                   {isConnecting ? (
                     <Loader2 className="w-4 h-4 animate-spin" />
-                  ) : isConnected ? (
+                  ) : isConnected && isVoiceMode ? (
                     <MicOff className="w-4 h-4" />
                   ) : (
                     <Mic className="w-4 h-4" />
@@ -381,7 +417,7 @@ export function ElevenLabsWidget({
 
             {/* Voice status bar */}
             <AnimatePresence>
-              {isConnected && (
+              {isConnected && isVoiceMode && (
                 <motion.div
                   initial={{ height: 0, opacity: 0 }}
                   animate={{ height: 'auto', opacity: 1 }}
@@ -550,7 +586,7 @@ export function ElevenLabsWidget({
   );
 }
 
-/** Fallback responses when edge function unavailable */
+/** Fallback responses when ElevenLabs session is unavailable */
 function getFallbackResponse(input: string): string {
   const lower = input.toLowerCase();
 

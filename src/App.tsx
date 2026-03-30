@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { Navigation } from './components/Navigation'
+import { ScrollProgress } from './components/ScrollProgress'
 import { Hero } from './components/Hero'
 import { MarqueeStrip } from './components/MarqueeStrip'
 import { Services } from './components/Services'
@@ -12,9 +13,12 @@ import { UrgencyCTA } from './components/UrgencyCTA'
 import { SynthiosProduct } from './components/SynthiosProduct'
 import { Contact } from './components/Contact'
 import { Footer } from './components/Footer'
+import { Philosophy } from './components/Philosophy'
 import { ElevenLabsWidget } from './components/ElevenLabsWidget'
 import { NewsletterSignup } from './components/NewsletterSignup'
 import { useVisitorTracking } from './hooks/useVisitorTracking'
+import { useSmoothScroll, smoothScrollTo } from './hooks/useSmoothScroll'
+import { useSEO } from './hooks/useSEO'
 import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 
@@ -25,7 +29,32 @@ const sectionVariants = {
 
 export default function App() {
   useVisitorTracking()
+  useSmoothScroll()
   const location = useLocation()
+  
+  useSEO({
+    title: 'MyHorizon | SYNTHIOS - AI Infrastructure for Business',
+    description: 'We build custom AI agents that run your operations, remember your customers, and make decisions alongside your team.',
+    keywords: 'AI agent, AI infrastructure, business automation, SYNTHIOS, MyHorizon AI, generative AI, AI assistant, operations automation',
+    schema: {
+      '@context': 'https://schema.org',
+      '@type': 'SoftwareApplication',
+      'name': 'SYNTHIOS',
+      'operatingSystem': 'Cloud',
+      'applicationCategory': 'BusinessApplication',
+      'offers': {
+        '@type': 'Offer',
+        'price': '0',
+        'priceCurrency': 'USD'
+      },
+      'description': 'SYNTHIOS is an AI infrastructure platform that remembers every customer, executes follow-ups, and operates business workflows 24/7.',
+      'creator': {
+        '@type': 'Organization',
+        'name': 'MyHorizon AI',
+        'url': 'https://myhorizon.ai'
+      }
+    }
+  });
 
   useEffect(() => {
     if (location.hash) {
@@ -33,7 +62,7 @@ export default function App() {
       const tryScroll = (attempts = 0) => {
         const el = document.getElementById(id)
         if (el) {
-          el.scrollIntoView({ behavior: 'smooth' })
+          smoothScrollTo(id)
         } else if (attempts < 10) {
           setTimeout(() => tryScroll(attempts + 1), 100)
         }
@@ -44,6 +73,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <ScrollProgress />
       <Navigation />
       <main className="relative" role="main">
 
@@ -70,21 +100,10 @@ export default function App() {
 
         {/* Pull quote — seeds the bigger-picture thinking */}
         <PullQuote
-          quote="The businesses that embrace AI early won't just save time — they'll build something their competitors can't catch up to."
+          quote="Artificial intelligence will be infrastructure — like water, electricity and the internet."
+          author="Jensen Huang, CEO of NVIDIA"
           bg="card"
         />
-
-        {/* 3 — Opportunity (Problem) */}
-        <motion.section
-          aria-label="Opportunity section"
-          variants={sectionVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
-          transition={{ duration: 0.6 }}
-        >
-          <Problem />
-        </motion.section>
 
         {/* 4 — Industries */}
         <motion.section
@@ -99,17 +118,8 @@ export default function App() {
           <Industries />
         </motion.section>
 
-        {/* 5 — Process */}
-        <motion.section
-          aria-label="Process section"
-          variants={sectionVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
-          transition={{ duration: 0.6, delay: 0.05 }}
-        >
-          <Process />
-        </motion.section>
+        {/* ATM Philosophy Section */}
+        <Philosophy />
 
         {/* 6 — Results */}
         <motion.section
@@ -121,40 +131,6 @@ export default function App() {
           transition={{ duration: 0.6 }}
         >
           <Results />
-        </motion.section>
-
-        {/* 8 — Urgency CTA */}
-        <motion.section
-          aria-label="Urgency CTA"
-          variants={sectionVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
-          transition={{ duration: 0.6 }}
-        >
-          <UrgencyCTA />
-        </motion.section>
-
-        {/* Newsletter signup — catches mid-page visitors */}
-        <NewsletterSignup variant="banner" />
-
-        {/* Pull quote — plants the SYNTHIOS seed */}
-        <PullQuote
-          quote="Imagine having a team member who knows every customer, never forgets a follow-up, and gets smarter every single day."
-          bg="background"
-        />
-
-        {/* 8 — SYNTHIOS */}
-        <motion.section
-          id="synthios"
-          aria-label="SYNTHIOS Product section"
-          variants={sectionVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
-          transition={{ duration: 0.6 }}
-        >
-          <SynthiosProduct />
         </motion.section>
 
         {/* 9 — Contact */}

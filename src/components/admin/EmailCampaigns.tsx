@@ -141,7 +141,7 @@ export function EmailCampaigns() {
     else { toast({ title: 'Campaign marked as sent' }); setShowSendConfirm(null); }
   };
 
-  const useTemplate = (template: EmailTemplate) => {
+  const applyTemplate = (template: EmailTemplate) => {
     setSubject(template.subject);
     setBodyHtml(template.body_html);
     setShowTemplates(false);
@@ -356,7 +356,7 @@ export function EmailCampaigns() {
           <DialogHeader><DialogTitle>Email Templates</DialogTitle></DialogHeader>
           <div className="space-y-3">
             {templates.map((t) => (
-              <Card key={t.id} className="cursor-pointer hover:shadow-md transition-shadow" onClick={() => useTemplate(t)}>
+              <Card key={t.id} className="cursor-pointer hover:shadow-md transition-shadow" onClick={() => applyTemplate(t)}>
                 <CardContent className="p-4">
                   <h4 className="font-semibold">{t.name}</h4>
                   <p className="text-sm text-muted-foreground">{t.subject}</p>
