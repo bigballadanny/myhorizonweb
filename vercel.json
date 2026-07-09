@@ -1,5 +1,28 @@
 {
-  "rewrites": [
-    { "source": "/((?!api|assets|.*\\..*).*)", "destination": "/index.html" }
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "installCommand": "",
+  "routes": [
+    {
+      "src": "/(.*)",
+      "headers": {
+        "X-Robots-Tag": "noindex, nofollow, noarchive",
+        "X-Content-Type-Options": "nosniff",
+        "Referrer-Policy": "strict-origin-when-cross-origin",
+        "Content-Security-Policy": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'none'"
+      },
+      "continue": true
+    },
+    {
+      "src": "/api(?:/.*)?",
+      "status": 404
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
   ]
 }
