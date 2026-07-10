@@ -1,10 +1,11 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useNavigate } from 'react-router-dom'
-import { ArrowRight } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { ArrowRight, ChevronDown } from 'lucide-react'
 import { Button } from './ui/button'
 import { smoothScrollTo } from '../hooks/useSmoothScroll'
+import { useState } from 'react'
 
 type IconProps = React.SVGProps<SVGSVGElement>
 
@@ -128,6 +129,7 @@ interface Industry {
   accentColor: string       // Tailwind arbitrary or utility for border
   accentIconBg: string      // Icon box bg on hover
   accentText: string        // Name text color on hover (inline style)
+  hasDemo?: boolean
 }
 
 const industries: Industry[] = [
@@ -216,7 +218,7 @@ const industries: Industry[] = [
 ]
 
 export function Industries() {
-  const navigate = useNavigate()
+  const [showAllMobile, setShowAllMobile] = useState(false)
 
   const scrollToContact = () => smoothScrollTo('contact')
 
@@ -254,9 +256,12 @@ export function Industries() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.1 }}
                 transition={{ delay: index * 0.07, duration: 0.5 }}
-                onClick={() => navigate(`/industry/${industry.slug}`)}
-                className={`group cursor-pointer transition-all duration-400 ease-out px-5 py-7 rounded-xl bg-white dark:bg-card border border-transparent hover:border-border/50 hover:-translate-y-1 glass-card-hover dark:hover:bg-white/[0.04] dark:hover:backdrop-blur-xl dark:hover:border-white/10 dark:hover:shadow-[0_8px_32px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.05)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.08)] ${industry.accentColor}`}
+                className={index >= 4 && !showAllMobile ? 'hidden sm:block' : 'block'}
               >
+                <Link
+                  to={`/industry/${industry.slug}`}
+                  className={`group block h-full transition-all duration-400 ease-out px-5 py-7 rounded-xl bg-white dark:bg-card border border-transparent hover:border-border/50 hover:-translate-y-1 glass-card-hover dark:hover:bg-white/[0.04] dark:hover:backdrop-blur-xl dark:hover:border-white/10 dark:hover:shadow-[0_8px_32px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.05)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.08)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue focus-visible:ring-offset-4 ${industry.accentColor}`}
+                >
                 {/* Icon box — tints on hover */}
                 <div className={`w-9 h-9 rounded-lg bg-card border border-border flex items-center justify-center mb-5 transition-all duration-200 ${industry.accentIconBg}`}>
                   <Icon className="w-4 h-4 text-muted-foreground group-hover:text-current transition-colors duration-200" />
@@ -285,11 +290,22 @@ export function Industries() {
                 <p className="text-sm text-muted-foreground leading-relaxed">
                   {industry.tagline}
                 </p>
+                </Link>
               </motion.div>
             )
           })}
           {/* spacer */}
         </div>
+
+        <button
+          type="button"
+          onClick={() => setShowAllMobile((current) => !current)}
+          className="sm:hidden min-h-11 inline-flex items-center gap-2 text-sm font-medium text-accent-blue mb-12"
+          aria-expanded={showAllMobile}
+        >
+          {showAllMobile ? 'Show fewer industries' : `View all ${industries.length} industries`}
+          <ChevronDown className={`w-4 h-4 transition-transform ${showAllMobile ? 'rotate-180' : ''}`} />
+        </button>
 
         {/* Bottom CTA */}
         <motion.div

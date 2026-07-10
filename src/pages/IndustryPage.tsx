@@ -18,6 +18,7 @@ import { Button } from '@/components/ui/button'
 import { ElevenLabsWidget } from '@/components/ElevenLabsWidget'
 import { industryData, type IndustryData } from '@/data/industryData'
 import { useSEO } from '@/hooks/useSEO'
+import { BOOKING_URL } from '@/lib/booking'
 
 type IconProps = React.SVGProps<SVGSVGElement>
 
@@ -439,7 +440,7 @@ export default function IndustryPage() {
             >
               <Icon className="w-10 h-10 text-white/70" />
               <Link
-                to="/"
+                to="/#industries"
                 className="inline-flex items-center gap-1.5 text-sm font-medium text-white/60 hover:text-white transition-colors"
               >
                 <ArrowLeft className="w-3.5 h-3.5" />
@@ -473,7 +474,7 @@ export default function IndustryPage() {
               className="mb-14"
             >
               <a
-                href="https://cal.com/myhorizon/consultation"
+                href={BOOKING_URL}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -871,7 +872,7 @@ export default function IndustryPage() {
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-5">
                 <a
-                  href="https://cal.com/myhorizon/consultation"
+                  href={BOOKING_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full sm:w-auto"
@@ -883,7 +884,7 @@ export default function IndustryPage() {
                     <ArrowRight className="w-5 h-5 ml-2" />
                   </Button>
                 </a>
-                <Link to="/" className="w-full sm:w-auto">
+                <Link to="/#industries" className="w-full sm:w-auto">
                   <Button
                     variant="ghost"
                     className="w-full sm:w-auto text-white hover:bg-white/10 px-8 py-7 rounded-2xl text-lg font-medium transition-all duration-300"

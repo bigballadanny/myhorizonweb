@@ -13,6 +13,7 @@ export interface ElevenLabsWidgetProps {
   industryName?: string;
   openingMessage?: string;
   hasStickyMobileCTA?: boolean;
+  initiallyOpen?: boolean;
 }
 
 interface ChatMessage {
@@ -27,12 +28,19 @@ interface ConversationData {
   endTime: Date | null;
 }
 
+interface ViewportMetrics {
+  height: number;
+  bottomInset: number;
+  keyboardVisible: boolean;
+}
+
 export function ElevenLabsWidget({
   agentId,
   accentColor,
   industryName,
   openingMessage,
   hasStickyMobileCTA = false,
+  initiallyOpen = false,
 }: ElevenLabsWidgetProps = {}) {
   const AGENT_ID = agentId || DEFAULT_AGENT_ID;
   const accent = accentColor || '#2563eb';
@@ -40,12 +48,13 @@ export function ElevenLabsWidget({
   const defaultOpening = openingMessage ||
     "Hi! I'm MyHorizon's AI consultant. I can help you understand how AI automation could work for your business. Ask me anything or tap the mic to talk!";
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(initiallyOpen);
   const [isConnecting, setIsConnecting] = useState(false);
   const [isSessionActive, setIsSessionActive] = useState(false);
   const [isVoiceMode, setIsVoiceMode] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showTooltip, setShowTooltip] = useState(true);
+  const [contactInViewOnMobile, setContactInViewOnMobile] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       role: 'agent',
@@ -55,10 +64,14 @@ export function ElevenLabsWidget({
   ]);
   const [inputText, setInputText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
-  const [viewportHeight, setViewportHeight] = useState<number | null>(null);
+  const [viewportMetrics, setViewportMetrics] = useState<ViewportMetrics | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const chatPanelRef = useRef<HTMLDivElement>(null);
+  const launcherRef = useRef<HTMLButtonElement>(null);
+  const fallbackTimeoutRef = useRef<number | null>(null);
+  const finalizationPromiseRef = useRef<Promise<void> | null>(null);
+  const finalizeConversationRef = useRef<() => Promise<void>>(async () => undefined);
+  const conversationModeRef = useRef<'text' | 'voice'>('text');
   const conversationDataRef = useRef<ConversationData>({
     transcripts: [],
     startTime: null,
@@ -69,17 +82,21 @@ export function ElevenLabsWidget({
 
   const conversation = useConversation({
     onConnect: () => {
-      conversationDataRef.current.startTime = new Date();
-      conversationDataRef.current.transcripts = [];
+      conversationDataRef.current.startTime ??= new Date();
+      conversationDataRef.current.endTime = null;
       setIsSessionActive(true);
       setError(null);
     },
-    onDisconnect: async () => {
+    onDisconnect: () => {
       conversationDataRef.current.endTime = new Date();
+      if (fallbackTimeoutRef.current !== null) {
+        window.clearTimeout(fallbackTimeoutRef.current);
+        fallbackTimeoutRef.current = null;
+      }
       setIsSessionActive(false);
       setIsVoiceMode(false);
-      const convId = await saveConversation();
-      if (convId) processConversation(convId);
+      setIsTyping(false);
+      void finalizeConversationRef.current();
     },
     onMessage: (message) => {
       const msg = message as unknown as {
@@ -99,6 +116,10 @@ export function ElevenLabsWidget({
       }
 
       if (msg.type === 'agent_response' && msg.agent_response_event) {
+        if (fallbackTimeoutRef.current !== null) {
+          window.clearTimeout(fallbackTimeoutRef.current);
+          fallbackTimeoutRef.current = null;
+        }
         const chatMsg: ChatMessage = {
           role: 'agent',
           text: msg.agent_response_event.agent_response,
@@ -116,6 +137,10 @@ export function ElevenLabsWidget({
         agentResponseBuffer.current += part.text;
       }
       if (part.is_final && agentResponseBuffer.current) {
+        if (fallbackTimeoutRef.current !== null) {
+          window.clearTimeout(fallbackTimeoutRef.current);
+          fallbackTimeoutRef.current = null;
+        }
         const chatMsg: ChatMessage = {
           role: 'agent',
           text: agentResponseBuffer.current,
@@ -144,7 +169,8 @@ export function ElevenLabsWidget({
   // Focus input when panel opens
   useEffect(() => {
     if (isOpen && !isVoiceMode) {
-      setTimeout(() => inputRef.current?.focus(), 300);
+      const timer = window.setTimeout(() => inputRef.current?.focus(), 300);
+      return () => window.clearTimeout(timer);
     }
   }, [isOpen, isVoiceMode]);
 
@@ -154,29 +180,65 @@ export function ElevenLabsWidget({
     const vv = window.visualViewport;
     if (!vv) return;
 
-    const onResize = () => {
-      setViewportHeight(vv.height);
-      setTimeout(() => {
+    const updateViewport = () => {
+      const heightDifference = window.innerHeight - vv.height;
+      const keyboardVisible = heightDifference > Math.max(120, window.innerHeight * 0.15);
+      setViewportMetrics({
+        height: vv.height,
+        bottomInset: Math.max(0, window.innerHeight - (vv.offsetTop + vv.height)),
+        keyboardVisible,
+      });
+
+      window.requestAnimationFrame(() => {
         inputRef.current?.scrollIntoView({ block: 'nearest' });
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
+      });
     };
 
-    vv.addEventListener('resize', onResize);
-    vv.addEventListener('scroll', onResize);
-    onResize();
+    vv.addEventListener('resize', updateViewport);
+    vv.addEventListener('scroll', updateViewport);
+    window.addEventListener('resize', updateViewport);
+    updateViewport();
 
     return () => {
-      vv.removeEventListener('resize', onResize);
-      vv.removeEventListener('scroll', onResize);
-      setViewportHeight(null);
+      vv.removeEventListener('resize', updateViewport);
+      vv.removeEventListener('scroll', updateViewport);
+      window.removeEventListener('resize', updateViewport);
+      setViewportMetrics(null);
     };
   }, [isOpen]);
+
+  useEffect(() => {
+    return () => {
+      if (fallbackTimeoutRef.current !== null) {
+        window.clearTimeout(fallbackTimeoutRef.current);
+      }
+    };
+  }, []);
 
   // Hide tooltip
   useEffect(() => {
     const timer = setTimeout(() => setShowTooltip(false), 5000);
     return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    const contact = document.getElementById('contact');
+    if (!contact) return;
+    const mobile = window.matchMedia('(max-width: 639px)');
+    const observer = new IntersectionObserver(
+      ([entry]) => setContactInViewOnMobile(mobile.matches && entry.isIntersecting),
+      { threshold: 0.08 },
+    );
+    observer.observe(contact);
+    const onViewportChange = () => {
+      if (!mobile.matches) setContactInViewOnMobile(false);
+    };
+    mobile.addEventListener('change', onViewportChange);
+    return () => {
+      observer.disconnect();
+      mobile.removeEventListener('change', onViewportChange);
+    };
   }, []);
 
   const processConversation = async (conversationId: string) => {
@@ -212,7 +274,7 @@ export function ElevenLabsWidget({
           call_type: 'inbound',
           metadata: {
             source: 'react_sdk',
-            mode: isVoiceMode ? 'voice' : 'text',
+            mode: conversationModeRef.current,
             page_url: window.location.href,
             captured_at: new Date().toISOString(),
           },
@@ -231,39 +293,82 @@ export function ElevenLabsWidget({
     }
   };
 
+  const finalizeConversation = async (): Promise<void> => {
+    if (finalizationPromiseRef.current) {
+      return finalizationPromiseRef.current;
+    }
+
+    conversationDataRef.current.endTime ??= new Date();
+    const finalization = (async () => {
+      const conversationId = await saveConversation();
+      if (conversationId) {
+        await processConversation(conversationId);
+      }
+    })();
+
+    finalizationPromiseRef.current = finalization;
+    return finalization;
+  };
+
+  useEffect(() => {
+    finalizeConversationRef.current = finalizeConversation;
+  });
+
+  const prepareNewConversation = useCallback(async () => {
+    if (conversationDataRef.current.endTime) {
+      await finalizationPromiseRef.current;
+      conversationDataRef.current = {
+        transcripts: [],
+        startTime: null,
+        endTime: null,
+      };
+      finalizationPromiseRef.current = null;
+    }
+
+    conversationDataRef.current.startTime ??= new Date();
+  }, []);
+
   // Start a text-only session with ElevenLabs (no mic needed)
   const startTextSession = useCallback(async () => {
     if (isSessionActive) return; // already connected
     setIsConnecting(true);
     setError(null);
+    conversationModeRef.current = 'text';
 
     try {
       await conversation.startSession({
         agentId: AGENT_ID,
-        connectionType: 'websocket' as any,
+        connectionType: 'websocket',
+        textOnly: true,
       });
     } catch (err) {
       console.error('Failed to start text session:', err);
-      // Session might already be active or connection failed silently
-      // Don't show error for text mode — just use the session if it's there
+      setError('Live AI chat is unavailable right now. You can still leave a message below.');
+      throw err;
     } finally {
       setIsConnecting(false);
     }
-  }, [conversation, isSessionActive]);
+  }, [AGENT_ID, conversation, isSessionActive]);
 
   const startVoice = useCallback(async () => {
     setIsConnecting(true);
     setError(null);
 
     try {
+      if (isSessionActive || conversation.status === 'connected') {
+        await conversation.endSession();
+        setIsSessionActive(false);
+        await finalizeConversationRef.current();
+      }
+      await prepareNewConversation();
+      conversationModeRef.current = 'voice';
       await navigator.mediaDevices.getUserMedia({ audio: true });
 
-      if (!isSessionActive) {
-        await conversation.startSession({
-          agentId: AGENT_ID,
-          connectionType: 'webrtc' as any,
-        });
-      }
+      await conversation.startSession({
+        agentId: AGENT_ID,
+        connectionType: 'webrtc',
+        textOnly: false,
+      });
       setIsVoiceMode(true);
     } catch (err) {
       console.error('Failed to start voice:', err);
@@ -271,17 +376,26 @@ export function ElevenLabsWidget({
     } finally {
       setIsConnecting(false);
     }
-  }, [conversation, isSessionActive]);
+  }, [AGENT_ID, conversation, isSessionActive, prepareNewConversation]);
 
   const endVoice = useCallback(async () => {
-    await conversation.endSession();
-    setIsVoiceMode(false);
-    setIsSessionActive(false);
+    try {
+      await conversation.endSession();
+    } finally {
+      setIsVoiceMode(false);
+      setIsSessionActive(false);
+      await finalizeConversationRef.current();
+    }
   }, [conversation]);
 
   // Send text message via the native ElevenLabs SDK
   const sendTextMessage = async () => {
     if (!inputText.trim()) return;
+
+    await prepareNewConversation();
+    if (!isVoiceMode) {
+      conversationModeRef.current = 'text';
+    }
 
     const userMsg: ChatMessage = {
       role: 'user',
@@ -301,7 +415,7 @@ export function ElevenLabsWidget({
       captureLead({
         email: emailMatch[0],
         source: 'chat_widget',
-        notes: `Provided email via chat: "${messageText}"`,
+        notes: 'Email voluntarily provided via website chat.',
       });
     }
 
@@ -317,15 +431,19 @@ export function ElevenLabsWidget({
       conversation.sendUserMessage(messageText);
 
       // Set a timeout for the response — if no agent response comes in 15s, show fallback
-      setTimeout(() => {
+      fallbackTimeoutRef.current = window.setTimeout(() => {
+        fallbackTimeoutRef.current = null;
         setIsTyping((current) => {
           if (current) {
             // Still typing after timeout — agent didn't respond
             const response = getFallbackResponse(messageText);
-            setMessages((prev) => [
-              ...prev,
-              { role: 'agent', text: response, timestamp: new Date() },
-            ]);
+            const fallbackMessage: ChatMessage = {
+              role: 'agent',
+              text: response,
+              timestamp: new Date(),
+            };
+            conversationDataRef.current.transcripts.push(fallbackMessage);
+            setMessages((prev) => [...prev, fallbackMessage]);
             return false;
           }
           return current;
@@ -334,10 +452,13 @@ export function ElevenLabsWidget({
     } catch {
       // Fallback response if SDK fails
       const response = getFallbackResponse(messageText);
-      setMessages((prev) => [
-        ...prev,
-        { role: 'agent', text: response, timestamp: new Date() },
-      ]);
+      const fallbackMessage: ChatMessage = {
+        role: 'agent',
+        text: response,
+        timestamp: new Date(),
+      };
+      conversationDataRef.current.transcripts.push(fallbackMessage);
+      setMessages((prev) => [...prev, fallbackMessage]);
       setIsTyping(false);
     }
   };
@@ -349,33 +470,92 @@ export function ElevenLabsWidget({
     }
   };
 
+  const handleClose = useCallback(async () => {
+    setIsOpen(false);
+    setShowTooltip(false);
+    setIsTyping(false);
+
+    if (fallbackTimeoutRef.current !== null) {
+      window.clearTimeout(fallbackTimeoutRef.current);
+      fallbackTimeoutRef.current = null;
+    }
+
+    window.requestAnimationFrame(() => {
+      if (contactInViewOnMobile) {
+        const contactControl = document.querySelector<HTMLElement>(
+          '#contact button, #contact a[href], #contact input, #contact select',
+        );
+        contactControl?.focus();
+      } else {
+        launcherRef.current?.focus();
+      }
+    });
+
+    try {
+      if (isSessionActive || conversation.status === 'connected') {
+        await conversation.endSession();
+      }
+    } catch (endError) {
+      console.error('Failed to end conversation session:', endError);
+    } finally {
+      setIsVoiceMode(false);
+      setIsSessionActive(false);
+      await finalizeConversationRef.current();
+    }
+  }, [contactInViewOnMobile, conversation, isSessionActive]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        void handleClose();
+      }
+    };
+
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [handleClose, isOpen]);
+
   const isConnected = conversation.status === 'connected';
   const isSpeaking = conversation.isSpeaking;
+  const availablePanelHeight = viewportMetrics
+    ? Math.max(0, viewportMetrics.height - (viewportMetrics.keyboardVisible ? 24 : 140))
+    : null;
+  const panelBottom = viewportMetrics?.keyboardVisible
+    ? viewportMetrics.bottomInset + 12
+    : 80;
 
   return (
     <div
+      data-chat-widget
       className={`fixed right-4 sm:right-6 z-[110] transition-all duration-300 ${
         hasStickyMobileCTA ? 'bottom-24 sm:bottom-6' : 'bottom-4 sm:bottom-6'
       }`}
     >
       {/* Chat Panel */}
-      <AnimatePresence>
-        {isOpen && (
+      {isOpen && (
           <motion.div
             initial={{ opacity: 0, y: 20, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.9 }}
             transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-            ref={chatPanelRef}
             className="fixed z-[120] bg-card border border-border shadow-2xl overflow-hidden flex flex-col rounded-2xl"
             style={{
-              bottom: '80px',
-              right: '16px',
-              width: '380px',
-              height: 'min(560px, calc(100svh - 140px))',
-              maxHeight: 'calc(100svh - 140px)',
+              bottom: `${panelBottom}px`,
+              right: 'max(12px, env(safe-area-inset-right))',
+              width: 'min(380px, calc(100vw - 24px))',
+              height: availablePanelHeight === null
+                ? 'min(560px, calc(100dvh - 140px))'
+                : `${Math.min(560, availablePanelHeight)}px`,
+              maxHeight: availablePanelHeight === null
+                ? 'calc(100dvh - 140px)'
+                : `${availablePanelHeight}px`,
             }}
             id="chat-panel"
+            role="dialog"
+            aria-labelledby="chat-panel-title"
           >
             {/* Header */}
             <div
@@ -383,34 +563,41 @@ export function ElevenLabsWidget({
               style={{ background: `linear-gradient(135deg, ${accent}cc, ${accent}99)` }}
             >
               <div className="flex items-center gap-2">
-                <div className={`w-2 h-2 rounded-full ${isConnected ? 'bg-green-400' : 'bg-white/80'} animate-pulse`} />
-                <span className="font-medium text-sm">{displayName}</span>
+                <div
+                  aria-hidden="true"
+                  className={`w-2 h-2 rounded-full ${isConnected ? 'bg-green-400' : 'bg-white/80'} animate-pulse`}
+                />
+                <span id="chat-panel-title" className="font-medium text-sm">{displayName}</span>
               </div>
               <div className="flex items-center gap-1">
                 {/* Voice toggle */}
                 <button
+                  type="button"
                   onClick={isConnected && isVoiceMode ? endVoice : startVoice}
                   disabled={isConnecting}
-                  className={`p-1.5 rounded-lg transition-colors ${
+                  className={`w-11 h-11 inline-flex items-center justify-center rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80 ${
                     isConnected && isVoiceMode
                       ? 'bg-red-500/20 text-red-300 hover:bg-red-500/30'
                       : 'hover:bg-white/10 text-background/70'
                   }`}
                   title={isConnected && isVoiceMode ? 'End voice call' : 'Start voice call'}
+                  aria-label={isConnected && isVoiceMode ? 'End voice call' : 'Start voice call'}
                 >
                   {isConnecting ? (
-                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <Loader2 aria-hidden="true" className="w-4 h-4 animate-spin" />
                   ) : isConnected && isVoiceMode ? (
-                    <MicOff className="w-4 h-4" />
+                    <MicOff aria-hidden="true" className="w-4 h-4" />
                   ) : (
-                    <Mic className="w-4 h-4" />
+                    <Mic aria-hidden="true" className="w-4 h-4" />
                   )}
                 </button>
                 <button
-                  onClick={() => setIsOpen(false)}
-                  className="p-1.5 rounded-lg hover:bg-white/10 text-background/70"
+                  type="button"
+                  onClick={() => void handleClose()}
+                  className="w-11 h-11 inline-flex items-center justify-center rounded-lg hover:bg-white/10 text-background/70 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
+                  aria-label="Close chat"
                 >
-                  <X className="w-4 h-4" />
+                  <X aria-hidden="true" className="w-4 h-4" />
                 </button>
               </div>
             </div>
@@ -433,8 +620,10 @@ export function ElevenLabsWidget({
                     {isSpeaking ? 'AI is speaking...' : 'Listening...'}
                   </span>
                   <button
+                    type="button"
                     onClick={endVoice}
-                    className="ml-auto text-xs text-destructive hover:underline"
+                    className="ml-auto min-h-11 px-2 text-xs text-destructive hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue"
+                    aria-label="End voice call"
                   >
                     End call
                   </button>
@@ -443,7 +632,15 @@ export function ElevenLabsWidget({
             </AnimatePresence>
 
             {/* Messages */}
-            <div className="flex-1 min-h-0 overflow-y-auto p-4 space-y-3" style={{scrollbarWidth:'none'}}>
+            <div
+              className="flex-1 min-h-0 overflow-y-auto p-4 space-y-3"
+              style={{ scrollbarWidth: 'none' }}
+              role="log"
+              aria-live="polite"
+              aria-relevant="additions text"
+              aria-label={`${displayName} conversation`}
+              aria-busy={isTyping}
+            >
               {messages.map((msg, i) => (
                 <div
                   key={i}
@@ -485,7 +682,10 @@ export function ElevenLabsWidget({
             {/* Error */}
             {error && (
               <div className="px-4 pb-2">
-                <div className="text-xs text-destructive bg-destructive/10 rounded-lg px-3 py-1.5">
+                <div
+                  role="alert"
+                  className="text-xs text-destructive bg-destructive/10 rounded-lg px-3 py-1.5"
+                >
                   {error}
                 </div>
               </div>
@@ -502,20 +702,22 @@ export function ElevenLabsWidget({
                   onKeyDown={handleKeyDown}
                   placeholder="Type a message..."
                   disabled={isTyping}
+                  aria-label={`Message ${displayName}`}
                   className="flex-1 bg-muted rounded-xl px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent-blue/40 disabled:opacity-50"
                 />
                 <button
+                  type="button"
                   onClick={sendTextMessage}
                   disabled={!inputText.trim() || isTyping}
-                  className="p-2.5 rounded-xl bg-accent-blue text-white hover:bg-accent-blue/90 disabled:opacity-30 transition-all"
+                  className="w-11 h-11 shrink-0 inline-flex items-center justify-center rounded-xl bg-accent-blue text-white hover:bg-accent-blue/90 disabled:opacity-30 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue/60 focus-visible:ring-offset-2"
+                  aria-label="Send message"
                 >
-                  <Send className="w-4 h-4" />
+                  <Send aria-hidden="true" className="w-4 h-4" />
                 </button>
               </div>
             </div>
           </motion.div>
         )}
-      </AnimatePresence>
 
       {/* Tooltip */}
       <AnimatePresence>
@@ -524,7 +726,7 @@ export function ElevenLabsWidget({
             initial={{ opacity: 0, y: 10, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.9 }}
-            className="absolute bottom-full right-0 mb-3 whitespace-nowrap"
+            className="hidden sm:block absolute bottom-full right-0 mb-3 whitespace-nowrap"
           >
             <div className="bg-foreground text-background px-4 py-2 rounded-lg shadow-lg text-sm font-medium">
               Chat with us
@@ -535,37 +737,29 @@ export function ElevenLabsWidget({
       </AnimatePresence>
 
       {/* Main FAB */}
-      <motion.button
-        onClick={() => setIsOpen(!isOpen)}
+      {(!contactInViewOnMobile || isOpen) && <motion.button
+        ref={launcherRef}
+        type="button"
+        onClick={() => {
+          if (isOpen) {
+            void handleClose();
+          } else {
+            setIsOpen(true);
+          }
+        }}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full shadow-xl flex items-center justify-center transition-all duration-300 focus:outline-none focus:ring-4"
         style={{ backgroundColor: isOpen ? '#18181b' : accent }}
         aria-label={isOpen ? 'Close chat' : 'Open chat'}
+        aria-expanded={isOpen}
+        aria-controls="chat-panel"
       >
-        <AnimatePresence mode="wait">
-          {isOpen ? (
-            <motion.div
-              key="close"
-              initial={{ rotate: -90, opacity: 0 }}
-              animate={{ rotate: 0, opacity: 1 }}
-              exit={{ rotate: 90, opacity: 0 }}
-              transition={{ duration: 0.15 }}
-            >
-              <X className="w-7 h-7 text-background" />
-            </motion.div>
-          ) : (
-            <motion.div
-              key="chat"
-              initial={{ rotate: 90, opacity: 0 }}
-              animate={{ rotate: 0, opacity: 1 }}
-              exit={{ rotate: -90, opacity: 0 }}
-              transition={{ duration: 0.15 }}
-            >
-              <MessageCircle className="w-7 h-7 text-white" />
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {isOpen ? (
+          <X aria-hidden="true" className="w-7 h-7 text-background" />
+        ) : (
+          <MessageCircle aria-hidden="true" className="w-7 h-7 text-white" />
+        )}
 
         {/* Pulse ring when closed */}
         {!isOpen && (
@@ -581,7 +775,7 @@ export function ElevenLabsWidget({
         {!isOpen && messages.length > 1 && (
           <div className="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 bg-red-500 rounded-full border-2 border-background" />
         )}
-      </motion.button>
+      </motion.button>}
     </div>
   );
 }

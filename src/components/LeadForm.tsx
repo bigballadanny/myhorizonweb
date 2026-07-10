@@ -14,6 +14,7 @@ export function LeadForm() {
   })
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   const industries = [
     'Med Spa / Clinic',
@@ -29,17 +30,20 @@ export function LeadForm() {
     e.preventDefault()
     const email = formData.email.trim()
     if (!email || !email.includes('@')) return
+    const interest = new URLSearchParams(window.location.search).get('interest')
 
     setLoading(true)
-    await captureLead({
+    setError(null)
+    const result = await captureLead({
       email,
       name: formData.name.trim() || undefined,
       company: formData.company.trim() || undefined,
       source: 'lead_form',
-      notes: `Industry: ${formData.industry || 'Not specified'}. From contact section lead form.`,
+      notes: `Industry: ${formData.industry || 'Not specified'}. Interest: ${interest || 'General consultation'}. From contact section lead form.`,
     })
-    setSubmitted(true)
     setLoading(false)
+    if (result.ok) setSubmitted(true)
+    else setError(result.message)
   }
 
   if (submitted) {
@@ -48,6 +52,8 @@ export function LeadForm() {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         className="bg-emerald-500/5 border border-emerald-500/20 rounded-2xl p-8 text-center"
+        role="status"
+        tabIndex={-1}
       >
         <div className="w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center mx-auto mb-4">
           <Check className="w-6 h-6 text-emerald-500" />
@@ -80,32 +86,44 @@ export function LeadForm() {
 
       <form onSubmit={handleSubmit} className="space-y-3">
         <div className="grid sm:grid-cols-2 gap-3">
+          <label htmlFor="contact-name" className="sr-only">Your name</label>
           <input
+            id="contact-name"
             type="text"
             value={formData.name}
             onChange={(e) => setFormData((p) => ({ ...p, name: e.target.value }))}
             placeholder="Your name"
+            autoComplete="name"
             className="w-full bg-background border border-border rounded-xl px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-primary transition-colors"
           />
+          <label htmlFor="contact-email" className="sr-only">Work email</label>
           <input
+            id="contact-email"
             type="email"
             value={formData.email}
             onChange={(e) => setFormData((p) => ({ ...p, email: e.target.value }))}
             placeholder="your@email.com *"
             required
+            autoComplete="email"
+            aria-describedby={error ? 'contact-form-error' : undefined}
             className="w-full bg-background border border-border rounded-xl px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-primary transition-colors"
           />
         </div>
 
+        <label htmlFor="contact-company" className="sr-only">Business name</label>
         <input
+          id="contact-company"
           type="text"
           value={formData.company}
           onChange={(e) => setFormData((p) => ({ ...p, company: e.target.value }))}
           placeholder="Business name (optional)"
+          autoComplete="organization"
           className="w-full bg-background border border-border rounded-xl px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-primary transition-colors"
         />
 
+        <label htmlFor="contact-industry" className="sr-only">Industry</label>
         <select
+          id="contact-industry"
           value={formData.industry}
           onChange={(e) => setFormData((p) => ({ ...p, industry: e.target.value }))}
           className="w-full bg-background border border-border rounded-xl px-4 py-3 text-sm text-foreground outline-none focus:border-primary transition-colors appearance-none"
@@ -132,6 +150,11 @@ export function LeadForm() {
             </>
           )}
         </button>
+        {error && (
+          <p id="contact-form-error" role="alert" className="text-sm text-destructive">
+            {error}
+          </p>
+        )}
       </form>
 
       <p className="text-xs text-muted-foreground mt-3 text-center">

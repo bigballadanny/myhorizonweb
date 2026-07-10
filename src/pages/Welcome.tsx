@@ -5,6 +5,7 @@ import { CheckCircle2, Mail, Calendar, Zap } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Navigation } from '@/components/Navigation'
 import { Footer } from '@/components/Footer'
+import { Link } from 'react-router-dom'
 
 const steps = [
   {
@@ -133,9 +134,7 @@ export default function Welcome() {
             size="lg"
             className="rounded-full px-8 py-6 text-base font-semibold bg-white text-black hover:bg-white/90 transition-colors"
           >
-            <a href="https://myhorizon.ai" target="_blank" rel="noopener noreferrer">
-              Explore Your Dashboard
-            </a>
+            <Link to="/">Continue to MyHorizon</Link>
           </Button>
         </motion.div>
       </main>

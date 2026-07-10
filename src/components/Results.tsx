@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -18,11 +18,18 @@ function AnimatedCounter({ end, suffix = '', prefix = '', duration = 2.2 }: Coun
   const ref = useRef<HTMLSpanElement>(null)
   const suffixRef = useRef<HTMLSpanElement>(null)
   const counterObj = useRef({ value: 0 })
+  const reduceMotion = useReducedMotion()
 
   useEffect(() => {
     const el = ref.current
     const suffixEl = suffixRef.current
     if (!el) return
+
+    if (reduceMotion) {
+      el.textContent = `${prefix}${end}`
+      if (suffixEl) gsap.set(suffixEl, { opacity: 1, scale: 1 })
+      return
+    }
 
     // Hide suffix initially for pop-in effect
     if (suffixEl) gsap.set(suffixEl, { opacity: 0, scale: 0.5 })
@@ -51,7 +58,7 @@ function AnimatedCounter({ end, suffix = '', prefix = '', duration = 2.2 }: Coun
     })
 
     return () => ctx.revert()
-  }, [end, duration, prefix])
+  }, [end, duration, prefix, reduceMotion])
 
   return (
     <span className="inline-flex items-baseline">
@@ -134,7 +141,7 @@ export function Results() {
           {/* Card */}
           <div className="relative rounded-2xl border border-white/8 overflow-hidden">
             {/* Metrics — 2×2 grid on mobile, 4-col on lg */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-0">
               {metrics.map((metric, index) => (
                 <motion.div
                   key={metric.label}
@@ -142,9 +149,9 @@ export function Results() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.1 }}
                   transition={{ delay: index * 0.12, duration: 0.5 }}
-                  className="border-t border-white/8 pt-9 pb-9 px-7"
+                  className="border-t border-white/8 pt-7 pb-7 px-4 sm:pt-9 sm:pb-9 sm:px-7"
                 >
-                  <div className="font-serif text-5xl sm:text-6xl text-white mb-3 leading-none">
+                  <div className="font-serif text-4xl sm:text-6xl text-white mb-3 leading-none">
                     <AnimatedCounter end={metric.value} suffix={metric.suffix} prefix={metric.prefix} />
                   </div>
                   <h3 className="font-sans font-medium text-white/90 mb-2 text-sm uppercase tracking-wide">
