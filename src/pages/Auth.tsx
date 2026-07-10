@@ -4,7 +4,6 @@ import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/hooks/use-toast';
 import { Loader2 } from 'lucide-react';
 import logoIcon from '@/assets/myhorizon-logo-clean.png';
@@ -17,31 +16,20 @@ export default function Auth() {
   const { toast } = useToast();
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session) navigate('/admin');
+    let active = true;
+    supabase.auth.getSession().then(async ({ data: { session } }) => {
+      if (!session || !active) return;
+      const { data: adminUser } = await supabase
+        .from('admin_users')
+        .select('id')
+        .eq('auth_user_id', session.user.id)
+        .maybeSingle();
+      if (!active) return;
+      if (adminUser) navigate('/admin');
+      else await supabase.auth.signOut();
     });
+    return () => { active = false; };
   }, [navigate]);
-
-  const handleSignUp = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    try {
-      const { error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          emailRedirectTo: `${window.location.origin}/admin`,
-          data: { role: 'viewer' }
-        }
-      });
-      if (error) throw error;
-      toast({ title: 'Account Created', description: 'You can now sign in with your credentials.' });
-    } catch (error: any) {
-      toast({ title: 'Sign Up Failed', description: error.message, variant: 'destructive' });
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -52,16 +40,26 @@ export default function Auth() {
 
       const { data: { user } } = await supabase.auth.getUser();
       if (user) {
+        const { data: adminUser, error: adminError } = await supabase
+          .from('admin_users')
+          .select('id')
+          .eq('auth_user_id', user.id)
+          .maybeSingle();
+        if (adminError || !adminUser) {
+          await supabase.auth.signOut();
+          throw new Error('This account has not been provisioned for admin access.');
+        }
         await supabase
           .from('admin_users')
           .update({ last_login: new Date().toISOString() })
-          .eq('auth_user_id', user.id);
+          .eq('id', adminUser.id);
       }
 
       toast({ title: 'Welcome Back', description: 'Successfully signed in.' });
       navigate('/admin');
-    } catch (error: any) {
-      toast({ title: 'Sign In Failed', description: error.message, variant: 'destructive' });
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'Unable to sign in.';
+      toast({ title: 'Sign In Failed', description: message, variant: 'destructive' });
     } finally {
       setIsLoading(false);
     }
@@ -79,14 +77,7 @@ export default function Auth() {
 
         {/* Card */}
         <div className="bg-card border border-border rounded-2xl p-8">
-          <Tabs defaultValue="signin" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 mb-6">
-              <TabsTrigger value="signin">Sign In</TabsTrigger>
-              <TabsTrigger value="signup">Sign Up</TabsTrigger>
-            </TabsList>
-
-            <TabsContent value="signin">
-              <form onSubmit={handleSignIn} className="space-y-4">
+          <form onSubmit={handleSignIn} className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="signin-email">Email</Label>
                   <Input
@@ -117,45 +108,10 @@ export default function Auth() {
                 >
                   {isLoading ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" />Signing in...</> : 'Sign In'}
                 </Button>
-              </form>
-            </TabsContent>
-
-            <TabsContent value="signup">
-              <form onSubmit={handleSignUp} className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="signup-email">Email</Label>
-                  <Input
-                    id="signup-email"
-                    type="email"
-                    placeholder="you@myhorizon.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    disabled={isLoading}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="signup-password">Password</Label>
-                  <Input
-                    id="signup-password"
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                    disabled={isLoading}
-                    minLength={6}
-                  />
-                </div>
-                <Button
-                  type="submit"
-                  className="w-full bg-accent-blue hover:bg-accent-blue/90 text-white rounded-xl mt-2"
-                  disabled={isLoading}
-                >
-                  {isLoading ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" />Creating account...</> : 'Create Account'}
-                </Button>
-              </form>
-            </TabsContent>
-          </Tabs>
+          </form>
+          <p className="text-xs text-muted-foreground mt-5 text-center">
+            Access is provisioned by MyHorizon. Contact your administrator if you need an account.
+          </p>
         </div>
 
         <p className="text-center text-xs text-muted-foreground mt-6">

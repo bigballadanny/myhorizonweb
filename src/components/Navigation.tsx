@@ -11,6 +11,8 @@ export function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const clickCountRef = useRef(0)
   const clickTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const menuButtonRef = useRef<HTMLButtonElement>(null)
+  const mobileMenuRef = useRef<HTMLDivElement>(null)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -20,6 +22,52 @@ export function Navigation() {
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  useEffect(() => {
+    if (!isMobileMenuOpen) return
+
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    const background = [
+      document.querySelector('main'),
+      document.querySelector('footer'),
+      document.querySelector('[data-chat-widget]'),
+    ].filter(Boolean) as HTMLElement[]
+    background.forEach((element) => element.setAttribute('inert', ''))
+
+    const focusable = () => Array.from(
+      mobileMenuRef.current?.querySelectorAll<HTMLElement>('button, a[href], [tabindex]:not([tabindex="-1"])') || [],
+    ).filter((element) => !element.hasAttribute('disabled'))
+
+    const frame = requestAnimationFrame(() => focusable()[0]?.focus())
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsMobileMenuOpen(false)
+        requestAnimationFrame(() => menuButtonRef.current?.focus())
+        return
+      }
+      if (event.key !== 'Tab') return
+      const items = focusable()
+      if (!items.length) return
+      const first = items[0]
+      const last = items[items.length - 1]
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault()
+        last.focus()
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault()
+        first.focus()
+      }
+    }
+    document.addEventListener('keydown', onKeyDown)
+
+    return () => {
+      cancelAnimationFrame(frame)
+      document.body.style.overflow = previousOverflow
+      background.forEach((element) => element.removeAttribute('inert'))
+      document.removeEventListener('keydown', onKeyDown)
+    }
+  }, [isMobileMenuOpen])
 
   const scrollToSection = (sectionId: string) => {
     setIsMobileMenuOpen(false)
@@ -61,13 +109,14 @@ export function Navigation() {
   ]
 
   const handleGetStarted = () => {
-    navigate('/network')
-    window.scrollTo({ top: 0, behavior: 'instant' })
+    setIsMobileMenuOpen(false)
+    scrollToSection('contact')
   }
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      aria-label="Primary navigation"
+      className={`fixed top-0 left-0 right-0 ${isMobileMenuOpen ? 'z-[200]' : 'z-50'} transition-all duration-300 ${
         isScrolled ? 'glass-navbar py-4' : 'bg-transparent py-6'
       }`}
     >
@@ -76,7 +125,8 @@ export function Navigation() {
           {/* Logo */}
           <button
             onClick={handleLogoClick}
-            className="flex items-center gap-2.5 hover:opacity-80 transition-opacity select-none shrink-0 min-w-max"
+            aria-label="MyHorizon home"
+            className="flex min-h-11 items-center gap-2.5 hover:opacity-80 transition-opacity select-none shrink-0 min-w-max"
           >
             <img
               src={logoIcon}
@@ -94,7 +144,7 @@ export function Navigation() {
               <button
                 key={link.id}
                 onClick={() => scrollToSection(link.id)}
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200"
+                className="min-h-11 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200"
               >
                 {link.label}
               </button>
@@ -115,11 +165,15 @@ export function Navigation() {
           <div className="flex md:hidden items-center gap-2">
             <ThemeToggle />
             <Button
+              ref={menuButtonRef}
               variant="ghost"
               size="icon"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="w-10 h-10"
-              aria-label="Toggle menu"
+              className="w-11 h-11"
+              aria-label={isMobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+              aria-expanded={isMobileMenuOpen}
+              aria-controls="mobile-navigation-menu"
+              aria-haspopup="dialog"
             >
               {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </Button>
@@ -128,12 +182,19 @@ export function Navigation() {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden fixed inset-0 top-[72px] z-[999] bg-background border-t border-border flex flex-col px-6 py-8 space-y-2 overflow-y-auto">
+          <div
+            ref={mobileMenuRef}
+            id="mobile-navigation-menu"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Navigation menu"
+            className="md:hidden fixed inset-0 top-[72px] z-[210] bg-background border-t border-border flex flex-col px-6 py-8 space-y-2 overflow-y-auto"
+          >
             {navLinks.map((link) => (
               <button
                 key={link.id}
                 onClick={() => scrollToSection(link.id)}
-                className="block w-full text-left text-lg font-medium text-foreground hover:text-accent-blue transition-colors py-4 border-b border-border/40"
+                className="block w-full min-h-14 text-left text-lg font-medium text-foreground hover:text-accent-blue transition-colors py-4 border-b border-border/40"
               >
                 {link.label}
               </button>

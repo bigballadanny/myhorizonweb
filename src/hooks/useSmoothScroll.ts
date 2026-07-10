@@ -5,8 +5,16 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
+type SmoothScrollWindow = Window & { __lenis?: Lenis }
+
 export function useSmoothScroll() {
   useEffect(() => {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduceMotion) {
+      document.documentElement.classList.remove('lenis', 'lenis-smooth')
+      return
+    }
+
     // Add lenis class to html — signals CSS to yield scroll control
     document.documentElement.classList.add('lenis', 'lenis-smooth')
 
@@ -30,13 +38,13 @@ export function useSmoothScroll() {
 
     // Override native scrollIntoView so CTA buttons work with Lenis
     // Store on window so components can use it
-    ;(window as any).__lenis = lenis
+    ;(window as SmoothScrollWindow).__lenis = lenis
 
     return () => {
       document.documentElement.classList.remove('lenis', 'lenis-smooth')
       gsap.ticker.remove(tickHandler)
       lenis.destroy()
-      delete (window as any).__lenis
+      delete (window as SmoothScrollWindow).__lenis
     }
   }, [])
 }
@@ -48,10 +56,12 @@ export function smoothScrollTo(id: string) {
   const el = document.getElementById(id)
   if (!el) return
 
-  const lenis = (window as any).__lenis
+  const lenis = (window as SmoothScrollWindow).__lenis
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
   if (lenis) {
-    lenis.scrollTo(el, { offset: 0, duration: 1.2 })
+    lenis.scrollTo(el, { offset: -88, duration: 1.2 })
   } else {
-    el.scrollIntoView({ behavior: 'smooth' })
+    const top = el.getBoundingClientRect().top + window.scrollY - 88
+    window.scrollTo({ top, behavior: reduceMotion ? 'auto' : 'smooth' })
   }
 }

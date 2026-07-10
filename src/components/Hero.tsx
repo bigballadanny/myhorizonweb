@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { ArrowRight, ChevronDown } from 'lucide-react'
 import { Button } from './ui/button'
 import { HeroCapture } from './HeroCapture'
@@ -12,8 +12,10 @@ import gsap from 'gsap'
 /* ─── Magnetic button wrapper ─── */
 function MagneticWrap({ children, className }: { children: React.ReactNode; className?: string }) {
   const ref = useRef<HTMLDivElement>(null)
+  const reduceMotion = useReducedMotion()
 
   const handleMove = (e: React.MouseEvent) => {
+    if (reduceMotion) return
     const el = ref.current
     if (!el) return
     const rect = el.getBoundingClientRect()
@@ -23,7 +25,7 @@ function MagneticWrap({ children, className }: { children: React.ReactNode; clas
   }
 
   const handleLeave = () => {
-    if (ref.current) gsap.to(ref.current, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1, 0.4)' })
+    if (!reduceMotion && ref.current) gsap.to(ref.current, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1, 0.4)' })
   }
 
   return (
@@ -59,12 +61,18 @@ function GradientOrbs() {
 /* ─── Word-by-word animated headline ─── */
 function KineticHeadline() {
   const containerRef = useRef<HTMLHeadingElement>(null)
+  const reduceMotion = useReducedMotion()
 
   useEffect(() => {
     const el = containerRef.current
     if (!el) return
 
     const words = el.querySelectorAll('.hero-word')
+    if (reduceMotion) {
+      gsap.set(words, { clearProps: 'all' })
+      return
+    }
+    const context = gsap.context(() => {
     gsap.set(words, { opacity: 0, y: 30, rotateX: 15 })
     gsap.to(words, {
       opacity: 1,
@@ -87,7 +95,9 @@ function KineticHeadline() {
         delay: 1.5,
       })
     }
-  }, [])
+    }, el)
+    return () => context.revert()
+  }, [reduceMotion])
 
   const line1 = 'Your business runs 24/7.'.split(' ')
   const line2 = "Your team doesn't.".split(' ')
@@ -98,12 +108,13 @@ function KineticHeadline() {
       ref={containerRef}
       className="font-serif text-4xl sm:text-6xl lg:text-7xl text-foreground leading-[1.1] mb-8"
       style={{ perspective: '600px' }}
+      aria-label="Your business runs 24/7. Your team doesn't. Now it can."
     >
       {line1.map((word, i) => (
-        <span key={`a${i}`} className="hero-word inline-block mr-[0.3em]">{word}</span>
+        <span key={`a${i}`} className="hero-word inline-block mr-[0.3em]">{word}{' '}</span>
       ))}
       {line2.map((word, i) => (
-        <span key={`b${i}`} className="hero-word inline-block mr-[0.3em]">{word}</span>
+        <span key={`b${i}`} className="hero-word inline-block mr-[0.3em]">{word}{' '}</span>
       ))}
       <br className="hidden sm:block" />
       <em className="not-italic">
@@ -137,8 +148,9 @@ function HeroVisual() {
       >
         <img
           src={heroSynthiosDragon}
-          alt="SYNTHIOS"
+          alt="SYNTHIOS dragon rising over the horizon"
           className="w-full object-contain"
+          decoding="async"
         />
       </motion.div>
     </div>
@@ -147,8 +159,24 @@ function HeroVisual() {
 
 /* ─── Main Hero ─── */
 export function Hero() {
-  const scrollToContact = () => smoothScrollTo('contact')
-  const scrollToServices = () => smoothScrollTo('services')
+  const [showDesktopVisual, setShowDesktopVisual] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia('(min-width: 1024px)').matches,
+  )
+
+  useEffect(() => {
+    const media = window.matchMedia('(min-width: 1024px)')
+    const onChange = () => setShowDesktopVisual(media.matches)
+    media.addEventListener('change', onChange)
+    onChange()
+    return () => media.removeEventListener('change', onChange)
+  }, [])
+
+  const scrollToSynthios = () => smoothScrollTo('synthios')
+  const focusRoadmapForm = () => {
+    const input = document.getElementById('hero-email') as HTMLInputElement | null
+    input?.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center' })
+    window.setTimeout(() => input?.focus(), 250)
+  }
 
   return (
     <div className="relative min-h-screen w-full bg-background flex items-center overflow-hidden">
@@ -193,7 +221,7 @@ export function Hero() {
               <MagneticWrap>
                 <Button
                   size="lg"
-                  onClick={scrollToContact}
+                  onClick={scrollToSynthios}
                   className="w-full sm:w-auto bg-accent-blue hover:bg-accent-blue/90 text-white px-8 py-6 rounded-xl text-base transition-all duration-200 hover:shadow-[0_0_30px_rgba(37,99,235,0.3)]"
                 >
                   See SYNTHIOS in Action
@@ -204,7 +232,7 @@ export function Hero() {
                 <Button
                   size="lg"
                   variant="outline"
-                  onClick={scrollToServices}
+                  onClick={focusRoadmapForm}
                   className="w-full sm:w-auto px-8 py-6 rounded-xl text-base border-border text-foreground hover:bg-card transition-all duration-200"
                 >
                   Get Your Free AI Roadmap
@@ -233,14 +261,14 @@ export function Hero() {
           </div>
 
           {/* Right — glass dashboard visual */}
-          <motion.div
+          {showDesktopVisual && <motion.div
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.6, ease: 'easeOut' }}
             className="hidden lg:block"
           >
             <HeroVisual />
-          </motion.div>
+          </motion.div>}
         </div>
       </div>
 

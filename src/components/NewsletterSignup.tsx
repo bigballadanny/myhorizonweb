@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useId, useState } from 'react'
 import { motion } from 'framer-motion'
 import { ArrowRight, Check, Sparkles } from 'lucide-react'
 import { captureLead } from '@/lib/lead-capture'
@@ -22,6 +22,8 @@ export function NewsletterSignup({
   const [email, setEmail] = useState('')
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const emailId = useId()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -29,13 +31,15 @@ export function NewsletterSignup({
     if (!trimmed || !trimmed.includes('@')) return
 
     setLoading(true)
-    await captureLead({
+    setError(null)
+    const result = await captureLead({
       email: trimmed,
       source: 'newsletter',
       notes: `Newsletter signup from ${variant} variant`,
     })
-    setSubmitted(true)
     setLoading(false)
+    if (result.ok) setSubmitted(true)
+    else setError(result.message)
   }
 
   if (submitted) {
@@ -46,6 +50,7 @@ export function NewsletterSignup({
         className={`flex items-center gap-3 ${
           variant === 'minimal' ? 'py-2' : 'py-4 px-6 bg-emerald-500/10 border border-emerald-500/20 rounded-xl'
         }`}
+        role="status"
       >
         <div className="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center shrink-0">
           <Check className="w-4 h-4 text-emerald-500" />
@@ -59,13 +64,17 @@ export function NewsletterSignup({
 
   if (variant === 'minimal') {
     return (
-      <form onSubmit={handleSubmit} className="flex gap-2 w-full max-w-md">
+      <form onSubmit={handleSubmit} className="flex flex-wrap gap-2 w-full max-w-md">
+        <label htmlFor={emailId} className="sr-only">Email address for AI insights</label>
         <input
+          id={emailId}
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="your@email.com"
           required
+          autoComplete="email"
+          aria-describedby={error ? `${emailId}-error` : undefined}
           className="flex-1 bg-muted border border-border rounded-lg px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-primary transition-colors"
         />
         <button
@@ -76,6 +85,7 @@ export function NewsletterSignup({
           {loading ? '...' : 'Subscribe'}
           {!loading && <ArrowRight className="w-3.5 h-3.5" />}
         </button>
+        {error && <p id={`${emailId}-error`} role="alert" className="basis-full text-xs text-red-300">{error}</p>}
       </form>
     )
   }
@@ -95,13 +105,17 @@ export function NewsletterSignup({
               <h3 className="text-lg font-serif text-foreground mb-1">{heading}</h3>
               <p className="text-sm text-muted-foreground">{subtext}</p>
             </div>
-            <form onSubmit={handleSubmit} className="flex gap-2 w-full md:w-auto shrink-0">
+            <form onSubmit={handleSubmit} className="flex flex-wrap gap-2 w-full md:w-auto shrink-0">
+              <label htmlFor={emailId} className="sr-only">Email address for AI insights</label>
               <input
+                id={emailId}
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="your@email.com"
                 required
+                autoComplete="email"
+                aria-describedby={error ? `${emailId}-error` : undefined}
                 className="flex-1 md:w-64 bg-background border border-border rounded-xl px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-primary transition-colors"
               />
               <button
@@ -111,6 +125,7 @@ export function NewsletterSignup({
               >
                 {loading ? '...' : 'Get Insights →'}
               </button>
+              {error && <p id={`${emailId}-error`} role="alert" className="basis-full text-xs text-destructive">{error}</p>}
             </form>
           </div>
         </div>
@@ -129,13 +144,17 @@ export function NewsletterSignup({
       </div>
       <h3 className="font-serif text-2xl text-foreground mb-2">{heading}</h3>
       <p className="text-sm text-muted-foreground mb-5 max-w-md">{subtext}</p>
-      <form onSubmit={handleSubmit} className="flex gap-2">
+      <form onSubmit={handleSubmit} className="flex flex-wrap gap-2">
+        <label htmlFor={emailId} className="sr-only">Email address for AI insights</label>
         <input
+          id={emailId}
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="your@email.com"
           required
+          autoComplete="email"
+          aria-describedby={error ? `${emailId}-error` : undefined}
           className="flex-1 bg-background border border-border rounded-xl px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-primary transition-colors"
         />
         <button
@@ -145,6 +164,7 @@ export function NewsletterSignup({
         >
           {loading ? '...' : 'Subscribe →'}
         </button>
+        {error && <p id={`${emailId}-error`} role="alert" className="basis-full text-xs text-destructive">{error}</p>}
       </form>
       <p className="text-xs text-muted-foreground mt-3">
         Join 500+ business owners getting smarter about AI. Unsubscribe anytime.

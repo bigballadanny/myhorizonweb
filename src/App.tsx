@@ -1,21 +1,16 @@
 import { motion } from 'framer-motion'
 import { Navigation } from './components/Navigation'
-import { ScrollProgress } from './components/ScrollProgress'
 import { Hero } from './components/Hero'
 import { MarqueeStrip } from './components/MarqueeStrip'
 import { Services } from './components/Services'
 import { PullQuote } from './components/PullQuote'
-import { Problem } from './components/Problem'
 import { Industries } from './components/Industries'
-import { Process } from './components/Process'
 import { Results } from './components/Results'
-import { UrgencyCTA } from './components/UrgencyCTA'
 import { SynthiosProduct } from './components/SynthiosProduct'
 import { Contact } from './components/Contact'
 import { Footer } from './components/Footer'
 import { Philosophy } from './components/Philosophy'
-import { ElevenLabsWidget } from './components/ElevenLabsWidget'
-import { NewsletterSignup } from './components/NewsletterSignup'
+import { DeferredChatWidget } from './components/DeferredChatWidget'
 import { useVisitorTracking } from './hooks/useVisitorTracking'
 import { useSmoothScroll, smoothScrollTo } from './hooks/useSmoothScroll'
 import { useSEO } from './hooks/useSEO'
@@ -73,9 +68,9 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <ScrollProgress />
+      <a href="#main-content" className="skip-link">Skip to main content</a>
       <Navigation />
-      <main className="relative" role="main">
+      <main id="main-content" className="relative" role="main" tabIndex={-1}>
 
         {/* 1 — Hero */}
         <section id="hero" aria-label="Hero section">
@@ -86,8 +81,7 @@ export default function App() {
         <MarqueeStrip />
 
         {/* 2 — Services */}
-        <motion.section
-          id="services"
+        <motion.div
           aria-label="Services section"
           variants={sectionVariants}
           initial="hidden"
@@ -96,7 +90,7 @@ export default function App() {
           transition={{ duration: 0.6 }}
         >
           <Services />
-        </motion.section>
+        </motion.div>
 
         {/* Pull quote — seeds the bigger-picture thinking */}
         <PullQuote
@@ -106,8 +100,7 @@ export default function App() {
         />
 
         {/* 4 — Industries */}
-        <motion.section
-          id="industries"
+        <motion.div
           aria-label="Industries section"
           variants={sectionVariants}
           initial="hidden"
@@ -116,7 +109,10 @@ export default function App() {
           transition={{ duration: 0.6, delay: 0.05 }}
         >
           <Industries />
-        </motion.section>
+        </motion.div>
+
+        {/* SYNTHIOS — the product promised by the navigation and hero */}
+        <SynthiosProduct />
 
         {/* ATM Philosophy Section */}
         <Philosophy />
@@ -134,8 +130,7 @@ export default function App() {
         </motion.section>
 
         {/* 9 — Contact */}
-        <motion.section
-          id="contact"
+        <motion.div
           aria-label="Contact section"
           variants={sectionVariants}
           initial="hidden"
@@ -144,11 +139,11 @@ export default function App() {
           transition={{ duration: 0.6 }}
         >
           <Contact />
-        </motion.section>
+        </motion.div>
 
       </main>
       <Footer />
-      <ElevenLabsWidget hasStickyMobileCTA />
+      <DeferredChatWidget hasStickyMobileCTA />
     </div>
   )
 }

@@ -4,9 +4,9 @@ import { motion } from 'framer-motion'
 import { ArrowRight, Bot, Workflow, BarChart3, Megaphone, LineChart, Layers } from 'lucide-react'
 import { Button } from './ui/button'
 import { smoothScrollTo } from '../hooks/useSmoothScroll'
-import serviceAgentsImg from '@/assets/service-agents-web.jpg'
-import serviceWorkflowsImg from '@/assets/service-workflows-web.jpg'
-import serviceCrmImg from '@/assets/service-crm-web.jpg'
+import serviceAgentsImg from '@/assets/service-agents-web.webp'
+import serviceWorkflowsImg from '@/assets/service-workflows-web.webp'
+import serviceCrmImg from '@/assets/service-crm-web.webp'
 
 const featuredServices = [
   {
@@ -69,7 +69,15 @@ const additionalServices = [
 ]
 
 export function Services() {
-  const scrollToContact = () => smoothScrollTo('contact')
+  const scrollToContact = (interest?: string) => {
+    if (interest) {
+      const url = new URL(window.location.href)
+      url.searchParams.set('interest', interest)
+      url.hash = 'contact'
+      window.history.replaceState({}, '', `${url.pathname}${url.search}${url.hash}`)
+    }
+    smoothScrollTo('contact')
+  }
 
   return (
     <section id="services" className="py-20 lg:py-24 bg-background">
@@ -123,7 +131,8 @@ export function Services() {
                       {service.description}
                     </p>
                     <button
-                      onClick={scrollToContact}
+                      type="button"
+                      onClick={() => scrollToContact(service.title)}
                       className="inline-flex items-center gap-2 text-accent-blue text-sm font-medium hover:gap-3 transition-all duration-200"
                     >
                       Talk to us about this
@@ -132,11 +141,13 @@ export function Services() {
                   </div>
 
                   {/* Image column */}
-                  <div className={`${service.flip ? 'lg:[direction:ltr]' : ''} flex items-start`}>
+                  <div className={`${service.flip ? 'lg:[direction:ltr]' : ''} hidden sm:flex items-start`}>
                     <div className="rounded-2xl overflow-hidden bg-card aspect-[4/3] w-full">
                       <img
                         src={service.image}
                         alt={service.imageAlt}
+                        loading="lazy"
+                        decoding="async"
                         className="w-full h-full object-cover"
                       />
                     </div>
@@ -161,14 +172,15 @@ export function Services() {
             {additionalServices.map((service, index) => {
               const Icon = service.icon
               return (
-                <motion.div
+                <motion.button
+                  type="button"
                   key={service.id}
                   initial={{ opacity: 0, y: 12 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.1 }}
                   transition={{ delay: index * 0.08, duration: 0.5 }}
-                  onClick={scrollToContact}
-                  className="cursor-pointer group border-t border-border py-8 pr-8"
+                  onClick={() => scrollToContact(service.title)}
+                  className="w-full text-left cursor-pointer group border-t border-border py-8 pr-8 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue focus-visible:ring-offset-4 rounded-sm"
                 >
                   <div className="w-9 h-9 rounded-lg bg-card border border-border flex items-center justify-center mb-5">
                     <Icon className="w-4 h-4 text-muted-foreground" />
@@ -179,7 +191,7 @@ export function Services() {
                   <p className="text-sm text-muted-foreground leading-relaxed">
                     {service.description}
                   </p>
-                </motion.div>
+                </motion.button>
               )
             })}
             <div className="col-span-full border-t border-border" />
@@ -197,7 +209,7 @@ export function Services() {
           <p className="text-muted-foreground mb-6 max-w-md">
             Book a free consultation and we'll map out your automation opportunities together.
           </p>
-          <Button onClick={scrollToContact} size="lg" className="bg-accent-blue hover:bg-accent-blue/90 text-white px-8 py-6 rounded-xl">
+          <Button onClick={() => scrollToContact('Not sure where to start')} size="lg" className="bg-accent-blue hover:bg-accent-blue/90 text-white px-8 py-6 rounded-xl">
             Book a Free Consultation
             <ArrowRight className="w-4 h-4 ml-2" />
           </Button>

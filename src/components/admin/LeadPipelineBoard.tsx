@@ -9,6 +9,7 @@ import { Search, Download, Mail, Phone, Building2, Clock, GripVertical, DollarSi
 import { toast } from 'sonner';
 import { exportLeadsToCSV } from '@/lib/exportUtils';
 import { formatDistanceToNow } from 'date-fns';
+import type { Database } from '@/integrations/supabase/types';
 
 interface Lead {
   id: string;
@@ -18,6 +19,7 @@ interface Lead {
   company: string | null;
   status: string;
   ai_score: number | null;
+  notes: string | null;
   estimated_value: number | null;
   source: string;
   created_at: string;
@@ -88,7 +90,7 @@ export function LeadPipelineBoard({ onLeadClick }: LeadPipelineBoardProps) {
     setLeads(prev => prev.map(l => l.id === leadId ? { ...l, status: newStatus } : l));
     const { error } = await supabase
       .from('leads')
-      .update({ status: newStatus as any })
+      .update({ status: newStatus as Database['public']['Enums']['lead_status'] })
       .eq('id', leadId);
     if (error) { toast.error('Error updating lead'); fetchLeads(); }
     else { toast.success('Lead moved to ' + PIPELINE_STAGES.find(s => s.value === newStatus)?.label); }

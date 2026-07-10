@@ -25,17 +25,17 @@ import { Badge } from '@/components/ui/badge';
 export default function Admin() {
   const [showCreateLead, setShowCreateLead] = useState(false);
   const [showCreateAppointment, setShowCreateAppointment] = useState(false);
-  const [selectedLead, setSelectedLead] = useState<any>(null);
+  const [selectedLead, setSelectedLead] = useState<React.ComponentProps<typeof LeadDetailDialog>['lead']>(null);
   const [showLeadDetail, setShowLeadDetail] = useState(false);
   const [activeTab, setActiveTab] = useState('dashboard');
   const navigate = useNavigate();
   const { isAuthenticated, isLoading, adminUser, signOut, isSuperAdmin } = useAuth();
 
   useEffect(() => {
-    if (!isLoading && !isAuthenticated) {
+    if (!isLoading && (!isAuthenticated || !adminUser)) {
       navigate('/auth');
     }
-  }, [isLoading, isAuthenticated, navigate]);
+  }, [isLoading, isAuthenticated, adminUser, navigate]);
 
   const handleLogout = async () => {
     await signOut();
@@ -50,7 +50,7 @@ export default function Admin() {
     );
   }
 
-  if (!isAuthenticated) {
+  if (!isAuthenticated || !adminUser) {
     return null;
   }
 

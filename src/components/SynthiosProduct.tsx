@@ -3,7 +3,8 @@
 import { motion } from 'framer-motion'
 import { Check, Zap, Brain, MessageSquare, Clock, TrendingUp, ArrowRight } from 'lucide-react'
 import { Button } from './ui/button'
-import synthiosImg from '@/assets/synthios-web.jpg'
+import synthiosImg from '@/assets/synthios-web.webp'
+import { smoothScrollTo } from '@/hooks/useSmoothScroll'
 
 const capabilities = [
   {
@@ -41,8 +42,11 @@ const handledItems = [
 
 export function SynthiosProduct() {
   const scrollToContact = () => {
-    const contact = document.getElementById('contact')
-    if (contact) contact.scrollIntoView({ behavior: 'smooth' })
+    const url = new URL(window.location.href)
+    url.searchParams.set('interest', 'SYNTHIOS')
+    url.hash = 'contact'
+    window.history.replaceState({}, '', `${url.pathname}${url.search}${url.hash}`)
+    smoothScrollTo('contact')
   }
 
   return (
@@ -86,6 +90,8 @@ export function SynthiosProduct() {
             <img
               src={synthiosImg}
               alt="SYNTHIOS AI system"
+              loading="lazy"
+              decoding="async"
               className="w-full h-full object-cover"
             />
           </div>
