@@ -61,7 +61,12 @@ export function Navigation() {
   ]
 
   const handleGetStarted = () => {
-    navigate('/network')
+    window.location.href = 'https://go.synthios.ai'
+  }
+
+  const goToPricing = () => {
+    setIsMobileMenuOpen(false)
+    navigate('/pricing')
     window.scrollTo({ top: 0, behavior: 'instant' })
   }
 
@@ -99,6 +104,12 @@ export function Navigation() {
                 {link.label}
               </button>
             ))}
+            <button
+              onClick={goToPricing}
+              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200"
+            >
+              Pricing
+            </button>
 
             <ThemeToggle />
 
@@ -138,6 +149,12 @@ export function Navigation() {
                 {link.label}
               </button>
             ))}
+            <button
+              onClick={goToPricing}
+              className="block w-full text-left text-lg font-medium text-foreground hover:text-accent-blue transition-colors py-4 border-b border-border/40"
+            >
+              Pricing
+            </button>
             <div className="pt-6">
               <Button
                 onClick={handleGetStarted}

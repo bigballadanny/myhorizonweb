@@ -7,25 +7,30 @@ import { ArrowRight } from 'lucide-react'
 const steps = [
   {
     number: '01',
-    title: 'Discovery Call',
+    title: 'Start Your Trial',
     description:
-      'We map your business processes and identify the highest-ROI automation opportunities. Free, no strings attached.',
-    // Lightest background
+      'Sign up at go.synthios.ai and start your 5-day free trial. No setup fee. Your agent team starts with your real work, not a demo.',
     cardBg: 'bg-card/40',
   },
   {
     number: '02',
-    title: 'Custom Strategy',
+    title: 'Connect Your Tools',
     description:
-      'Our team architects a system tailored to your exact workflows. No templates, no one-size-fits-all. Built around how you actually operate.',
-    cardBg: 'bg-card/65',
+      'Link the email, calendar, and apps you already run on. Synthios connects inside the AI assistant you already use.',
+    cardBg: 'bg-card/55',
   },
   {
     number: '03',
-    title: 'Launch & Optimize',
+    title: 'Teach It Your Business',
     description:
-      'Go live with full support. Your AI systems compound value every day they run — getting smarter, saving more time, and closing more business.',
-    // Slightly darker
+      'Your customers, your prices, your way of working. Synthios remembers all of it, so every answer and follow-up sounds like you.',
+    cardBg: 'bg-card/75',
+  },
+  {
+    number: '04',
+    title: 'Grow the Team',
+    description:
+      'It gets sharper every week it runs. When your people need their own agents, add team seats at $100 per seat per month.',
     cardBg: 'bg-card/90',
   },
 ]
@@ -51,20 +56,17 @@ export function Process() {
           <p className="section-label mb-5">How It Works</p>
           <div className="max-w-2xl">
             <h2 className="font-serif text-4xl sm:text-5xl text-foreground leading-tight mb-5">
-              From conversation to live AI system
+              Live in days, not months
             </h2>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              A clear, simple path. No jargon, no complexity — just real progress.
+              Four steps from signup to an AI team that knows your business. No install project. Nothing new to maintain.
             </p>
           </div>
         </motion.div>
 
         {/* Steps */}
         <div className="relative mb-14">
-          {/* Dashed connecting line — desktop only, sits between steps */}
-          <div className="hidden lg:block absolute top-10 left-[calc(33.333%+1.5rem)] right-[calc(33.333%+1.5rem)] border-t-2 border-dashed border-border pointer-events-none" />
-
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
             {steps.map((step, index) => (
               <motion.div
                 key={step.title}
@@ -106,13 +108,15 @@ export function Process() {
         >
           <Button
             size="lg"
-            onClick={scrollToContact}
+            asChild
             className="w-full sm:w-auto bg-accent-blue hover:bg-accent-blue/90 text-white px-8 py-6 rounded-xl"
           >
-            Start with a Free Discovery Call
-            <ArrowRight className="w-5 h-5 ml-2" />
+            <a href="https://go.synthios.ai">
+              Start your 5-day free trial
+              <ArrowRight className="w-5 h-5 ml-2" />
+            </a>
           </Button>
-          <p className="text-muted-foreground text-sm mt-3">No commitment. No pressure. Just clarity.</p>
+          <p className="text-muted-foreground text-sm mt-3">No setup fee. Cancel anytime.</p>
         </motion.div>
 
       </div>
