@@ -46,7 +46,7 @@ export function PricingSection() {
               }`}
             >
               {plan.highlighted && (
-                <span className="absolute -top-3 left-8 bg-accent-blue text-white text-xs font-semibold px-3 py-1 rounded-full">
+                <span className="inline-block bg-accent-blue text-white text-xs font-semibold px-3 py-1 rounded-full mb-4">
                   Most popular
                 </span>
               )}

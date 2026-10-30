@@ -126,7 +126,7 @@ export default function PricingPage() {
                 transition={{ duration: 0.5, delay: 0.2 }}
                 className="relative rounded-2xl border border-accent-blue bg-card p-8"
               >
-                <span className="absolute -top-3 left-8 bg-accent-blue text-white text-xs font-semibold px-3 py-1 rounded-full">
+                <span className="inline-block bg-accent-blue text-white text-xs font-semibold px-3 py-1 rounded-full mb-4">
                   Most popular
                 </span>
                 <p className="section-label mb-3">{plans[1].audience}</p>
