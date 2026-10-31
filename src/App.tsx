@@ -36,7 +36,7 @@ export default function App() {
   
   useSEO({
     title: 'MyHorizon | Synthios - The AI Agent Team for Your Business',
-    description: 'Synthios is an AI agent team that answers every lead, follows up until the job books, and remembers every customer. Business $300/mo, Personal $100/mo, 5-day free trial.',
+    description: 'Synthios is an AI agent team that answers every lead, follows up until the job books, and remembers every customer. Business $197/mo, Personal $100/mo, 5-day free trial.',
     keywords: 'AI agents, AI agent team, business automation, lead follow-up, Synthios, MyHorizon, AI for service businesses',
     schema: {
       '@context': 'https://schema.org',
@@ -48,7 +48,7 @@ export default function App() {
       'offers': {
         '@type': 'AggregateOffer',
         'lowPrice': '100',
-        'highPrice': '300',
+        'highPrice': '197',
         'priceCurrency': 'USD',
         'offerCount': '2'
       },

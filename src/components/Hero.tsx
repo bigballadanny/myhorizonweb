@@ -93,7 +93,7 @@ export function Hero() {
               transition={{ duration: 0.28, delay: reduceMotion ? 0 : 0.75, ease: EASE_OUT }}
               className="text-sm text-muted-foreground"
             >
-              Business $300/mo · Personal $100/mo · No setup fee · One subscription covers every business you own
+              Business $197/mo · Personal $100/mo · No setup fee · One subscription covers every business you own
             </motion.p>
           </div>
 

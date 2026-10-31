@@ -28,7 +28,7 @@ export const plans: Plan[] = [
   },
   {
     name: 'Business',
-    price: '$300',
+    price: '$197',
     cadence: '/mo',
     audience: 'For businesses that run on response time',
     blurb: 'The full agent team across your operation. Every lead answered, every follow-up done.',

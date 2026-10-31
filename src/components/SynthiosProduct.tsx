@@ -175,7 +175,7 @@ export function SynthiosProduct() {
             </Button>
           </div>
           <p className="text-sm text-muted-foreground mt-4">
-            Business $300/mo · Personal $100/mo · Team seats $100 per seat/mo · No setup fee
+            Business $197/mo · Personal $100/mo · Team seats $100 per seat/mo · No setup fee
           </p>
         </motion.div>
 

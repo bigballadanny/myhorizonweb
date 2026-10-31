@@ -16,7 +16,7 @@ const faqs = [
   },
   {
     q: 'Is there a setup fee?',
-    a: 'No. Plans are month to month. Personal is $100 a month, Business is $300 a month, and that is the price, not a teaser rate.',
+    a: 'No. Plans are month to month. Personal is $100 a month, Business is $197 a month, and that is the price, not a teaser rate.',
   },
   {
     q: 'What is a team seat?',
@@ -39,8 +39,8 @@ const faqs = [
 export default function PricingPage() {
   useSEO({
     title: 'Pricing | MyHorizon - Synthios Plans',
-    description: 'Synthios pricing: Personal $100/mo, Business $300/mo, team seats $100 per seat/mo, 5-day free trial, no setup fee. One subscription covers every business you own.',
-    keywords: 'Synthios pricing, AI agent pricing, Personal $100, Business $300, team seats',
+    description: 'Synthios pricing: Personal $100/mo, Business $197/mo, team seats $100 per seat/mo, 5-day free trial, no setup fee. One subscription covers every business you own.',
+    keywords: 'Synthios pricing, AI agent pricing, Personal $100, Business $197, team seats',
     schema: {
       '@context': 'https://schema.org',
       '@type': 'SoftwareApplication',
@@ -50,7 +50,7 @@ export default function PricingPage() {
       'offers': {
         '@type': 'AggregateOffer',
         'lowPrice': '100',
-        'highPrice': '300',
+        'highPrice': '197',
         'priceCurrency': 'USD',
         'offerCount': '2',
       },
@@ -249,7 +249,7 @@ export default function PricingPage() {
                 Five days on your real work. Then decide.
               </h2>
               <p className="text-muted-foreground leading-relaxed mb-8">
-                No setup fee. Business $300 a month, Personal $100 a month, seats $100 a month each.
+                No setup fee. Business $197 a month, Personal $100 a month, seats $100 a month each.
               </p>
               <Button size="lg" asChild className="w-full sm:w-auto bg-accent-blue hover:bg-accent-blue/90 text-white px-8 py-6 rounded-xl">
                 <a href={SIGNUP_URL}>
