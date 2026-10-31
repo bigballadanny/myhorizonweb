@@ -4,6 +4,8 @@ import { ScrollProgress } from './components/ScrollProgress'
 import { Hero } from './components/Hero'
 import { MarqueeStrip } from './components/MarqueeStrip'
 import { Services } from './components/Services'
+import { WhatWeDo } from './components/WhatWeDo'
+import { Engagements } from './components/Engagements'
 import { PullQuote } from './components/PullQuote'
 import { Problem } from './components/Problem'
 import { Industries } from './components/Industries'
@@ -11,6 +13,8 @@ import { Process } from './components/Process'
 import { Results } from './components/Results'
 import { UrgencyCTA } from './components/UrgencyCTA'
 import { SynthiosProduct } from './components/SynthiosProduct'
+import { PricingSection } from './components/PricingSection'
+import { ForkSection } from './components/ForkSection'
 import { Contact } from './components/Contact'
 import { Footer } from './components/Footer'
 import { Philosophy } from './components/Philosophy'
@@ -33,21 +37,24 @@ export default function App() {
   const location = useLocation()
   
   useSEO({
-    title: 'MyHorizon | SYNTHIOS - AI Infrastructure for Business',
-    description: 'We build custom AI agents that run your operations, remember your customers, and make decisions alongside your team.',
-    keywords: 'AI agent, AI infrastructure, business automation, SYNTHIOS, MyHorizon AI, generative AI, AI assistant, operations automation',
+    title: 'MyHorizon | Synthios - The AI Agent Team for Your Business',
+    description: 'Synthios is an AI agent team that answers every lead, follows up until the job books, and remembers every customer. Business $197/mo, Personal $100/mo, 5-day free trial.',
+    keywords: 'AI agents, AI agent team, business automation, lead follow-up, Synthios, MyHorizon, AI for service businesses',
     schema: {
       '@context': 'https://schema.org',
       '@type': 'SoftwareApplication',
-      'name': 'SYNTHIOS',
+      'name': 'Synthios',
       'operatingSystem': 'Cloud',
       'applicationCategory': 'BusinessApplication',
+      'url': 'https://go.synthios.ai',
       'offers': {
-        '@type': 'Offer',
-        'price': '0',
-        'priceCurrency': 'USD'
+        '@type': 'AggregateOffer',
+        'lowPrice': '100',
+        'highPrice': '197',
+        'priceCurrency': 'USD',
+        'offerCount': '2'
       },
-      'description': 'SYNTHIOS is an AI infrastructure platform that remembers every customer, executes follow-ups, and operates business workflows 24/7.',
+      'description': 'Synthios is an AI agent team that answers every lead, follows up until the job books, and remembers every customer.',
       'creator': {
         '@type': 'Organization',
         'name': 'MyHorizon AI',
@@ -85,7 +92,23 @@ export default function App() {
         {/* Marquee trust strip — industries we serve */}
         <MarqueeStrip />
 
-        {/* 2 — Services */}
+        {/* What MyHorizon does — the company, in plain terms */}
+        <WhatWeDo />
+
+        {/* 2 — Synthios, the flagship product */}
+        <motion.section
+          id="synthios"
+          aria-label="Synthios product section"
+          variants={sectionVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ duration: 0.6 }}
+        >
+          <SynthiosProduct />
+        </motion.section>
+
+        {/* 3 — Services */}
         <motion.section
           id="services"
           aria-label="Services section"
@@ -97,6 +120,9 @@ export default function App() {
         >
           <Services />
         </motion.section>
+
+        {/* How a custom engagement runs, step by step */}
+        <Engagements />
 
         {/* Pull quote — seeds the bigger-picture thinking */}
         <PullQuote
@@ -117,6 +143,35 @@ export default function App() {
         >
           <Industries />
         </motion.section>
+
+        {/* 5 — How it works */}
+        <motion.section
+          id="process"
+          aria-label="How it works section"
+          variants={sectionVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ duration: 0.6 }}
+        >
+          <Process />
+        </motion.section>
+
+        {/* 6 — Pricing */}
+        <motion.section
+          id="pricing"
+          aria-label="Pricing section"
+          variants={sectionVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ duration: 0.6 }}
+        >
+          <PricingSection />
+        </motion.section>
+
+        {/* 7 — Self-selection fork */}
+        <ForkSection />
 
         {/* ATM Philosophy Section */}
         <Philosophy />

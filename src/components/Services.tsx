@@ -15,8 +15,8 @@ const featuredServices = [
     number: '01',
     title: 'AI Agents & Voice Systems',
     description:
-      'Autonomous agents that handle customer conversations, qualify leads, and execute tasks around the clock. Your business stays responsive whether your team is in the office or not.',
-    detail: 'Handles inbound inquiries, books appointments, answers FAQs, and escalates complex issues — all without human intervention.',
+      'Your phones and inboxes stop being the bottleneck. Calls get answered, leads get qualified, and appointments get booked around the clock, including the hours your team is off the clock.',
+    detail: 'A lead who calls at 9 pm gets a real answer and a booked appointment. Your team walks in to clean notes, not a pile of missed calls.',
     image: serviceAgentsImg,
     imageAlt: 'AI Agents & Voice Systems',
     flip: false,
@@ -27,8 +27,8 @@ const featuredServices = [
     number: '02',
     title: 'Intelligent Workflows',
     description:
-      'AI-driven process automation that connects your systems and makes real-time decisions across your business. When one thing happens, the right things follow — automatically.',
-    detail: 'Connects your CRM, calendar, email, and ops tools into a single intelligent layer that runs itself.',
+      'Your tools stop working in silos. When one thing happens, the right things follow on their own, across your CRM, calendar, email, and the rest of your stack.',
+    detail: 'A booked job updates the schedule. A finished job triggers the follow-up. Nobody has to remember the steps, because the system runs them.',
     image: serviceWorkflowsImg,
     imageAlt: 'Intelligent Workflows',
     flip: true,
@@ -39,8 +39,8 @@ const featuredServices = [
     number: '03',
     title: 'CRM & Pipeline Automation',
     description:
-      'Smart lead scoring, automated nurturing, and pipeline optimization built around how your sales team actually works. Fewer dropped balls, more closed deals.',
-    detail: 'AI that qualifies leads, triggers follow-ups at the right moment, and surfaces who\'s most likely to convert.',
+      'No lead sits in a spreadsheet and gets forgotten. Every lead gets scored, followed up at the right moment, and pushed toward a decision, built around how your sales team actually works.',
+    detail: 'You open a pipeline that is actually current, and you can see at a glance who is close to buying and who needs a nudge today.',
     image: serviceCrmImg,
     imageAlt: 'CRM & Pipeline Automation',
     flip: false,
@@ -52,19 +52,19 @@ const additionalServices = [
     id: 'content',
     icon: Megaphone,
     title: 'Content & Marketing AI',
-    description: 'Multi-agent systems that create, schedule, and optimize content across every channel you use.',
+    description: 'Your content goes out on schedule across every channel you use. The system drafts it, schedules it, and adjusts based on what actually performs.',
   },
   {
     id: 'analytics',
     icon: LineChart,
     title: 'AI Analytics & Insights',
-    description: 'Intelligent reporting that surfaces what matters and triggers automated actions — no analyst required.',
+    description: 'You get reporting that tells you what matters and what to do next, without paying an analyst to build it or waiting a week to read it.',
   },
   {
     id: 'custom',
     icon: Layers,
     title: 'Custom AI Systems',
-    description: 'Full-stack AI infrastructure — agents, automations, and workflows — architected around your exact business.',
+    description: 'When the job does not fit a product, we design and build the system around your exact operation: the agents, automations, and workflows your business actually needs.',
   },
 ]
 
@@ -89,7 +89,7 @@ export function Services() {
               AI Systems That Work for You
             </h2>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              From voice agents to full automation stacks — we build the infrastructure that runs your business while you focus on growing it.
+              This is the build side of MyHorizon. When the job is bigger than a subscription, we design and build the system for you, around the work your business already does.
             </p>
           </div>
         </motion.div>
@@ -121,6 +121,10 @@ export function Services() {
                     </h3>
                     <p className="text-base text-muted-foreground leading-relaxed mb-5 max-w-md">
                       {service.description}
+                    </p>
+                    <p className="text-base text-foreground leading-relaxed mb-6 max-w-md">
+                      <span className="section-label block mb-2">What changes</span>
+                      {service.detail}
                     </p>
                     <button
                       onClick={scrollToContact}

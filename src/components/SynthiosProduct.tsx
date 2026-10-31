@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { Check, Zap, Brain, MessageSquare, Clock, TrendingUp, ArrowRight } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import { Button } from './ui/button'
 import synthiosImg from '@/assets/synthios-web.jpg'
 
@@ -9,12 +10,12 @@ const capabilities = [
   {
     icon: Brain,
     title: 'Persistent Memory',
-    description: 'Learns your business over time. Every conversation, every decision, every preference — remembered and used to help you better every single day.',
+    description: 'Learns your business over time. Every conversation, every decision, every preference, remembered and used to help you better every single day.',
   },
   {
     icon: MessageSquare,
     title: 'Works Where You Work',
-    description: 'Connect through Telegram. No new apps to learn, no new habit to form.',
+    description: 'Connect inside the AI assistant app you already use. No new software to learn, no new habit to form.',
   },
   {
     icon: Clock,
@@ -24,7 +25,7 @@ const capabilities = [
   {
     icon: TrendingUp,
     title: 'Gets Smarter Over Time',
-    description: 'The longer SYNTHIOS runs, the better it understands your operation. It compounds — like a great employee who never stops learning.',
+    description: 'The longer SYNTHIOS runs, the better it understands your operation. It compounds, like a great employee who never stops learning.',
   },
 ]
 
@@ -40,11 +41,6 @@ const handledItems = [
 ]
 
 export function SynthiosProduct() {
-  const scrollToContact = () => {
-    const contact = document.getElementById('contact')
-    if (contact) contact.scrollIntoView({ behavior: 'smooth' })
-  }
-
   return (
     <section id="synthios" className="py-20 lg:py-24 bg-background">
       <div className="container mx-auto px-6 sm:px-8 lg:px-12">
@@ -69,7 +65,7 @@ export function SynthiosProduct() {
               Intelligence that grows with your business.
             </p>
             <p className="text-base text-muted-foreground leading-relaxed">
-              SYNTHIOS is a personal AI system that understands your business deeply — your customers, your processes, your priorities — and helps you operate at a level that wasn't possible before.
+              SYNTHIOS is a personal AI system that understands your business deeply: your customers, your processes, your priorities. It helps you operate at a level that wasn't possible before.
             </p>
           </div>
         </motion.div>
@@ -157,24 +153,30 @@ export function SynthiosProduct() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="flex flex-col sm:flex-row items-start gap-3"
         >
-          <Button
-            size="lg"
-            className="bg-accent-blue hover:bg-accent-blue/90 text-white px-8 py-6 rounded-xl"
-            onClick={scrollToContact}
-          >
-            See SYNTHIOS in Action
-            <ArrowRight className="w-4 h-4 ml-2" />
-          </Button>
-          <Button
-            size="lg"
-            variant="outline"
-            className="border-border hover:bg-card px-8 py-6 rounded-xl"
-            onClick={() => window.location.href = '/network'}
-          >
-            Learn More
-          </Button>
+          <div className="flex flex-col sm:flex-row items-start gap-3">
+            <Button
+              size="lg"
+              asChild
+              className="bg-accent-blue hover:bg-accent-blue/90 text-white px-8 py-6 rounded-xl"
+            >
+              <a href="https://go.synthios.ai">
+                Start your 5-day free trial
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </a>
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              asChild
+              className="border-border hover:bg-card px-8 py-6 rounded-xl"
+            >
+              <Link to="/pricing">See plans and pricing</Link>
+            </Button>
+          </div>
+          <p className="text-sm text-muted-foreground mt-4">
+            Business $197/mo · Personal $100/mo · Team seats $100 per seat/mo · No setup fee
+          </p>
         </motion.div>
 
       </div>
