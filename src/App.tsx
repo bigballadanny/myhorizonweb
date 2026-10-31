@@ -4,6 +4,8 @@ import { ScrollProgress } from './components/ScrollProgress'
 import { Hero } from './components/Hero'
 import { MarqueeStrip } from './components/MarqueeStrip'
 import { Services } from './components/Services'
+import { WhatWeDo } from './components/WhatWeDo'
+import { Engagements } from './components/Engagements'
 import { PullQuote } from './components/PullQuote'
 import { Problem } from './components/Problem'
 import { Industries } from './components/Industries'
@@ -90,6 +92,9 @@ export default function App() {
         {/* Marquee trust strip — industries we serve */}
         <MarqueeStrip />
 
+        {/* What MyHorizon does — the company, in plain terms */}
+        <WhatWeDo />
+
         {/* 2 — Synthios, the flagship product */}
         <motion.section
           id="synthios"
@@ -115,6 +120,9 @@ export default function App() {
         >
           <Services />
         </motion.section>
+
+        {/* How a custom engagement runs, step by step */}
+        <Engagements />
 
         {/* Pull quote — seeds the bigger-picture thinking */}
         <PullQuote
